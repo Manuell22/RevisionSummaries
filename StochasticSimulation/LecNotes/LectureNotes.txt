@@ -1,0 +1,2531 @@
+Stochastic Simulation
+From Uniform Random Numbers to Generative Models
+O. Deniz Akyildiz
+Department of Mathematics
+Imperial College London
+1
+INTRODUCTION
+We introduce in this section the general ideas of this course, notation, and setup. We will also
+introduce the principles behind sampling and generative modelling and also try to answer the
+existential question from the beginning: Why is this course useful?
+A
+1.1 introduction
+This course is about simulating random variables or put it differently sampling from probability
+distributions. This seemingly simple task arises in a large number of scenarios in the real world
+and embedded in many critical applications. Furthermore, we look into generating samples from
+dependent processes (e.g. stochastic processes) as well as sampling from intractable distributions.
+1.1.1 why is this course useful?
+This course is about simulating structured randomness. The course is a standard part of a Mathematics/
+Statistics curriculum, sometimes named differently, e.g., Monte Carlo methods or Computational
+Statistics. This course will teach you essential skills of simulating random systems and as
+such this can be very useful in a multitude of settings:
+• Simulation of complex systems: It is often of interest to outright simulate systems to
+understand their behaviour. This is straightforward for simple systems but it can get
+complicated when one wants to model intricate systems. This sort of “forward simulation”
+approaches consist of designing the system and then simulating it. This is a very common
+approach in engineering and physics.
+• Bayesian statistical inference: Now imagine a random system that is not fully known.
+This could be defined using a simulator or a generator as described above. But if some
+1
+variables in this system are not known and we have some data of other variables, we can
+always condition on the data and find out latent/hidden variables. Simulation and sampling
+methods come in handy in these cases. By carefully formulating these estimation problems
+as simulation/sampling problems, we can estimate the unknown variables.
+• Generative modelling: We are often interested in sampling from a completely unknown
+probability measure in the case of generative models. Consider a given image dataset
+{x1, . . . , xn} and consider the problem of generating new images that mimic the properties
+of the image dataset. This problem can be framed as a sampling procedure where the target
+is unknown but we have access to its samples {x1, . . . , xn} in the form of a dataset. Methods
+that address this challenge gave rise to very successful generative models, such as ChatGPT.
+The methods we introduce are the key foundations for working on these models.
+Monte Carlo methods have many further applications in various fields, e.g., finance, physics,
+engineering, and so on. The methods we introduce in this course are the basis for many of these
+applications.
+1.1.2 what will be covered in this course?
+We will first go through exact sampling methods. That is, we will learn the mechanisms that are
+usually under the hood when you call a function to generate random numbers. To begin, we
+will learn to generate random samples from simple distributions, e.g., uniform, Gaussian, and
+exponential. We will then move onto integration problems, one of the fundamental applications
+of sampling methods and will learn to use these samplers to estimate integrals. This will be
+useful in the context of Bayesian models and inference. Then, we will move onto Markov chain
+Monte Carlo (MCMC) and sequential Monte Carlo (SMC) methods which are for intractable
+distributions that do not have a simple form.
+1.1.3 notation
+Throughout this course, we will have a notion of a “target probability measure” that we want
+to sample from. We will use the same letters for the measures and their densities when there is
+no confusion. We will use p? to denote the target distribution throughout. We write X  p?
+to denote that the law of the random variable X is p?. We denote the expectation of a random
+variable with Ep? [X] (or Ep?X when there is no confusion). In general, we define the expectation
+of a function of a random variable X  p? as
+(', p?) = Ep? ['(X)] =
+Z
+'(x)p?(x)dx.
+The cumulative density functions (CDF) associated with the random variable X will generally be
+denoted as FX(x).
+1.2 the sampling problem
+Given a probability distribution p?, we are interested in sampling from this distribution which is
+simply denoted as drawing
+X(i)  p?, i = 1, . . . ,N.
+2
+The main goal here is to draw these samples as accurately as possible, as often we may not have
+access to an exact sampling scheme.
+Technically speaking, we will be often interested in sampling from a distribution p? defined on
+a space X (e.g., Rd or any constrained subset of it) but we only have an access to an unnormalised
+positive function ¯p? : X ! R+ such that
+p?(x) = ¯p?(x)
+Z
+, (1.1)
+where the normalising constantZ := R ¯p?(x)dx is impossible to compute. We will see throughout
+this course many settings this sort of problem arises. In this setting, designing a sampler for p? is
+not straightforward and it is (still after decades) a major research area.
+In order to fully develop our intuition from first principles, we will first discuss exact sampling
+methods which are only applicable to simple distributions. However, these will be crucial for
+advanced sampling techniques – as all sampling methods rely on being able to draw realistic
+samples from simple distributions such as uniform or Gaussian distribution. We will then describe
+cases where the exact sampling is not possible and introduce advanced sampling algorithms (such
+as Markov chain Monte Carlo (MCMC) and sequential Monte Carlo (SMC) methods) to tackle
+this problem.
+1.2.1 motivating example: estimating 
+We mentioned repeatedly above that we can use random sampling methods to do various computation
+tasks. We can now demonstrate an intuitive application and this will be the idea of random
+variate generation to estimate . This example is simple enough for us to understand the idea
+even if we have not seen any sampling methods yet.
+Figure 1.1: The circle and
+square.
+Suppose that we want to obtain an estimate of  using computation.
+Normally, this number is available on any given software package, you
+can just query it, e.g., np.pi in Python. Let us assume that we do not
+have access to this number and we want to estimate it using a computer.
+We can use this through a neat geometric idea: Consider Fig. 1.1. We
+know that the area of a circle is given by r2 for any r. If we fit a square
+around a circle, then we also know that the square will have one side
+of length 2r and hence the area of the square will be 4r2. Given this,
+we can easily conclude
+area of circle
+area of square
+= r2
+4r2 = 
+4 .
+We can again easily imagine that if we had uniformly distributed points in this square, the ratio
+of the number of points within the circle and the total number of points will be approxiamtely
+the same as the ratio of the areas. In other words, if we draw N points uniformly at random from
+the square, and Nc of these points fall within the circle, then
+Nc
+N
+
+4
+.
+This is a very simple Monte Carlo estimate which comes with lots of guarantees, in particular, we
+know that as N ! 1, the estimate will converge to the true value of .
+3
+Figure 1.2: Estimating  using the Monte Carlo method.
+To formalise this intuition, the trick at this stage is to phrase this question probabilistically.
+Can we convert this problem into estimating the probability of a set? Let us say, for clarity of the
+definition, this square is a set A = [−1, 1] × [−1, 1]. Let us define a 2-dimensional probability
+distribution, uniform on this set, defined as P = Unif([−1, 1]
+2). This is a uniform distribution
+on the square. Naturally, we have that P(A) = 1. Now we can see that, if the circle is defined as
+another set
+B = {(x, y) 2 R2 : x2 + y2  1},
+then the probability of this set is
+P(B) = area of circle
+area of square
+= 
+4 .
+We need to then find a way to formally estimate this set, using samples from P. This is formally
+done by converting this probability into an expectation
+P(B) = EP[1B(X)],
+and estimating this expectation (integral) using samples. We will see later that this simple Monte
+Carlo procedure coincides with the intuitive solution: Count the samples within the circle and
+calculate the ratio to estimate /4. We can see the result of this estimation procedure above.
+1.3 a primer on bayesian inference
+Throughout this course, we will routinely draw examples from the field of Bayesian inference
+to build intuition for sampling methods. We will now introduce the basic concepts of Bayesian
+inference to set the stage for later chapters.
+4
+1.3.1 bayesian inference
+Consider a statistical model defined through a likelihood function pY |X(y|x) and a prior distribution
+pX(x). Given an observation Y = y, we are interested in inferring the latent variable X.
+This is done through the posterior distribution
+pX|Y (x|y) = pY |X(y|x)pX(x)
+pY (y) .
+Throughout these notes when there is no confusion, we will use p(x) generically as a probability
+density of a random variable X. When we then write p(y), this will mean a different density of
+another random variable (say Y ). If we write the Bayes’ formula in these terms
+p(x|y) = p(y|x)p(x)
+p(y) , (1.2)
+which is much cleaner. Of course, here, p(x|y) and p(y|x) are different functions, just as p(x)
+and p(y) are. We will however revert back to pX and pY in cases where it is necessary, such
+as transformation of random variables. Note that the formula holds for continuous random
+variables as well as discrete random variables. Its importance comes from the fact that it provides
+us a natural way to incorporate data into a probabilistic model. In this interpretation, we have
+four key concepts.
+• Prior: In the formula (1.2), p(x) is called the prior probability of X. Here X can be
+interpreted as a parameter of p(y|x) or a hidden (unobserved) variable. The probability
+distribution p(x) encodes our prior knowledge about this variable we cannot observe
+directly. This could be simple constraints, a distribution dictated by a real application
+(e.g. a physical variable can be only positive). In time series applications, p(x) can be the
+distribution over an entire time series, it can even encode physical laws.
+• Likelihood: p(y|x) is called the likelihood of Y given X. This is the probability model
+of the process of observation – in other words, it describes how the underlying parameter
+or hidden variable is observed. For example, if Y is the number of observed cases of a
+disease in a population, then p(y|x) is the probability of observing y cases given that the
+true number of cases is x.
+• Posterior: p(x|y) is called the posterior distribution ofX given Y = y. This is the updated
+probability distribution after we see y observation and updated our prior knowledge p(x)
+into p(x|y).
+• Marginal Likelihood (Evidence): p(y) is called the marginal likelihood or evidence. This
+is the probability of observing Y = y under the model. This is often of direct interest when
+comparing different models.
+Remark 1.1. Note that we can map the notation in Bayesian inference to the notation we introduced
+in (1.1). In the setting of Bayesian inference, we have our target p?(x) := p(x|y) (i.e.
+we want to sample from the posterior distribution – some books denote this as (x|y)). The
+5
+unnormalised density is then given as p?(x) := p(y|x)p(x) = p(x, y) and the normalising
+constant is Z := p(y). Hence, we can see that Bayesian inference problems fit naturally into the
+sampling framework we introduced above.
+Oftentimes, in connection with Bayesian inference, we are interested in estimating expectations
+w.r.t. the posterior distribution, e.g.,
+EX|Y =y['(X)] =
+Z
+'(x)p(x|y)dx = (', p?).
+We will be interested in sampling from p? to estimate such expectations. Let us first look at a few
+closed form examples to build our intuition. First a Gaussian example adapted from Murphy
+(2007).
+Example 1.1. Let
+p(x) = N(x; μ0, 2
+0),
+p(y|x) = N(y; x, 2),
+where μ0 and 2
+0 are the prior mean and variance, respectively, and 2 is the variance of the
+likelihood. Derive the posterior distribution p(x|y) using the Bayes’ rule.
+Solution. Let us write
+p(x|y) = p(y|x)p(x)
+p(y) .
+In order to derive the posterior, we first derive p(y|x)p(x) as
+p(y|x)p(x) = N(y; x, 2)N(x; μ0, 2
+0)
+= 1
+p
+22 exp
+ 
+−
+(y − x)2
+22
+! 1
+q
+22
+0
+exp
+ 
+−
+(x − μ0)2
+22
+0
+!
+= 1
+2
+q
+22
+0
+exp
+ 
+−
+(y − x)2
+22 −
+(x − μ0)2
+22
+0
+!
+.
+We know that
+p(x|y) / p(y|x)p(x)
+/ exp
+ 
+−
+(y − x)2
+22 −
+(x − μ0)2
+22
+0
+!
+.
+6
+Recall now that we want a density on x. Let us expand this exponential
+p(x|y) / exp
+ 
+−
+y2
+22 + xy
+2 −
+x2
+22 −
+x2
+22
+0
++ xμ0
+2
+0
+−
+μ20
+22
+0
+!
+= exp
+ 
+−
+  1
+22 + 1
+22
+0
+!
+x2 +
+ 
+y
+2 + μ0
+2
+0
+!
+x −
+y2
+22 −
+μ20
+22
+0
+!
+,
+/ exp
+ 
+−
+12
+ 
+2 + 2
+0
+22
+0
+!
+x2 +
+ 
+y2
+0 + μ02
+2
+02
+!
+x
+!
+,
+= exp
+ 
+−
+12
+ 
+2 + 2
+0
+22
+0
+!  
+x2 − 2x
+ 
+y2
+0 + μ02
+2
+0 + 2
+!!!
+,
+/ exp
+0
+B @
+−
+12
+
+x − y2
+0+μ02
+2
+0+2
+2
+22
+0
+2+2
+0
+1
+CA
+.
+This can be recognised as a Gaussian:
+μp = 2μ0 + 2
+0y
+2 + 2
+0
+,
+2
+p = 22
+0
+2 + 2
+0
+.
+This gives us our Gaussian posterior. See Fig 1.3 for an illustration.
+Exercise 1.1. In Example 1.1, we derived the posterior distribution for the model
+p(x) = N(x; μ0, 2
+0)
+p(y|x) = N(y; x, 2).
+Now assume we have multiple conditionally independent observations given x. In other words,
+we have a likelihood of the form
+p(yi|x) = N(yi; x, 2), i = 1, . . . , n.
+and each yi is conditionally independent given x, i.e.,
+p(y1:n|x) =
+Yn
+i=1
+p(yi|x).
+Derive the posterior distribution p(x|y1:n) using the Bayes’ rule for this case.
+We can also expand this to the multivariate setting.
+7
+Figure 1.3: Posterior distribution of x given  = 1,  = 0.7 and  = 0.5 respectively. One can see that as we
+shrink the likelihood variance, the posterior distribution becomes more peaked towards the observation y = 0.5.
+Old posteriors are also plotted in the second and third figure for comparison (in transparent blue).
+Example 1.2. Let
+p(x) = N(x; μ0,0),
+p(y|x) = N(y; Ax, ),
+where μ0 2 Rd and 0 2 Rd×d are the prior mean and covariance matrix, respectively. Hence
+x 2 Rd. Furthermore, A 2 Rm×d is a known observation matrix, y 2 Rm, and  2 Rm×m is the
+covariance matrix of the likelihood. Derive the posterior distribution p(x|y) using the Bayes’ rule.
+Solution. Let us write
+p(x|y) = p(y|x)p(x)
+p(y) .
+In order to derive the posterior, we first derive p(y|x)p(x) as
+p(y|x)p(x) = N(y; Ax, )N(x; μ0,0)
+= 1
+(2)m/2||1/2 exp
+
+−
+12
+(y − Ax)>−1(y − Ax)
+
+×
+1
+(2)d/2|0|1/2 exp
+
+−
+12(
+x
+−
+μ0)>−
+1
+0 (x − μ0)
+
+= 1
+(2)(m+d)/2||1/2|0|1/2
+× exp
+
+−
+12
+(y − Ax)>−1(y − Ax) −
+12
+(x − μ0)>−1
+0 (x − μ0)
+
+.
+Recall now that we want a density on x. Let us expand this exponential and keep only the terms
+that depend on x:
+/ exp
+
+−
+12
+
+x>A>−1Ax − 2y>−1Ax + y>−1y + x>−1
+0 x − 2μ>
+0 −1
+0 x + μ>
+0 −1
+0 μ0
+
+,
+/ exp
+
+−
+12
+x>
+
+A>−1A + −1
+0
+
+x + y>−1Ax + μ>
+0 −1
+0 x
+
+,
+/ exp
+
+−
+12
+x>
+
+A>−1A + −1
+0
+
+x +
+
+y>−1A + μ>
+0 −1
+0
+
+x
+
+,
+= exp
+
+−
+12
+x>
+
+A>−1A + −1
+0
+
+x + x>
+
+A>−1y + −1
+0 μ0
+
+.
+8
+This can be recognised as a Gaussian by completing the square explicitly. Define
+ := A>−1A + −1
+0 ,
+t := A>−1y + −1
+0 μ0.
+Then the kernel of the posterior can be written compactly as
+p(x|y) / exp
+
+−
+12
+x>x + x>t
+
+.
+To complete the square, note that
+(x − −1t)>(x − −1t) = x>x − 2x>t + t>−1t.
+Rearranging this identity gives
+x>x − 2x>t = (x − −1t)>(x − −1t) − t>−1t.
+Now substitute this into the exponent:
+−
+12
+x>x + x>t = −
+12
+
+x>x − 2x>t
+
+= −
+12
+(x − −1t)>(x − −1t) +12
+t>−1t.
+The term 12
+t>−1t does not depend on x, so it can be absorbed into the normalising constant in
+the proportionality. Therefore
+p(x|y) / exp
+
+−
+12
+(x − −1t)>(x − −1t)
+
+.
+This is exactly the kernel of a multivariate Gaussian distribution with precision matrix . Hence
+the posterior is
+x|y  N(μp,p),
+where the posterior covariance and mean are
+p = −1 =
+
+A>−1A + −1
+0
+−1
+, (1.3)
+μp = −1t =
+
+A>−1A + −1
+0
+−1 
+A>−1y + −1
+0 μ0
+
+. (1.4)
+This gives us our Gaussian posterior. An alternative form of these equations (using the Woodbury
+matrix identity) is
+p = 0 − 0A>(A0A> + )−1A0, (1.5)
+μp = μ0 + 0A>(A0A> + )−1(y − Aμ0). (1.6)
+9
+Exercise 1.2. Derive eqs. (1.5)-(1.6) from eqs. (1.3)-(1.4) using the Woodbury matrix identity.
+Example 1.3. Assume that we have a Poisson observation model:
+p(y|x) = Pois(y; x) = xye−x
+y! ,
+and a Gamma prior:
+p(x) = Gamma(x; , ) = 
+􀀀()x−1e−x.
+Derive the posterior distribution p(x|y).
+Solution. We know that the posterior is proportional to
+p(x|y) / p(y|x)p(x)
+= Pois(y; x)Gamma(x; , ),
+/ x−1+ye−x−x,
+where we ignored all the normalising constants. We can see that the posterior is also a Gamma
+density:
+p(x|y) = Gamma(x;  + y,  + 1).
+Exercise 1.3. Suppose we have two fair dice, each with six faces. Suppose that we throw both
+dice and observe the sum as y = 9. Derive the posterior distribution of the first die X1 and the
+second die X2 given y = 9.
+It is important to realise that the Bayes rule can be used conditionally. In this case, the Bayes
+rule for p(x|y, z) can be written entirely on z (of course, this is true if we swap the variables and
+condition on x or y). We can write in this case the conditional Bayes rule.
+Proposition 1.1. Given three random variables X, Y,Z without any conditional independence
+assumptions, the Bayes rule holds conditionally:
+p(x|y, z) = p(y|x, z)p(x|z)
+p(y|z) .
+10
+Exercise 1.4. Prove Proposition 1.1.
+This is of course true if we write the same rule for x or y conditioned.
+1.3.2 bayes rule for conditionally independent observations
+The step forward from the simple Bayes rule to modelling complex dependencies and interactions
+is to understand the notion of conditional independence. Simply put, conditional independence
+is a notion of independence of two random variables conditioned on a third random variable. Of
+course, this can be extended to arbitrary number of variables, defining a full probabilistic model.
+It is important to note that these models everywhere in science and engineering.
+Let us first define the notion of conditional independence.
+Definition 1.1. Let X, Y and Z be random variables. We say that X and Y are conditionally
+independent given Z if
+p(x, y|z) = p(x|z)p(y|z).
+This definition is of course the same as plain independence, just written in terms of conditional
+probabilities. Note that, in general, X and Y are not independent if we do not condition on Z.
+Exercise 1.5. If Y1, . . . , Yn are conditionally independent given X, show that
+p(y1:n|x) =
+Yn
+i=1
+p(yi|x).
+Exercise 1.6. Let X, Y,Z be random variables such that X and Y are conditionally independent
+given Z. Show that
+p(x|y, z) = p(x|z).
+Let us define the general Bayes update for this case. Assume that we have observed y1, . . . , yn 
+p(y|x) (these can be thought of as conditionally i.i.d samples from the likelihood)1. Given a
+1We define the following notation. Let y1, . . . , yn be n observations. We collectively denote these variables as
+y1:n := (y1, . . . , yn). This will be also used in the following sections.
+11
+Figure 1.4: Bayes update for conditionally independent observations.
+prior of x, denoted p(x), we want to compute the posterior p(x|y1, . . . , yn). We know that the
+posterior is given by
+p(x|y1:n) = p(y1:n|x)p(x)
+p(y1:n) . (1.7)
+Under the conditional independence assumption of observations, we can just use Definition 1.1
+to arrive at
+p(y1:n|x) =
+Yn
+i=1
+p(yi|x).
+Plugging this in back to the Bayes update (1.7), we can see that the posterior is proportional to
+the product
+p(x|y1, . . . , yn) / p(y1, . . . , yn|x)p(x)
+=
+Yn
+i=1
+p(yi|x)p(x),
+Again, in many occasions, we will not be able to compute the normalising constant. However, we
+can still sample from the posterior. In this particular example, let us continue with the Gaussian
+prior and likelihood. In this case, we can exactly compute the posterior too.
+Exercise 1.7. Let us assume the following probabilistic model
+X  N(x; μ0, 2
+0) = p(x)
+Yi|X = x  N(yi; x, 2) = p(yi|x), i = 1, . . . , n,
+where Yi are conditionally independent given X = x. Derive the posterior distribution p(x|y1:n).
+12
+1.3.3 marginal likelihood
+The notion of marginal likelihood is left unexplored so far and we will now investigate it. Recall
+the Bayes rule from Eq. (1.2)
+p(x|y) = p(y|x)p(x)
+p(y) .
+In this formula, we have been discussing the posterior p(x|y), the prior p(x), and the likelihood
+p(y|x) in past sections. However, the normalising constant, which we assumed to be intractable,
+is also of interest. This quantity, p(y), is called the marginal likelihood and it is given by
+p(y) =
+Z
+p(y|x)p(x)dx.
+For fixed y, the interpretation of this term is that it gives us the probability of data y under the
+model2. For more complicated models (where x can be multiple variables or multiple other
+distributions may exist), the quantity p(y) becomes crucial to determine the quality of the model
+for the observed data. While itself does not mean much, it gives us a comparative measure to
+compare different models. We will discuss this with an example below.
+First we provide an example in the Gaussian case.
+Example 1.4. Consider the following Gaussian model:
+X  N(x; μ0, 2
+0) = p(x)
+Y |X = x  N(y; x, 2) = p(y|x).
+Derive the marginal likelihood p(y).
+Solution. Let
+p(x) = 1
+q
+22
+0
+exp
+ 
+−
+(x − μ0)2
+22
+0
+!
+,
+p(y|x) = 1
+p
+22 exp
+ 
+−
+(y − x)2
+22
+!
+.
+We want to compute
+p(y) =
+Z 1
+−1
+p(y|x) p(x) dx
+=
+Z 1
+−1
+1
+p
+22 exp
+ 
+−
+(y − x)2
+22
+! 1
+q
+22
+0
+exp
+ 
+−
+(x − μ0)2
+22
+0
+!
+dx
+= 1
+20
+Z 1
+−1
+exp
+(
+−
+12
+"(y − x)2
+2 + (x − μ0)2
+2
+0
+#)
+dx.
+2Aside from its usual interpretation as the normalising constant.
+13
+We now expand the terms in the exponent:
+(y − x)2
+2 + (x − μ0)2
+2
+0
+= x2 − 2xy + y2
+2 + x2 − 2μ0x + μ20
+2
+0
+=
+  1
+2 + 1
+2
+0
+!
+x2 − 2
+ 
+y
+2 + μ0
+2
+0
+!
+x +
+ 
+y2
+2 + μ20
+2
+0
+!
+.
+Let
+a := 1
+2 + 1
+2
+0
+, b := y
+2 + μ0
+2
+0
+, c := y2
+2 + μ20
+2
+0
+.
+Using these notations, we can complete the square:
+ax2 − 2bx + c = a
+ 
+x −
+b
+a
+!2
++
+ 
+c −
+b2
+a
+!
+.
+Next, we calculate the marginal likelihood:
+p(y) = 1
+20
+Z 1
+−1
+exp
+8<
+:−
+12
+2
+4a
+ 
+x −
+b
+a
+!2
++
+ 
+c −
+b2
+a
+!3
+5
+9=
+; dx
+= 1
+20
+exp
+ 
+−
+12
+"
+c −
+b2
+a
+#! Z 1
+−1
+exp
+0
+@−
+a2
+ 
+x −
+b
+a
+!21
+A dx
+= 1
+20
+exp
+ 
+−
+12
+"
+c −
+b2
+a
+#!s
+2
+a
+.
+We have that
+a = 1
+2 + 1
+2
+0
+= 2
+0 + 2
+22
+0
+=)
+1
+20
+s
+2
+a
+= 1
+q
+2(2
+0 + 2)
+.
+And finally, we compute
+c −
+b2
+a
+=
+ 
+y2
+2 + μ20
+2
+0
+!
+−
+
+y
+2 + μ0
+2
+0
+2
+1
+2 + 1
+2
+0
+=
+ 
+y2
+2 + μ20
+2
+0
+!
+−
+22
+0
+
+y
+2 + μ0
+2
+0
+2
+2
+0 + 2
+=
+ 
+y2
+2 + μ20
+2
+0
+!
+−
+2
+0y2
+2 + 2yμ0 + 2μ20
+2
+0
+2
+0 + 2
+= (y − μ0)2
+2
+0 + 2 .
+Putting all together, we obtain:
+p(y) = 1
+q
+2(2
+0 + 2)
+exp
+ 
+−
+(y − μ0)2
+2(2
+0 + 2)
+!
+= N
+
+y; μ0, 2
+0 + 2
+
+.
+14
+Figure 1.5: Marginal likelihood for model comparison. For observed data, we can compute the marginal likelihood
+for each model. The model with the highest marginal likelihood is the best model for the observed data.
+Next, let us look at an example of model comparison using marginal likelihood.
+Example 1.5 (Marginal likelihood for two Gaussian models). Consider two different models:
+p0(x) = N(x; μ0, 2
+0)
+p(y|x) = N(y; x, 2
+y)
+and
+p1(x) = N(x; μ1, 2
+1)
+p(y|x) = N(y; x, 2
+y).
+Consider observing y (a single data point). How can you find out which model is more likely?
+Solution. For these models, we have computed p(y) analytically in Example 1.4. Now we can
+compute for both models:
+p0(y) =
+Z
+p(y|x)p0(x)dx
+=
+Z
+N(y; x, 2
+y)N(x; μ0, 2
+0)dx
+= N(y; μ0, 2
+0 + 2
+y)
+and
+p1(y) =
+Z
+p(y|x)p1(x)dx
+=
+Z
+N(y; x, 2
+y)N(x; μ1, 2
+1)dx
+= N(y; μ1, 2
+1 + 2
+y)
+15
+We will say Model 1 is better than Model 0 if p1(y) > p0(y) for fixed y and similarly, we will say
+Model 0 is better if p1(y) < p0(y). This, however, as you can see depends on various parameters.
+Let us choose that  = 1, μ0 = −4, 0 = 2, and μ1 = 1, 1 = 0.5. The computed marginal
+likelihoods can be seen from Fig. 1.5. It can be seen that Model 1 is a much better fit to the data
+than Model 0.
+Exercise 1.8. Let
+p(x) = N(x; μ0,0)
+p(y|x) = N(y; Ax,y)
+where x 2 Rd, y 2 Rm, A 2 Rm×d, μ0 2 Rd, 0 2 Rd×d, and y 2 Rm×m. Derive the marginal
+likelihood p(y).
+1.4 conclusion
+In this section, we provided an introduction to sampling and Bayesian inference. This statistical
+framework will provide us a consistent line of examples throughout the course. We will see how
+Monte Carlo methods can be used to approximate Bayesian inference in cases where analytical
+solutions are not available. In the next chapter, we will focus on exact generation of random
+variates, which is a crucial building block for Monte Carlo methods.
+16
+2
+EXACT GENERATION OF RANDOM VARIATES
+In this section, we will focus on exact sampling from certain classes of distributions, above all, uniform
+distribution. This chapter aims at developing an understanding for the basis for all simulation
+algorithms.
+3
+One of the central pillars of sampling algorithms is our ability to sample from the uniform
+distribution. This may sound straightforward, however, it is surprisingly difficult to sample a real
+uniform random number (Devroye, 1986). If the aim is to generate these numbers on a computer,
+one has to “listen” to some randomness1 (e.g. thermal noise in the circuits of the computer) and
+even then, this random numbers have no guarantee to follow a uniform distribution. Therefore,
+much of the literature is devoted to generating pseudo-uniform random numbers. Furthermore,
+generation of random variables that follow popular distributions in statistics (such as Gaussian
+or exponential distribution) also requires pseudo-uniform random numbers as we will see in
+next sections.
+Definition 2.1. A sequence pseudo-random numbers u1, u2, . . . is a deterministic sequence of numbers
+whose statistical properties match a sequence of random numbers from a desired distribution.
+Why would we use pseudo-random numbers? They are (i) easier, quicker, and cheaper to
+generate, and more importantly, (ii) repeatable. This provides a crucial experimental advantage
+when it comes to testing algorithms based on random numbers – as we can re-run the same code
+(with the same pseudo-random numbers), e.g., for debugging.
+In what follows, we will describe different methods for pseudo-uniform random number
+generators that can be used in practice.
+1see https://www.random.org/ if you need real random numbers.
+17
+0 200 400 600 800 1000
+k
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Sequence
+0.0 0.2 0.4 0.6 0.8 1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Histogram
+0.0 0.2 0.4 0.6 0.8 1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+uk+1 vs uk
+Figure 2.1: Top Left: Samples generated by an LCG with parameters m = 2048, a = 43, b = 0, x0 = 1. Top
+Middle: The histogram of the samples showing that it conforms the uniform distribution. Top Right: However,
+plotting (uk, uk+1) pairs shows that the samples are not random enough. Bottom Left: Samples generated by
+an LCG with parameters m = 232, a = 1664525, b = 1013904223. Bottom Middle: The histogram of the
+samples showing that it conforms the uniform distribution. Bottom Right: Plotting (uk, uk+1) pairs shows that
+the samples do not look nonrandom.
+2.1 generating uniform random variates
+The most popular (in practice) uniform random number generator is called the linear congruential
+generator (LCG). This method generates random numbers using a linear recursion
+xn+1  axn + b (mod m)
+where x0 is the seed, m is the modulus of the recursion, b is the shift, and a is the multiplier. If
+b = 0, then the LCG is called a multiplicative generator and it is called a mixed generator when
+b 6= 0. We setman integer and choose x0, a, b 2 {0, . . . ,m−1}. Defined this way, the recursion
+defines a class of generators and we have xn 2 {0, 1, . . . ,m−1}. The uniform numbers are then
+generated by implementing
+un = xn
+m
+2 [0, 1) 8n.
+The sequence (un)n0 is periodic with period T  m(Martino et al., 2018). The goal is to choose
+the parameters a and b so that the sequence has the largest possible period, ideally, T = m
+(full period). The choice of the modulus is determined by the precision, e.g., m  232 for
+single-precision, and so on.
+There are known shortcomings of LCGs, in particular that they generate periodic sequences.
+An illustration is given in Fig. 2.1. In particular, if care is not taken, this can cause significant
+problems in applications. As a typical issue, we will now demonstrate the impact of poor random
+18
+Figure 2.2: Left two figures: Gaussian samples generated using the samples in top row of Fig. 2.1. Right two
+figures: Gaussian samples generated using the samples in the bottom row Fig. 2.1 but a better parameterisation:
+m = 232, a = 1664525, b = 1013904223.
+samples on other sampling algorithms. In the following sections, we will show that, for example,
+drawing Gaussian samples requires uniform random numbers. If we use the random samples
+generated in top row of Fig. 2.1, we will get bad samples from a “Gaussian distribution”, see
+Fig. 2.2 leftmost two figures. Similarly, if we choose a better parameterisation m = 232, a =
+1664525, b = 1013904223, whose samples are shown in the bottom row of Fig. 2.1, then we can
+get much better samples, which can be seen from the rightmost two figures of Fig. 2.2.
+Unfortunately, LCGs fail to produce good samples in high-dimensions. The standard implemented
+method nowadays is Mersenne-Twister algorithm which is not an LCG. For the rest of
+the course, we will use rng.uniform(0, 1) to draw uniform random numbers, where rng is a
+properly initialised RNG (see online companion), as a suboptimal implementation can impact
+our simulation schemes.
+Exercise 2.1. Consider the following logistic map defined on the interval [0, 1]:
+xn+1 = rxn(1 − xn)
+with r = 4 and initial condition x0 2 (0, 1). Plot the histogram of the samples {xn}N
+n=1 for
+N = 105 and compare it to the arcsine distribution density:
+p?(x) = 1
+
+q
+x(1 − x)
+,
+for x 2 (0, 1). This is a stationary measure of a deterministic dynamical system – generally
+studied in the field called ergodic theory (Walters, 2000). We will later provide a way to obtain
+uniform samples from the logistic map recursion.
+2.2 transformation methods
+Given a pseudo-uniform random number generator, we can now describe some exact sampling
+methods. In this section, we will describe transformation methods, where a uniform random
+19
+0.2
+0.4
+0.6
+0.8
+1
+1 2 3 4
+PMF p
+CDF F
+U ∼ Unif(0, 1)
+Figure 2.3: The inversion technique. The black is the probability mass function p whereas the red function is the
+CDF F. One can see that, drawing a uniform random number projected on the y axis ensures that we draw the
+samples {1, . . . , 4} w.r.t. the probability if we follow the inverse of CDF.
+number
+U  Unif(0, 1),
+can be transferred to a prescribed random variable V = g(U) using a deterministic transform
+g. Note that, in almost all of our exact sampling methods for nonuniform densities, we need
+a uniform random number generator – hence the samplers above are of crucial importance to
+stochastic simulation applications.
+We will next start with the inversion method.
+2.2.1 inverse transform
+This method considers the cumulative distribution function (CDF) F of a density p to draw
+samples from p given access to uniform random numbers. The intuition of the method is best
+seen on a discrete example first. Assume p is a discrete distribution on some finite set X taking
+values x1, x2, x3, . . .. The CDF is an increasing staircase function whose spacing in y axis reflects
+probabilities. In other words, if we draw U  Unif(0, 1) and invert through the CDF, we will
+choose x1, x2, . . . according to their probabilities (see Fig. 2.3).
+This follows from a more general result called probability integral transform.
+Theorem 2.1. Consider a random variable X with a CDF FX. Then the random variable F−1
+X (U)
+where U  Unif(0, 1), has the same distribution as X.
+Proof. The proof is one line:
+P(F−1
+X (U)  x) = P(U  FX(x)) = FX(x).
+20
+which is the CDF of the target distribution2. 
+This suggests then a sampling procedure for distributions where we can compute F−1
+X .
+Algorithm 1 Pseudocode for inverse transform sampling
+1: Input: The number of samples n
+2: for i = 1, . . . , n do
+3: Generate Ui  Unif(0, 1)
+4: Set Xi = F−1
+X (Ui)
+5: end for
+Example 2.1. (Discrete distribution) Let p? be a discrete probability distribution defined on
+the set S = {s1, . . . , sK} (states) with probabilities p?(sk) = wk and PKk
+=1 wk = 1. Provide the
+inversion method.
+Solution. In this case, the CDF is not continuous and the procedure is summarised in Fig. 2.3. Let
+us call X as our random variable to be sampled X  p?. We can define the CDF FX : S ! [0, 1]
+as
+FX(sk) = P(X  sk) =
+Xk
+j=1
+p?(sj) =
+Xk
+j=1
+wj .
+Consider the generalised inverse F−1
+X : [0, 1] ! S defined as F−
+X (u) = min{x : FX(x)  u}.
+Then the sampling procedure as described above becomes (with generalised inverse):
+• Ui  Unif(0, 1)
+• Find ki = mink{FX(sk)  Ui}.
+• Xi = ski .
+This corresponds to something simple: SampleUi and find the first state sk that givesFX(sk)  Ui.
+Note that Bernoulli distribution corresponds to a special case of this with s1 = 0, s2 = 1 (see
+Fig. 2.3).
+Example 2.2. (Exponential) Describe a sampler to generate X  Exp(x; ) = e−x.
+2Note that above result is written for the case where F−1
+X exists, i.e., the CDF is continuous. If this is not the
+case, one can define the generalised inverse function,
+F−
+X(u) = min{x : FX(x)  u},
+for which the result holds.
+21
+Solution. We calculate the CDF
+FX(x) =
+Z x
+0
+p(x0)dx0,
+= 
+Z x
+0
+e−x0dx0,
+= 
+
+−
+1
+
+e−x0
+x
+x0=0
+= 1 − e−x.
+Given FX(x) = 1 − e−x we start by deriving the inverse by
+U = 1 − e−X
+=) X = −
+1
+
+log(1 − U),
+=) F−1
+X (U) = −−1 log(1 − U).
+The algorithm is described next to draw samples from exponential distribution.
+• Generate Ui  Unif(0, 1)
+• Set Xi = −−1 log(1 − Ui).
+Example 2.3. (Cauchy) Assume we want X  Cauchy where the probability density is given as
+p?(x) = 1
+(1 + x2).
+Describe the sampler using the inversion method.
+Solution. The CDF is analytically available and given as
+FX(x) =
+Z x
+−1
+p?(y)dy = 12
++ −1 tan−1 x
+Furthermore, the inverse is also available
+F−1
+X (u) = tan
+
+
+
+U −
+12
+
+Given this, we can provide the algorithm (this should be obvious now!).
+• Generate Ui  Unif(0, 1)
+• Set Xi = tan
+h
+
+
+Ui − 12
+i
+.
+22
+Example 2.4. (Poisson) Consider sampling the Poisson random variable X  p? with parameter
+ > 0 where
+p?(k) = P(X = k) = Pois(k; ) = ke−
+k! .
+Describe the sampler using the inversion method.
+Solution. The CDF is given as
+FX(k) = P(X  k) = e−
+Xk
+i=0
+i
+i! .
+This is similar to the discrete case.
+• Sample U  Unif(0, 1)
+• Find the smallest k such that FX(k)  U
+then k 2 N is our sample.
+Exercise 2.2 (Stochastic Simulation, Final Exam Q1(a)(ii), 2024, modified). Let X be a Weibull
+random variable with PDF pX(x) = kxk−1 exp(−xk) where k is a parameter and x 2 [0,1).
+Show that FX(x) = 1 − exp(−xk), where x 2 R+. Derive F−1
+X and provide an algorithm to
+sample from the Weibull distribution using the inversion method.
+While this is a useful technique for sampling from many distributions, it is limited to the
+cases where F−1
+X exists, which is a very stringent condition. For example, consider the problem
+of sampling a standard normal, i.e., X  N(0, 1). We know that the CDF is
+FX(x) =
+Z x
+−1
+1
+p2
+e−12
+y2dy.
+We cannot find F−1
+X . Fortunately, for certain special cases, we can use another transformation to
+sample.
+2.2.2 transformation method
+Transformation method is a generalisation of the inversion method, in the sense that, one can
+generalise the idea of sampling U and passing it through F−1
+X to using a more general transform
+g. In this case, we can describe the sampling procedure as the following algorithm.
+Of course, designing g is the crucial aspect of this method. This depends on the goal of the
+sampling method. A crucial tool to understand what happens with this kind of transformations
+is the formula describes transformation of random variables which is described below.
+23
+Algorithm 2 Pseudocode for transformation method
+1: Input: The number of samples n.
+2: for i = 1, . . . , n do
+3: Generate Ui  Unif(0, 1)
+4: Set Xi = g(Ui)
+5: end for
+Remark 2.1. The transformation of random variables formula is an important formula for us
+describing the transformation of probability densities when we transform random variables. In
+other words, assume X  pX(x) and Y = g(X), then pY (y) has a certain density that is related
+to the density of X. The exact formula depends on the dimension of the random variables. For
+one-dimensional case, the relationship is given by
+pY (y) = pX(g−1(y))
+
+dg−1(y)
+dy
+
+. (2.1)
+One needs to explicitly find g−1 first (here is the weakness of this approach). Provided that,
+writing down pX(g−1(y)) simple (just write down the density of X, evaluated at g−1(y). The
+derivative is also often simple to compute, so is the absolute value.
+For multidimensional (say n-dimensional) random variables (we will see one 2D example
+below), the formula is equally compact and simple, however, computations might become more
+involved. It is simply given as
+pY (y) = pX(g−1(y)) |det Jg−1(y)| (2.2)
+While the first term on the r.h.s. is similar to above, the term det Jg−1(y) now means determinant
+of the Jacobian. And in this case, the Jacobian would be given as
+Jg−1 =
+2
+664
+@g−1
+1 /@y1 @g1−1/@y2 · · · @g−1
+1 /@yn ...
+· · · · · ·
+...
+@g−1
+n /@y1 @gn
+−1/@y2 · · · @g−1
+n /@yn
+3
+775
+where g−1 = (g−1
+1 , . . . , g−1
+n ) is a multivariate function.
+Next, we consider the example where we develop the method to sample Gaussian random
+variates.
+Example 2.5. Let X1 and X2 be independent random variables where
+X1  Exp
+12
+
+,
+X2  Unif(−, ).
+24
+Prove that Y1 = p
+X1 cosX2 and Y2 = p
+X1 sinX2 are independent and standard normal.
+Solution. This is a a transformation method with
+(y1, y2) = g(x1, x2) = (p
+x1 cos x2,
+p
+x1 sin x2).
+We use the transformation of random variables formula (from standard probability)
+py1,y2(y1, y2) = px1,x2(g−1(y1, y2)) |det Jg−1(y1, y2)| (2.3)
+where Jg−1 is the Jacobian of the inverse. We next derive g−1 by writing
+x1 = y2
+1 + y2
+2, as cos2 x2 + sin2 x2 = 1.
+and
+sin x2
+cos x2
+= y2
+y1
+which leads to
+x2 = arctan(y2/y1).
+Therefore, g−1 : R2 ! R2
+g−1(y1, y2) = (g−1
+1 , g−1
+2 ) =
+
+y2
+1 + y2
+2, arctan(y2/y1)
+
+.
+We now compute the Jacobian
+Jg−1 =
+"
+@g−1
+1 /@y1 @g1−1/@y2
+@g2−1/@y1 @g−1
+2 /@y2
+#
+=
+" 2y1 2y2
+1
+1+(y2/y1)2
+−y2
+y2
+1
+1
+1+(y2/y1)2
+1
+y1
+#
+Hence, the absolute value of the determinant is:
+|det Jg−1 | = 2.
+From the transformation of random variables formula
+py1,y2(y1, y2) = Exp(g−1
+1 ; 1/2)Unif(g−1
+2 ;−, ) |Jg−1 |
+= 12
+e−12
+(y2
+1+y2
+2) 1
+2
+2
+= N(y1; 0, 1)N(y2; 0, 1),
+which concludes.
+25
+Exercise 2.3. Show that if X  Exponential(x; 1) then Y = X1/ has the Weibull distribution
+with density
+pY (y) = −y−1exp
+"
+−
+
+y
+
+
+#
+Hence, explain how you could generate Weibull random quantities using the inversion method
+and only uniform random numbers (no use of exponentials). Implement and test this algorithm.
+Plot your histogram against the Weibull density.
+Example 2.6. (Sampling uniformly on a disk) Consider drawing
+r  Unif(0, 1),
+  Unif(−, ).
+Prove that taking X1 = p
+r cos  and X2 = p
+r sin  results in a uniform distribution on a disk
+of radius r.
+Solution. We will show now that using the same formula derived in the previous proof, we can
+describe a scheme to sample uniformly on a disk. We define
+x1 = p
+r cos ,
+x2 = p
+r sin .
+We derive using the eq. (2.3)
+px1,x2(x1, x2) = pr,(g−1(x1, x2))| det Jg−1(x1, x2)|.
+We know that, since we use the same transformation as in Example 2.5, we have the Jacobian
+| det Jg−1 | = 2. We can then write
+px1,x2(x1, x2) = Unif(x21+ x22
+; 0, 1)Unif(arctan(x2/x1);−, )2.
+If we pay attention to the first Uniform distribution in the above formula, we see that this would
+be 1 when x21
++x22
+< 1. The second formula is arctan which takes values on (−/2, /2), which
+means we always have Unif(arctan(x2/x1);−, ) = 1/2. This results
+px1,x2(x1, x2) = 1
+
+for x21
++ x22
+< 1
+and 0 otherwise, which is the uniform distribution within a disk. See Fig. 2.4 for some examples
+(and alternatives discussed in the class).
+26
+Figure 2.4: On the left, one can see the samples with the correct scaling
+p
+r. Some other intuitive formulas result in
+a non-uniform distribution.
+Exercise 2.4. (Sampling non-uniformly on the disk) Recall that sampling
+r  Unif(0, 1),   Unif(−, )
+and setting
+X1 = r cos , X2 = r sin 
+will not give us uniform sample on the disk (See Example 2.6).
+(a) Prove that, this sampler samples from the density
+px1,x2(x1, x2) = 1
+2
+q
+x21
++ x22
+for x21
++ x22
+ 1.
+(b) Plot this function in 2D on a regular grid and verify that it is not uniform. Compute the
+integral of this function over the unit disk and verify that it is 1 (analytically or numerically).
+(c) Give a reasoning why the samples look the way they look in Figure 2.4.
+We next consider the Gaussian example.
+Example 2.7. Describe a transformation method to sample Y  N(y; μ, 2) using
+X  N(x; 0, 1) and prove that Y  N(y; μ, 2) as desired.
+Solution. This is a simple demonstration of the transformation of random variables formula (in
+1-dimension). Let X  N(x; 0, 1) where
+N(x; 0, 1) = pX(x) = 1
+p2
+exp
+ 
+−
+x2
+2
+!
+. (2.4)
+27
+Now let Y = X + μ which is our transformation, i.e.,
+g(x) = x + μ.
+This is intuitive as we first scale the random variable with  to increase or decrease its variability
+(variance) and then add some mean μ. The transformation formula in 1D is simpler:
+pY (y) = pX(g−1(y))
+
+dg−1(y)
+dy
+
+(2.5)
+where we have the absolute value of the derivative of the inverse function g−1(y). This is easy
+derive by leaving x alone starting from y = g(x) = x + μ and
+x = y − μ
+
+= g−1(y).
+The derivative is then given by
+dg−1(y)
+dy
+= 1
+
+.
+Then using Eq. (2.3) we obtain
+pY (y) = pX(g−1(y)) 1
+
+,
+pY (y) = 1
+p2
+exp
+ 
+−
+(y − μ)2
+22
+! 1
+
+,
+as  > 0 and by using Eq. (2.4) and plugging x = (y − μ)/. We can already recognize the
+expression pY (y) = N(y; μ, 2).
+2.2.3 box-müller transform
+Box-Müller transform is a related transform to above, but provides a way to sample Gaussians
+directly from uniforms. In this case, we will just provide the algorithm.
+Let U1,U2  Unif(0, 1) be independent. Then
+Z1 =
+q
+−2 log U1 cos(2U2),
+Z2 =
+q
+−2 log U1 sin(2U2),
+are independent standard Normal random variables, i.e., Z1,Z2  N(0, 1). This transformation
+is called the Box-Müller transform. This algorithm is the standard way to draw Gaussian samples
+in practice. For correlated samples, we can use the Cholesky decomposition of the covariance
+matrix to transform the samples as will be covered in Section 2.4.
+28
+Exercise 2.5 (Stochastic Simulation, Final Exam Q1(b), 2024). Let U1  Unif(0, 1) and U2 
+Unif(−, ). Consider the following transformation
+X1 = cos(U2)
+q
+−2 log(U1) and X2 = sin(U2)
+q
+−2 log(U1).
+Show that X1 and X2 are independent and standard Normal random variables.
+2.3 composition
+When the target probability density p?(x) can be expressed in a composition of operations, we can
+still sample from such densities straightforwardly, albeit it may look complex at first look. We first
+discuss sampling from joint densities using sampling from conditional densities and marginals,
+then we move on to discrete mixture densities, and finally continuous mixture densities.
+2.3.1 sampling joint distributions
+Suppose we would like to sample from a joint distribution p(x1, x2), i.e. we want to realise
+X1,X2  p(x1, x2), (2.6)
+e.g., a two-dimensional sample from 2D Gaussian. It is often the case that the standard factorisation
+of joint densities
+p(x1, x2) = pX2|X1(x2|x1)pX1(x1),
+can be used. In order to realise (2.6), one can employ
+X1  pX1(·),
+X2|X1 = x1  pX2|X1(·|x1).
+Note the notation which implies that things should be done in this order. Once X1 is sampled,
+then it is fixed X1 = x1. After that, X2 is sampled conditioned on that specific x1 sample. We
+can formalise this with the following result.
+Proposition 2.1 (Chain Rule for Sampling). Let (X1,X2) be a random vector on Rd1 × Rd2
+with joint density p(x1, x2) (with respect to Lebesgue measure) that factorises as p(x1, x2) =
+pX1(x1)pX2|X1(x2|x1), where pX1 is the marginal density of X1 and pX2|X1(·|x1) is a (regular)
+conditional density of X2 given X1 = x1. Consider the two-step procedure
+1. Sample X0
+1  pX1(·).
+2. Given X0
+1 = x0
+1, sample X0
+2  pX2|X1(·|x0
+1).
+Then (X0
+1,X0
+2 ) has joint density p(x1, x2).
+29
+Proof. We omit the proof as it relies on the disintegration theorem (see e.g., Kallenberg (2021)).
+
+Remark 2.2. The discrete case follows identically, replacing integrals with sums and densities
+with probability mass functions.
+In particular, the idea can be generalised for n variables if one knows the full conditionals.
+For example, consider a joint distribution p(x1, . . . , xn), then any joint distribution of n variables
+satisfy the following.
+p(x1, . . . , xn) = p(xn|xn−1, . . . , x1)p(xn−1|xn−2, . . . , x1) · · · p(x2|x1)p(x1).
+Therefore, simulating from a joint distribution can be done
+X1  p(x1)
+X2|X1 = x1  p(x2|x1)
+X3|X1 = x1,X2 = x2  p(x3|x2, x1)
+...
+Xn|X1 = x1,X2 = x2, . . . ,Xn−1 = xn−1  p(xn|x1, . . . , xn−1).
+Of course the difficulty with this is that, it is often impossible to know these conditional distributions
+described above.
+Remark 2.3. This idea can be taken to great generalisation, in fact, it is often the core of complex
+simulations. The core idea of probabilistic modelling is to factorise (assuming independence)
+some complex joint distribution p(x1, . . . , xn) with respect to the modelling assumptions. Simulation
+methods can then be used to sample these variables in the order that is assumed in the
+model and generate synthetic data.
+Another example can be seen as follows.
+Example 2.8 (Linear Model). Linear models are of utmost importance in many fields of science.
+Describe a method to simulate (x, y) pairs that have a linear relationship.
+Solution. We know that we can sample x, y  p(x, y) by sampling x  p(x) and y|x  p(y|x)
+from the last chapter. We will now use this for a linear example.
+To start intuitively, a typical linear relationship is described as
+y = ax + b, (2.7)
+30
+Figure 2.5: The data simulated from (2.8)–(2.9) using a = 0.5 and b = 0.5 with three different values for 2.
+As can be seen from the figures, the generated (x, y) pairs exhibit a clear linear relationship (as intended) with
+variance changing depending on our modelling choice.
+which describes a line where a is the slope and b is the intercept. In order to obtain a probabilistic
+model and generate data, we have to simulate both x and y variables. Since, from the equation, it
+is clear that y is generated given x, we should start from defining x. Now this depends on the
+application. For example, x can be a variable that may be uniform or a Gaussian. We denote
+its density as p(x). The typical task is also to formulate p(y|x). The linear equation suggests a
+deterministic relationship, however, real data often contains noise. To generate realistic data, we
+will instead assume
+y = ax + b + n
+where n  N(0, 2) is noise (often with small 2. Note that, given noise is zero mean and ax+b
+is a deterministic number (given x), we can then write our full model
+p(x) = Unif(x;−10, 10) (2.8)
+p(y|x) = N(y; ax + b, 2). (2.9)
+where we chose our p(x) distribution to be uniform on [−10, 10]. As a result, we have a full
+model to simulate variables with a linear relationship
+Xi  p(x),
+Yi|Xi = xi  p(y|xi),
+where p(x) could be a uniform, Gaussian, truncated Gaussian etc. depending on the nature of
+the modelled variable. The results of this generation can be seen in the scatter plot in Fig. 2.5.
+31
+Exercise 2.6. Simulate data from the nonlinear model
+p(x) = Unif(x;−10, 10)
+p(y|x) = N(y; a cos(x) + b, 2),
+with a = 0.5, b = 0.5, and  = 0.15. You can use np.random.normal for this. Scatter plot
+(x, y) samples and discuss the behaviour. Plot p(y) using samples/histogram, do you think p(y)
+is computable any other way?
+2.3.2 sampling marginals
+It is a common case that a density can be written as an integral and we would like to sample from
+it. For example, consider the marginal density
+p(x1) =
+Z
+p(x1, x2)dx2,
+for any joint density. This operation is called marginalisation and it is often of interest to compute
+marginal densities (and of course sampling from them).
+Surprisingly enough, sampling from the marginal (say p(x1) here) is pretty straightforward:
+Sample from the joint p(x1, x2) using the method above (i.e. X1  p(x1) and X2|X1 = x1 
+p(x2|x1)), then just keep X1 samples. They will approximate p(x1).
+Proposition 2.2 (Marginalization by Projection). Let (X1,X2) be a random vector on Rd1 × Rd2
+with joint density p(x1, x2) (with respect to Lebesgue measure). Define the marginal densities
+pX1(x1) :=
+Z
+Rd2
+p(x1, x2) dx2, pX2(x2) :=
+Z
+Rd1
+p(x1, x2) dx1.
+Let (X0
+1 ,X0
+2 ) be a random vector sampled from the joint density p (for instance via the two-step
+procedure X0
+1  pX1 and X0
+2 | X0
+1 = x1  pX2|X1(· | x1)). Let  : Rd1 × Rd2 ! Rd2 be the
+projection (x1, x2) = x2, and set Z := (X0
+1 ,X0
+2 ) = X0
+2. Then Z has density pX2 .
+Proof. Fix a measurable set A  Rd2 . Since Z = (X0
+1 ,X0
+2 ),
+{Z 2 A} = {(X0
+1,X0
+2 ) 2 A} = {(X0
+1 ,X0
+2) 2 −1(A)}. (2.10)
+Because (x1, x2) = x2, we have
+−1(A) = {(x1, x2) 2 Rd1 × Rd2 : (x1, x2) 2 A}
+= {(x1, x2) 2 Rd1 × Rd2 : x2 2 A}
+= Rd1 × A.
+32
+Considering this fact and (2.10), we have
+P(Z 2 A) = P
+
+(X0
+1,X0
+2) 2 Rd1 × A
+
+.
+Since (X0
+1,X0
+2 ) has joint density p, by definition of a density,
+P(Z 2 A) = P
+
+(X0
+1,X0
+2 ) 2 Rd1 × A
+
+=
+Z
+Rd1×A
+p(x1, x2) dx1 dx2
+=
+Z
+A
+Z
+Rd1
+p(x1, x2) dx1
+
+dx2
+=
+Z
+A
+pX2(x2) dx2.
+Since this holds for all measurable A  Rd2 , the random variable Z has density pX2 . 
+Example 2.9. Let
+p(x1) = N(x1; μ, 2
+1)
+and
+p(x2|x1) = N(x2; x1, 2
+2).
+Then we know from Example 1.4 that the marginal density of X2 is
+p(x2) = N(x2; μ, 2
+1 + 2
+2).
+Numerically verify that this is the case.
+Solution. This can be verified by implementing two procedures. First,
+• Sample X1  N(x1; μ, 2
+1),
+• Sample X2|X1 = x1  N(x2; x1, 2
+2)
+and comparing resulting X2 samples to the density
+p(x2) = N(x2; μ, 2
+1 + 2
+2).
+See online companion for this empirical verification.
+Exercise 2.7. Consider the uniform sampling problem on the unit disk from Example 2.6 where
+the joint density is
+px1,x2(x1, x2) = 1
+
+, x21
++ x22
+ 1.
+33
+(i) Compute the marginals in x1, x2, i.e., write the expressions of px1(x1) and px2(x2).
+(ii) Sample from these marginals and plot the density vs. histograms to prove that your samples
+are coming from the correct marginals. Hint: How do you obtain samples from marginals
+given the samples from the joint? Do not forget to scatter plot your samples in 2d to ensure
+that your joint samples are uniform.
+sampling from discrete mixture densities
+We can specialise this idea and define a general mixture distribution
+p?(x) =
+KX
+k=1
+wkqk(x),
+with k mixtures. Sampling from such distributions are extremely easy with the techniques
+we know. We first sample from the probability mass function defined by weights: wk where PKk
+=1 wk = 1 (using inversion as we learned). This gives us an index k  Categorical(w1, . . . ,wK),
+then we sample from associated density X0  qk(x), which gives us a sample from the mixture.
+Algorithm 3 Sampling discrete mixtures
+1: Input: The number of samples n.
+2: for i = 1, . . . , n do
+3: Generate ki  Categorical(w1, . . . ,wK)
+4: Generate Xi  qki(x)
+5: end for
+2.4 sampling multivariate densities
+Finally, we will discuss the sampling methods for multivariate distributions. As we saw earlier,
+a multivariate density is nothing but a joint density in d dimensions, i.e., can be defined as
+p(x1, . . . , xd). The techniques mentioned in Sec. 2.3.1 might be used (sampling from conditionals)
+if they are known. Also, what we have seen as samplers, e.g., rejection sampling generalizes to
+many dimensions as you have already seen from the disk example. But, of course, most of the
+time, they are not known and very general independent sampling techniques are available, see
+Martino et al. (2018, Chapter 6). We will only cover one specific case.
+2.4.1 sampling a multivariate gaussian
+Define x 2 Rd, a multivariate Gaussian:
+p(x) = (2)−d2
+| det|−12
+exp
+
+−
+12
+(x − μ)>−1(x − μ)
+
+,
+where μ 2 Rd is the mean vector and  2 Rd×d is a d × d symmetric positive definite matrix.
+Recall that, in the univariate case, Y = μ + X (where μ,  are scalars) gave us a sample from
+34
+Algorithm 4 Sampling Multivariate Gaussian
+1: Input: The number of samples n.
+2: for i = 1, . . . , n do
+3: Compute L such that  = LL>. (Cholesky decomposition)
+4: Draw d univariate independent normals vk  N(0, 1) to form the vector v =
+[v1, . . . , vd]>
+5: Generate xi = μ + Lv.
+6: end for
+N(μ, 2). The same idea works here, however, since now we have the covariance instead of
+variance, we need to find a notion of a “square-root” of the covariance matrix . In short, let
+X  N(x; 0, I) where now X 2 Rd and the mean is a zero vector, and finally, I is the identity
+matrix. Such a multivariate Gaussian can be drawn by drawing each entry independently. We
+then can sample Y  N(y; μ, ) where μ 2 Rd the mean vector and  2 Rd×d the symmetric
+covariance matrix, as
+Y = 1/2X + μ.
+The computation of 1/2 is done using a Cholesky decomposition3. The algorithm is provided in
+Algorithm 4.
+2.5 rejection sampling
+Inversion and the more general transformation method depend on the existence of specific
+transformations. Given a general p?(x), we may not have a specific transformation derived from
+simpler distributions or an inverse transform. We can still devise sampling methods in this
+case (in fact, there are many of them). In this section, we will look into one specific class called
+rejection samplers.
+This specific class of methods are powered by a principle: If one can sample (x, y) pairs which
+are uniformly distributed under the area of p?(x) (or the unnormalised density ¯p?(x)), then the
+x-marginal of these samples exactly coming from p?(x). We formalise this intuition in the next
+theorem, adapted from Martino et al. (2018).
+Theorem 2.2 (Fundamental Theorem of Simulation). (Martino et al., 2018, Theorem 2.2) Drawing
+samples from one dimensional random variable X with a density ¯p?(x) / p?(x) is equivalent to
+sampling uniformly on the two dimensional region defined by
+A = {(x, y) 2 R2 : 0  y  ¯p?(x)}. (2.11)
+In other words, if (X0, Y 0) is uniformly distributed on A, then X0 is a sample from p?(x).
+3You do not need to know how to implement or compute this, it is perfectly fine to use
+numpy.linalg.cholesky.
+35
+Figure 2.6: On the left, you can see a mixture of Gaussians (we will cover mixture distributions later) and samples
+uniformly distributed below the curve. Each black dot on under the curve is an (x, y) pair, hence you could denote
+those samples (Xi, Yi). On the right, you can see the histogram of the x-marginal, which means, only Xi samples.
+This is the empirical demonstration of Theorem 2.2.
+Proof. Consider the pair (X, Y ) uniformly distributed on the region A. We denote their joint
+density as q(x, y) as
+q(x, y) = 1
+Z
+1A(x, y), (2.12)
+where Z = R ¯p?(x)dx which is also the area of A. We now compute the x-marginal:
+q(x) =
+Z
+q(x, y)dy
+=
+Z 1
+Z
+1A(x, y)dy
+= 1
+Z
+Z ¯p?(x)
+0
+dy
+= ¯p?(x)
+Z
+.
+This shows that the x-marginal of (X, Y ) is exactly p?(x) as required. 
+An illustration of this theorem can be seen in Fig. 2.6. This theorem extends to cases where we
+do not have the p?(x) exactly, but only have access to an unnormalised version (a very practical
+issue, as we will see in the following sections).
+We will now describe some numerical methods which utilise the fact that if we manage to
+uniformly under the area of a curve, then we can sample from the probability density. Theorem 2.2
+suggests a quite intuitive sampling procedure: We can sample uniformly under the area of a
+density (or even an unnormalised nonnegative curve) and obtain samples from the (normalised)
+probability density by keeping the samples on the x-axis (this is sometimes called the x-marginal).
+One simple example that does this is described below.
+36
+Figure 2.7: On the left, we plot the accepted samples (scattered) under the curve. On the right, we describe the
+histogram of x-marginal of these samples (so we just keep the first dimension of the two dimensional array).
+Example 2.10 (Beta density under a box). Consider the Beta density
+p?(x) = Beta(x; , ) = 􀀀( + )
+􀀀()􀀀()x−1(1 − x)−1,
+where 􀀀(n) = (n − 1)! for integers. Design a sampler that samples uniformly under the curve
+p?(x) = Beta(x; 2, 2).
+Solution. In order to design a uniform sampler under the area of the Beta(2, 2), we can use its
+special properties. For example, the Beta density is defined on [0, 1] which makes it easy to design
+a uniform sampler. The simplest choice for this is to design a “box” over the density. In order
+to design this box, we require the maximum of the density which is given by (show this as an
+exercise)
+pmax = max
+x Beta(x; 2, 2) = 1.5.
+We are of course lucky to have this number, which could be difficult to find analytically in general.
+In this case, we can design a box [0, 1] × [0, pmax] and draw uniform random samples in this box.
+Let us suggestively denote these samples
+(X0,U0)  Unif([0, 1] × [0, pmax]).
+We can then check whether these samples are under the Beta density curve, which can be done
+by checking:
+U0  p?(X0),
+and accepting the sample if this condition holds. Fig. 2.7 shows the result of this procedure
+together with the histogram.
+37
+2.5.1 rejection sampler
+The box example is nice, however, it is not optimal: It might be too inefficient to find a box of that
+type and for peaky densities, this could be horribly inefficient. We can however identify another
+probability density we can easily sample from (by choice), denoted q(x), which may cover our
+target density much better (compared to the box). Rejection sampling is based on this idea: We
+identify a q(x) to cover our target density p?(x). Of course, because p?(x) and q(x) are both
+probability densities, q(x) can never entirely cover p?(x). However, it will be sufficient for us if
+we can find anM such that
+p?(x)  Mq(x),
+so the scaled version of q(x) should entirely cover p?(x). Depending on the choice of the proposal,
+the procedure will be much more efficient than simple boxing.
+Recall now that using the proposal q and the numberM, we would like to sample uniformly
+under the curve p?(x). For this, we can first sample X0  q(x) and fix its value X0 = x04. We
+are interested in then sampling a uniform between 0 andMq(x0) sinceMq(x) dominates p?(x),
+i.e., we then sample U0  Unif(0,Mq(x0)). We can then accept the sample if U0  p?(x0). More
+compactly:
+• Sample X0  q(X0)
+• U0  Unif(0,Mq(X0))
+• Accept if
+U0  p?(X0).
+This is exactly drawing a (X0,U0) pair and accepting the sample if it is under the curve of p?(x).
+By Theorem 2.2, this samples from the correct distribution!
+The general implementation usually differs from the above procedure and takes the following
+form. The usual implementations first generate X0  q(x) and then in order to implement the
+Accept step, generate U  Unif(0, 1) and accept the sample if
+U  a(x0) = p?(x0)
+Mq(x0).
+This is what accept with probability a(x0) means. A closer look reveals, we could also write this
+(by playing with the above inequality)
+Mq(x0)U  p?(x0).
+In order words, the lhs of this inequality is a uniform random variable multiplied byMq(x0), so
+we could define U0 = Mq(x0)U as
+U0  Unif(0,Mq(x0)),
+since U  Unif(0, 1). This shows the equivalence of the two procedures. Let us describe the
+conceptual algorithm.
+4This is usual in probability: Capital letters are random variables, it is better to fix their values after they are
+sampled (now deterministic).
+38
+• Generate X0
+i  q(x)
+• Accept with probability
+a(X0
+i) = p?(X0
+i)
+Mq(X0
+i)  1. (2.13)
+So far we have written a few different versions of the method. Implementation however is made
+according to Algorithm 5 as mentioned above.
+Algorithm 5 Pseudocode for rejection sampling
+1: Input: The number of iterations n and scaling factorM.
+2: for i = 1, . . . , n do
+3: Generate X0  q(x0)
+4: U  Unif(0, 1)
+5: if U  p?(X0)
+Mq(X0) then
+6: Accept X0 . This should record the sample with other accepted samples
+7: end if
+8: end for
+9: Return accepted samples
+rejection sampling with unnormalised densities
+So far, we have assumed that we have access to the density we want to sample from p?(x): We
+could evaluate it, hence use it for rejection under the curve. However, imagine we know a
+probability density up to a normalising constant. This is one of the most common problems in
+computational statistics and it arises in multiple situations which will be described shortly.
+We denote the unnormalised density associated to p?(x) as ¯p?(x). Usually, we write
+p?(x) = ¯p?(x)
+Z
+,
+where Z = R ¯p?(x)dx. This is typical in in physics, engineering, machine learning, and optimisation,
+we do not start from densities, instead one defines:
+p?(x) / e−f(x),
+for some function f (which is generally called a potential). f usually comes from a rule which
+determines how probability mass should be spread (e.g. a multimodal function). However, in
+order to convert this into probabilities, we need normalise e−f(x) which is often impossible. In
+these cases, we only have access to ¯p?(x) = e−f(x) and not p?(x).
+The rejection sampler works in the same way for unnormalised densities ¯p?. In other words,
+more generally, Theorem 2.2 holds for ¯p?: As long as we sample uniformly under ¯p?, we can
+obtain x-marginal which would be distributed w.r.t. p?(x) (Martino et al., 2018). This gives
+rejection samplers a massive advantage. Of course, needless to say, in this case, one should ensure
+that
+¯p?(x)  Mq(x),
+i.e. the unnormalised density is covered by our scaled proposalMq(x). We describe the algorithm
+for the unnormalised case in Algorithm 6.
+39
+Algorithm 6 Pseudocode for rejection sampling without normalising constants
+1: Input: The number of iterations n and scaling factorM.
+2: for i = 1, . . . , n do
+3: Generate X0  q(x0)
+4: U  Unif(0, 1)
+5: if U  ¯p?(X0)
+Mq(X0) then
+6: Accept X0 . This should record the sample with other accepted samples
+7: end if
+8: end for
+9: Return accepted samples
+2.5.2 acceptance rate
+An important aspect of this algorithm is the concept of acceptance rate, that is, the ratio of the
+number of accepted samples vs. the number of total samples. When the algorithm has a low
+acceptance rate, this hints that the proposal is poorly designed and most of the computational
+effort (sampling) goes unused and wasted5.
+Let us consider the normalised case first with a probability density p?(x). Note that the
+acceptance probability is a function of X0 and defined as a(X0) in (2.13). We accept a sample
+when U  a(X0), in other words, when
+U 
+p?(X0)
+Mq(X0),
+where X0  q(x0). Let us denote the probability of acceptance (acceptance rate) as ˆa. This
+quantity is formalised below.
+Proposition 2.3. When the target density p?(x) is normalised andM is prechosen, the acceptance
+rate is given by
+ˆa = 1
+M
+,
+where M > 1 in order to satisfy the requirement that q covers p?. For an unnormalised target
+density ¯p?(x) with the normalising constant Z = R ¯p?(x)dx, the acceptance rate is given as
+ˆa = Z
+M
+.
+Proof. We will first prove
+ˆa = E[a(X0)] = 1
+M
+(2.14)
+5Acceptance rate will also be a crucial notion when we later study Markov chain Monte Carlo (MCMC) methods.
+40
+in the normalised case. Similarly, we will also prove
+ˆa = E[a(X0)] = Z
+M
+(2.15)
+for the unnormalised case where we use ¯p?(x) instead of p?(x).
+For the first fact, we can prove (2.14) by noting that
+ˆa = P(accept) = P
+ 
+U 
+p?(X0)
+Mq(X0)
+!
+,
+where the randomness here is w.r.t. U andX0 jointly. We know however that, for a givenX0 = x0,
+we accept with the following probability
+P(accept|X0 = x0) = P
+ 
+U 
+p?(x0)
+Mq(x0)
+!
+=
+Z p?(x0)/Mq(x0)
+0
+du = p?(x0)
+Mq(x0) = a(x0).
+This means that we can compute the unconditional acceptance probability as
+P(accept) =
+Z
+P(accept|X0 = x0)q(x0)dx0,
+= E[a(X0)].
+We can then easily show that
+E[a(X0)] =
+Z
+a(x0)q(x0)dx0 =
+Z
+p?(x0)
+Mq(x0)q(x0)dx0
+= 1
+M
+Z
+p?(x0)dx0 = 1
+M
+.
+For the unnormalised case, we can prove (2.15) with a similar argument above as
+ˆa = E[a(X0)] =
+Z
+a(x0)q(x0)dx0 =
+Z ¯p?(x0)
+Mq(x0)q(x0)dx0
+=
+Z
+Z
+p?(x0)
+Mq(x0)q(x0)dx0 = Z
+M
+Z
+p?(x0)dx0
+= Z
+M
+.
+
+Remark 2.4. Note the difference between two quantities a and ˆa. While a(x) is the acceptance
+ratio p?(x)/Mq(x) (or the unnormalised version), ˆa is the expectation of this quantity, called
+acceptance rate.
+It can be seen that smallerM is theoretically useful for us as it will mean higher acceptance
+rates. Consider the following example.
+41
+Figure 2.8: A better proposal for p?(x) = Beta(2, 2)
+Example 2.11 (Beta(2, 2) density). We can go back to our example Beta(2, 2) density in Example
+2.10. Instead of the box, we can now choose
+q(x) = N(x; 0.5, 0.25),
+andM = 1.3 (this is optimised visually by plotting – we will compute these quantities explicitly
+below). This will result in the graph shown in Fig. 2.8. Compare the acceptance rate of this
+algorithm with the box example and demonstrate this numerically.
+Solution. We can see now that in the box example, we chose Mbox = pmax = 1.5. By visual
+inspection for this example, for the Gaussian case, we choseMGauss = 1.3. We can now compute
+the acceptance rate for both cases. For the box example, we have
+ˆabox = 1
+Mbox
+= 1
+1.5 = 0.67,
+and for the Gaussian case, we have
+ˆaGauss = 1
+MGauss
+= 1
+1.3 = 0.77.
+These must be the precise numbers that the numerical simulations will give us.
+Another example can be seen as follows.
+Example 2.12 (Truncated Densities). Describe a rejection sampler for a Truncated Gaussian
+42
+target:
+¯p?(x) = N(x; 0, 1)1|x|a(x).
+Solution. The truncated densities arise in a number of applications where we may want to model
+something we know with a probability density p?(x) we are familiar with. However, it could
+also be the case that this variable X has strong constraints (e.g. positivity or boundedness). For
+example, we could consider an age distribution could be restricted this way with hard constraints.
+Imagine a Gaussian density N(x; 0, 1) and suppose we are interested in sampling this density
+between [−a, a]. We can write this truncated normal density as
+p?(x) = ¯p?(x)
+Z
+= N(x; 0, 1)1|x|a(x)
+R a
+−a N(y; 0, 1)dy
+. (2.16)
+Here are a few important things about this equation: 1A(x) denotes a function where
+1A(x) =
+(
+1 if x 2 A
+0 otherwise.
+Note that now we have access to our density evaluation in an unnormalised way: We can evaluate
+¯p?(x) which equals to N(x; 0, 1) if −a  x  a and to 0 otherwise. Rejection sampling is
+optimal for this task. Note here that, we can choose
+q(x) = N(x; 0, 1)
+anyway, and we have ¯p?(x)  q(x) (i.e. we can takeM = 1). Note a few interesting things for
+this case: First of all, since p?(x) is zero outside [−a, a] and ¯p?(x)/Mq(x) = 1 if x 2 [−a, a], we
+can simply reject any sample that is out of bounds and accept if they are in the bounds (without
+needing to sample U at all). Secondly, note that, this is one of the rare cases where we have Z < 1.
+Note that we can very intuitively also calculate the acceptance rate:
+ˆa = Z
+M
+= Z
+where Z = R a
+−a N(y; 0, 1)dy as given in the density (2.16). It is very intuitive that the acceptance
+rate is this integral, as we literally accept a Gaussan sample from q(x) = N(x; 0, 1) if
+it falls into [−a, a], the probability of sample falling into this interval R is given by the integral a
+−a N(y; 0, 1)dy = Z.
+Example 2.13. Assume that we have a prior distribution p(x) = N(x; μ0, 2
+0) and a likelihood
+p(y|x) = N(y; x, 2). We want to sample the posterior distribution p(x|y) without going
+through the derivation. Derive the rejection sampler for this purpose.
+43
+Figure 2.9: On the left, we plot all distributions of interest: prior, likelihood (with y = 0.5 with respect to x),
+the posterior, and the unnormalised posterior, and the proposal. Note that, the proposal should only cover the
+unnormalised posterior, even if the normalising constant is less than one. On the left, we plot the samples vs. the
+same quantities. One can see that we exactly sampled from the correct posterior.
+Solution. We know the posterior is given by
+p(x|y) / p(y|x)p(x) = N(x; μ0, 2
+0)N(y; x, 2).
+Recall that we would like to sample from the posterior p(x|y) without necessarily computing the
+Bayes rule. We can pose this problem as a rejection sampling problem. We would like to sample
+from the posterior distribution conditioned on y. In our case, the unnormalised posterior is
+given by
+¯p(x|y) = p(y|x)p(x)
+Note that we evaluate the likelihood at the observation y and hence it becomes a function of x.
+Below, for clarity, we will use the r.h.s. of above equation in acceptance rate, instead of ¯p(x) as we
+usually did before. For this example, we also set μ0 = 0, 0 = 1, and  = 0.5. Next, we need to
+design a proposal distribution q(x). This could be tricky as we do not know the posterior. For
+now, we can choose another simple Gaussian (we could also optimise this):
+q(x) = N(x; μq, 2
+q ).
+Let us choose μq = 0 and q = 1 (note again that this is the standard deviation!) andM = 1.
+An illustration of this is shown in Fig 2.9. We can now sample from the posterior
+• Sample X0  q(x)
+• Sample U  Unif(0, 1)
+• If U  p(y|X0)p(X0)
+Mq(X0) , accept X0. Otherwise, reject X0 and go back to step 1.
+We can see the results of this procedure from Fig 2.9. As seen from the figure, we exactly sample
+from the posterior p(x|y = 0.5) without ever computing the correct posterior. We have also
+plotted the correct posterior in the figure for comparison.
+44
+Figure 2.10: Illustration of the prior, posterior, likelihood, and the proposal distribution.
+2.5.3 designing the optimal rejection sampler
+In the above examples, we have seen that choosing the right proposal q(x) andM can improve the
+sampler quality significantly. In this section, we will discuss how to choose the optimal proposal
+q(x) andM for a given target density p?(x) (or ¯p?(x)).
+choosingM
+In the above example, we have seen that choosingM is crucial for the acceptance rate. It is easy
+to see that we should chooseM such thatMq(x)  p?(x) for all x. To choose smallest suchM,
+we should find the numberM? such that
+M? = sup
+x
+p?(x)
+q(x) .
+This will ensure thatM?q(x)  p?(x) for all x. This is the optimal choice ofM and we can see
+that this is the smallestM that covers p?(x). Needless to say, for the unnormalised case, we just
+replace p? with ¯p? in the above formula.
+Example 2.14 (ChoosingM). Let our target be
+¯p?(x) = e−x2/2
+i.e., an unnormalised Gaussian and our proposal be
+q(x) = 1
+
+1
+1 + x2 .
+ComputeM for the optimal rejection sampler.
+45
+Solution. We need to compute
+M = sup
+x
+¯p?(x)
+q(x) ,
+as usual. How? For this, let R(x) = ¯p?(x)/q(x) and note that we will first need to find
+x? = argmax
+x
+R(x) = argmax
+x
+logR(x),
+as log is monotonic. Then we can findM = R(x?). Let us now compute
+logR(x) = log ¯p?(x)/q(x) = −
+x2
+2 + log(1 + x2) + log(1/)
+and find the roots by taking the derivative and setting it to zero
+d
+dx
+logR(x) = −x + 2x
+1 + x2 = 0
+x = 0,±1,
+we see that we have three roots to decide. Which one is the maximum? To look at the answer, we
+need to check second derivatives. We compute the second derivative
+d2
+dx2 log ¯p?(x)/q(x) = −1 + 2(1 − x2)
+(1 + x2)2
+• When x = 0, the second derivative is positive - which means x = 0 is a minimum.
+• When x = ±1, the second derivative is negative - which means x = ±1 is a maximum.
+• x? = ±1.
+So we have
+M = ¯p?(1)
+q(1) = 2e−1/2.
+optimising the proposal
+Let us in this section parameterise our proposal q where  is the parameter of the proposal
+density q. We have seen above that the choice of M will obviously depend on q so we can
+denote it asM. Since, in fact, we would like to achieve the optimalM such that
+p?(x)  Mq(x).
+We have seen that we can chooseM as
+M = sup
+x
+p?(x)
+q(x) .
+46
+Figure 2.11: Two rejection sampling procedures for Example 2.15 with  = 0.001 and optimal  = 1/ (as derived
+in the example) for n = 10000.
+Note that this is a function of , therefore allows us now to optimise our proposal to maximise
+the acceptance rate. Therefore, we can now solve the problem
+? = argmax
+
+1
+M
+.
+We always perform this optimisation in the log-space6 as the quantities we will obtain are more
+tractable, therefore, the problem often becomes
+? = argmin
+
+logM,
+as log(1/M) = −logM.
+6We denote ln with log, so all logaritms are w.r.t. to natural base.
+47
+Example 2.15. (A numerical example from Yıldırım (2017)) Say we are interested in sampling
+X  Gamma(, 1),
+with  > 1. The density is given by
+p?(x) = x−1e−x
+􀀀() , x > 0.
+As a proposal, let us choose exponential
+q(x) = Exp(x; ) = e−x, x > 0
+with 0 <  < 1 (for  > 1, the ratio p?/q is unbounded). Derive the optimal rejection sampler
+for this problem.
+Solution. We should ensure that p?(x)  Mq(x), therefore, the standard choice for M is to
+compute
+M = sup
+x
+p?(x)
+q(x).
+We know that
+p?(x)
+q(x) = x−1e(−1)x
+􀀀() .
+In order to computeM, in practice, one needs to first find
+x? = argmax
+x
+p?(x)
+q(x),
+and then we can identify that M = p?(x?)/q(x?) for fixed . Denote R(x) = p?(x)/q(x).
+To find such x?, we can compute
+x? = argmax log p?(x) − log q(x),
+as log is monotonic. We can then compute
+logR(x) = log p?(x) − log q(x) = ( − 1) log x − x + ( − 1)x − log  − log 􀀀().
+We then take the derivative of this
+d logR(x)
+dx
+=  − 1
+x
++  − 1,
+and set it to zero, which leads to
+x? = ( − 1)
+(1 − ) .
+48
+Placing x = x? in the ratio p?(x)/q(x), we obtain
+M =
+
+−1
+1−
+−1
+e−(−1)
+􀀀() .
+This leads to the acceptance probability
+p?(x)
+Mq(x) =
+ 
+x(1 − )
+ − 1
+!−1
+e(−1)x+−1.
+Now, we have to minimise M with respect to  so that ˆa = 1/M would be maximised. It is
+easy to show that (show)M is minimised by
+? = 1
+
+.
+Plugging this and computing
+M? = e−(−1)
+􀀀() .
+So we designed our optimised rejection sampler. In order to sample from 􀀀(, 1), we perform
+• Sample X0  Exp(1/) and U  Unif(0, 1)
+• If
+U  (x/)−1e(1/−1)x+−1,
+accept X0, otherwise start again.
+We can see the results of this algorithm in Fig. 2.11.
+Exercise 2.8. Define
+Gamma(x; , ) = 1
+􀀀()x−1e−x, for x > 0, ,  > 0.
+Recall the Beta density
+Beta(x; , ) = 􀀀( + )
+􀀀()􀀀()x−1(1 − x)−1.
+(a) Prove that if X1  Gamma(, 1) and X2  Gamma(, 1), then
+Y = X1
+X1 + X2
+ Beta(, ).
+49
+(b) Test this as a sampler. You should only use uniforms (rng.uniform). Precisely:
+(i) Remind yourself the code given in the webpage for sampling Exp(x; ). Convert this
+into a function exp_sampler which uses only uniforms.
+(ii) Write a sampler function for gamma_sampler to sample Gamma(x; , 1) using rejection
+sampling as in Example 2.12, using optimal q for given  you want to sample
+from.
+(iii) Then set ,  to prespecified values of your choice and build your Beta sampler
+using the transformation above. Test resulting histogram against the density (use
+scipy.stats.beta to plot the density).
+Example 2.16. Assume that we have a Gamma prior:
+p(x) = Gamma(x; , 1) = 1
+􀀀()x−1e−x,
+with  > 0. Next, we define our Poisson observation model as before
+p(y|x) = Pois(y; x) = xye−x
+y! .
+Derive the rejection sampler for the posterior without explicitly computing the posterior
+distribution.
+Solution. We know that the posterior is proportional to
+p(x|y) / p(y|x)p(x) = Pois(y; x)Gamma(x; , 1),
+/ x−1+ye−2x.
+In short, we will choose this as our unnormalised posterior
+¯p(x|y) = x−1+ye−2x.
+Now we will design our proposal distribution. We choose the proposal as an exponential distribution:
+q(x) = Exp(x; ) = e−x.
+Now we derive the acceptance probability. As usual, we need to first find
+M = sup
+x
+¯p(x|y)
+q(x) .
+50
+First we need to optimise the ratio:
+¯p(x|y)
+q(x) = x−1+ye−2x
+e−x
+= x−1+ye−(2−)x
+
+.
+Aiming at optimising this w.r.t. x, we first compute its log:
+log ¯p(x|y)
+q(x) = log x−1+y + log e−(2−)x − log 
+= ( − 1 + y) log x − (2 − )x − log .
+We now take the derivative of this w.r.t. x:
+d
+dx
+[( − 1 + y) log x − (2 − )x − log ] =  − 1 + y
+x
+− (2 − ),
+and set it to zero:
+ − 1 + y
+x
+− (2 − ) = 0.
+This gives us the maximiser
+x? =  − 1 + y
+2 − 
+.
+We can now computeM:
+M = ¯p(x?|y)
+q(x?)
+= x?−1+ye−(2−)x?
+
+= 1
+
+
+ − 1 + y
+2 − 
+−1+y
+e−(2−)
+􀀀−1+y
+2−
+
+= 1
+
+
+ − 1 + y
+2 − 
+−1+y
+e−(−1+y).
+We can now optimise this further to choose our optimal proposal. We will first compute the log
+ofM:
+logM = log 1
+
++ ( − 1 + y) log
+
+ − 1 + y
+2 − 
+
+− ( − 1 + y)
+= −log  + ( − 1 + y) log
+
+ − 1 + y
+2 − 
+
+− ( − 1 + y).
+Taking the derivative of this w.r.t. , we obtain
+d
+d
+logM = −
+1
+
++ ( − 1 + y)
+2 − 
+51
+Figure 2.12: Histogram of the samples drawn using rejection sampling.
+Setting this to zero, we obtain
+1
+
+= ( − 1 + y)
+2 − 
+,
+which implies that
+? = 2
+ + y
+.
+Therefore, we can choose our optimal proposal in terms of  and y depends on the observed
+sample. See Fig . 2.12 for the histogram of the samples drawn using rejection sampling.
+52
+Figure 2.13: The curse of dimensionality for the sampling example for rejection sampling.
+2.6 conclusion
+We close by explaining why the basic rejection sampler is rarely suitable for realistic Bayesian
+models.
+Given observations y1, . . . , yn, suppose the unnormalised posterior is
+¯p(x|y1:n) = p(x)
+Yn
+i=1
+p(yi|x).
+Assume we have a proposal density q(x) and a finite constantM such that
+¯p(x|y1:n)  Mq(x).
+Then rejection sampling proceeds as:
+1. Sample X0  q(x)
+2. Sample U  Unif(0, 1)
+3. Accept X0 if U  ¯p(X0|y1:n)
+Mq(X0) = p(X0)
+Qn
+i=1 p(yi|X0)
+Mq(X0) ; otherwise reject and repeat.
+4. Otherwise reject X0 and go back to step 1.
+Two practical obstacles arise:
+• Numerical stability. The product Qni
+=1 p(yi|X0) underflows for moderate n. Using logs
+avoids this: compute
+log a(X0) = log p(X0) +
+Xn
+i=1
+log p(yi|X0) − logM − log q(X0),
+53
+and accept when log U  log a(X0).
+• Existence and tightness ofM. For complex posteriors a global bound ¯p(x|y)  Mq(x)
+may not exist; even if it does, a largeM yields a vanishing acceptance rate.
+Even with an ideal proposal, rejection sampling deteriorates rapidly with dimension. For a
+unit ball inside the unit cube,
+ˆa2 = area of the disk
+area of the square
+= 
+4  0.78, ˆa3 = volume of the sphere
+volume of the cube
+= 
+6  0.52,
+and in general
+ˆad = volume of the unit ball
+volume of the unit cube
+= d/2
+􀀀(d/2 + 1).
+Stirling’s approximation shows ˆad decays super-exponentially in d, so acceptance probabilities
+collapse (Fig. 2.13). This poor scaling motivates the Markov chain and adaptive samplers in
+subsequent chapters.
+Exercise 2.9 (Curse of dimensionality for rejection samplers). Assume x 2 Rd and p?(x) and
+q(x) are two d-dimensional probability distributions. If
+p?(x) =
+Yd
+i=1
+p0(xi) and q(x) =
+Yd
+i=1
+q0(xi)
+where xi 2 R and
+sup
+x02R
+p0(x0)
+q0(x0) = K,
+then findM in terms of K and prove that the acceptance rate in rejection sampling of p? using
+the proposal q will go to zero as d ! 1.
+Apply this result to
+p?(x) = N(x; 0, 2
+pId)
+q(x) = N(x; 0, 2
+q Id),
+where q > p. Find the optimal M and show that the acceptance rate will approach zero as
+d ! 1.
+Exercise 2.10. Assume that the generic cost of drawing a sample from q is O(1). Show that, if
+the acceptance rate is ˆa, then the expected computational cost (in terms of proposal samples) for
+drawing one sample from p? using rejection sampling is O(1/ˆa) (Hint: Think of a distribution
+which arises until a success occurs).
+54
+Exercise 2.11. You proved in Exercise 2.9 that the acceptance rate in rejection sampling decays
+exponentially to zero as dimension increases when sampling the full d-dimensional vector at
+once. However, consider the product structure of p?(x) and q(x) in Exercise 2.9. Using the result
+you obtained in Exercise 2.10, suggest an alternative rejection sampling strategy that exploits this
+structure so that the expected computational cost scales as O(dK) instead of O(Kd).
+55
+BIBLIOGRAPHY
+Devroye, Luc. 1986. Non-Uniform Random Variate Generation. Cited on p. 17.
+Kallenberg, Olav. 2021. Foundations of Modern Probability. Probability Theory and Stochastic
+Modelling. Springer Cham, 3rd edn. isbn 978-3-030-61871-1. doi:https://doi.org/10.1007/978-
+3-030-61871-1. 1 b/w illustration. Cited on p. 30.
+Martino, Luca; Luengo, David; and Míguez, Joaquín. 2018. Independent random sampling
+methods. Springer. Cited on pp. 18, 34, 35, and 39.
+Murphy, Kevin P. 2007. Conjugate Bayesian analysis of the Gaussian distribution. In def, vol. 1,
+no. 22, p. 16. Cited on p. 6.
+Walters, Peter. 2000. An introduction to ergodic theory, vol. 79. Springer Science & Business
+Media. Cited on p. 19.
+Yıldırım, Sinan. 2017. Sabanci University IE 58001 Lecture notes: Simulation Methods for
+Statistical Inference. Cited on p. 48.

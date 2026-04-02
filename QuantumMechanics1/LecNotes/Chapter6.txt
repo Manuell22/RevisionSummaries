@@ -1,0 +1,401 @@
+Chapter 6
+Representations
+In this chapter, we finally connect the abstract formulation of quantum mechanics expressed in the
+five principles, and using the Dirac notation, back to the Schr¨odinger wave formulation we have
+encountered in Chapter 2. The essence is that in Schr¨odinger’s wave mechanics, the position plays
+the role of a preferred observable, and the wave function is nothing but the state of the quantum
+system, expressed in the basis of eigenstates of the position operator. What complicates the matter,
+is that the position operator has a continuous spectrum, and no normalisable eigenfunctions on the
+Hilbert space, which leads to some technical complications when formulating the theory.
+6.1 Discrete and continuous spectra - normalisable and improper
+eigenvectors
+Consider a linear operator Aˆ acting on a complex Hilbert space H. If there exists a pair of a complex
+number ω → C and a non-zero vector |ε↑ → H, such that
+Aˆ|ε↑ = ω|ε↑, (6.1)
+then |ε↑ is an eigenvector of Aˆ belonging to the eigenvalue ω.
+We will now follow Dirac’s argument, to argue why eigenvectors with a continuous set of eigenvalues cannot be normalisable. There are more rigorous mathematical treatments of this problem,
+which are covered in advanced analysis lectures. Here we stay within the realm of quantum mechanics, and assume that the principles of Chapter 4 should be applicable even to an observable
+with a continuous spectrum, or else such observables would not be permissible in QM. A central
+idea in the principles of QM is that the eigenstates of an observable form a basis of the relevant
+Hilbert space, i.e. for discrete eigenvalues ωn belonging to eigenvectors |εn↑, or more generally for
+potentially degenerate eigenvalues, belonging to eigenspaces with projectors Pˆn, an arbitrary vector
+in the Hilbert space can be expanded as
+|ϑ↑ = !
+n
+Pˆn|ϑ↑. (6.2)
+Now, let us consider the case of a continuous spectrum. For simplicity, let us assume that the
+eigenvalues form a continuous interval on the real line [a, b] ↓ R. The equivalent of equation (6.2)
+then states that every vector |ϑ↑ can be written as
+|ϑ↑ =
+" b
+a
+Pˆω|ϑ↑dω, (6.3)
+however, this implies that the norm of the eigenvectors cannot be finite. Let us for simplicity assume
+that the spectrum is non-degenerate, and write
+|ϑ↑ =
+" b
+a
+↔εω|ϑ↑|εω↑dω, (6.4)
+37
+38 CHAPTER 6. REPRESENTATIONS
+If we consider a single eigenvector |εω↑ we have
+|εω↑ =
+" b
+a
+↔εω→|εω↑|εω→↑dω→
+. (6.5)
+Now, since Aˆ is a self-adjoint operator, the eigenvectors belonging to di!erent eigenvalues are
+orthogonal to each other, meaning that the integrand vanishes at all but one point ω = ω→
+. The
+only way to make the equality work is to assume that the squared norm ↔εω|εω↑ of an eigenvector
+belonging to an eigenvalue in the continuous spectrum is infinite. Specifically, we need
+↔εω→|εω↑ = ϖ(ω→ ↗ ω), (6.6)
+where ϖ(x) denotes the Dirac Delta-Distribution, which is infinite at ω = ω→
+, which means that
+an eigenvalue in the continuum is not strictly speaking an eigenvalue, since it does not have an
+eigenvector in the Hilbert space.
+Remark 32. Remember that a Hilbert space is a complete metric space, that is, it cannot have
+elements with infinite norm.
+Remark 33. The continuous “eigenvalues” are referred to simply as the continuous spectrum in
+mathematics, and together with the discrete eigenvalues they make up the whole spectrum of a
+self-adjoint operator. Sometimes they are referred to as improper or approximate eigenvalues, and
+the corresponding “eigenvectors” (with infinite norm) are referred to as improper eigenvectors.
+Mathematically, the continuous spectrum is defined using a generalisation of the eigenvalue
+equation, that circumvents the concept of eigenvectors. The eigenvalue equation (6.1) implies that
+(Aˆ ↗ ωˆI)|ε↑ = 0, (6.7)
+i.e., the operator (Aˆ↗ωˆI) is not invertible when ω is an eigenvalue. Bounded Hermitian operators Aˆ
+have discrete real eigenvalues (forming what is known as the point spectrum). Unbounded Hermitian
+operators, however, might have an (additional) continuous spectrum, consisting of values ω → R that
+span a continuous interval, and for which the operator (Aˆ ↗ ωˆI)↑1 is defined, however, its domain
+is not the whole Hilbert space. As we have seen, there are no eigenvectors in the Hilbert space,
+corresponding to these values of ω, but one can extend the notion of eigenvectors to vectors with
+an infinite norm in the sense explained above.
+In quantum mechanics, we simply refer to the continuous spectrum as eigenvalues and use
+the same bra-ket notation for the improper eigenvectors as for the normalisable ones, belonging to
+discrete eigenvalues. With the only di!erence that for eigenvectors belonging to discrete eigenvalues
+ωn we have
+↔εn|εm↑ = ϖn,m, (6.8)
+while for continuous eigenvalues this is replaced by (6.6).
+Importantly, while the eigenvectors of an operator Aˆ with a purely discrete spectrum provide a
+resolution of the identity as
+!
+n
+|εn↑↔εn| = ˆI, (6.9)
+the eigenvectors of an operator with a purely continuous spectrum fulfil
+" b
+a
+|εω↑↔εω|dω = ˆI. (6.10)
+6.1.1 A few comments on the Dirac ω-Distribution
+The ϖ-distribution is strictly speaking only defined inside an integral, and fulfils the important
+property
+" ↓
+↑↓
+f(x)ϖ(x)dx = f(0), (6.11)
+6.2. EIGENVALUES OF THE POSITION OPERATOR 39
+for functions f(x) with compact support on R.
+The ϖ-distribution can be expressed as the limit of various well-defined functions, for example
+as the limit of a Gaussian with vanishing width,
+ϖ(x) = limε↔0
+1
+ε
+↗2ϑ e
+↑ x2
+2ω2 , (6.12)
+or as the Fourier transform of a plane wave as
+ϖ(x ↗ ϱ) = 1
+2ς
+" ↓
+↑↓
+eik(x↑ϖ)
+dk. (6.13)
+Remark 34. In equation (6.12) we have yet another abuse of notation. Writing ϖ(x) = g(x) is a
+short-hand form for the slightly more rigorous statement # ↓
+↑↓ f(x)ϖ(x)dx = # ↓
+↑↓ f(x)g(x)dx.
+6.2 Eigenvalues of the position operator
+While there are no finite dimensional matrices ˆq and ˆp that fulfil the required commutation relation
+[ˆq, pˆ]=i⊋ˆI for position and momentum operators, we have seen in Chapter 5 that there are infinite
+dimensional matrices (in the harmonic oscillator basis), with the elements
+↔m|qˆ|n↑ =
+$ ⊋
+2mφ
+%↘n ϖm,n↑1 + ↘
+n + 1 ϖm,n+1&
+, (6.14)
+and
+↔m|pˆ|n↑ = i$mφ⊋
+2
+%↘
+n + 1 ϖm,n+1 ↗ ↘n ϖm,n↑1
+&
+. (6.15)
+Let us now formally solve the eigenvalue equation for this infinite dimensional matrix representation
+of ˆq. Defining the length L =
+' ⊋
+mϱ , ˆq has the matrix representation
+Q = L
+↘2
+
+
+0 ↘10 0 ··· ↘1 0 ↘2 0 ···
+0 ↘2 0 ↘3
+0 0 ↘3 0 ...
+.
+.
+. .
+.
+. ... ...
+
+
+(6.16)
+in the harmonic oscillator basis. The eigenvalue equation
+qˆ|εω↑ = ω|εω↑ (6.17)
+translates into a recursion relation for the components εn(ω) := ↔n|εω↑ of the eigenvector in the
+harmonic oscillator basis, with
+ε1(ω) = ω
+↘2
+L ε0(ω) (6.18)
+and
+↘nεn↑1(ω) + ↘
+n + 1εn+1(ω) = ω
+↘2
+L εn(ω), for n > 0. (6.19)
+That is, fixing the first component ε0 arbitrarily, we can always construct the other components
+of an eigenvector, corresponding to any real eigenvalue ω. These vectors, however, will not be
+normalisable. To solve the recursion relation for the eigenvector components, we recognise it as a
+version of the recursion relation fulfilled by the Hermite polynomials Hn(x), which are a family of
+orthogonal polynomials, fulfilling the orthogonality relation
+" +↓
+↑↓
+Hm(x)Hn(x)e↑x2
+dx = ↘ς2nn!ϖm,n. (6.20)
+40 CHAPTER 6. REPRESENTATIONS
+They can be defined via the expression
+Hn(x)=ex2/2
+.
+x ↗ d
+dx
+/n
+e↑x2/2. (6.21)
+They are polynomials of degree n with alternating parity (even, odd, even, ...). Importantly, they
+fulfil the recursion relation
+Hn+1(x)=2xHn(x) ↗ 2nHn↑1(x),
+with H0(x) = 1, and H1(x)=2x.
+We notice the similarity to the recursion relation (6.19). Starting from (6.19), let us introduce
+the rescaled components ↼n(ω) of the eigenvector as
+↼n(ω) = ↘
+2n n!εn(ω). (6.22)
+After a little algebra we find that these fulfil the recursion relation
+↼n+1(ω)=2 ω
+L↼n(ω) ↗ 2n↼n↑1(ω), (6.23)
+and thus we have
+↼n(ω) ≃ Hn(
+ω
+L), (6.24)
+and thus
+εn(ω) = ε0(ω)
+↘
+2n n!
+Hn(
+ω
+L). (6.25)
+However, as we expect, these eigenvectors are not normalisable. We have
+↔ε(ω)|ε(ω)↑ = !↓
+n=0
+|ε0(ω)|
+2
+2n n! H2
+n(ω/L), (6.26)
+which, unfortunately, is a divergent series.
+Of course, from the discussions in section 6.1 we already know that we expect (with the correct
+“normalising” factor) ↔ε(ω)|ε(ω→
+)↑ = ϖ(ω ↗ ω→
+). This indeed can be seen from the properties of the
+Hermite polynomials in a suitable limit. The Hermite polynomials fulfil the important relation (also
+known as Mehler’s formula)
+!↓
+n=0
+Hn(x)Hn(y)
+n!
+c
+2
+n
+= 1
+↘
+1 ↗ c2
+e
+↑ c2(x2+y2)↑2cxy
+1↑c2 , for ↗ 1 <c< 1. (6.27)
+Choosing ε0(ω) = 1
+ϑ1/4
+↗L e
+↑ ε2
+2L2 , we thus have
+↔ε(ω)|ε(ω→
+)↑ = 1
+L
+↘ς
+e
+↑ (ε→2+ε2)
+2L2 lim
+c↔1
+1
+↘
+1 ↗ c2
+e
+↑ c2(ε2+ε→2)↑2cεε→
+(1↑c2)L2 , (6.28)
+(6.29)
+the overall exponent can be rewritten as
+↗(ω→2 + ω2)
+2L2 ↗ c2(ω2 + ω→2) ↗ 2cωω→
+y
+(1 ↗ c2)L2 = ↗(1 ↗ c)(ω + ω→
+)2
+4(1 + c)L ↗ (1 + c)2(ω ↗ ω→
+)2
+4(1 ↗ c2)L2 , (6.30)
+which simplifies our expression to
+↔ε(ω)|ε(ω→
+)↑ = 1
+↘ς
+lim
+c↔1
+1
+L
+↘
+1 ↗ c2
+e
+↑ (ε↑ε→)2
+(1↑c2)L2 , (6.31)
+(6.32)
+6.3. POSITION REPRESENTATION 41
+Introducing the variable ↽2 = 1↑c2
+2 we can rewrite this as
+↔ε(ω)|ε(ω→
+)↑ = 1
+L
+lim
+ε↔0
+e
+↑ 1
+2ω2 ( ε
+L ↑ ε→
+L )2
+↽
+↘2ς , (6.33)
+which is indeed one of the representations of the ϖ-distribution we have encountered in section 6.1,
+and using ϖ(ax) = 1
+|a|
+ϖ(x) we thus have
+↔ε(ω)|ε(ω→
+)↑ = ϖ(ω ↗ ω→
+). (6.34)
+In summary, we have found that the position operator has a continuous spectrum spanning the
+whole real line x → R, with corresponding (generalised) eigenvectors |x↑,
+qˆ|x↑ = x|x↑. (6.35)
+The eigenvectors fulfil the continuous analogue of the orthonormality condition,
+↔x|x→
+↑ = ϖ(x ↗ x→
+), (6.36)
+and form a resolution of the identity as
+" +↓
+↑↓
+|x↑↔x|dx = ˆI. (6.37)
+6.3 Position representation
+The wave function in position representation ϑ(x) corresponds to the coe”cients of the abstract
+vector |ϑ↑ in the basis of the eigenfunctions of ˆq, that is ϑ(x) := ↔x|ϑ↑, and
+|ϑ↑ =
+" ↓
+↑↓
+ϑ(x)|x↑dx. (6.38)
+The squared norm of the state |ϑ↑ can thus be evaluated in position representation as
+↔ϑ|ϑ↑ =
+" +↓
+↑↓
+|ϑ(x)|
+2dx. (6.39)
+Demanding the norm to be finite, we thus identify our Hilbert space with the space of square
+integrable functions, L2(R).
+The matrix elements of the position operator in the position basis are
+↔x|qˆ|x→
+↑ = xϖ(x ↗ x→
+), (6.40)
+which simply means that the position operator is diagonal in the basis of its eigenvectors, as expected. We can also define the position operator in the position representation directly by its action
+on a square integrable function ϑ(x) → L2 as
+qˆ : ϑ(x) ⇐⇒ xϑ(x). (6.41)
+More formally, this is equivalent to
+↔x|qˆ|ϑ↑ = x↔x|ϑ↑ = xϑ(x). (6.42)
+When measuring a particle’s position, according to principle 3, the probability of obtaining a value
+in the interval I = [a, b] is given by # b
+a |ϑ(x)|
+2dx, as we have assumed in Chapter 2. That is, the
+interpretation of Schr¨odinger’s wave function is a special case of principle 3.
+With the definition of the position operator, also the momentum operator pˆ is fixed, because ˆp
+and ˆq have to fulfil equation (4.1). The operator
+pˆ : ϑ(x) ⇐⇒ ↗i⊋ ⇀
+⇀x
+ϑ(x) (6.43)
+fulfils this condition with (6.41).
+42 CHAPTER 6. REPRESENTATIONS
+Exercise 11. Verify that the operators (6.43) and (6.41) indeed fulfil the commutation relation
+(4.1), by applying their commutator onto a test function ϑ(x) → L2.
+Remark 35. One could in principle add an arbitrary function of ˆq to ˆp and still fulfil the commutation
+relation (4.1). The reason why it is fine to choose this function to be zero is a little subtle, and does
+not need to concern us here. If you are interested in the details, see e.g. Dirac’s textbook.
+Finally, the kinetic energy is described by Ekin = p2
+2m in classical mechanics. This is analogous
+in quantum mechanics, and thus the operator of kinetic energy in the position representation is
+given by
+Eˆkin = pˆ2
+2m
+: ϑ(x) ⇐⇒ ↗
+⊋2
+2m
+⇀2
+⇀x2ϑ(x). (6.44)
+With this we are back to Schr¨odinger’s equation as it appears in wave mechanics, where the
+Hamiltonian for a particle in a one-dimensional potential is the operator Hˆ = pˆ2
+2m + V (ˆq), and thus
+the Schr¨odinger equation in position representation,
+i⊋↔x|ϑ˙↑ = ↔x|Hˆ |ϑ↑, (6.45)
+explicitly reads
+i⊋ϑ˙(x, t) = ↗ ⊋2
+2m
+⇀2
+⇀x2ϑ(x, t) + V (x)ϑ(x, t). (6.46)
+6.4 Change of bases/representation
+To change between two representations, we simply insert a resolution of the identity in the basis we
+are starting from. That is, for example, if we have the coe”cients ϑn of a vector |ϑ↑ in the harmonic
+oscillator basis, that is, ϑn = ↔n|ϑ↑ and want to know its position representation ϑ(x) = ↔x|ϑ↑ we
+find this in the following way.
+ϑ(x) = ↔x|ϑ↑ = ↔x|ˆI|ϑ↑ = ↔x|
+!
+n
+|n↑↔n|
+
+|ϑ↑ (6.47)
+= !
+n
+↔x|n↑↔n|ϑ↑ (6.48)
+= !
+n
+ϑnεn(x), (6.49)
+where εn(x) = ↔x|n↑ denotes the position representation of the harmonic oscillator eigenvector
+belonging to the eigenvalue ⊋φ(n + 1
+2 ). As a second example, if we want to translate from the
+position representation ϑ(x) = ↔x|ϑ↑ to the momentum representation ϑ˜(p) = ↔p|ϑ↑, where |p↑
+denotes the eigenstate of the momentum operator ˆp belonging to the eigenvalue p, we find
+ϑ˜(p) = ↔p|ϑ↑ (6.50)
+=
+" +↓
+↑↓
+↔p|x↑↔x|ϑ↑dx (6.51)
+=
+" +↓
+↑↓
+ε↘
+p(x)ϑ(x)dx, (6.52)
+where εp(x) = ↔x|p↑ denotes the position representation of the momentum eigenvector belonging
+to momentum p, which you can deduce from solving the eigenvalue equation for ˆp in position
+representation.

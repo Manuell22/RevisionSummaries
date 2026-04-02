@@ -1,0 +1,402 @@
+Chapter 8
+Quantum dynamics
+In this chapter we shall turn away from the spectral problems, and focus our attention on the
+dynamical features of quantum theory. The most interesting features of observable things are often
+those that change in time, after all. We shall discuss dynamics of expectation values, which yields
+a version of the famous Heisenberg equations of motion, which can be viewed as an alternative to
+Schr¨odinger’s dynamical equation in quantum mechanics. We then turn to the discussion of quantum
+dynamics from a Lie algebraic perspective, and finish with an example of dynamical tunneling.
+8.1 Dynamics of expectation values
+From the time-dependent Schr¨odinger equation, i⊋|ω˙→ = Hˆ |ω→, we can deduce a dynamical equation
+for observable expectation values ↑Aˆ→: We have by definition
+↑Aˆ→ = ↑ω|Aˆ|ω→
+↑ω|ω→ . (8.1)
+Thus, we find
+d
+dt
+↑Aˆ→ = ↑ω˙|Aˆ|ω→ + ↑ω| ˙
+Aˆ|ω→ + ↑ω|Aˆ|ω˙→
+↑ω|ω→ ↓
+d
+dt↑ω|ω→
+↑ω|ω→2 ↑ω|Aˆ|ω→. (8.2)
+From the Schr¨odinger equation we know
+|ω˙→ = ↓ i
+⊋
+Hˆ |ω→, and ↑ω˙| = i
+⊋
+↑ω|H, ˆ (8.3)
+thus, the overall norm is conserved, d
+dt↑ω|ω→ = 0 and we find
+d
+dt
+↑Aˆ→ =
+i
+⊋ ↑ω|Hˆ Aˆ|ω→ + ↑ω| ˙
+Aˆ|ω→ ↓ i
+⊋ ↑ω|AˆHˆ |ω→
+↑ω|ω→
+= i
+⊋
+↑Hˆ Aˆ ↓ AˆHˆ → + ↑
+εAˆ
+εt
+→.
+(8.4)
+Or, using the commutator,
+d↑Aˆ→
+dt = i
+⊋
+↑[H, ˆ Aˆ]→ + ↑
+εAˆ
+εt
+→. (8.5)
+This is one formulation of the famous Heisenberg equation of motion for observables, which can be
+used as the foundational dynamical equation of quantum mechanics, as an alternative of Schr¨odinger’s
+equation. Comparing the Heisenberg equation to the classical equation of motion (1.16) for a phase
+space variable A(p, q) we observe a striking similarity if we associate expectation values with classical variables and interpret the commutator, or more precisely i/⊋ times the commutator, as a
+quantum Poisson bracket.
+51
+52 CHAPTER 8. QUANTUM DYNAMICS
+The Ehrenfest theorem
+The special case of the equations of motion for the expectation values of position and momentum
+for a system with Hamiltonian of the type
+Hˆ = pˆ2
+2m
++ Vˆ (ˆq) (8.6)
+forms the basis of what is referred to as the Ehrenfest theorem, which we shall consider in what
+follows. From equation (8.5) and the form of the Hamiltonian (8.6) we find
+d
+dt
+↑qˆ→ = i
+⊋
+↑[
+pˆ2
+2m, qˆ]→
+= i
+2⊋m↑[ˆp2, qˆ]→
+= i
+2⊋m↑pˆ[ˆp, qˆ] +[ˆp, qˆ]ˆp→.
+(8.7)
+Recalling the commutation relation between position and momentum operator, [ˆq, pˆ]=i⊋, this
+reduces to
+d
+dt
+↑qˆ→ = ↑pˆ→
+m . (8.8)
+For the momentum operator we find
+d
+dt
+↑pˆ→ = i
+⊋
+↑[Vˆ (ˆq), pˆ]→. (8.9)
+To calculate the commutator between the momentum operator and the potential, it is convenient
+to use the position representation, in which we have
+[Vˆ (ˆq), pˆ] = ↓i⊋[V (x), ε
+εx
+], (8.10)
+applied to a test function ω(x),
+↓i⊋ [V (x), ε
+εx
+] ω(x) = ↓i⊋V (x)ω→
+(x)+i⊋ ε
+εx
+(V (x)ω(x))
+= ↓i⊋V (x)ω→
+(x)+i⊋V →
+(x)ω(x)+i⊋V (x)ω→
+(x)
+= i⊋V →
+(x)ω(x)
+(8.11)
+Translating this back to the abstract operator notation this is
+[Vˆ (ˆq), pˆ]=i⊋
+dV (ˆq)
+dˆq , (8.12)
+and thus we find
+d
+dt
+↑pˆ→ = ↓↑εVˆ
+εqˆ
+→. (8.13)
+In summary we have obtained the set of equations
+d
+dt
+↑qˆ→ = ↑pˆ→
+m , and d
+dt
+↑pˆ→ = ↓↑εVˆ
+εqˆ
+→, (8.14)
+which are strikingly similar in form to the classical equations of motion
+d
+dt
+q = p
+m, and d
+dt
+p = ↓εV
+εq , (8.15)
+a fact that is often referred to as the Ehrenfest theorem.
+8.1. DYNAMICS OF EXPECTATION VALUES 53
+Notwithstanding the formal similarity, there are of course important di!erences between quantum and classical dynamics. On the level of the Ehrenfest theorem, this is due to the fact that in
+general
+↑
+εVˆ
+εqˆ
+→ ↔= εV (↑qˆ→)
+ε↑qˆ→ . (8.16)
+Consider for example the case Vˆ (ˆq)=ˆq4. Here we have
+εVˆ (↑qˆ→
+ε↑qˆ→ = 4↑qˆ→
+3, (8.17)
+while
+↑
+εVˆ
+εqˆ
+→ = 4↑qˆ
+3→. (8.18)
+The two expressions in equation (8.16) are, however, similar for potentials that are polynomials of
+qˆ of order two or lower. For more general potentials equations (8.14) in fact do not even form a
+closed set of equations (as the left side of the time derivative of ↑pˆ→ is not only a function of ↑qˆ→ and
+↑pˆ→).
+Literary Excursion
+In the following I provide a translation of a short excerpt from the novel Dirac by Dietmar Dath
+(Surkamp 2006) to provide some further insight into the development of quantum mechanics, albeit
+in the form of a literary supplement.
+Just like a melody, which the whistling lips are faster to grasp than the conscious mind, Heisenberg’s mathematics returns to the focus of Dirac’s attention. Non-commutativity, this times that is
+di!erent from that times this. A pale-blue bird thrusts itself onto the strong wind just above Dirac’s
+head, struggling, staggering, spinning, re-balancing, it positions itself tangentially to the air stream,
+and then rises again, very fast and very high. Dirac is viewing the bird in a coordinate plane, seeing
+it rotating, and fleeing upwards.
+Position and velocity, where the bird is thrown towards, and how it is flapping its wings: Sky
+and puddle, wind and water, bird and – fish? “Poisson”, Dirac says.
+That’s it! Poisson brackets. Sim´eon Denis Poisson, seventeen hundred eighty one to eighteen
+hundred forty. Non-commutativity... Where has he read about this? What was it? There seems
+to be a connection. Or is he just grasping at straws? Heisenberg’s commutator: uv ↓ vu, and the
+relation between the two quantities in this formalism for phase-space transforms. ...This is only the
+faintest memory: Old mathematics, which might come to rescue Heisenberg’s new physics. Dirac is
+leaping over the road-side ditch without a thought on what he is doing, and he is now walking right
+across the muddy meadow. Every step slurping, Dirac is in a hurry: He has to go home, has to look
+it up, find out what’s going on there... Poisson, non-commutativity – everything.
+Dirt splashing on his trousers, his joints cracking, he is hurrying on. It can’t be true. The
+similarity of these two forms must be a coincidence, just like a rhyme in a poem or a harmony of
+two voices. It would be too strange for such a coincidence to actually mean anything. Already he
+has a feeling that this thought, which had only just occurred to him, might be implausible, but his
+excitement is growing at the same time: What if there was something to it? After a few hundred
+metres of cross-country tracking he is now reaching a footpath and finding himself panting for air,
+staggering, dizzy: He had been running. He has left the rural area behind and is now in the town.
+He is pushed forward into his thoughts by a tailwind, which is seizing him just as it had seized the
+bird before him.
+Finally he reaches his door, hectically searching his coat pocket for his key. As he tries to unlock
+the door too fast, the key gets stuck. He is swearing under his breath. He has to get in there,
+look it up, clear definitions, order! He is rattling at the lock, which finally releases the key. Dirac
+immediately reinserts it and this time the door opens. Without even taking o! his coat Dirac is
+54 CHAPTER 8. QUANTUM DYNAMICS
+rushing through his room, searching his books, his lecture notes, kneeling on the floor, opening all
+the drawers.
+The storm that had been raging outside earlier is revived again in this room; pages are flying,
+eyes are searching, but nothing: canonical transformations, linear mappings, di!erential equations,
+textbooks, mathematical tables. All of this is much too fundamental. Nothing on Poisson brackets,
+no hint. But he did see it. Did read it: In a book, not in a lecture note.
+Finally he is sitting in the midst of the chaos he has produced, panting. He takes o! his coat
+and it makes him chuckle: Sunday night. All libraries closed. He runs his fingers through his hair,
+as if what he is looking for might be stuck in there.
+Dreadful, euphoric night: Dirac’s heart is pounding in his throat, half asleep he is imagining
+himself as a little bird in the wind, throwing himself from left to right. If it really was possible to express things this way, if one could formulate a type of Hamiltonian dynamics using non-commutative
+Poisson-brackets... If that was the key...
+Dawn is breaking. Dirac gets up. His joints are painful. He is extraordinarily weary, as after hard
+labour. After a quick superficial wash he gets dressed and leaves the house, walking straight towards
+the faculty library. He is the first one there. The librarian allows him in, shaking his head. Dirac
+is rushing past long rows of bookshelves, he knows his way around here.
+He takes a left turn at the big cross-bar window in front of one of the columns. There, at breast
+height, is Whittaker’s “Analytical Dynamics”. Dirac quickly finds what he was looking for. The
+letters are flickering, and he is finding it di”cult to read. Yet, his intuition had not failed him. He
+now has his own key to the latest physics...
+8.2 Lie groups and Lie algebras in quantum dynamics
+8.2.1 A quick overview
+The time evolution in quantum mechanics is closely related to the concept of (Lie) groups. In this
+section, I will give a brief summary of the most important concepts in this context.
+We begin with a brief reminder of the concept of a
+Group. A group is a set G of elements, together with a map ↗ : G↘G ≃ G, which fulfil the following
+three properties:
+• The map is associative, i.e. (a ↗ b) ↗ c = a ↗ (b ↗ c), for all a, b, c ⇐ G,
+• The group contains an identity element e with e ↗ a = a ↗ e = a for all a ⇐ G,
+• Every element has an inverse element in the group, often denoted by a↑1, such that a ↗ a↑1 =
+a↑1 ↗ a = e.
+A representation of a group can be thought of as a realisation of group elements as linear
+operators on a linear vectorspace V, that is, a map (a group homomorphism) g ≃ Dˆ(g), from G to
+V, which fulfils
+Dˆ(g1 ↗ g2) = Dˆ(g1)Dˆ(g2). (8.19)
+Thus we have Dˆ(g↑1)=(Dˆ(g))↑1, and Dˆ(e) = ˆI, where ˆI denotes the identity on V. A representation is faithful if the map g ≃ Dˆ(g) is invertible (an isomorphism).
+A continuous group is a group with elements that continuously depend on parameters, i.e. the
+group elements are functions of a set of parameters. The set of unitary operations on a Hilbert
+space together with the consecutive application of unitary operations as the group map, form a
+continuous group.
+A special type of continuous groups are Lie groups. Whole lectures and textbooks are devoted
+to the topic of Lie groups. We will only devote a couple of paragraphs, sacrificing rigour for an
+intuitive idea. Broadly speaking, an n-dimensional Lie group is a continuous group, the elements g
+8.2. LIE GROUPS AND LIE ALGEBRAS IN QUANTUM DYNAMICS 55
+of which can be represented as Cn functions of n real parameters, with g(0) = e. Thus, Lie groups
+are both groups and analytical manifolds.
+If Dˆ(g) is a representation of a Lie group element, we write for short Dˆ(x) = Dˆ(g(x)), and
+Dˆ(0) = ˆI. Since a Lie group element is a di!erentiable function of the parameters, for small values
+of x we can expand an element into a power series with the first two terms
+Dˆ(x) = ˆI + i!n
+j=1
+xjTˆ
+j + ..., (8.20)
+with
+Tˆ
+j = ↓i εDˆ
+εxj
+"
+"
+"
+"
+"
+x=0
+. (8.21)
+Remark 40. The factor of i in (8.20) and (8.21) is common in physics, but is not usually used in
+the mathematics literature.
+Remark 41. The higher order terms in (8.20) are in general complicated.
+The operators Tˆ
+j in (8.21) are called the generators of the group. Let us for simplicity consider
+a one-dimensional group with representation Dˆ(x) with x ⇐ R. When the generator Tˆ is known
+the group structure allows to represent group elements not only for small but for arbitrary x, since
+Dˆ(2”x) = Dˆ(”x)Dˆ(”x)=(Dˆ(”x))2 and Dˆ(m”x)=(Dˆ(”x))m, and thus, if we define x = m”x
+we have
+Dˆ(x)=(Dˆ(”x))m ⇒ (1 + i”xTˆ)
+m = (1 + i x
+m
+Tˆ)
+m ↓↓↓↓≃ m↓↔ eixTˆ
+. (8.22)
+Remark 42. Here the similarity to the relation between our time-evolution operator and our Hamiltonian for time-independent systems should become apparent.
+The n generators of an n dimensional Lie group form a Lie algebra. A Lie algebra is a vector
+space G with a map [·, ·] : G ↘ G ≃ G, a so-called Lie bracket, that maps each ordered pair
+of algebra elements to a third algebra element, and that is anti-symmetric, bilinear, and fulfils
+the Jacobi identity [A, [B,C]] + [B, [C, A]] + [C, [A, B]] = 0 (just like our Poisson brackets and
+commutators).
+A simple example of a finite Lie algebra we encounter in quantum mechanics consists of the
+position and the momentum operators and the identity, since we have
+[ˆq, pˆ]=i⊋ˆI. (8.23)
+This algebra corresponds to the group of translations in phase space.
+Another example is the algebra associated to the harmonic oscillator, spanned by the identity,
+aˆ, ˆa†, and Nˆ, with
+[ˆa, aˆ†
+] = ˆI, [N, ˆ aˆ] = ↓a, ˆ [N, ˆ aˆ†
+]=ˆa†
+. (8.24)
+The corresponding group consists of translations and rotations in phase space.
+An important consequence for quantum mechanics is that if a Hamiltonian is an element of a
+Lie algebra, that is, a linear combination of the Lie algebra elements, Kˆj ,
+Hˆ = !
+j
+cjKˆj , (8.25)
+then the corresponding time evolution operator can be expressed as
+Uˆ = ei
+!
+j ωjKˆj , (8.26)
+in what is called the Magnus form, or alternatively as
+Uˆ = #
+j
+eiεjKˆj , (8.27)
+56 CHAPTER 8. QUANTUM DYNAMICS
+in the so-called Wei Norman form. Importantly this still holds if the coe#cients cj in the Hamiltonian are time dependent.
+When considering the time evolution of expectation values (in the Heisenberg equation), we
+encounter expressions of the form Uˆ†AˆUˆ. Explicitly evaluating these can be challenging unless the
+Hamiltonian and the observable Aˆ are elements of a nice Lie algebra. In general we have
+Theorem 9 (Hadamard lemma).
+esXˆ
+Yˆ e↑sXˆ = Yˆ + s[X, ˆ Yˆ ] + s2
+2! [X, ˆ [X, ˆ Yˆ ]] + s3
+3! [X, ˆ [X, ˆ [X, ˆ Yˆ ]]] + ..., (8.28)
+where Xˆ and Yˆ are linear operators and s ⇐ C is a complex constant.
+Proof. We consider f(s) := esXˆ
+Yˆ e↑sXˆ as an operator valued function of the complex variable s,
+and Taylor expand around s = 0:
+ˆf(s) = !
+n
+ˆf(n)
+(0)sn
+n!
+. (8.29)
+We have
+d
+ds
+esXˆ
+Yˆ e↑sXˆ = esXˆ
+XˆYˆ e↑sXˆ ↓ esXˆ
+Yˆ Xˆe↑sXˆ
+= esXˆ
+[X, ˆ Yˆ ]e↑sXˆ
+,
+(8.30)
+d2
+ds2 esXˆ
+Yˆ e↑sXˆ = esXˆ
+Xˆ[X, ˆ Yˆ ]e↑sXˆ ↓ esXˆ
+[X, ˆ Yˆ ]Xˆe↑sXˆ
+= esXˆ
+[X, ˆ [X, ˆ Yˆ ]]e↑sXˆ
+,
+(8.31)
+and so forth. Inserting this into the Taylor expansion yields equation (8.28).
+Exercise 13. Use the Hadamard lemma and the fundamental commutator to show that
+eiapˆ1/⊋qˆ1e↑iapˆ1/⊋ = ˆq1 + a. (8.32)
+8.2.2 Reminder: The group SU(2)
+A group that is of great importance in the theory of angular momentum, which we will discuss in
+the next Chapter, is the group SU(2). The corresponding Lie algebra su(2) can be spanned by
+three elements Jˆ
+k, with k = 1, 2, 3 that fulfill the commutation relations
+[Jˆ
+j , Jˆ
+k]=i⊋
+!
+l
+ϑjklJˆ
+l, (8.33)
+where
+ϑjkl =
+
+
+
+1, j, k, l cyclic
+↓1, j, k, l anticyclic
+0, otherwise,
+(8.34)
+is the Levi-Civita symbol.
+You have probably encountered the group SU(2) before, as the group of complex unitary 2 ↘ 2
+matrices with determinant one, i.e. the set of matrices
+SU(2) = {S ⇐ C2↗2|S† = S↑1 and det S = 1}, (8.35)
+which is a Lie group under matrix multiplication.
+In the mathematics literature, the associate Lie algebra is commonly defined as the set of
+matrices generating the group elements via the exponential map, which in the case of SU(2) consists
+of complex anti-Hermitian 2↘2 matrices with trace zero. In the physics literature we tend to include
+8.3. DYNAMICAL TUNNELING 57
+a factor of i into the exponent in the exponential map resulting in the algebra of complex Hermitian
+2 ↘ 2 matrices with trace 1. A basis for these is given by the matrices
+ϖˆ1 =
+'
+0 1
+1 0(
+, ϖˆ2 =
+'
+0 ↓i
+i 0 (
+, ϖˆ3 =
+'
+1 0
+0 ↓1
+(
+. (8.36)
+These matrices are also known as the Pauli matrices. They fulfil the commutation relations
+[ˆϖj , ϖˆk] = 2i!
+l
+ϑjklϖˆl. (8.37)
+SU(2) is commonly associated with complex 2 ↘ 2 matrices. However, it has higher dimensional
+representations which will be related to quantum mechanical angular momentum, as we shall see in
+Chapter 9.
+8.3 Dynamical Tunneling
+I include the slides from the video on dynamical tunneling here.
+58 CHAPTER 8. QUANTUM DYNAMICS

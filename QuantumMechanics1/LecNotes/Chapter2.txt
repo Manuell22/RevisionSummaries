@@ -1,0 +1,377 @@
+Chapter 2
+Schr¨odinger dynamics
+In this chapter we provide a first introduction to Schr¨odinger’s wave equation, the meaning and
+interpretation of the wave function etc. Much of the content will be formalised in chapter 4.
+2.1 The Schr¨odinger equation and the wave function
+In parallel to Heisenberg’s formulation of quantum mechanics Schr¨odinger developed a description
+in terms of what is known as the wave function. He was inspired by Einstein’s and de Broglie’s
+ideas of wave-particle-duality and matter waves. In modern form this time-dependent Schr¨odinger
+equation is written as
+i~ ˙(~r, t) = Hˆ (~r, t), (2.1)
+where the dot denotes the derivative with respect to time. Here Hˆ is the Hamiltonian, a di↵erential
+operator acting on the wave function , and ~ = h
+2⇡ , where h ⇡ 6.626⇥1034Js is Planck’s constant.
+The Hamiltonian encodes the total energy of the system and is often of the form
+Hˆ =  ~2
+2m
+r2 + V (~r), (2.2)
+where r2 denotes the Laplacian, i.e. in three dimensions in Cartesian coordinates, r2 = @2
+@x2
+1
++
+@2
+@x2
+2
++ @2
+@x2
+3
+. The first term encodes the kinetic and the second the potential energy. We will often
+consider one-dimensional systems for which the Schr¨odinger equation with a Hamiltonian of the
+form (2.2) takes the form
+i~ ˙(x, t) = ✓
+ ~2
+2m
+@2
+@x2 + V (x)
+◆
+ (x, t). (2.3)
+Remark 7. In the context of quantum mechanics, we usually denote the spatial coordinate of onedimensional systems, the argument of the wave function, by x.
+2.1.1 The wave function
+The wave function 2 C is interpreted as a probability amplitude. The square modulus of the wave
+function is a probability density. Specifically, | (x, t)|
+2dx is the probability of finding a quantum
+particle (described by the wave function ) between x and x+dx at time t (assuming is normalised
+to one, that is, R 1
+1 | (x, t)|
+2dx = 1.). The normalisation condition R 1
+1 | (x, t)|
+2dx = 1 means
+that the particle is somewhere with probability one. The probability to find the particle in the
+interval A = [a, b] is given by
+Z b
+a
+| (x)|
+2dx. (2.4)
+7
+8 CHAPTER 2. SCHRODINGER DYNAMICS ¨
+The wave function encodes everything that one can possibly know about a quantum particle. Knowing (x, t0) one can deduce (x, t) for all times. That is, the time evolution in quantum mechanics
+is deterministic.
+To interpret | (x, t)|
+2 as a probability distribution we need R 1
+1 | (x, t)|
+2dx to be finite. That
+is, (x, t) 2 L2(R) (we refer to this as normalisable or square integrable).
+Remark 8. We will mostly consider wave functions that are in L2, but the theory can be slightly
+extended to include, for example, functions such as plane waves, / eikx. We shall occasionally
+use such functions, and fill in a minimum of interpretational background when needed.
+Remark 9. While it is meaningful to consider all square integrable functions as wave functions,
+as they lead to a probability density, there are other motivations that might restrict the space
+of admissible wave functions to certain subspaces of L2. For example, the right-hand side of the
+Schr¨odinger equation (2.3) is only defined for functions (x) that are at least twice di↵erentiable,
+which is not the case for all square integrable functions.
+Exercise 3. Consider the wave function
+ (x, t) = Ae|x|
+ei!t
+,
+where A, , ! are real positive constants.
+(a) Find the value of A for which is normalised to one.
+(b) What is the probability to find the particle described by (x, t) in the interval [1
+, 1
+] ?
+2.1.2 Probability current and conservation of probability
+To interpret a time-dependent wave function that is a solution of the time-dependent Schr¨odinger
+equation as a probability amplitude, the overall norm should stay conserved over time. Let us now
+check whether this is indeed the case. We consider the total probability
+Z 1
+1
+| (x, t)|
+2dx (2.5)
+as a function of time, assuming the Hamiltonian is of the form (2.2). In this context we can only
+consider wave functions that are at least twice di↵erentiable. In this case, the derivative with respect
+to time and the integral over the coordinate x commute, that is, we have
+d
+dt
+Z 1
+1
+| (x, t)|
+2dx =
+Z 1
+1
+d
+dt
+| (x, t)|
+2dx
+=
+Z 1
+1
+ ˙⇤(x, t) (x, t) + ⇤(x, t) ˙(x, t)dx, (2.6)
+where the asterisk ⇤ denotes complex conjugation. Inserting the Schr¨odinger equation and its
+conjugate yields
+d
+dt
+Z 1
+1
+| (x, t)|
+2dx = i
+~
+Z 1
+1
+V (x) ⇤(x, t) (x, t)  ~2
+2m
+ 00⇤(x, t) (x, t)dx
+ i
+~
+Z 1
+1
+V (x) ⇤(x, t) (x, t)  ~2
+2m
+ ⇤(x, t) 00(x, t)dx
+= i~
+2m
+Z 1
+1
+ ⇤(x, t) 00(x, t)  00⇤(x, t) (x, t)dx, (2.7)
+where we have made use of the fact that the potential V (x) is a real function. Now we recognise
+the integrand as the first derivative of a function which is proportional to the so-called probability
+current or probability flux, defined as
+j(x, t) := ~
+2mi
+⇣
+ ⇤(x, t) 0
+(x, t)  0
+⇤(x, t) (x, t)
+⌘
+. (2.8)
+2.2. STATIONARY SOLUTIONS: THE TIME-INDEPENDENT SCHRODINGER EQUATION ¨ 9
+We can integrate to find
+d
+dt
+Z 1
+1
+| (x, t)|
+2dx = i~
+2m
+⇥
+j(x, t)
+⇤x=1
+x=1. (2.9)
+That is, if j(x) tends to zero for x ! 0 then the overall probability is indeed conserved in time.
+This condition is fulfilled as long as (x) tends to zero at infinity and its first derivative is bounded,
+in this case, the overall probability is conserved in time.
+Remark 10. For those who are interested in the mathematical subtleties: we shall return to the
+discrepancy of the di↵erent spaces of admissible wave functions in later chapters. For those who do
+not wish to dwell too deeply into subtleties, it is of little (or no) harm to take the attitude of most
+physics textbooks, that any physically meaningful wave function is a square integrable function
+that also fulfils all the necessary conditions to make it normalisable, make sense of both sides of the
+Schr¨odinger equation, and conserve the norm over time.
+2.1.3 Superposition principle
+The Schr¨odinger equation is a linear di↵erential equation. Thus, if 1(x, t) and 2(x, t) are solutions,
+and c1, c2 2 C are constants, then c1 1(x, t) + c2 2(x, t) is also a solutions (Verify this!). This
+perhaps trivial sounding fact plays a central role in quantum theory. On a formal level it makes
+quantum mechanics much “easier” than classical mechanics.
+2.1.4 The Hamiltonian and the energy
+A quantum system is characterised by its Hamiltonian Hˆ , an operator acting on the wave function,
+whose expectation value, defined as
+hHˆ i :=
+R 1
+1 ⇤(x, t)Hˆ (x, t)dx
+R 1
+1 | (x, t)|
+2dx , (and analogously for higher dimensions) (2.10)
+gives the total energy of the system.
+For a Hamiltonian of the type (2.2), consisting of potential and kinetic energy, if the potential
+fulfills V (x ! ±1) ! 1, all eigenvalues (eigenenergies) of the Hamiltonian, are real numbers,
+and the corresponding eigenfunctions (also referred to as eigenstates) form an orthonormal basis
+for all possible wave functions of the system. The eigenstates E(~r) are the solutions of the timeindependent Schr¨odinger equation
+Hˆ E(~r) = EE(~r). (2.11)
+Here orthonormality means that
+Z
+all space
+⇤
+E(~r)E0(~r)dV = EE0. (2.12)
+Remark 11. For potentials that are bounded (and don’t go to infinity at infinity), the situation is
+more complicated. Here, typically the spectrum consists of discrete eigenvalues and a continuum
+part.
+2.2 Stationary solutions: The time-independent Schr¨odinger equation
+Consider special solutions of the time-dependent Schr¨odinger equation of the form
+ (x, t) = (x)(t). (2.13)
+10 CHAPTER 2. SCHRODINGER DYNAMICS ¨
+Inserting this ansatz into the Schr¨odinger equation yields
+i~
+˙(t)
+(t) = Hˆ (x)
+(x) . (2.14)
+Since the left side of this equation is independent of x, so has to be the right side. Similarly, as the
+right side is independent of t, so is the left side, and in fact, both sides have to be constant. We
+call the constant E and separate the original equation into two di↵erential equations
+i~˙(t) = E(t) (2.15)
+Hˆ (x) = E(x). (2.16)
+Remark 12. This method is known as separation of variables.
+Equation (2.15) is easily solved by direct integration to yield (t) = (0)eiEt/~. Equation
+(2.16) is just the time-independent Schr¨odinger equation, that is, the eigenvalue equation for Hˆ .
+The functions E(x) are the eigenfunctions of Hˆ to the eigenvalues E. They are also referred to as
+eigenstates. We will solve some examples of this, especially in chapter 6. The eigenvalue equation
+can only be solved analytically for a small number of textbook cases.
+Remark 13. For Hamiltonians of the form  ~2
+2m
+@2
+@x2 + V (x), where the potential has the property
+V (x ! ±1) ! 1 normalisable solutions to the time-independent Schr¨odinger equation only exist
+for special discrete values of E. These discrete energies are the reason for the discrete atomic
+spectra, that is, the distinct colours that are emitted by stimulated atoms (think for example of
+fluorescent lamps).
+The time-dependence of separable wave functions is rather trivial:
+ (x, t) = 0eiEt/~E(x). (2.17)
+In particular, if the initial wave function at time zero is an eigenfunction of Hˆ we have 0 = 1 and
+ (x, t)=eiEt/~E(x), (2.18)
+that is, an initial eigenstate evolves in time only by acquiring a phase factor, which means for the
+probability density
+| (x, t)|
+2 = |E(x)|
+2. (2.19)
+Hence, these wave functions are called stationary states.
+Linear superpositions of stationary states, however, do have a non-trivial time-dependence.
+Consider for example an initial state which is a superposition of two eigenstates belonging to two
+di↵erent energies E1 and E2,
+ (x, 0) = aE1 (x) + bE2 (x).
+The probability density of the time-dependent state is then given by
+| (x, t)|
+2 =|a|
+2|E1 (x)|
+2 + |b|
+2|E2 (x)|
+2
++ a⇤b ei(E2E1)t/~⇤
+E1 (x)E2 (x) + ab⇤ ei(E1E2)t/~E1 (x)⇤
+E2 (x) (2.20)
+The last two terms are time-dependent and are often referred to as the interference terms. In the
+special case where a, b 2 R, and also the eigenfunctions are real valued, Ej 2 R, this reduces to
+| (x, t)|
+2 = a2|E1 (x)|
+2 + b2|E2 (x)|
+2 + 2ab cos(E2E1
+~ t) E1 (x)E2 (x), (2.21)
+that is, the probability oscillates with a frequency determined by the energy di↵erence of the two
+states in the superposition.
+2.3. THE METHOD OF STATIONARY STATES 11
+2.3 The method of stationary states
+Consider an initial state that is an arbitrary superposition of eigenstates of the Hamiltonian
+ (x, t = 0) = X
+n
+ann(x), (2.22)
+with
+Hˆ n(x) = Enn(x).
+Due to the linearity of the Schr¨odinger equation, the time-dependent state is given by
+ (x, t) = X
+n
+aneiEnt/~n(x). (2.23)
+Remark 14. That is the superposition principle again!
+Given that the eigenstates of a Hamiltonian are a basis for all possible states of a system,
+and the superposition principle, the time-evolution of an arbitrary initial state can be deduced by
+representing it in the eigenbasis. This method is often called the method of stationary states.
+2.3.1 The method of stationary states (for one dimensional systems in coordinate representation)
+Given: Hamiltonian Hˆ , initial wave function (x, t = 0)
+Wanted: Wave function at time t, (x, t)
+Method:
+1. Calculate the eigenvalues En and normalised eigenstates n(x) of the Hamiltonian Hˆ .
+2. Expand the initial wave function in the basis of eigenstates {n(x)}:
+ (x, 0) = X
+n
+ann(x).
+The coecients are given by an = R 1
+1 ⇤
+n(x) (x, 0)dx.
+3. The time evolution is then given by
+ (x, t) = X
+n
+aneiEnt/~n(x).
+2.4 Example: Particle in a half box
+(From David Tannor’s Introduction to Quantum Mechanics)
+A standard system in quantum mechanics is the so-called particle in a box. In one dimension that
+is a particle moving freely on a certain interval on the real line, here we consider the interval [0, L].
+The Hamiltonian of the system is given by Hˆ =  ~2
+2m
+@2
+@x2 +V (x), where there is an infinite potential
+outside this interval, i.e.
+V (x) = ⇢ 0, 0  x  L
+1, otherwise.
+12 CHAPTER 2. SCHRODINGER DYNAMICS ¨
+Figure 2.1: Eigenvalues and eigenfunctions of a particle in a box.
+We shall discuss the solution of the timeindependent Schr¨odinger equation for this system
+in chapter 7. For now we simply provide the result: The eigenvalues of the Hamiltonian are given
+by
+En = n2⇡2~2
+2mL2 , (2.24)
+and the corresponding eigenfunctions are
+n(x) = ( q 2
+L sin n⇡x
+L
+
+, 0  x  L
+0, otherwise. (2.25)
+The first 5 eigenfunctions are schematically depicted at the height of their corresponding energies in figure 2.1.
+Remark 15. This is analogous to the problem of
+standing waves on a string.
+Consider a quantum particle in the lowest eigenstate of a box potential of length L. Assume
+now that at time t = 0 the box is suddenly expanded to the length 2L. If this is done infinitely fast,
+the wavefunction is initially not altered. However, the wavefunction is now not an eigenfunction of
+the new system, and thus it dynamically evolves for times t > 0.
+Remark 16. Such a fast change of the external potential in an experiment is often called a quantum
+quench, a method often employed to experimentally prepare a system in a state other than an
+eigenstate.
+We can use the method of stationary states to understand the dynamics of the wave function.
+It turns out that the motion of the wave function while being rather complicated in its details,
+is periodic. Let us use the method of stationary states to calculate the shortest time ⌧ at which
+ (x, ⌧ ) = (x, 0). For this purpose we need to expand the wave function at time zero, which is a
+normalised eigenfunction of the square well of length L,
+ (x, 0) = (L)
+1 (x), (2.26)
+in the basis of eigenfunctions (2L) n (x) of the square well of twice the size, that is, we write
+(L)
+1 (x) = X
+n
+an(2L) n (x). (2.27)
+To calculate the actual coecients an we would have to calculate the integrals
+an =
+Z 1
+1
+⇤(2L) n (x)(L)
+1 (x)dx =
+p2
+L
+Z L
+0
+sin ⇣n⇡x
+2L
+⌘
+sin ⇣n⇡x
+L
+⌘
+dx. (2.28)
+However, to calculate ⌧ we do not need to know all the values of an. The wave function at time t
+has the form
+ (x, t) = X
+n
+aneiE(2L) n t/~(2L) n (x). (2.29)
+Inserting the energy values for the square well of width 2L, we have
+ (x, t) = X
+n
+ane
+i ⇡2~
+8mL2 n2t
+(2L) n (x). (2.30)
+Or
+ (x, t) = X
+n
+anei!n2t
+(2L) n (x), (2.31)
+2.4. EXAMPLE: PARTICLE IN A HALF BOX 13
+where we have defined ! = ⇡2~
+8mL2 . Thus, we have (x, ⌧ ) = (x, 0) at times ⌧ for which all
+ei!n2⌧ = 1, which is true if all n2!⌧ are integer multiples of 2⇡. Since n are integers here, the
+shortest such time ⌧ thus fulfils
+⌧ = 2⇡
+! = 16mL2
+~⇡ . (2.32)
+14 CHAPTER 2. SCHRODINGER DYNAMICS ¨

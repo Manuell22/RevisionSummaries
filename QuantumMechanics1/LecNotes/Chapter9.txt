@@ -1,0 +1,563 @@
+Chapter 9
+Angular momentum
+9.1 Definition of angular momentum - classical and quantum
+In this chapter we move beyond one-dimensional systems and consider angular momentum. In
+classical mechanics the angular momentum of a particle moving in three spatial dimensions with
+spatial coordinate ωq → R3 and momentum pω → R3 is given by
+Lω = ωq ↑ p, ω (9.1)
+or in components
+L1 = q2p3 ↓ q3p2, L2 = q3p1 ↓ q1p3, and L3 = q1p2 ↓ q2p1. (9.2)
+In quantum mechanics, we can as well consider a particle in three dimensional space R3, with
+position and momentum operators ˆq = (ˆq1, qˆ2, qˆ3)
+T , and ˆp = (ˆp1, pˆ2, pˆ3)
+T , whose components fulfil
+the canonical commutation relations
+[ˆqj , pˆk]=i⊋εjk, [ˆqj , qˆk] = 0 = [ˆpj , pˆk]. (9.3)
+In analogy to classical mechanics we can then define an operator associated to the orbital angular
+momentum as
+Lˆ = ˆq ↑ p, ˆ (9.4)
+that is, an operator with the three components
+Lˆ1 = ˆq2pˆ3 ↓ qˆ3pˆ2
+Lˆ2 = ˆq3pˆ1 ↓ qˆ1pˆ3
+Lˆ3 = ˆq1pˆ2 ↓ qˆ2pˆ1.
+(9.5)
+The components of the orbital angular momentum fulfil the commutation relations
+[Lˆ1,Lˆ2]=i⊋Lˆ3, [Lˆ2,Lˆ3]=i⊋Lˆ1, [Lˆ3,Lˆ1]=i⊋Lˆ2, (9.6)
+which are just the commutation relations of the su(2) algebra, written more compactly as
+[Lˆj ,Lˆk]=i⊋
+!
+l
+ϑjklLˆl. (9.7)
+In quantum mechanics, we make the following definition:
+Quantum angular momentum An operator with three Hermitian operator components Jˆ
+1,2,3
+fulfilling the commutation relations
+[Jˆ
+j , Jˆ
+k]=i⊋
+!
+l
+ϑjklJˆ
+l, (9.8)
+is an angular momentum operator.
+59
+60 CHAPTER 9. ANGULAR MOMENTUM
+The total angular momentum operator is then defined as
+Jˆ2 = Jˆ2
+1 + Jˆ2
+2 + Jˆ2
+3 . (9.9)
+It can be easily verified that [Jˆ2, Jˆ
+j ] = 0.
+Remark 43. In the following we shall use the letter J to denote generic quantum angular momentum,
+while we reserve the letter L to denote orbital angular momentum, which can be defined as (9.5) in
+some given coordinate system.
+9.2 Angular momentum and rotations
+The above definition of angular momentum relates it to the group SU(2), which, is a double cover
+of the group SO(3), which can be represented as rotations in R3. Intuitively it makes perfect
+sense, that angular momentum is thus related to rotations. Technically speaking, the angular
+momentum operators are the generators of infinitesimal rotations. Here we shall investigate an
+intuitive connection between angular momentum and rotations, by showing that the time-evolution
+where the angular momentum operators act as Hamiltonians, are rotations of the coordinate system.
+9.2.1 Reminder: Rotations in R3
+The rotations in R3 are a non-commutative group. A rotation in R3 can be described by three
+parameters: the direction of the axis of rotation (two parameters) and the angle of rotation, and
+can be expressed by an orthogonal (real unitary) 3↑3 matrix. There are three fundamental rotations
+that can be used as a basis for all other rotations, the rotations around the x, y- and z-axes, whose
+matrices are given by:
+Rx(ϖ) =
+
+
+10 0
+0 cos ϖ ↓ sin ϖ
+0 sin ϖ cos ϖ
+
+ , Ry(ϖ) =
+
+
+cos ϖ 0 sin ϖ
+0 10
+↓ sin ϖ 0 cos ϖ
+
+ ,
+and
+Rz(ϖ) =
+
+
+cos ϖ ↓ sin ϖ 0
+sin ϖ cos ϖ 0
+0 01
+
+ .
+Applying for example Rx(ϖ) to ωr =
+
+
+x
+y
+z
+
+ yields:
+Rx(ϖ)
+
+
+x
+y
+z
+
+ =
+
+
+x
+y cos ϖ ↓ z sin ϖ
+y sin ϖ + z cos ϖ
+
+ ,
+i.e. a rotation around the x-axis by the angle ϖ.
+9.2.2 Action of the eiωLˆj/⊋ on the position operators
+Consider a quantum system in R3 described by the state |ϱ↔. We shall now show that the time
+evolution with a Hamiltonian Hˆ = Lˆj (orbital angular momentum) corresponds to a rotation of the
+coordinate system. The time-evolved state is given by |ϱ(t)↔ = e→iLˆj t/⊋|ϱ(0)↔. Thus, the expectation
+value of an observable Aˆ at time t is given by
+↗ϱ(t)|Aˆ|ϱ(t)↔ = ↗ϱ(0)|eiLˆj t/⊋Aˆe→iLˆj t/⊋|ϱ(0)↔. (9.10)
+9.2. ANGULAR MOMENTUM AND ROTATIONS 61
+Alternatively, we can interpret this as the expectation value of the operator eiLˆj t/⊋Aˆe→iLˆj t/⊋ in the
+state at time zero. Let us consider the expectation values of the position operators ˆq1,2,3. Denote
+the expectation value of ˆq at time zero by the vector Qω = (Q1, Q2, Q3)T → R3.
+To calculate eiLˆj t/⊋qˆke→iLˆj t/⊋ we can use the Hadamard lemma 8.28. From the definition of the
+components of the orbital angular momentum (9.5) we find the commutators
+[Lˆj , qˆk] = i⊋ϑjklqˆl. (9.11)
+Using these and the Hadamard lemma we can calculate the eiωLˆj/⊋qˆke→iωLˆj/⊋. Let us consider the
+examples eiωLˆ1/⊋qˆje→iωLˆ1/⊋. Since [Lˆj , qˆj ] = 0, we trivially have
+eiωLˆ1/⊋qˆ1e→iωLˆ1/⊋ = ˆq1. (9.12)
+To evaluate eiωLˆ1/⊋qˆ2e→iωLˆ1/⊋ we need to calculate the nested commutators [Lˆ1, [Lˆ1, [..., [Lˆ1, qˆ2]...]]].
+This can be done iteratively, starting from [Lˆ1, qˆ2] = i⊋qˆ3:
+[Lˆ1, [Lˆ1, qˆ2]] = i⊋[Lˆ1, qˆ3] = ⊋2qˆ2
+[Lˆ1, [Lˆ1, [Lˆ1, qˆ2]]] = ⊋2[Lˆ1, qˆ2] = i⊋3qˆ3
+[Lˆ1, [Lˆ1, [Lˆ1, [Lˆ1, qˆ2]]]] = i⊋3[Lˆ1, qˆ3] = ⊋4qˆ2
+.
+.
+.
+Remembering the Taylor expansions of sin and cos:
+sin(x) = x ↓ x3
+3! +
+x5
+5! ↓ x7
+7! + ...
+cos(x)=1 ↓ x2
+2! +
+x4
+4! ↓ x6
+6! + ...
+we realise that
+eiωLˆ1/⊋qˆ2e→iωLˆ1/⊋ = ˆq2 cos(ϖ) ↓ qˆ3 sin(ϖ).
+Similarly we find
+eiωLˆ1/⊋qˆ3e→iωLˆ1/⊋ = ˆq3 cos(ϖ)+ˆq2 sin(ϖ),
+and so on. That is, we have
+Qω (t) := ↗ϱ(0)|eiLˆj t/⊋qˆe→iLˆj t/⊋|ϱ(0)↔ = Rj (t)Q, ω (9.13)
+where Rj (t) is the rotation matrix around the axis j by an angle t, and Qω is the vector of expectation
+values of the position operators at time zero.
+9.2.3 Action of the eiωJˆ
+j/⊋ on the angular momentum operators
+Similarly to the considerations above we can use the Hadamard lemma to calculate eiωJˆ
+j/⊋Jˆ
+ke→iωJˆ
+j/⊋:
+Trivially we have
+eiωJˆ
+j/⊋Jˆ
+je→iωJˆ
+j/⊋ = Jˆ
+j . (9.14)
+Let us now consider the example eiωJˆ
+1/⊋Jˆ
+2e→iωJˆ
+1/⊋. Again, we need to calculate the nested commutators [Jˆ
+1, [Jˆ
+1, [..., [Jˆ
+1, Jˆ
+2]...]]]. Similarly to above, this can be done iteratively, starting from
+[Jˆ
+1, Jˆ
+2] = i⊋Jˆ
+3:
+[Jˆ
+1, [Jˆ
+1, Jˆ
+2]] = i⊋[Jˆ
+1, Jˆ
+3] = ↓⊋2Jˆ
+2
+[Jˆ
+1, [Jˆ
+1, [Jˆ
+1, Jˆ
+2]]] = ↓⊋2[Jˆ
+1, Jˆ
+2] = ↓i⊋3Jˆ
+3
+[Jˆ
+1, [Jˆ
+1, [Jˆ
+1, [Jˆ
+1, Jˆ
+2]]]] = ↓i⊋3[Jˆ
+1, Jˆ
+3] = ⊋4Jˆ
+2
+.
+.
+.
+62 CHAPTER 9. ANGULAR MOMENTUM
+And thus,
+eiωJˆ
+1/⊋Jˆ
+2e→iωJˆ
+1/⊋ = Jˆ
+2 cos(ϖ) ↓ Jˆ
+3 sin(ϖ).
+Similarly we find
+eiωJˆ
+1/⊋Jˆ
+3e→iωJˆ
+1/⊋ = Jˆ
+3 cos(ϖ) + Jˆ
+2 sin(ϖ),
+and so on. In summary we have
+eiJˆ
+j t/⊋Jˆe→iJˆ
+j t/⊋ = Rj (t)J, ˆ (9.15)
+where Rj (t) is the rotation matrix around the axis j by an angle t.
+Exercise 14. Prove that Jˆ
+2 and Jˆ
+3 have the same eigenvalues.
+9.3 Spectral properties of angular momentum
+We now continue to determine the eigenvalues of quantum angular momentum. Similar to the
+case of the harmonic oscillator, this can be done by purely algebraic methods. We start out with
+some considerations about orbital angular momentum, where we shall deduce that the possible
+eigenvalues of the components of orbital angular momentum are integer multiples of ⊋. We shall
+then move on to find that the commutation relations defining angular momentum would also allow
+for half-integer values. Half-integer angular momentum does indeed occur in nature, though it
+cannot be related to orbital angular momentum of particles, as the latter would have to be integer
+valued. Half-integer valued angular momentum appears as an internal degree of freedom, in the
+spin of quantum particles. We shall briefly discuss this quantum spin in section 9.5.
+9.3.1 Orbital angular momentum
+Let us consider the possible eigenvalues of Lˆ3 = ˆq1pˆ2 ↓ qˆ2pˆ1. One can show that these will be given
+by integer multiples of ⊋. This is done by introducing the new set of operators ˆx and ˆy, and ˆpx and
+pˆy, defined as
+xˆ = 1
+↘2
+(ˆq1 + ˆp2), pˆx = 1
+↘2
+(ˆp1 ↓ qˆ2)
+yˆ = 1
+↘2
+(ˆq1 ↓ pˆ2), pˆy = 1
+↘2
+(ˆp1 + ˆq2),
+which also fulfil the fundamental commutation relation of position and momenta, and rewriting Lˆ3
+in terms of these operators as
+Lˆ3 = 1
+2
+&
+pˆ2
+x + ˆx2'
+↓ 1
+2
+&
+pˆ2
+y + ˆy2'
+. (9.16)
+In this way, we can interpret Lˆ3 as the di!erence of two harmonic oscillators Hˆx and Hˆy, with
+masses m = 1 and frequencies ς = 1. Remembering that the eigenvalues of the harmonic oscillator
+Hˆ = pˆ2
+2m + 1
+2mς2qˆ2 are given by ⊋ς(n + 1
+2 ), where n are the non-negative integers, we thus deduce
+that the eigenvalues of Lˆ3 are given by
+φn = ⊋(nx +
+1
+2
+) ↓ ⊋(ny +
+1
+2
+) = ⊋(nx ↓ ny), (9.17)
+where nj are non-negative integers. Thus, the eigenvalues of Lˆ3 are integer multiples of ⊋, if Lˆ3 is
+associated to orbital angular momentum. The same argument can be used to deduce the eigenvalues
+of Lˆ1 (and Lˆ2), which are also integer multiples of ⊋.
+9.3. SPECTRAL PROPERTIES OF ANGULAR MOMENTUM 63
+9.3.2 Algebraic derivation of the spectral properties
+Since the three components of angular momentum do not commute, we cannot measure them
+simultaneously. The operator Jˆ2 commutes with all of the components, and thus, it is meaningful
+to talk about the total angular momentum and the component in one direction. We recall Theorem
+7 from Section 4.3.2, stating that two commuting observables have simultaneous eigenvectors, and
+consider the simultaneous eigenvectors of Jˆ2 and one selected component of the angular momentum.
+In what follows we arbitrarily choose Jˆ
+3:
+Jˆ2|↼, m↔ = ⊋2↼|↼, m↔, and Jˆ
+3|↼, m↔ = ⊋m|↼, m↔, (9.18)
+and ask the question: What are the possible values of ↼ and m?
+Remark 44. Due to the symmetry of the problem, the eigenvalues of Jˆ
+1 and Jˆ
+2 are the same as
+those of Jˆ
+3.
+We will prove the following
+Theorem 10. The possible values of ↼ are given by j(j + 1) with 2j → N, and for each value of ↼
+m can take the values ↓j, ↓j + 1,...,j ↓ 1, j.
+We first prove
+Lemma 4. For a given ↼ we have m2 ≃ ↼, that is, m is bounded from above and below.
+Proof. Assume that the states |↼, m↔ are normalised to one. Consider the sum of the norms of the
+states Jˆ
+j |↼, m↔, which are positive by definition. That is, we have
+!
+j
+↗↼, m|Jˆ2
+j |↼, m↔ = ↗↼, m|Jˆ2|↼, m↔ ⇐ 0. (9.19)
+On the other hand we have
+↗↼, m|Jˆ2|↼, m↔ = ⊋2↼, and ↗↼, m|Jˆ2
+3 |↼, m↔ = ⊋2m2. (9.20)
+Now we don’t know what the ↗↼, m|Jˆ2
+1,2|↼, m↔ are exactly, but we do know that
+↗↼, m|Jˆ2
+1,2|↼, m↔ ⇐ 0, (9.21)
+and thus
+!
+j
+↗↼, m|Jˆ
+j |↼, m↔ = ↗↼, m|Jˆ2|↼, m↔
+⊋2↼ ⇐ ⊋2m2.
+(9.22)
+The remainder of the proof of Theorem 10 proceeds very similarly to the case of the harmonic
+oscillator treated in section 5.1. We first introduce the set of adjoint operators
+Jˆ
+± = Jˆ
+1 ± iJˆ
+2. (9.23)
+We will need the commutators
+[Jˆ
+3, Jˆ
+±] = ±⊋J± and [Jˆ
++, Jˆ
+→]=2⊋Jˆ
+3, (9.24)
+and the identities
+Jˆ
+→Jˆ
++ = Jˆ2 ↓ Jˆ2
+3 ↓ ⊋Jˆ
+3, and Jˆ
++Jˆ
+→ = Jˆ2 ↓ Jˆ2
+3 + ⊋Jˆ
+3. (9.25)
+64 CHAPTER 9. ANGULAR MOMENTUM
+Exercise 15. Verify the commutation relations (9.24) and (9.25) using the defining commutator
+relations (9.8).
+The operators Jˆ
+± now play the same role as the ˆa(†) for the harmonic oscillator. We have the
+following two lemmas:
+Lemma 5. If |↼, m↔ is an eigenvector of Jˆ
+3 with eigenvalue ⊋m, then Jˆ
++|↼, m↔ is either the zero
+vector or also an eigenvector of Jˆ
+3 with eigenvalue ⊋(m + 1).
+Lemma 6. If |↼, m↔ is an eigenvector of Jˆ
+3 with eigenvalue ⊋m, then Jˆ
+→|↼, m↔ is either the zero
+vector or also an eigenvector of Jˆ
+3 with eigenvalue ⊋(m ↓ 1).
+Exercise 16. Proof Lemma 5 and Lemma 6.
+Since m2 ≃ ↼ there are either now eigenvectors at all, or there has to be a maximal value
+mmax = j, for which
+Jˆ
++|↼, j↔ = 0, (9.26)
+and a minimal value mmin = k, for which
+Jˆ
+→|↼, k↔ = 0, (9.27)
+and m runs in integer values from k to j. Applying Jˆ
+→ to equation (9.26), and using that Jˆ
+→Jˆ
++ =
+Jˆ2 ↓ Jˆ2
+3 ↓ ⊋Jˆ
+3 yields
+Jˆ2 ↓ Jˆ2
+3 ↓ ⊋Jˆ
+3|↼, j↔ = 0
+= &
+⊋2↼ ↓ ⊋2j2 ↓ ⊋2j
+'
+|↼, j↔, (9.28)
+where |↼, j↔ is assumed not to be the zero vector. That is,
+↼ = j2 + j = j(j + 1). (9.29)
+On the other hand, applying Jˆ
++ to equation (9.27), and using that Jˆ
++Jˆ
+→ = Jˆ2 ↓ Jˆ2
+3 + ⊋Jˆ
+3 yields
+Jˆ2 ↓ Jˆ2
+3 + ⊋Jˆ
+3|↼, k↔ = 0
+= &
+⊋2↼ ↓ ⊋2k2 + ⊋2k
+'
+|↼, k↔, (9.30)
+where |↼, k↔ is not the zero vector either, and thus
+↼ = k2 ↓ k = k(k ↓ 1). (9.31)
+Combining equations (9.29) and (9.31) yields
+k(k ↓ 1) = j(j + 1), (9.32)
+which has the two possible solutions
+k = j + 1 or k = ↓j, (9.33)
+we know, however, that k is the minimal value of m and j the maximal, that is k ≃ j, which means
+we have
+k = ↓j. (9.34)
+Thus we have deduced that m runs in integer steps from ↓j to j, from which it follows that
+2j is an integer, and the value of ↼ is related to j by ↼ = j(j + 1), which completes the proof of
+Theorem 10.
+Remark 45. The eigenstates are usually labelled by the numbers j and m, rather than ↼ and m.
+Remark 46. For any given value of j there are 2j + 1 values of m.
+9.4. MATRIX REPRESENTATION IN THE “STANDARD BASIS” 65
+9.4 Matrix representation in the “standard basis”
+The so-called standard basis of angular momentum is given by the set of states |j, m↔ fulfilling
+Jˆ2|j, m↔ = ⊋2j(j + 1)|j, m↔,
+Jˆ
+3|j, m↔ = ⊋m|j, m↔, (9.35)
+with 2j → N and m running in integer steps from ↓j to j. We shall now deduce the representation
+of the angular momentum operators in the standard basis. By definition the matrices of Jˆ2 and Jˆ
+3
+in the standard basis are diagonal. We have
+↗j↑
+, m↑
+|Jˆ2|j, m↔ = ⊋2j(j + 1)εj→jεm→m, (9.36)
+and
+↗j↑
+, m↑
+|Jˆ
+3|j, m↔ = ⊋mεj→jεm→m, (9.37)
+We can deduce the matrix elements of Jˆ
+1 and Jˆ
+2 from those of Jˆ
+±. We know that Jˆ
++|j, m↔ ⇒
+|j, m + 1↔. We can find the proportionality constant from the normalisation condition. We have
+↗j, m + 1|j, m + 1↔ = 1
+c2 ||Jˆ
++|j, m↔||2 = 1
+c2 ↗j, m|Jˆ
+→Jˆ
++|j, m↔
+= 1
+c2 ↗j, m|Jˆ2 ↓ Jˆ2
+3 ↓ ⊋Jˆ
+3|j, m↔
+= 1
+c2
+&
+⊋2j(j + 1) ↓ ⊋2m2 ↓ ⊋2m'
+↗j, m|j, m↔
+= 1
+c2
+&
+⊋2j(j + 1) ↓ ⊋2m(m + 1)'
+↗j, m|j, m↔.
+(9.38)
+Assuming that ↗j, m|j, m↔ = 1, |j, m + 1↔ is normalised if c = ⊋
+(j(j + 1) ↓ m(m + 1), that is,
+Jˆ
++|j, m↔ = ⊋
+(j(j + 1) ↓ m(m + 1)|j, m + 1↔. (9.39)
+Similarly we find
+Jˆ
+→|j, m↔ = ⊋
+(j(j + 1) ↓ m(m ↓ 1)|j, m ↓ 1↔. (9.40)
+That is we have for the matrix elements of Jˆ
++ and Jˆ
+→:
+↗j↑
+, m↑
+|Jˆ
++|j, m↔ = ⊋
+(j(j + 1) ↓ m(m + 1)εj→jεm→,m+1,
+↗j↑
+, m↑
+|Jˆ
++|j, m↔ = ⊋
+(j(j + 1) ↓ m(m ↓ 1)εj→jεm→,m→1. (9.41)
+The matrix elements of Jˆ
+1 and Jˆ
+2 then follow from
+Jˆ
+1 = 1
+2
+)
+Jˆ
++ + Jˆ
+→
+*
+, and Jˆ
+2 = 1
+2i
+)
+Jˆ
++ ↓ Jˆ
+→
+*
+. (9.42)
+The angular momentum matrices for the total angular momentum j = 1
+2 are given by ˆsj = ⊋
+2↽ˆj ,
+where ˆ↽j denotes the Pauli matrices (8.36).
+9.5 Quantum Spin
+There is a quantum observable whose three components fulfil the angular momentum commutation
+relations, which does not describe orbital angular momentum. This observable is the so-called spin
+of a particle. It corresponds to an internal degree of freedom. The values of the spin of a particle
+in a given direction can be integer or half integer multiples of ⊋. Although it does not relate to
+an actual rotation or “spinning” motion of the particle, it can be transformed into orbital angular
+momentum. The spin is a fundamental quantity of a quantum particle, similar to for example, its
+mass. That is, the total value (i.e. the value of Sˆ2) is a conserved quantity.
+66 CHAPTER 9. ANGULAR MOMENTUM
+Remark 47. There are two types of particles in nature, those with integer spin, the so-called bosons,
+and those with half-integer spin, the so-called fermions, which behave very di!erently from each
+other. The details of this di!erence could easily lead us into many more lectures and thus we will
+not comment further at this point.
+Remark 48. The spin degree of freedom of a spin 1
+2 particle is described by the 2 ↑ 2 representation
+of angular momentum, i.e. the Pauli matrices. Together with the identity matrix the Pauli matrices
+form a basis for all 2 ↑ 2 matrices. That is, every 2 ↑ 2 matrix can be written as a superposition
+of Pauli-matrices, and thus every quantum system with two states can be interpreted as a spin 1
+2
+system.
+Figure 9.1: Stern-Gerlach experiment, setup, and postcard with the results from Gerlach to Bohr.
+9.5.1 A short history
+In 1922 a now famous experiment was performed by Stern and Gerlach, which was meant to demonstrate the quantisation of angular momentum. We now know that this was the first experimental
+verification of the quantum spin, even though at the time of the experiment that was not clear,
+and even the notion of quantum spin did not exist at the time. In the experiment, the setup of
+which is schematically depicted in figure 9.1 on the left, silver atoms were heated in an oven and
+allowed to escape and fly through an inhomogeneous magnetic field. The interaction between a
+charged particle with a given angular momentum and an inhomogeneous magnetic field leads to a
+force that is given by the so-called magnetic moment of the particle multiplied with the gradient
+of the magnetic field. The magnetic moment is proportional to the charge and the internal angular
+momentum of the particle. Thus, one expects that after crossing the magnetic field the silver atoms
+will be displaced from the straight line on which they entered the magnetic field by a distance
+proportional to their angular momentum. Stern and Gerlach were lucky to have chosen silver for
+their experiment, as the electrons in a silver atom have total orbital angular momentum of zero,
+and the total angular momentum of the atom is entirely due to the spin of the outermost electron in
+the atom, which has spin 1
+2 (that is, j = 1/2) and thus the beam split into two. Stern and Gerlach
+were aware they had measured the quantisation of angular momentum, and sent a postcard to Bohr
+(see figure 9.1), congratulating him on the experimental verification of his quantum theory. They
+were, however, not aware that they had in fact measured the internal spin degree of the electron, a
+9.5. QUANTUM SPIN 67
+concept which didn’t even exist at the time. Most certainly they had not done our calculation in
+Section 9.3.1, or otherwise they would have been rather surprised to find the initial beam of silver
+atoms had split into an even number of beams. It took until 1927 for the Stern-Gerlach experiment
+to be connected to the electron spin.
+Uhlenbeck and Goudsmith proposed the idea of a spin of the electron around 1925 in their calculations of atomic spectra. At approximately the same time Pauli used the idea of a double-valued
+observable and introduced the Pauli-matrices, but said this had “nothing to do with Uhlenbeck’s
+and Goudsmith’s spin”... Not much later Dirac introduced a relativistic version of quantum theory,
+compatible with special relativity. In this theory, the spin comes out automatically.
+Today the quantum spin is at the basis of many technologies, and gains ever more importance.
+Spin dynamics is the basic principle behind medical techniques such as MRI, there is an ever
+increasing interest in so-called spin-tronics, and the spin is the key ingredient (qubit) in quantum
+information.

@@ -1,0 +1,329 @@
+Chapter 3
+Excursion: Mathematical background
+After having gained some first impressions of quantum behaviour looking at Schr¨odinger’s wave
+functions, we shall now move to a more abstract and versatile formulation of quantum mechanics, that will allow us to identify which questions can be answered by quantum mechanics, and
+which questions the theory does not “allow” us to ask. In particular in chapter 4 we will learn
+five principles/postulates of quantum mechanics that form the basis of the whole theory and its
+interpretations. Several mathematical concepts and notations are needed to formulate and understand these principles, and in the present chapter we provide the minimum background. Let us
+first, however, have a brief look into the first two postulates that we will discuss in more detail in
+chapter 4 to get an idea which mathematical background is needed and why.
+3.1 States and obervables - Hilbert spaces and Hermitian operators
+The main ingredients for this theoretical framework of quantum mechanics are the concepts of
+a state and of observables. A state encodes all the information one can have about a quantum
+system. Observables are measurable quantities (such as, for example, the position of a particle
+or its kinetic energy). In some ways, the same concepts appear in classical mechanics, but we so
+naturally associate the mathematical objects that describe these properties with the actual physical
+properties that they are seldom talked about.
+Looking back at Hamilton’s classical mechanics we see that all measurable quantities, i.e. observables are given by real phase-space functions, that is, real functions of the canonical variables.
+The canonical variables, in turn, are the classical state. We implicitly consider this state to be a
+property of the system (for example a particle) in classical physics, and talk about the position of
+an object or the momentum of a particle, in similar terms as when considering its mass, colour or
+other inherent property. In quantum mechanics we will have to let go of this.
+The state of a quantum system, as defined above, encodes all we can in principle measure about
+a particle, but it makes no claim about measurable quantities being properties of a particle. We
+have already encountered this in the last chapter where we have seen that it makes little sense in
+Schr¨odinger’s framework of quantum mechanics to talk about a particle’s position. The only thing
+we can talk about is the probability of finding a particle in a certain region at a given time. Think
+this over - it is the essence of quantum mechanics!
+As Philip Ball argues in his beautiful recent book ”Beyond weird”, this is neither weird nor
+strange. It does, however, require a shift away from century-old ways of thinking about the nature
+of things. This allows us to predict a lot of experimental observations with unprecedented accuracy,
+and to design technological devices such as transistors and lasers, that would be impossible on the
+basis of classical physics. A lot can be said (and over the decades a lot has been said, indeed) about
+the philosophical aspects of quantum theory. Here, however is not the place to do so. Let us instead
+focus on the mathematical framework and on what we can calculate with it.
+15
+16 CHAPTER 3. EXCURSION: MATHEMATICAL BACKGROUND
+As we shall see, compared to classical mechanics, the role of position and momentum is shifted
+from the state to observables. The role of the state is taken over by another mathematical object
+that does not appear explicitly in classical physics. That brings us to
+The first principle of quantum mechanics: The state of a quantum system is described by a
+non-zero vector in a Hilbert space.
+Observables are covered by
+The second principle of quantum mechanics: A measurable quantity is described by a Hermitian operator on the Hilbert space. Both the measurable quantities and the operators representing
+them are often referred to as observables.
+With this in mind in this chapter we shall review some general concepts from linear algebra
+and analysis, and in particular provide a minimal background on Hilbert spaces and Hermitian
+operators. We shall also learn about a very powerful notation for vectors and operators on Hilbert
+spaces that has been developed by Dirac especially for quantum mechanics, aptly called the Dirac
+notation, that we shall make use of in the rest of the course.
+3.2 Some linear algebra and analysis
+Here we summarise a few definitions from linear algebra that are essential in the abstract formulation
+of quantum mechanics.
+Complex vector space: A set of elements (vectors) V , forming an Abelian (i.e. commutative)
+group with respect to addition u + v, and a scalar multiplication C ⇥ V ! V , satisfying
+( + µ)v = v + µv
+(µ)v = (µv)
+(u + v) = u + v
+1v = v.
+for all , µ 2 C and u, v 2 V , is called a vector space.
+Remark 17. In general a vector space can be defined over any field F, where the scalars are
+elements of F. Most commonly encountered in physics are vector spaces over the real or the
+complex numbers.
+Inner product space: An inner product space is a vector space V together with a map V ⇥V ! C,
+written as (u, v), such that for all u, v, w 2 V and , µ 2 C:
+(u, v)=(v, u)
+⇤
+(u, u)  0, and (u, u)=0 , u = 0
+(u, v + µw) = (u, v) + µ(u, w).
+Linear (in)dependence, basis, dimension: A set of vectors {un} is said to be linearly independent if no nontrivial linear combination of them sums to zero. If the set is on the contrary
+linearly dependent, one can express one member of the set as a linear combination of the
+others: uk = P
+n6=k ↵nun.
+The maximum number of linearly independent vectors in a space is called the dimension of
+the space.
+A maximal set of linearly independent vectors is called a basis. That is, every vector in the
+space can be represented as a linear combination of the basis vectors:  = P
+n nun. The n
+are the coecients or components of  in the basis {un}. One can represent  as an N-tuple
+of complex numbers, (1, ... , N ) 2 CN , where N is the dimension of the vector space.
+3.2. SOME LINEAR ALGEBRA AND ANALYSIS 17
+Norm: The norm ||v|| of a vector can be defined via ||v||2 = (v, v). A vector is called normalised
+if ||v|| = 1.
+Orthonormality: Two vectors u, v are called orthogonal if (u, v) = 0. A set of vectors {un} is
+said to be orthonormal if each vector is normalised and the vectors are pairwise orthogonal.
+An orthonormal maximal set of linearly independent vectors is an orthonormal basis.
+Coecients: The coecients of a vector  in an orthonormal basis {un} can be found via the
+orthonormality condition as n = (un, ).
+Hilbert space: A Hilbert space H is a complex inner product space which is complete with respect
+to the norm induced by the inner product.
+Completeness of a vector space: A vector space V is complete if the following holds. Whenever
+{un 2 V } is a sequence of vectors such that for any positive ✏ there exists an integer N✏ with
+||um  un|| < ✏, for all m, n > N✏,
+then there exists a limit vector u 2 V , such that
+||un  u|| ! 0.
+A finite dimensional vector space is automatically complete, i.e. every finite dimensional
+vector space is a Hilbert space.
+Separable Hilbert space: A Hilbert space is called separable if it possesses a countable basis. In
+quantum mechanics, we deal only with separable Hilbert spaces.
+Linear Operator: An operator on a vector space is a map V ! V . A linear operator A satisfies
+A(u + µv) = (Au) + µ(Av),
+for all , µ 2 C, and u, v 2 V .
+A linear operator on a finite dimensional vector space can be represented by a matrix.
+Bounded operators An operator A on a Hilbert space is bounded if and only if there exists a real
+number c > 0, such that for all u 2 H,
+||Au||  c||u||.
+Domain The domain D(A) 2 H of an operator A is the set of vectors on which A is bounded, i.e.,
+the set of vectors u 2 H for which Au 2 H.
+Adjoint Operator: The adjoint A† of a linear operator A is defined by the relation
+(A†
+u, v)=(u, Av), for all v 2 D(A) and u 2 D(A†
+).
+The adjoint fulfils the following properties:
+(cA)
+† = c⇤A†
+(A + B)
+† = A† + B†
+(AB)
+† = B†
+A†
+.
+18 CHAPTER 3. EXCURSION: MATHEMATICAL BACKGROUND
+Hermiticity and Self-adjointness: A linear operator defined on a Hilbert space H is called Hermitian
+(Au, v)=(u, Av), for all v, u 2 D(A),
+that is if A† = A on the overlap of the domains of A and A†.
+For bounded operators the domain is the whole Hilbert space, and Hermiticity leads to many
+useful properties. For unbounded operators, on the other hand, Hermiticity is not enough to
+guarantee some crucial properties we need in quantum mechanics. Here the stronger concept
+of self-adjointness is important. An operator A is self-adjoint if A = A† and D(A) = D(A†).
+For more details, see, e.g. Ballentine, Cohen Tannoudji, or Brian Hall’s “Quantum mechanics
+for Mathematicians”.
+Eigenvalues and eigenvectors: If an operator acting on a certain vector produces a scalar multiple of that same vector,
+Au = au,
+we call the vector u an eigenvector and the scalar a an eigenvalue of the operator A.
+If A is an N ⇥ N matrix the eigenvalue equation only has nontrivial solutions if
+det(A  a1)=0.
+This yields the characteristic polynomial of A, which is a polynomial of Nth order in a.
+3.3 The Dirac notation
+3.3.1 The dual space and the Riesz theorem
+To any linear vector space V there exists a dual space of linear functionals on V . A linear functional
+F assigns a scalar F() to each vector , such that
+F(↵ +  ) = ↵F() + F( ), (3.1)
+for ↵,  2 C and , 2 V .
+The set of linear functionals is itself a linear vector space V 0 with the definition
+(F1 + F2)() = F1() + F2(). (3.2)
+Theorem 1 (Riesz representation theorem). A complex Hilbert space H is anti-isomorphic to its
+dual space H0
+. That is, there exists a one-to-one correspondence between linear functionals F and
+vectors f, such that all linear functionals can be represented in the form F()=(f, ) with a fixed
+vector f and arbitrary vectors .
+We shall prove the Riesz theorem for separable Hilbert spaces here, making use of the fact that
+they possess a countable orthonormal basis. Clearly every vector defines a functional via the inner
+product. The proof for the opposite direction, that every functional can be represented as an inner
+product with a fixed vector, works by construction:
+Proof. Let {n} be an orthonormal basis of H. Let = P
+n nn with n 2 C be an arbitrary
+vector in H. Then
+F( ) = X
+n
+ nF(n). (3.3)
+Defining the vector f = P
+n [F(n)]⇤ n we see that
+(f, ) = X
+n
+F(n) n = F( ) (3.4)
+for all 2 H.
+3.3. THE DIRAC NOTATION 19
+3.3.2 The Dirac notation
+Vectors in H are called ket vectors, written as |i, vectors in the dual space H0 (functionals) are
+called bra vectors, written as hf|. In this way we have
+F()=(f, ) = hf|i, (3.5)
+where the last expression is a “bra-ket” – hence the name.
+Remark 18. On some level one can think of this Dirac notation simply as a notation for scalar
+products, but it turns out to be useful far beyond this.
+There is an anti-linear correspondence between bras and kets due to the nature of the scalar
+product:
+↵⇤hf1| + ⇤hf2| ! ↵|f1i + |f2i. (3.6)
+Recalling the definition of the adjoint operator Aˆ† of a linear operator Aˆ we see that the bra
+associated to the ket vector Aˆ|i is the vector h|Aˆ†. That is, we can interpret the expression Aˆ|i
+as “|Aˆi” and the expression h|Aˆ† as “hAˆ|”. That is, the notation h|Aˆ| i denotes two equal,
+but morally di↵erent, things:
+(i) The inner product of the vector  with the vector resulting from acting with Aˆ on the vector
+ , i.e. “h|Aˆ i”;
+(ii) The inner product of the vector resulting from acting with Aˆ† onto the vector  with the
+vector , i.e. “hAˆ†| i”.
+The definition of the adjoint operator is expressed in Dirac notation as
+h|Aˆ| i = h |Aˆ†
+|i
+⇤. (3.7)
+3.3.3 Rules for finding the adjoint of an expression
+To find the adjoint of an expression, one needs to
+• complex conjugate scalars c $ c⇤,
+• replace kets with bras and vice versa |i$h|,
+• replace operators with their adjoints Aˆ $ Aˆ†,
+• reverse the order of factors.
+As an example, consider the expression
+c| ih|A| ih|.
+This expression is an operator. The adjoint operator is given by
+c⇤|ih |Aˆ†
+|ih |. (3.8)
+3.3.4 The outer product of two vectors
+Besides the inner product of a bra h| and a ket | i, h| i, which is a scalar, there is also an outer
+product, | ih|, which is a linear operator.
+Exercise 4. What is the adjoint operator of | ih|?
+Remark 19. An operator of the form P = |ih| is a projection operator, as the mapping P : | i 7!
+h| i|i is the projection of | i onto |i. We will return to a more general notion of projection
+operators in the discussion of principle 4 in chapter 4.
+20 CHAPTER 3. EXCURSION: MATHEMATICAL BACKGROUND
+3.3.5 Completeness and resolution of identity
+An orthonormal set of vectors {n} is complete if an arbitrary |vi 2 V can be written as
+|vi = X
+n
+vn|ni. (3.9)
+The coecients vn are given by
+vn = hn|vi. (3.10)
+Reinserting this into the expansion (3.9) of |vi gives the identity
+|vi = X
+n
+|nihn|vi. (3.11)
+This, however, is identical to the statement
+|vi =
+ X
+n
+|nihn|
+!
+|vi. (3.12)
+Since this is valid for all vectors v 2 V , that means that
+X
+n
+|nihn| = 1. (3.13)
+This property which is fulfilled by any complete orthonormal set, is called the resolution of identity.
+3.4 More on Hermitian operators
+Theorem 2. All eigenvalues of a Hermitian operator are real.
+Proof. Consider the (non-zero) eigenvector |ui of a Hermitian operator Aˆ = Aˆ†, corresponding to
+the eigenvalue a 6= 0:
+Aˆ|ui = a|ui.
+The adjoint equation reads
+hu|Aˆ = hu|a⇤.
+We have
+hu|Aˆ|ui = hu|a|ui = ahu|ui.
+On the other hand we have Aˆ = Aˆ†, and thus
+hu|Aˆ|ui = hu|Aˆ†
+|ui = hu|a⇤|ui = a⇤hu|ui.
+It follows that
+ahu|ui = a⇤hu|ui. (3.14)
+Since hu|ui 6= 0 it follows that
+a = a⇤ 2 R.
+Theorem 3. Eigenvectors of a Hermitian operator belonging to di↵erent eigenvalues are orthogonal.
+Exercise 5. Prove theorem 3.
+Theorem 4. The expectation values, hv|Aˆ|vi, of Hermitian operators are real. On the other hand,
+if every expectation value of an operator is real, the operator is Hermitian.
+3.5. VECTOR/MATRIX REPRESENTATION 21
+We will prove theorem 4 in the lecture.
+Finally, without proof, we state the following important
+Theorem 5. The eigenvectors of a Hermitian operator form a complete orthogonal basis set for
+the Hilbert space the operator acts upon.
+An operator A is called anti-Hermitian if Aˆ† = Aˆ. If Aˆ is Hermitian then iAˆ is anti-Hermitian.
+Every operator can be uniquely decomposed into a Hermitian and an anti-Hermitian part, Aˆ =
+Aˆh + iAˆa, with Aˆ†
+h = Aˆh and Aˆ†
+a = Aˆa.
+3.5 Vector/matrix representation
+Consider a Hilbert space H with a countable orthonormal basis {|uni}. The ket vectors | i 2 H
+can be represented by (possibly infinite) column vectors of their coecients in this basis:
+| i = X
+n
+an|uni, | i '
+0
+BBBBBB@
+a1
+a2
+.
+.
+.
+aj
+.
+.
+.
+1
+CCCCCCA
+=: ~a.
+For the scalar product of two vectors | i = P
+n an|uni, and |i = P
+n bn|uni it follows from
+h| = P
+nhun|b⇤
+n that
+h| i = X
+m,n
+hum|b⇤
+man|uni = X
+m,n
+b⇤
+manhum|uni
+= X
+m,n
+b⇤
+manmn = X
+n
+b⇤
+nan
+= (~b⇤)
+T~a .
+Similarly linear operators on the Hilbert space can be represented by matrices. Consider, e.g., the
+equation Mˆ | i = |i, that is
+X
+n
+anMˆ |uni = X
+n
+bn|uni.
+Operating on this with hum| yields
+X
+n
+anhum|Mˆ |uni = X
+n
+bnhum|uni
+X
+n
+anhum|Mˆ |uni = X
+n
+bnmn
+X
+n
+Mmnan = bm,
+which is valid for all m. Thus,
+Mˆ | i = |i , M~a = ~b,
+with Mˆ = (Mmn) and Mmn = hum|Mˆ |uni. In matrix representation Hermiticity means that
+Mmn = M⇤
+nm.
+22 CHAPTER 3. EXCURSION: MATHEMATICAL BACKGROUND

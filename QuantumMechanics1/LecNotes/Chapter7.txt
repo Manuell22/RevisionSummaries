@@ -1,0 +1,537 @@
+Chapter 7
+Spectral properties of one-dimensional
+quantum systems
+In this chapter we will analyse the eigenvalues of the Hamiltonian for a number of important onedimensional quantum systems. That is, we solve the time-independent Schr¨odinger equation. Again,
+we consider systems of the form Hˆ = → ⊋2
+2m
+ω2
+ωx2 + V (x). Physically these Hamiltonians describe a
+particle (in one-dimensional space) of mass m under the influence of an external potential V (x).
+This could be, for example, an electron in an atom, where the potential is given by the interaction
+with the nucleus and the other electrons (this is complicated and obviously three-dimensional and we
+will not discuss details in this chapter). The particle in a box is a good approximation for electrons
+in so-called quantum dots, which are fabricated semiconductor structures in which electrons are
+confined. Atoms in optical potentials (where quantum optical e!ects are used to confine atoms with
+laser setups) are another experimental system described by Hamiltonians of the form considered
+here. Experimentally these systems can often be made quasi one-dimensional. Similarly atoms
+can be trapped magnetically, in approximately harmonic traps described by quadratic potentials.
+There are countless other examples, even outside quantum physics: The Helmholtz equation for
+microwaves in flat (quasi two-dimensional) resonators is similar to the Schr¨odinger equation where
+the potential is related to the structure of the cavity. Similar analogies exist in optical setups.
+7.1 Position representation of the harmonic oscillator eigenstates
+With the position representation from Chapter 6 at hand, we can now return to the harmonic
+oscillator and provide the position representation of the eigenstates. In fact, we have already
+calculated this along the way when we considered the eigenvalues of the position operator in section
+6.2, where we deduced that
+↑n|x↓ = 1
+ω1/4
+↔
+2n n!
+↔
+L
+e
+→ x2
+2L2 Hn(
+x
+L). (7.1)
+Thus, we have implicitly found there that
+εn(x) = ↑x|n↓ = 1
+ω1/4
+↔
+2n n!
+↔
+L
+e
+→ x2
+2L2 Hn(
+x
+L). (7.2)
+Nevertheless, let us, as an exercise also consider the problem in position representation picking
+up at an earlier point and verifying (7.2). Let us start with deducing the position representation of
+the ground state (the state belonging to the lowest eigenvalue, E0 = ⊋ε
+2 ), directly from the condition
+aˆ|0↓ = 0. This will also provide the direct verification of the statement that the ground state energy
+is not degenerate, which we had used without proof in Chapter 5. We can deduce the functional
+form of ε0(x) from the equation ˆa|0↓ = 0 in position representation.
+43
+44CHAPTER 7. SPECTRAL PROPERTIES OF ONE-DIMENSIONAL QUANTUM SYSTEMS
+First we remember the definition of ˆa in terms of ˆq and ˆp:
+aˆ :=
+1
+↔2
+!
+Qˆ + iPˆ
+"
+= 1
+↔2
+#$mϑ
+⊋ qˆ+ i$ 1
+mϑ⊋
+pˆ
+%
+(7.3)
+We recall the expressions for ˆq and ˆp in position representation,
+↑x|qˆ|ε↓ = xε(x), and ↑x|pˆ|ε↓ = →i⊋ ϖ
+ϖx
+ε(x), (7.4)
+to find
+↑x|aˆ|ε↓ = 1
+↔2
+#$mϑ
+⊋ x +
+$ ⊋
+mϑ
+ϖ
+ϖx
+%
+ε(x). (7.5)
+Thus, the ground state wave function fulfils the condition
+ϖ
+ϖx
+ε0(x) = →mϑ
+⊋ xε0(x). (7.6)
+Thus we find
+ε0(x) = ε0(x) = c e→ mω
+2⊋ x2
+, c ↗ C. (7.7)
+We can deduce the normalisation constant c by requiring the wave function to be normalised. From
+& ↑
+→↑
+|ε0(x)|
+2dx =
+& ↑
+→↑
+|c|
+2e→ mω
+⊋ x2
+dx = 1, (7.8)
+we deduce
+|c|
+2 =
+$mϑ
+ω⊋ , (7.9)
+and thus we choose
+c =
+!mϑ
+ω⊋
+"1/4
+, (7.10)
+such that the ground state wave function is normalised, real, and positive. In summary, we have
+found the position representation of the normalised ground state wave function of the operator Nˆ
+(and thus the harmonic oscillator):
+ε0(x) = !mϑ
+ω⊋
+"1/4
+exp !
+→mϑ
+2⊋ x2
+"
+. (7.11)
+We can now use the abstract expression for the chain of eigenvectors starting from the ground
+state in equation (5.19), to deduce the position representation of these eigenvectors, εn(x) := ↑x|n↓.
+Using expression (5.19) we can deduce all εn(x) from ε0(x). To find the position representations of
+the higher excited states, we need to apply ˆa† onto the ground state:
+↑x|n↓ = εn(x) = 1
+↔
+n!
+↑x|(ˆa†
+)
+n|0↓. (7.12)
+That is,
+εn(x) = 1
+↔
+n!
+#
+1
+↔2
+#$mϑ
+⊋ x →
+$ ⊋
+mϑ
+ϖ
+ϖx
+%%n
+ε0(x)
+= 1
+↔
+n!
+!mϑ
+ω⊋
+"1/4 1
+↔2n
+#$mϑ
+⊋ x →
+$ ⊋
+mϑ
+ϖ
+ϖx
+%n
+exp !
+→mϑ
+2⊋ x2
+"
+.
+(7.13)
+Explicitly the εn(x) can be expressed in terms of Hermite polynomials Hn(x) as
+εn(q) = ' ↔mϑ
+2nn!
+↔
+ω⊋
+Hn(q) e→q2/2, (7.14)
+with q = (mε
+⊋ x, as expected.
+7.2. PROPERTIES OF EIGENFUNCTIONS FOR GENERAL ONE-DIMENSIONAL POTENTIALS45
+7.2 Properties of eigenfunctions for general one-dimensional potentials
+There are only very few examples of Hamiltonian operators the spectrum of which can be deduced
+analytically. In general, approximative or numerical methods have to be applied. Yet, a few general
+remarks can be made about the solutions of time-independent Schr¨odinger equations of the form
+)
+→ ⊋2
+2m
+ϖ2
+ϖx2 + V (x)
+*
+εE(x) = EεE(x) : (7.15)
+• In general there are two types of solutions of (7.15) that we can interpret in a meaningful
+way in Schr¨odinger’s wave mechanics: The bound states, for which ε(x ↘ ±≃) ↘ 0, and the
+continuum states, which are improper eigenfunctions (not in L2), belonging to eigenvalues in
+the continuous part of the spectrum.
+• For potentials for which V (x ↘ ±≃) ↘ ≃ there are only bound states (i.e. only discrete
+eigenvalues - this is the quantisation part of quantum mechanics again - energies can often
+only have discrete values.)
+• Eigenfunctions can be chosen real valued.
+Proof. Assume we have a complex solution ε(x) of the Schr¨odinger equation. Then also its
+complex conjugate function ε↓(x) is a solution. Thus, the linear combination ε(x) + ε↓(x) is
+a real valued solution of the Schr¨odinger equation.
+• There are no bound states with eigenenergies smaller than the minimum of the potential.
+Proof. We have
+ϖ2εE(x)
+ϖx2 = 2m
+⊋2 (V (x) → E)εE(x). (7.16)
+Now if E<Vmin(x) then the the wave function εE(x) and its second derivative would have
+the same sign for all x. That is if the wave function would have to curve away from the x-axis
+everywhere. Such a function however, can not be normalisable.
+• The expectation value of a Hamiltonian is bounded from below by the lowest energy eigenvalue.
+We will prove this in the end of the week lecture.
+• The bound state eigenvalues are non-degenerate (that is, there is only one linearly independent
+solution per eigenvalue).
+Proof. Let us first rewrite the Schr¨odinger equation (7.15) in the form
+ε↔↔(x) + k2(x)ε(x)=0, (7.17)
+where we have introduced the function k =
++2m
+⊋2 (E → V (x)). Suppose now that ε1(x) and
+ε2(x) are two bound state eigenfunctions corresponding to the same energy E. We shall show
+now that this implies that ε1(x) and ε2(x) are linearly dependent, i.e. they di!er at most by
+a multiplicative factor.
+We have
+ε↔↔
+j (x)/εj (x) = →k(x)
+2, (7.18)
+for j = 1, 2. That is,
+ε↔↔
+1(x)/ε1(x) = ε↔↔
+2(x)/ε2(x), (7.19)
+or
+ε↔↔
+1(x)ε2(x) → ε↔↔
+2(x)ε1(x)=0. (7.20)
+46CHAPTER 7. SPECTRAL PROPERTIES OF ONE-DIMENSIONAL QUANTUM SYSTEMS
+We realise that the left hand side is equal to the derivative of ε↔
+1(x)ε2(x) → ε↔
+2(x)ε1(x), that
+is we have
+d
+dx
+,
+ε↔
+1(x)ε2(x) → ε↔
+2(x)ε1(x)
+-
+= 0. (7.21)
+Integrating this yields
+ε↔
+1(x)ε2(x) → ε↔
+2(x)ε1(x) = c, c ↗ C. (7.22)
+Since we consider bound states we have that εj (x ↘ ≃) ↘ 0 while the derivative stays
+bounded, and thus we deduce that c = 0. We now integrate the expression
+ε↔
+1(x)/ε1(x) = ε↔
+2(x)/ε2(x), (7.23)
+to find
+ln ε1(x) = ln ε2(x) + const. (7.24)
+that is
+ε1(x) ⇐ ε2(x). (7.25)
+• The ground state (the state corresponding to the lowest energy eigenvalue) does not have
+zeros (apart from the asymptotic ones at x ↘ ±≃).
+• The n-th excited state (the state corresponding to the (n+ 1)th eigenvalue) has n zeros inside
+the potential.
+For a hand-wavy explanation of this see for example Barton Zwiebach’s video lecture on the
+topic.
+7.2.1 Symmetric potentials - parity
+Consider the Hermitian operator Sˆ on the Hilbert space of square integrable functions that interchanges x with →x, that is, Sˆϱ(x) = ϱ(→x). This is called the parity operator. The eigenfunctions
+of the parity operator fulfil
+Sˆεs(x) = εs(→x) = sεs(x). (7.26)
+On the other hand Sˆ2 = ˆI, that is,
+Sˆ(Sˆεs(x)) = s2εs(x) = εs(x). (7.27)
+Thus, we have s2 = 1, and therefore the only two eigenvalues of the parity operator are
+s = ±1. (7.28)
+The corresponding eigenfunctions are all even or odd functions ε±(→x) = ±ε(x). (The parity
+operator is highly degenerate).
+A Hamiltonian of the form Hˆ = → ⊋2
+2m
+ω2
+ωx2 + V (x) commutes with Sˆ if V (x) = V (→x). This can
+be seen as follows. Consider the action of the commutator on a test function ϱ(x) ↗ L2:
+[H, ˆ Sˆ]ϱ(x) = → ⊋2
+2m
+ϖ2
+ϖx2ϱ(→x) + V (x)ϱ(→x)
++
+⊋2
+2m
+ϖ2
+ϖ(→x)2ϱ(→x) → V (→x)ϱ(→x)
+= V (x)ϱ(→x) → V (→x)ϱ(→x),
+(7.29)
+which is zero for arbitrary wave functions ϱ(x) if and only if V (→x) = V (x).
+7.3. PIECEWISE CONSTANT POTENTIALS 47
+According to theorem 7, if the eigenvalues of Hˆ are non-degenerate, the corresponding eigenfunctions are either odd or even. Since the eigenvalues of one-dimensional Hamiltonians of the form
+V (x ↘ ±≃) ↘ ≃ (binding potentials) are always non-degenerate. If the potential is symmetric,
+the eigenfunctions are either even or odd. We have already seen an example when we discussed the
+particle in a square well in Chapter 2, there the potential was symmetric with respect to x = L
+2 and
+the eigenfunctions were even and odd with respect to this point.
+Remark 36. Unfortunately most of the statements above do not carry over to higher dimensional
+systems. This concerns in particular the non-degeneracy of eigenvalues and hence the symmetry of
+eigenfunctions in symmetric potentials.
+7.3 Piecewise constant potentials
+7.3.1 Piecewise constant potentials and boundary conditions
+For the remainder of this chapter we are specifically looking for the solutions E and εE(x) of the
+time-independent Schr¨odinger equation
+→ ⊋2
+2m
+ϖ2
+ϖx2 εE(x) + V (x)εE(x) = EεE(x), (7.30)
+where the potential V (x) is piecewise constant. Rewriting this in the form
+→ ⊋2
+2m
+ϖ2
+ϖx2 εE(x)=(E → V (x))εE(x), (7.31)
+emphasises that the second derivative of an eigenfunction is essentially proportional to the value of
+the potential energy. Thus, at values of x at which the potential makes a finite jump, so does the
+second derivative of the wave function, which means that the first derivative is continuous, while the
+wave function itself is continuous and continuously di!erentiable. If the potential makes an infinite
+jump the first derivative of the wave function is discontinuous, but the wave function itself is still
+continuous.
+To obtain the eigenfunctions εE(x) we can consider the di!erent regions of constant potential
+separately and patch the solutions together. Thus, we start out by determining the solutions of the
+time-independent Schr¨odinger equation in constant potentials.
+7.3.2 The free particle
+The free particle is a particle moving without the influence of an external potential, that is, V (x) = 0.
+However, in quantum (as well as in classical) physics, the zero point of the energy is arbitrary.
+Thus, the free particle is equivalent to a particle moving under the influence of a constant potential
+V (x) = V0, with the Hamiltonian
+Hˆ = → ⊋2
+2m
+ϖ2
+ϖx2 + V0, (7.32)
+with V0 ↗ R. The eigenvalue equation for the Hamiltonian (7.32), given by
+→ ⊋2
+2m
+ϖ2
+ϖx2 εE(x)=(E → V0)εE(x), (7.33)
+is formally solved by functions of the form
+εE(x) = Aeikx + Be→ikx, (7.34)
+with the wave number
+k =
+(2m(E → V0)
+⊋ , (7.35)
+48CHAPTER 7. SPECTRAL PROPERTIES OF ONE-DIMENSIONAL QUANTUM SYSTEMS
+for arbitrary values of E ↗ R. However, the functions (7.34) diverge at x ↘ ±≃ for negative values
+of E → V0. For the free particle on the whole real axis, we cannot interpret them in any meaningful
+way, and thus deduce that the eigenvalues of Hˆ are given by all real numbers E ⇒ V0.
+Even the eigenfunctions corresponding to these energies, however, are not square integrable, and
+can thus not be interpreted in the usual way as a probability amplitude to find a particle somewhere
+at a given time. They are however, a basis for all physically more meaningful wave functions in L2.
+Remark 37. We can interpret a wave function of the form
+ϱ±(x) ⇐ e±ixk, (7.36)
+a so-called plane wave, as a constant probability beam travelling from minus to plus infinity or plus
+to minus infinity, respectively. These wave functions are the extreme cases of Heisenberg’s uncertainty principle, with accurately defined momentum, and totally unspecified position (describing a
+“completely delocalised particle”). Their probability flux is given by
+j = ⊋
+2mi
+,
+ϱ↓ϱ↔ → ϱ↔↓ϱ
+-
+= ±
+⊋k
+m . (7.37)
+They are eigenfunctions of the momentum operator with eigenvalues p = ⊋k. Thus, they can be
+viewed as a stream of particles moving with constant velocity p
+m.
+Remark 38. The plane waves (7.36) fulfil the generalised orthonormality condition
+1
+2ω
+& ↑
+→↑
+e→ikxeik→
+xdx = ς(k → k↔
+). (7.38)
+Remark 39. If we have a piecewise constant potential then in the separate regions that do not
+extend to infinity on both sides also the solutions (7.34) with energies E<V0 are meaningful. They
+are more commonly expressed in the form
+εE(x) = Ceϑx + De→ϑx, (7.39)
+with
+φ =
+(2m(V0 → E)
+⊋ . (7.40)
+For regions that extend to x+≃ we need C = 0 and for regions that extend to x ↘ →≃ it holds
+D = 0.
+7.3.3 The infinite square well potential (“Particle in a box”)
+Let us now finally derive the eigenfunctions of a particle in an infinite square well (or “box”)
+potential
+V (x) = . 0, 0 ⇑ x ⇑ L
+≃, otherwise, (7.41)
+that we have already used numerous times. This system is an extreme case of a piecewise constant
+potential, where the potential is zero in a region x ↗ [0, L] (the interior of the box ) and infinite
+outside this region. Thus, outside the box the wave function has to be identical to zero. Inside the
+box, that is for 0 ⇑ x ⇑ L, we have the solutions
+ε(x) = Aeikx + Be→ikx, (7.42)
+with k =
+↗2mE
+⊋ . We know, however, that the wave function is continuous, and thus has to fulfil the
+boundary conditions
+ε(0) = 0 = ε(L). (7.43)
+7.3. PIECEWISE CONSTANT POTENTIALS 49
+This yields the conditions
+A + B = 0 (7.44)
+AeikL + Be→ikL = 0 (7.45)
+for A and B. Inserting B = →A into (7.45) yields
+2iA sin(kL)=0. (7.46)
+The choice A = 0 leads to a wave function that vanishes everywhere. The only physical meaningful
+wave functions exist for sin(kL) = 0, which means
+↔
+2mE
+⊋ L = nω, (7.47)
+for integer values of n, which yields the quantised energies
+En = ω2⊋2
+2mL2 n2. (7.48)
+The corresponding eigenfunctions are given by
+εn(x) = 2iA sin )↔2mEn
+⊋ x
+*
+= 2iA sin !ωnx
+L
+"
+. (7.49)
+We can now choose A such that the εn(x) are normalised and real valued. The norm of εn(x) in
+dependence on A is given by
+& L
+0
+|εn(x)|
+2 = 4|A|
+2
+& L
+0
+sin2
+!ωnx
+L
+"
+dx
+= 2|A|
+2
+& L
+0
+)
+1 → cos )2ωnx
+L
+** dx
+= 2|A|
+2L. (7.50)
+Thus, the choice A = ↗→i
+2L yields the normalised and real-valued wave functions
+εn(x) = / + 2
+L sin ,nϖx
+L
+-
+, 0 ⇑ x ⇑ L
+0, otherwise, (7.51)
+as given earlier without derivation in equation (2.25).
+7.3.4 The finite square well potential (”Particle in a finite box”)
+The finite square well potential is similar to the
+previously considered infinite one, with the difference that the potential outside the central region is non-zero but finite. It is convenient to
+consider a symmetric version
+V (x) = . 0, |x| ⇑ L
+2
+V0, otherwise. (7.52)
+The solutions of the time-independent Schr¨odinger
+equation in the separate regions are of the form
+aeikx + be→ikx with k = (2m(E → Vj )/⊋, where
+50CHAPTER 7. SPECTRAL PROPERTIES OF ONE-DIMENSIONAL QUANTUM SYSTEMS
+Vj is the value of the constant potential in region j. For values E>Vj , k ↗ R this can be equivalently written as ˜a cos(kx) +˜b sin(kx), while for
+E<Vj we have φ = (2m(Vj → E)/⊋ ↗ R, and the solutions take the form ae→ϑx + beϑx. That is
+we make the ansatz
+εE(x) =
+
+
+
+C1eϑx + C2e→ϑx, x ⇑ →L/2
+A cos(kx) + B sin(kx), →L/2 < x ⇑ L/2
+D1eϑx + D2e→ϑx, x > L/2,
+(7.53)
+with k = ↔
+2mE/⊋ and φ = (2m(V0 → E)/⊋ for the solution of the time-independent Schr¨odinger
+equation.
+Here we are looking for bound states, that is ε(x ↘ ±≃) ↘ 0. From the general solution (7.53)
+we deduce that this is only possible for E<V0, and that further we need C2 =0= D1. Thus, the
+solutions are of the form
+εE(x) =
+
+
+
+Ceϑx, x ⇑ →L/2
+A cos(kx) + B sin(kx), →L/2 < x ⇑ L/2
+De→ϑx, x > L/2.
+(7.54)
+The wave function εE(x) and its first derivative with respect to x have to be continuous everywhere. This is automatically fulfilled in the separate regions, but it imposes four boundary
+conditions between the di!erent regions.
+Exercise 12. Find the four boundary conditions the eigenfunctions need to fulfil. Use the fact that
+the symmetry of the potential means that the eigenfunctions are either even or odd eigenfunction,
+and verify that even eigenfunctions have to fulfil the conditions
+Ce→ϑL/2 = A cos(kL/2) (7.55)
+φCe→ϑL/2 = kA sin(kL/2), (7.56)
+and odd eigenfunctions have to fulfil the conditions
+Ce→ϑL/2 = →B sin(kL/2) (7.57)
+φCe→ϑL/2 = kB cos(kL/2). (7.58)
+These conditions can only be fulfilled simultaneously for specific values of the energy E, leading
+to the quantisation conditions
+φ = k tan(kL/2) (7.59)
+and
+φ = →k cot(kL/2), (7.60)
+for even and odd eigenfunctions, respectively. We can rewrite these in terms of the energy using
+the identities
+φ/k =
+$2mV0
+⊋2k2 → 1
+k = ↔
+2mE/⊋,
+(7.61)
+to find
+tan #↔
+2mEL
+2⊋
+%
+=
+$V0
+E → 1 , (7.62)
+and
+→ cot #↔
+2mEL
+2⊋
+%
+=
+$V0
+E → 1 , (7.63)
+for even and odd eigenfunctions, respectively.
+These conditions have to be solved numerically or graphically to find the quantised energies.
+We will discuss this further in the lecture.

@@ -1,0 +1,239 @@
+Chapter 5
+The harmonic oscillator
+Let us now consider the quantum harmonic oscillator, the classical version of which we have studied
+in 1.2. Similarly to the classical case, the Hamiltonian is given by
+Hˆ = pˆ2
+2m
++
+1
+2
+mω2qˆ
+2. (5.1)
+We want to solve the eigenvalue equation Hˆ |εn→ = En|εn→. First of all we want to deduce the
+eigenvalues.
+Remark 28. One way of solving this problem would be to express the eigenvalue equation in the
+Schr¨odinger formulation as ↑ ⊋2
+2m
+ω2εE(x)
+ωx2 + 1
+2mω2x2εE(x) = EεE(x), and determine for which values
+of E this has bound state solutions that fulfil εE(x ↓ ±↔) ↓ 0. Here, however, we use another
+method that does not require us to solve any di!erential equation, and instead uses only uses
+algebraic arguments, based in the commutation relation of ˆq and ˆp. .
+5.1 Algebraic solution of the eigenvalue equation
+Let us first introduce the dimensionless operators
+Qˆ =
+!mω
+⊋ q, ˆ and P =ˆ
+! 1
+mω⊋ ˆp. (5.2)
+They fulfil the commutation relation
+[Q, ˆ Pˆ] = 1
+⊋
+[ˆq, pˆ]=iˆI. (5.3)
+In terms of these rescaled operators the Hamiltonian takes the form
+Hˆ = ⊋ω
+2
+"
+Pˆ2 + Qˆ2
+#
+. (5.4)
+Now we introduce the operator
+aˆ = 1
+↗2
+"
+Qˆ + iPˆ
+#
+, (5.5)
+and its adjoint operator
+aˆ† = 1
+↗2
+"
+Qˆ ↑ iPˆ
+#
+. (5.6)
+These operators fulfil the commutation relation
+[ˆa, aˆ†
+] = ˆI. (5.7)
+31
+32 CHAPTER 5. THE HARMONIC OSCILLATOR
+Exercise 8. Verify the commutation relation (5.7) using the commutator(5.3), and rewrite the
+Hamiltonian in terms of ˆa and ˆa†.
+In terms of ˆa and ˆa† the Hamiltonian becomes
+Hˆ = ⊋ω(ˆa†
+aˆ + 1
+2 ). (5.8)
+That is, we need to analyse the spectrum of the Hermitian operator Nˆ := ˆa†aˆ.
+Theorem 8. Nˆ has a discrete spectrum consisting of the non-negative integers.
+To prove this theorem we will need the commutators [N, ˆ aˆ] and [N, ˆ aˆ†], which follow from
+[ˆa, aˆ†] = 1, as
+[N, ˆ aˆ] = [ˆa†
+a, ˆ aˆ]
+= [ˆa†
+, aˆ]ˆa
+= ↑[ˆa, aˆ†
+]ˆa
+= ↑aˆ
+(5.9)
+and similarly,
+[N, ˆ aˆ†
+]=ˆa†
+[ˆa, aˆ†
+]
+= ˆa†
+. (5.10)
+Lemma 1. The eigenvalues of Nˆ are non-negative. Further, if ϑ is an eigenvalue of Nˆ with
+eigenvector |ϑ→ then aˆ|ϑ→ is the zero vector if and only if ϑ = 0.
+Proof. Consider an eigenstate |ϑ→ of Nˆ with eigenvalue ϑ, that is Nˆ|ϑ→ = ϑ|ϑ→. Consider now the
+norm of the vector ˆa|ϑ→. We have
+||aˆ|ϑ→||2 ↘ 0
+≃ϑ|aˆ†
+aˆ|ϑ→ ↘ 0
+≃ϑ|Nˆ|ϑ→ ↘ 0
+ϑ≃ϑ|ϑ→ ↘ 0,
+(5.11)
+from which it follows that ϑ ↘ 0.
+Further, for ϑ = 0 we have that ||aˆ|ϑ→||2 = 0, which means that ˆa|0→ is the zero vector, we write
+aˆ|0→ = 0. (Note that |0→ is not the zero vector here, it is simply a vector labelled by the index 0.)
+Also note that ˆa|ϑ→ can be the zero vector for no other value of ϑ according to equation (5.11).
+Lemma 2. If |ϑ→ is an eigenvector of Nˆ corresponding to the eigenvalue ϑ, and aˆ|ϑ→ ⇐= 0, then aˆ|ϑ→
+is also an eigenvector of Nˆ corresponding to the eigenvalue ϑ ↑ 1.
+Proof.
+Nˆaˆ|ϑ→ =
+"
+Nˆaˆ ↑ aˆNˆ + ˆaNˆ
+#
+|ϑ→
+=
+"
+[N, ˆ aˆ]+ˆaNˆ
+#
+|ϑ→
+=
+"
+↑aˆ + ˆaNˆ
+#
+|ϑ→
+= ˆa(Nˆ ↑ 1)|ϑ→
+= (ϑ ↑ 1)ˆa|ϑ→.
+(5.12)
+5.2. NORMALISED EIGENVECTORS 33
+Combining Lemma 1 and 2 we conclude that either the spectrum is empty (i.e. there are no
+eigenvalues at all) or ϑ = 0 has to be in the spectrum, and no non-integer value of ϑ could possibly
+be in the spectrum (to guarantee that the series ϑ, ϑ ↑ 1, ϑ ↑ 2,... does not continue to negative
+values).
+Lemma 3. If |ϑ→ is an eigenvector of Nˆ corresponding to the eigenvalue ϑ, then aˆ†|ϑ→ is also an
+eigenvector of Nˆ corresponding to the eigenvalue ϑ + 1.
+Exercise 9. Prove Lemma 3.
+What we have shown now is that ϑ = 0 could be an eigenvalue of Nˆ. If it is, then starting from
+ϑ = 0 via consecutive application of ˆa† we thus deduce that all integers are eigenvalues of Nˆ. If
+ϑ = 0 is not an eigenvalue, the operator Nˆ has no eigenvalues at all. Thus, there is a representation
+of the algebra consisting of ˆa, aˆ† and Nˆ (and the identity) in which Nˆ is an infinite-dimensional
+matrix with diagonal elements given by its egenvalues, the non-negative integers. This completes
+our proof of Theorem 8.
+The spectrum of the harmonic oscillator (Hamiltonian) thus consists of the discrete set of numbers En = ⊋ω(n + 1
+2 ) where n is a non-negative integer,
+Hˆ |n→ = ⊋ω(n + 1
+2 )|n→. (5.13)
+Remark 29. The quantum energies are quantised. A classical particle in a harmonic oscillator potential can have any energy that is larger than the minimum of the potential (zero, in the present case),
+a quantum particle can only be in a superposition of states with discrete energies. Remembering
+the quantum rules in Chapter 4, this means that every time the energy of a quantum particle is
+measured, the outcome can only be one of the discrete energy eigenvalues. The expectation value
+resulting from a number of measurements, of course, can be any number larger than the smallest
+eigenvalue (which is larger than zero!), depending on the state of the particle (similar to the classical
+case).
+Remark 30. The operators ˆa and ˆa† are often referred to as ladder operators, more specifically ˆa
+is the lowering and ˆa† the raising operator. Often one also referes to ˆa as annihilation and ˆa† as
+creation operator. The operator Nˆ is called the number operator.
+5.2 Normalised eigenvectors
+We will first consider a possible degeneracy of the eigenvalues. We will show that if the ground state
+is non-degenerate (which we will explicitly show in a later Chapter), then all the eigenvalues are
+non-degenerate, i.e. there is a unique (up to a complex factor) eigenvector |n→ for each eigenvalue
+n. We shall now prove that if the eigenvalue n is non-degenerate so is the eigenvalue n + 1. Let us
+prove this by contradiction.
+Assume that the eigenvalue n is non-degenerate, but there are two linearly independent eigenstates |εn+1→ and |ϖn+1→ belonging to the eigenvalue n+ 1. Applying the lowering operator to these
+two states we can produce the states |εn→ = ˆa|εn+1→ and |ϖn→ = ˆa|ϖn+1→. Now, since the eigenvalue
+n is non-degenerate these two vectors have to be multiples of each other, i.e. there exists a ϱ ⇒ C
+such that
+|εn→ = ϱ|ϖn→. (5.14)
+Now acting on this relation with the raising operator ˆa† yields:
+aˆ†
+|εn→ = ˆa†
+aˆ|εn+1→ = Nˆ|εn+1→ = ϱaˆ†
+|ϖn→ = ϱaˆ†
+aˆ|ϖn+1→ = ϱNˆ|ϖn+1→, (5.15)
+that is Nˆ|εn+1→ = ϱNˆ|ϖn+1→. But since |εn+1→ and |ϖn+1→ are eigenstates of Nˆ with eigenvalue
+(n + 1), we have
+|εn+1→ = ϱ|ϖn+1→, (5.16)
+34 CHAPTER 5. THE HARMONIC OSCILLATOR
+which means the two assumed to be linearly independent eigenvectors are linearly dependent after
+all, and the eigenvalue n + 1 is also non-degenerate. Thus, assuming that the eigenvalue n = 0 is
+non-degenerate, we have shown that the eigenvalues are non-degenerate.
+We know that ˆa†|n→ = cn|n + 1→. Let us now deduce the constants cn assuming that the
+eigenvectors are normalised. We consider the norm of |n + 1→:
+≃n + 1|n + 1→ = 1
+|cn|
+2 ≃n|aˆaˆ†
+|n→ = 1
+|cn|
+2 ≃n|Nˆ + 1|n→ = n + 1
+|cn|
+2 ≃n|n→. (5.17)
+Thus, if |n→ is normalised, so is |n + 1→ for the choice cn = ↗n + 1. That is,
+aˆ†
+|n→ = ↗
+n + 1|n + 1→, (5.18)
+from which it follows that
+|n→ = 1
+↗
+n!
+aˆ†n|0→. (5.19)
+Remark 31. The corresponding equation to (5.18) for ˆa is
+aˆ|n→ = ↗n|n ↑ 1→. (5.20)
+5.3 Matrix representations in the harmonic oscillator basis
+1. Matrix representation of aˆ†: From equation (5.18) it follows for the matrix elements of ˆa†
+in the harmonic oscillator basis:
+≃m|aˆ†
+|n→ = ↗
+n + 1 ςm,n+1. (5.21)
+2. Matrix representation of aˆ: We can deduce the matrix elements for ˆa either directly from
+equation (5.20) or from the fact that ˆa is the adjoint of ˆa†, and thus their matrix elements are
+related by
+≃m|aˆ|n→ = ≃n|aˆ†|m→. (5.22)
+From the matrix elements of ˆa† we thus find the matrix elements of ˆa as
+≃m|aˆ|n→ = ↗n ςm,n→1 (5.23)
+3. Matrix representation of Hˆ : The Hamiltonian matrix is diagonal in the eigenbasis, with
+diagonal elements
+≃m|Hˆ |n→ = ⊋ω(n +
+1
+2
+) ςm,n (5.24)
+Exercise 10. Matrix representation of xˆ and pˆ.
+(a) What are the matrix elements of the operators ˆq and ˆp in the basis of harmonic oscillator
+eigenstates {|n→} ?
+(b) Verify that these matrices fulfil the correct commutation relation.
+5.4. HARMONIC OSCILLATOR BASIS - A SIMPLE NUMERICAL METHOD 35
+5.4 Harmonic oscillator basis - A simple numerical method for
+general potentials
+The matrix representation of position and momentum operator in the harmonic oscillator basis
+forms the basis of a simple numerical method to calculate eigenvalues of one-dimensional systems
+with Hamiltonians that are functions of position and momentum operators. Here the matrices are
+terminated at finite size, leading to an approximation. For more details on this method see H. J.
+Korsch and M. Gl¨uck, Computing quantum eigenvalues made easy, Eur. J. Phys. 23, 413 (2002).
+The following matlab program gives out the 8 lowest energy states of the harmonic oscillator Hamiltonian Hˆ = ˆp2/2+ˆx2/2:
+clear all
+N=100; %matrix size
+%matrices for postition and momentum operators
+n=1:N-1;
+k=sqrt(n);
+Q=sqrt(0.5)*(diag(k,1)+diag(k,-1));
+P=i*sqrt(0.5)*(diag(k,-1)-diag(k,1)):
+%Hamiltonian
+H=0.5*P^2+0.5*Q^2;
+%eigenvalues
+EigSort=sort(eig(H));
+EigSort(1:8)
+This programme can be modified to calculate the spectrum of many other Hamiltonians with
+di!erent potential functions. In a video I discuss the example of a quadratic potential with a small
+quartic contribution V (x) = x2 + cx4.
+36 CHAPTER 5. THE HARMONIC OSCILLATOR

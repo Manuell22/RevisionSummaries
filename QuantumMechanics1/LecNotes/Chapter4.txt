@@ -1,0 +1,316 @@
+Chapter 4
+The Principles of Quantum Mechanics
+In this chapter we will learn about the five principles/postulates of quantum mechanics that allow
+an abstract formulation of the theory. The first two principles that we have already briefly encountered in the previous chapter, concern the description of the states of a quantum system and its
+observables, that is, its measurable quantities. The third and fourth principle concern the concept
+of measurements and the final one the time-evolution of quantum systems.
+4.1 States and observables
+A state encodes all the information one can have about a quantum system. Observables are measurable quantities (such as, for example, the position of a particle or its kinetic energy).
+4.1.1 Principle 1 (States):
+The state of a quantum system is described by a non-zero vector in a Hilbert space.
+Remark 20. The space of square-integrable functions L2 that we have dealt with in Schr¨odinger’s
+theory of wave functions is a Hilbert space.
+The superposition principle means that the sum of two states is a state, which also follows from
+the vector space properties. Two vectors describe the same state if they are complex multiples of
+each other. The equivalence class ω → cω with c ↑ C defines rays through the ”origin” of the
+Hilbert space. The space of these rays is called the projective Hilbert space.
+Remark 21. Some caution is needed when dealing with the concept of the projective Hilbert space;
+while the states eiω1ω1 and eiω2ω2 are equivalent to the states ω1 and ω2 respectively, in general
+eiω1ω1 + eiω2ω2 describes a di!erent state from ω1 + ω2.
+4.1.2 Principle 2 (Observables):
+A measurable quantity is described by a Hermitian operator on the Hilbert space. Both the measurable quantities and the operators representing them are often referred to as observables.
+In particular the operators corresponding to position and momentum, ˆq and ˆp, fulfil the commutation relation
+[ˆq, pˆ]=i⊋1, (4.1)
+where the commutator [·, ·] is defined as
+[A, ˆ Bˆ] = AˆBˆ ↓ BˆA, ˆ (4.2)
+and 1 denotes the identity operator.
+23
+24 CHAPTER 4. THE PRINCIPLES OF QUANTUM MECHANICS
+4.2 Measurement and dynamics
+The first two principles state that a quantum state is a vector and that measurable quantities are
+represented by operators. Now we will focus on the actual measurement and how the outcome
+of a measurement is related to the operator describing an observable and the state describing the
+system.
+4.2.1 Principle 3 (“Born rule”):
+The possible outcomes of a measurement of an observable A are given by the eigenvalues of the
+corresponding operator Aˆ. The probability of obtaining an eigenvalue aj as a measurement outcome
+is encoded in the state |ω↔ the system is in immediately before the measurement. The probability is
+given by p(aj ) = ↗ω|Pˆj |ω↔, where Pˆj is the projection operator onto the subspace associated to the
+eigenvalue aj . For non-degenerate, discrete eigenvalues this reduces to the modulus square |ωj |
+2 of
+the coe”cient of the (normalised) wave function |ω↔ in the basis of eigenstates |εj ↔ of Aˆ:
+|ω↔ = !
+n
+ωn|εn↔, with Aˆ|εn↔ = an|εn↔. (4.3)
+For continuous spectra we replace the sum with an integral: The probability to obtain a value
+in the interval I in a measurement is the integral over the modulus squared of the components of
+the wave function over this interval P = "
+I |ω(ϑ)|
+2dϑ, where
+|ω↔ =
+#
+dϑ ω(ϑ)|ε(ϑ)↔, with Aˆ|ε(ϑ)↔ = ϑ|ε(ϑ)↔. (4.4)
+4.2.2 Projection operator
+A linear operator Pˆ that satisfies Pˆ2 = Pˆ is called a projection operator. Examples are operators
+of the form Pˆ = $N
+n=1 |εn↔↗εn| where {|εn↔} is an orthonormal set of vectors. We can easily verify
+that indeed Pˆ2 = Pˆ:
+Pˆ2 = !
+n
+|εn↔↗εn|
+!
+m
+|εm↔↗εm| = !
+n,m
+|εn↔↗εn|εm↔↗εm|
+= !
+n,m
+ϖmn|εn↔↗εn| = !
+n
+|εn↔↗εn| = Pˆ (4.5)
+Exercise 6. Verify that the eigenvalues ϱ of a projection operator are either one or zero.
+Example - Energies of a particle in a box of length L
+The eigenvalues of the Hamiltonian are given by En = n2ε2⊋2
+2mL2 . If the state is given by |ω↔ = $
+n ωn|εn↔ with Hˆ |εn↔ = En|εn↔ we will obtain the value En in an energy measurement with
+probability |ωn|
+2. If the system is in the “ground state” (that is, the state with the lowest energy,
+in this case E1), for example, we will obtain the value E1 = ε2⊋2
+2mL2 with probability one.
+Expectation values
+The mean value of the outcome of many measurements of an observable A on identically prepared
+systems does not have to be an eigenvalue of the operator Aˆ. It is given by the expectation value of
+Aˆ in the state |ω↔:
+↗Aˆ↔ := ↗ω|Aˆ|ω↔
+↗ω|ω↔ . (4.6)
+Let us verify this for the case of discrete eigenvalues: Let us denote the eigenvalues of Aˆ by an
+and the corresponding eigenvectors by |εn↔, that is, Aˆ|εn↔ = an|εn↔. The eigenvectors belonging
+4.2. MEASUREMENT AND DYNAMICS 25
+to di!erent eigenvalues are automatically orthogonal, in addition we can choose them normalised.
+The mean value of many measurements is clearly given by
+↗Aˆ↔ = !
+j
+ajP(aj ), (4.7)
+where P(aj ) denotes the probability that a measurement yields the outcome aj . Let us now verify
+that this is indeed equal to the expression (4.6), using that according to principle 3 P(aj ) is given
+by
+P(aj ) = |↗εj |ω↔|
+2
+= ↗ω|εj ↔↗εj |ω↔, (4.8)
+if the system is in the normalised state |ω↔. Inserting expression (4.8) for the probability of the
+measurement outcome aj into equation (4.7) yields
+↗Aˆ↔ = !
+j
+aj ↗ω|εj ↔↗εj |ω↔
+= !
+j
+↗ω|Aˆ|εj ↔↗εj |ω↔. (4.9)
+Now we recognise the resolution of identity $
+j |εj ↔↗εj | = 1 and thus we have
+↗Aˆ↔ = ↗ω|Aˆ|ω↔, (4.10)
+as expected.
+4.2.3 Principle 4 (“state collapse postulate”):
+Consider a system in the quantum state |ω↔ on which a measurement of an observable A is performed.
+If the measurement yields the outcome aj (an eigenvalue of Aˆ), then the system is in the state
+Pˆj |ϑ→
+↘↑ϑ|Pˆj |ϑ→ immediately after the measurement. Here Pˆj is the projection operator onto the subspace
+belonging to the eigenvalue aj . For a non-degenerate eigenvalue with eigenvector |εj ↔ that is Pˆj =
+|εj ↔↗εj |, which means the state afetr the measurement will be the state εj ↔.
+Remark 22. In some ways principle 4 is a logical extension of principle 3: If we were to perform
+two measurements of the same observable instantly after one another, we would expect to obtain
+the same outcome in both with probability one.
+Remark 23. Having the state collapse postulate in mind one often uses the formulation “to find a
+system in a state |ε↔” in quantum mechanics. Such as for example in “... calculate the probability
+to find the system in the ground state.”.
+4.2.4 Principle 5 (dynamics):
+The time-evolution of a quantum state |ω(t)↔ is governed by the Schr¨odinger equation
+i⊋|ω˙↔ = Hˆ |ω↔, (4.11)
+where the operator Hˆ is the operator corresponding to the total energy of the system.
+The solution of the Schr¨odinger equation can formally be written as
+|ω(t)↔ = Uˆ(t)|ω(0)↔, (4.12)
+where Uˆ(t) is the time-evolution operator. For time independent Hamiltonians it is given by
+Uˆ(t) = exp %
+↓ i
+⊋
+Ht ˆ
+&
+. (4.13)
+26 CHAPTER 4. THE PRINCIPLES OF QUANTUM MECHANICS
+Since the Hamiltonian Hˆ is Hermitian, the time-evolution operator Uˆ(t) is unitary. That is,
+Uˆ ↓1 = Uˆ†
+. (4.14)
+Unitarity means that the inner product is conserved, i.e.
+↗ω1(t)|ω2(t)↔ = ↗ω1(0)|ω2(0)↔, (4.15)
+with |ωj (t)↔ = Uˆ(t)|ωj (0)↔.
+Remark 24. Think of “rotations on Hilbert space”.
+4.2.5 The method of stationary states in Dirac notation (for arbitrary Hilbert
+spaces)
+Given: Hamiltonian Hˆ , initial wave function |ω(t = 0)↔
+Wanted: Wave function at time t, |ω(t)↔
+Method:
+1. Calculate the eigenvalues En and normalised eigenstates |εn↔ of the Hamiltonian Hˆ .
+2. Expand the initial wave function in the basis of eigenstates {|εn↔}:
+|ω(0)↔ = !
+n
+an|εn↔.
+The coe”cients are given by an = ↗εn|ω(0)↔.
+3. The time evolution is then given by
+|ω(t)↔ = !
+n
+ane↓iEnt/⊋|εn↔.
+4.3 Commutators and uncertainties
+The commutator of two observables restricts how accurately they can be measured simultaneously.
+In this chapter we shall discuss this in some detail. In this context we shall also learn about the
+famous Heisenberg uncertainty principle.
+4.3.1 The uncertainty relations
+The outcomes of many measurements of an observable A on identically prepared systems have a
+certain spread. The width of their distribution is characterised by the expectation value of the
+operator (Aˆ ↓ ↗Aˆ↔)2, that is, the variance
+(#A)
+2 := ↗(Aˆ ↓ ↗Aˆ↔)
+2↔
+= ↗Aˆ2 ↓ 2↗Aˆ↔Aˆ + ↗Aˆ↔
+2↔
+= ↗Aˆ2↔ ↓ 2↗Aˆ↔
+2 + ↗Aˆ↔
+2
+= ↗Aˆ2↔↓↗Aˆ↔
+2.
+(4.16)
+In quantum mechanics we refer to the standard deviation
+#A := '
+↗Aˆ2↔↓↗Aˆ↔2, (4.17)
+as uncertainty of A.
+It follows from the principles of quantum mechanics that in general the product of the uncertainties of two observables cannot be arbitrarily small. Instead, it has a lower bound that is related
+to the commutator of the observables via the following
+4.3. COMMUTATORS AND UNCERTAINTIES 27
+Theorem 6. Consider the two Hermitian operators Aˆ and Bˆ, with [A, ˆ Bˆ] ≃= 0. The product of the
+uncertainties of the observables A and B fulfils
+#A#B ⇐
+1
+2
+|↗Cˆ↔|, (4.18)
+where we have defined Cˆ := i[A, ˆ Bˆ].
+Remark 25. The factor of i in the definition of Cˆ has been introduced such that Cˆ is Hermitian.
+Proof. Let us shift the operators Aˆ and Bˆ such that their mean values are zero, that is, let us
+consider the operators
+aˆ := Aˆ ↓ ↗Aˆ↔, and ˆb := Bˆ ↓ ↗Bˆ↔. (4.19)
+These operators have the same commutator as Aˆ and Bˆ. That is,
+[ˆa, ˆb] = ↓iC. ˆ (4.20)
+Further we have
+(#A)
+2 = ↗aˆ2↔ and (#B)
+2 = ↗ˆb2↔. (4.21)
+Let us now consider the norm of the state |ς↔ = (ˆa ↓ iϱˆb)|ω↔ for ϱ ↑ R and an arbitrary normalised
+state |ω↔. We have
+↗ς|ς↔ = ↗ω|(ˆa + iϱˆb)(ˆa ↓ iϱˆb)|ω↔
+= ↗(ˆa + iϱˆb)(ˆa ↓ iϱˆb)↔
+= ↗aˆ2 + ϱ2ˆb2 + iϱ(ˆbaˆ ↓ aˆˆb)↔
+= ↗aˆ2↔ + ϱ2↗ˆb2↔ + iϱ↗iCˆ↔
+= ↗aˆ2↔ + ϱ2↗ˆb2↔ ↓ ϱ↗Cˆ↔
+(4.22)
+On the other hand, we know that ↗ς|ς↔ ⇐ 0. That is, we have
+↗aˆ2↔ + ϱ2↗ˆb2↔ ↓ ϱ↗Cˆ↔ ⇐ 0, (4.23)
+for all values of ϱ ↑ R. Let us now evaluate for which value of ϱ the norm ↗ς|ς↔ becomes minimal.
+The location of the minimum is found where
+d
+dϱ↗ς|ς↔ = 2↗ˆb2↔ϱ ↓ ↗Cˆ↔ = 0, (4.24)
+that is
+ϱ = ↗Cˆ↔
+2↗ˆb2↔
+. (4.25)
+(Note that this cannot be a maximum, since the function in (4.23) is a quadratic and goes to
+infinity at ϱ → ±⇒, and thus has a single minimum at a finite value of ϱ.) Reinserting this into
+the condition ↗ς|ς↔min ⇐ 0 yields
+↗ς|ς↔min = ↗aˆ2↔ + ↗Cˆ↔2
+4↗ˆb2↔2
+↗ˆb2↔ ↓ ↗Cˆ↔2
+2↗ˆb2↔
+= ↗aˆ2↔ ↓ ↗Cˆ↔2
+4↗ˆb2↔
+⇐ 0,
+(4.26)
+that is
+(#A)
+2 ⇐ ↗Cˆ↔2
+4(#B)2 , (4.27)
+28 CHAPTER 4. THE PRINCIPLES OF QUANTUM MECHANICS
+or
+(#A)(#B) ⇐ |↗Cˆ↔|
+2 .
+The special case of the uncertainty relation in theorem 6 for the case of position and momentum
+operator is known as Heisenberg’s uncertainty relation:
+#p#x ⇐
+⊋
+2
+. (4.28)
+This means that one can never know the exact values of both position and momentum simultaneously.
+Remark 26. The uncertainty relation gives a lower bound. There are states for which the actual
+uncertainty product for position and momentum for example is much larger than ⊋.
+4.3.2 Commuting observables
+If two observables commute they are in principle simultaneously measurable, according to the
+uncertainty relation. This is an aspect of the following
+Theorem 7. Commuting operators [A, ˆ Bˆ]=0 posess a set of common eigenvectors.
+Exercise 7. Prove theorem 7 for the case of non-degenerate eigenvalues. I.e., consider an eigenvector |ε↔ of Aˆ belonging to the eigenvalue a ↑ R, that is Aˆ|ε↔ = a|ε↔, and show that |ε↔ is also an
+eigenvector of Bˆ if [A, ˆ Bˆ] = 0.
+Remark 27. If the eigenvalue a is degenerate (that is, it is a multiple eigenvalue), we can find a
+linear superposition of the corresponding eigenvectors that is an eigenvector of Bˆ.
+Remember that if we measure an observable A, after the measurement the quantum state of
+the system will have collapsed into the eigenspace of the operator Aˆ belonging to the eigenvalue
+that had been measured. Now if we measure an observable Bˆ directly afterwards that measurement
+will project the state of the system onto an eigenspace of Bˆ. That means, only if Aˆ and Bˆ share
+eigenvectors, will the measurements be compatible, i.e. the measurement of one of the observables
+won’t delete the information about the value of the first observable. Commuting operators have a set
+of shared eigenvectors, so they can be measured simultaneously or without the order of measurement
+changing the probabilities of the outcomes.
+4.3.3 Complete set of commuting observables
+Consider a set of Hermitian operators Aˆ1,2,... on a Hilbert space H. Their simultaneous eigenvectors
+form a basis of H. They are called a complete set of commuting observables if their eigenvalues
+uniquely define each basis vector (up to a phase).
+If an operator Aˆ has only non-degenerate eigenvalues it is already a complete set of commuting
+observables on its own. If one or more eigenvalues is/are degenerate one can find a commuting operator to lift, or partially lift the degeneracy, and add further such operators to lift the degeneracies
+still present in this pair, and so on, until one arrives at a complete set of observables.
+Let us consider a simple example for a three dimensional Hilbert space first. The operator
+Aˆ =
+
+
+a1 0 0
+0 a2 0
+0 0 a3
+
+ , (4.29)
+with aj ↑ R, is clearly Hermitian, and indeed its eigenvectors are the standard vectors ej , which are
+a basis of C3, and could be uniquely labeled here by the eigenvalues of Aˆ, i.e. ej is the eigenvector of
+4.3. COMMUTATORS AND UNCERTAINTIES 29
+Aˆ belonging to the eigenvalue aj . If, however, some of the eigenvalues were degenerate, for example
+a2 = a1, or, for clarity, let’s consider another operator Bˆ
+Bˆ =
+
+
+b1 0 0
+0 b1 0
+0 0 b2
+
+ , (4.30)
+the situation would be di!erent. We can still find a set of eigenvectors that are an orthogonal basis
+for C3, for example still the standard vectors ej , or alternatively the vector e3 and two orthogonal
+linear combinations of e1 and e2. However, these basis vectors cannot be uniquely identified by
+the corresponding eigenvalues of Bˆ, as both e1 and e2 belong to the same eigenvalue b1. If we in
+addition consider the operator
+Cˆ =
+
+
+c1 0 0
+0 c2 0
+0 0 c2
+
+ , (4.31)
+then the eigenvalues of Cˆ alone would also not be su”cient to identify the basis vectors, but those
+of Bˆ and Cˆ together would be. In the case here we could label the basis as
+(b1, c1) ⇑ e1, (b1, c2) ⇑ e2, (b2, c2) ⇑ e3. (4.32)
+In infinite-dimensional Hilbert spaces it can be rather useful to have an abstract basis labelled
+according to the eigenvalues of an important observable (for example the energy), and if this has
+degenerate eigenvalues, it is useful to identify further commuting observables to uniquely label a
+basis of the Hilbert space. We will come back to this in more concrete physical examples later in
+the course.
+30 CHAPTER 4. THE PRINCIPLES OF QUANTUM MECHANICS

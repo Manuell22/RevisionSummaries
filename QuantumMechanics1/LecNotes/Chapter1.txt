@@ -1,0 +1,253 @@
+Chapter 1
+Classical mechanics
+Here we summarise the necessary background from classical mechanics, and introduce some physical
+terminology that will repeatedly occur in the lecture.
+1.1 Newton’s second law
+A classical particle has a mass m, and its state is described by its position ~r 2 R3 and its velocity
+~v = ˙
+~r = d~r
+dt or, often more conveniently, its momentum p~ = m~v. Newton’s second law connects the
+change of momentum to the external force F~ :
+˙
+p~ = m¨~r = F . ~ (1.1)
+This is a second order di↵erential equation for the time-dependent position of a classical particle.
+The solution is uniquely determined by two initial conditions, for example the position and velocity
+at a given time. The solution ~r(t) is called the trajectory of the particle.
+It is often convenient to study a system’s dynamics in the so-called phase space, the space of
+position and momentum coordinates. A phase-space trajectory, (~r(t), p~(t)) is a curve in phase space,
+that position and momentum coordinates trace as time evolves for a particular initial condition.
+A phase (space) portrait is a sketch of a collection of several phase-space trajectories belonging to
+di↵erent initial conditions, that summarise the overall types of trajectories.
+1.2 Hamilton’s canonical equations and phase space-dynamics
+1.2.1 Hamilton’s canonical equations
+In many cases of interest the force can be expressed as the negative gradient of a scalar function
+V (~r), the potential, i.e.,
+F~ (~r) = r~ V (~r). (1.2)
+Such systems are referred to as conservative, as they conserve the energy.
+Remark 1. Remind yourself of the definitions and the physical units of force, energy, and action.
+In what follows we shall for simplicity discuss one-dimensional systems, with coordinate q 2 R
+and momentum p 2 R. For a conservative system Newton’s second law (1.1) can then be written
+as
+p˙ = @V
+@q , (1.3)
+and by definition we have
+q˙ = p
+m. (1.4)
+1
+2 CHAPTER 1. CLASSICAL MECHANICS
+Introducing the function
+H(p, q) = p2
+2m
++ V (q), (1.5)
+the dynamical equations (1.3) and (1.4) can be rewritten as
+p˙ = @H
+@q
+and ˙q = @H
+@p . (1.6)
+These are Hamilton’s canonical equations. The function H(p, q) is called the Hamiltonian function,
+its value is the total energy of a system for a given state (p, q). The term p2
+2m is the kinetic energy,
+V (q) is the potential energy. Hamiltonian dynamics conserves the total energy, i.e., dH
+dt = 0.
+Remark 2. Hamiltonian mechanics applies more generally than in situations where p = mq˙, i.e., q
+and p do not have to refer to physical coordinate and momentum in all situations (see canonically
+conjugate variables below). It does only apply in situations where the total energy is conserved.
+Thus, for example systems with friction or other losses cannot be described in the standard Hamiltonian formalism.
+1.2.2 The potential and characteristics of the dynamics
+Figure 1.1: Example potential.
+For systems whose Hamiltonian is of the form kinetic plus potential energy, as in equation (1.5),
+one can deduce basic properties of the dynamics from the potential, as sketched in figure 1.1. The
+extrema of the potential correspond to fixed points (or equilibrium configurations) of the dynamics.
+Minima are stable, and maxima are unstable fixed points. For a given energy a particle can only be
+in a region where its total energy is larger or equal to the potential energy. These regions are called
+classically allowed. They are separated by turning points from the classically forbidden regions, in
+which the potential is larger than the total energy available. In a classically allowed region that is
+bounded by two turning points, a particle oscillates between them. For a region that is only bound
+by one turning point, the particle comes in from one side, is reflected at the turning point and then
+moves away in the direction it came from, towards (negative or positive) infinity.
+Exercise 1. Sketch the phase space portrait for a
+particle in one dimension with Hamiltonian of the
+form p2
+2m +V (q) for the two potentials sketched here
+on the right.
+1.2. HAMILTON’S CANONICAL EQUATIONS AND PHASE SPACE-DYNAMICS 3
+Example 1 - The free particle. The free particle moves without an external potential, i.e., the
+Hamiltonian is given by H = p2
+2m. Thus, the canonical equations of motion become
+p˙ = 0, and ˙q = p
+m, (1.7)
+and we find p = const, and q(t) = p
+mt + q0. Sketch the phase space portrait!
+Remark 3. q˙ = p
+m of course always holds for systems whose total energy is of the form H = p2
+2m+V (q).
+Remark 4. We could have also used the conservation of energy to deduce that the momentum is
+conserved here.
+Example 2 - The harmonic oscillator. The harmonic oscillator is a particle in a quadratic
+potential, V (q) / q2. It is a very important model system in physics for several reasons. Firstly,
+it has a simple analytical solution. Secondly, and more importantly, it is a good approximation for
+many systems that perform small oscillations around an equilibrium configuration. On a mathematical level this approximation can be interpreted as a Taylor expansion of the actual potential
+up to second order around a minimum, where the first derivative vanishes. The harmonic oscillator
+is for example a rough approximation for the vibrations of a two-atomic molecule.
+Let us here consider the example of a mass m on a spring for small displacements from the
+equilibrium configuration. At equilibrium the spring counterbalances gravity and there is no net
+force acting on the mass. If the mass is displaced slightly, the spring responds with a compensation
+force which is proportional to the displacement (this is known as Hooke’s law):
+F = Dq, (1.8)
+where D is the spring constant, and q denotes the displacement from equilibrium (i.e. q is positive
+when the spring is stretched). It is convenient to define a frequency ! =
+qD
+m. The potential is then
+given by
+V (q) = D
+2 q2 = m!2
+2 q2, (1.9)
+and we have the Hamiltonian
+H = p2
+2m
++
+m!2
+2 q2. (1.10)
+From the conservation of energy we can deduce the phase space portrait as consisting of concentric
+ellipses.
+The equations of motion
+p˙ = m!2q, q˙ = p
+m, (1.11)
+can be combined into a single second-order di↵erential equation for q,
+q¨ = !2q. (1.12)
+With the initial conditions q(t = 0) = q0 and p(t = 0) = p0 the solution is given by
+q(t) = q0 cos(!t) + p0
+m! sin(!t) (1.13)
+p(t) = p0 cos(!t)  q0m! sin(!t). (1.14)
+These equations describe harmonic oscillations.
+4 CHAPTER 1. CLASSICAL MECHANICS
+1.3 Time evolution of general dynamical variables - Poisson brackets
+The time evolution of any dynamical variable A(p, q) is governed by the equation
+dA
+dt = @A
+@q
+q˙ +
+@A
+@p
+p˙ +
+@A
+@t
+. (1.15)
+Remark 5. For a quantity without explicit time dependence we have @A
+@t = 0. All A(p, q) are
+implicitly time dependent via the time dependence of p and q. Some variables, however, might in
+addition have an explicit time dependence. Take for example the potential energy in an oscillating
+potential of the form V (q, t)=(q  cos(!t))2.
+Inserting Hamilton’s canonical equations (1.6) into (1.15) we find
+dA
+dt = @A
+@q
+@H
+@p  @A
+@p
+@H
+@q
++
+@A
+@t = {H, A} +
+@A
+@t
+, (1.16)
+where we have defined the Poisson bracket, {·, ·} as
+{A, B} = @A
+@p
+@B
+@q  @A
+@q
+@B
+@p . (1.17)
+For N-dimensional systems the Poisson bracket is defined as
+{A, B} = X
+N
+j=1
+@A
+@pj
+@B
+@qj
+ @A
+@qj
+@B
+@pj
+. (1.18)
+Remark 6. Note that both this definition and the one where p and q are interchanged are used in
+the literature.
+A dynamical variable without explicit time dependence is conserved in time if {H, A} = 0. Such
+quantities are also referred to as constants of motion. For the special case that H does not depend
+on one of the canonical variables qj the corresponding pj is conserved. Then qj is called a cyclic
+variable.
+1.3.1 Properties of Poisson brackets
+The Poisson bracket has the following properties:
+(i) {A, A} = 0 for all A
+(ii) Linearity in the first element: {c1A + c2B,C} = c1{A, C} + c2{B,C}
+(iii) Anti-symmetry with respect to interchange of elements: {A, B} = {B,A}
+(iv) Poisson-bracket with constant vanishes: {c, A} = 0, for c constant
+(v) Leibniz rule (product rule): {AB, C} = A{B,C} + {A, C}B
+(vi) Jacobi identity: {A, {B,C}} + {B, {C, A}} + {C, {A, B}} = 0.
+The Poisson bracket between momentum and position coordinates {pj , qk} = jk is called the
+fundamental Poisson bracket. Every pair Pj (pl, qm), Qj (pl, qm) that fulfils {Pj , Qj} = 1 is a pair of
+canonically conjugate variables and one can use the Hamiltonian formalism where H(Pj , Qj ) is the
+total energy of the system, even if this is di↵erent from P2
+2m + V (Q). In general of course this also
+means that Q˙ 6= P
+m.
+Exercise 2. Verify that the Poisson bracket defined in (1.17) indeed fulfils all the above properties.
+1.4. HISTORIC EXCURSION: THE BIRTH OF QUANTUM MECHANICS 5
+1.4 Historic excursion: The birth of quantum mechanics
+In the late 19th century physics was regarded as “complete”, in the sense that it was believed
+that Newton’s laws, together with Maxwell’s theory of electromagnetism explained everything, and
+all that was left was applying these theories to various situations. However, at the turn of the
+century some experiments were under way that revealed a fundamental lack of understanding. These
+included the measurement of atomic spectra, scattering experiments, the photo-electric e↵ect, and
+the study of the light emitted from hot objects. These experiments and the attempts to build
+a corresponding theory led to the biggest revolution in modern physics, and the development of
+quantum mechanics.
+Quantum theory is often divided into old and modern quantum theory. The name old quantum
+theory refers to the theory used in the initial 25 years of quantum theory, for example Bohr’s theory
+of the atom, where electrons are confined to discrete orbits around the atomic nucleus, while there
+is no actual theoretical reason for this phenomenon given. While old quantum theory explained
+many of the experimental results, and introduced the concept of energy quantisation, there was
+no deeper understanding of the phenomena, and there were a number of unsolved paradoxes. In
+1924/25 several breakthroughs were made, which led to the modern formulation of quantum theory
+(which, I want to mention such as not to mislead you, still has a lot of unresolved aspects, but we
+shall not focus on these.).
+Werner Heisenberg (who was only 24 then) came up with a strange dynamical equation for
+observables (measurable quantities) that do not commute:
+a˙ = 2⇡i
+h (W a  aW),
+where a is an arbitrary observable (for example the position of a particle), and W denotes the
+energy. It later turned out that the idea of non-commutative objects is of course closely related to
+matrices, which were not very popular/well-known amongst physicists in the 1920’s. Heisenberg’s
+formulation of quantum mechanics is sometimes referred to as matrix mechanics.
+In 1926 Schr¨odinger came up with his famous wave equation,
+i
+h
+2⇡
+ ˙(~r, t) = ✓
+ h2
+8⇡2m
+r2 + V (~r)
+◆
+ (~r, t),
+where the complex function (~r, t) is meant to somehow encode the position of a quantum particle,
+and the operator  ~2
+2mr2 + V (~r) represents the energy. We shall discuss this further in section 2.
+The fact that Schr¨odinger’s and Heisenberg’s theories are actually two di↵erent formulations
+of the same theory was not immediately clear. Around the same time as Schr¨odinger formulated
+his wave-theory, Dirac developed an abstract formulation of quantum theory, which unifies both
+Heisenberg and Schr¨odinger picture. All three of them received Nobel prizes for the development
+of quantum theory (Heisenberg in 1932, Dirac and Schr¨odinger jointly in 1933).
+The development of the theory was very exciting for everyone involved. Legend has it that in
+the summer of 1925 Heisenberg was thinking hard about quantum mechanics but didn’t make much
+progress. In addition he was su↵ering from bad hay fever, and decided to escape to Helgoland, an
+island in the northern sea. There he went for long hikes, read poetry, and also finally found his
+quantum theory! Later he wrote about this in his autobiography: It was about 3 o’clock at night
+when the final result of the calculation lay before me. At first I was deeply shaken. I was so excited
+that I could not think of sleep. So I left the house and awaited the sunrise on the top of a rock. He
+later sent his results to Wolfgang Pauli, with a letter saying: Everything is still vague and unclear
+to me, but it seems as if the electrons will no longer move on orbits...
+6 CHAPTER 1. CLASSICAL MECHANICS
