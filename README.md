@@ -19,6 +19,28 @@ Exam revision notebooks for each module, generated from lecture notes. Each modu
 | **StochasticSimulation** | Bayesian inference, pseudo-random number generation, inverse transform, transformation method, Box-Müller, composition, rejection sampling, curse of dimensionality | 3 |
 | **FiniteElements** | Poisson/Helmholtz, Ciarlet FE spaces, Lagrange/Hermite/Argyris elements, interpolation error, Hilbert spaces, Lax-Milgram, Céa's lemma, Aubin-Nitsche, Stokes & Brezzi | 3 |
 
+## Progress Tracking
+
+| Module | Lecture Notes Read | Summaries Created | Past Papers Reviewed | Status |
+|--------|--------------------|-------------------|----------------------|--------|
+| **SDEsFinance** | ✅ Done | ✅ 3 notebooks | ✅ 2024 & 2025 | 🟢 Revision phase |
+| **QuantumMechanics1** | ❌ Not started | ✅ 3 notebooks | ❌ | 🔴 Notes unread |
+| **StochasticSimulation** | ❌ Not started | ✅ 3 notebooks | ❌ | 🔴 Notes unread |
+| **FiniteElements** | ❌ Not started | ✅ 3 notebooks | ❌ | 🔴 Notes unread |
+| **OptionsPricing** | ❌ Not started | ✅ 3 notebooks | ❌ | 🔴 Notes unread |
+| **GameTheory** | ❌ Not started | ✅ 3 notebooks | ❌ | 🔴 Notes unread |
+
+## Exam Schedule
+
+| Date | Day | Module |
+|------|-----|--------|
+| **Mon 27 Apr** | Week 1 | SDEs in Finance |
+| **Tue 28 Apr** | Week 1 | Quantum Mechanics 1 |
+| **Mon 18 May** | Week 4 | Stochastic Simulation |
+| **Thu 21 May** | Week 4 | Finite Elements |
+| **Fri 22 May** | Week 4 | Options Pricing |
+| **Mon 25 May** | Week 5 | Game Theory |
+
 ## Usage
 
 Use the **RevisionAgent** (`@RevisionAgent` in VS Code chat) to ask revision questions. It searches the notebooks and returns exam-focused answers with definitions, theorems, and method recipes.

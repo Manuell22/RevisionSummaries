@@ -1,0 +1,1542 @@
+© 2024 Imperial College London
+MATH70130
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May 2024
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Stochastic Differential Equations in Financial Modelling
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO
+Date: Monday, April 29, 2024
+Time: 14:00 – 16:30 (BST)
+Time Allowed: 2.5 hours
+This paper has 5 Questions.
+Please Answer Each Question in a Separate Answer Booklet
+Candidates should start their solutions to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Allow margins for marking.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. OU SDE.
+Consider the particular Ornstein Uhlenbeck (OU) SDE
+dXt = −a(t)Xt dt + σ(t) dWt
+,
+where X0 = x0 is the deterministic initial condition and where a, σ are smooth deterministic
+functions of time, with |a(t)| and |σ(t)| all bounded above by K, namely
+max(|a(t)|, |σ(t)|) ≤ K for all t ≥ 0,
+with K a positive real constant.
+(a) Prove that this SDE admits a unique global solution. (6 marks)
+(b) Calculate the solution without using Stratonovich calculus. [Hint: Set Yt = exp(R t
+0 a(s)ds)Xt
+and work with Y , then go back to X.] (8 marks)
+(c) Calculate the expected value of the solution at a time T > 0. You will use one property of
+expectations of Ito integrals. Give an informal intuitive reason for this property. (6 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2024) Page 2 of 6
+2. Black-Scholes Option Pricing, Short Risk-Reversal.
+Given a stock with price St at time t, t ≥ 0, consider a payoff Y that is short a call option with
+strike K1 and long a put option with strike K2, with K2 < S0 < K1, both options with maturity
+T. In formula, the payoff is Y = −(ST − K1)
++ + (K2 − ST )
++ and is called a bear (or short) risk
+reversal payoff.
+(a) Draw a plot of this payoff as a function of ST . Explain what type of investor would be
+interested in buying this payoff and what views on the stock marcket this investor would
+have. (5 marks)
+(b) Price the short risk reversal in a Black-Scholes model, where the stock price dynamics under
+the the physical measure P is
+dSt = µStdt + σStdWP
+t
+,
+with S0 = s0 the deterministic initial condition, and where interest rates r are constant and
+deterministic. Here WP
+is a Brownian motion under the measure P. You can use the formula
+for a call option without deriving it. Derive the formula for the put option, either through
+put-call parity or through risk neutral valuation. (10 marks)
+(c) Calculate the delta of the short risk reversal, namely the sensitivity of its price to the initial
+stock price s0. How does the short risk reversal change with s0? (5 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2024) Page 3 of 6
+3. Option pricing Bachelier (long Straddle).
+Consider a stock market where the stock price S follows the Bachelier dynamics, assuming the risk
+free interest rate is zero, namely r = 0,
+dSt = σ dWt
+, S0 = s0,
+where W is a Brownian motion under the risk neutral measure Q, with deterministic initial stock
+price s0 > 0. σ is a positive real volatility. Consider a straddle payoff on S, with maturity T and
+strike K = s0e
+rT = s0, namely
+Y = (ST − K)
++ + (K − ST )
++.
+(a) Compute the straddle price at time 0 in the Bachelier model, call it V0. (10 marks)
+(b) Compute the delta of the straddle in the Bachelier model, namely ∂V0
+∂s0
+and determine
+conditions under which delta is positive. (6 marks)
+(c) Compute the vega of the straddle in the Bachelier model, namely ∂V0
+∂σ and comment on how
+the straddle price varies with σ. (4 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2024) Page 4 of 6
+4. Expected Shortfall of a stock position in the Bachelier model.
+Consider the dynamics of an equity asset price S in the Bachelier model, under both probability
+measures P (the Physical or Historical measure) and Q (the risk neutral measure), with stock
+dynamics dSt = µdt + σdWt
+, with µ and σ deterministic constants, σ > 0 and where W is a
+Brownian motion under P. Assume the risk-free interest rate is equal to zero, r = 0.
+(a) Define Expected Shortfall (ES) for a time horizon T with confidence level α for a general
+portfolio.
+(6 marks)
+(b) Compute ES for horizon T and confidence level α for a portfolio with N units of equity, where
+the equity price follows the Bachelier process above.
+(6 marks)
+(c) Explain one drawback of ES as a risk measure
+(4 marks)
+(d) Is the equity dynamics you used for ES the same you would have used to price an equity call
+option in the Bachelier model? Discuss any possible differences. (4 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2024) Page 5 of 6
+5. Mastery question.
+In the course we developed the theory of option pricing, included also in the lecture notes, but
+we didn’t discuss the theory in the problem classes. This is a question on the derivation of the
+Black Scholes partial differential equation and on the risk neutral measure whose solution can be
+based on what we learned in class and in the lecture notes. You don’t need to add material from
+independent research.
+(a) Define the Black–Scholes model, its economy and the main assumptions behind it. Write
+equations for the two assets in the model and comment on what the equations imply.
+(5 marks)
+(b) Sketch the derivation of the Black Scholes partial differential equation for the price of a call
+option on the stock with maturity T and strike K (without solving it) using the self financing
+condition and Ito’s formula, assuming that the claim price at time t > 0 can be written in the
+form V (t, St), where V (t, S) is a function of t and S that is once continuously differentiable
+in t and twice continuously differentiable in S. (5 marks)
+(c) The price you derived in the previous part is a price by replication. Explain how one can
+arrive at a different notion of price that is more related to expectations of future cash flows,
+and what theorem one needs to invoke in order to obtain this interpretation starting from the
+partial differential equation. (5 marks)
+(d) The answer to the previous question involves a new probability measure that is different from
+the initial physical measure P postulated for the model. This measure is usually called Q,
+the risk neutral measure. Name which theorem allows you to find the relationship between
+P and Q and write this relationship for the Black Scholes model using a Radon-Nykodym
+derivative dQ/dP.
+(5 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2024) Page 6 of 6
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2024
+This paper is also taken for the relevant examination for the Associateship.
+Math60130/70130
+Stochastic Differential Equations in Financial Modeling (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2024 Imperial College London Math60130/70130 Page 1 of 15
+sim. seen ⇓
+6, A
+1. (a) A sufficient condition for existence and uniqueness of a global strong solution is that
+we have two conditions regarding Lipschitz continuity and linear growth. We know
+from the theory that for the SDE dXt = µ(t, Xt)dt + σ(t, Xt)dWt
+, X0 = Z with
+Z independent of σ({Wt
+, t ≤ T)} and E[Z
+2
+] < +∞, and with µ : [0, T]×R → R
+(the drift) and σ : [0, T] × R → R (the diffusion coefficient) being measurable, if
+we have global Lipschitz continuity
+|µ(t, x) − µ(t, y)| + |σ(t, x) − σ(t, y)| ≤ K|x − y| for all t ∈ [0, T] and all x ∈ R
+and linear growth
+|µ(t, x)| + |σ(t, x)| ≤ K′
+(1 + |x|)| for all t ∈ [0, T] and all x ∈ R
+for two constants K, K′
+, then our SDE has a unique global solution Xt
+.
+Let’s check our conditions. In our case µ(t, x) = −a(t)x, σ(t, x) = σ are both
+measurable functions (being constant and linear), X0 = Z = x0 is deterministic,
+and thus trivially independent of W and with finite mean square E(Z
+2
+) = x
+2
+0 < ∞,
+and we can see that
+|µ(t, x)−µ(t, y)|+|σ(t, x)−σ(t, y)| = |−a(t)x+a(t)y|+|σ−σ| = |a(t)||x−y| for all t and x, y
+so that the Lipschitz condition is satisfied by taking K as the upper bound of the
+function |a(t)|, which is bounded by assumption. As for linear growth,
+|µ(t, x)|+|σ(t, x)| = |a(t)||x|+σ ≤ K|x|+σ ≤ max(K, σ)(1+|x|) for all t and x
+shows that also the linear growth condition is satisfied with K′ = max(K, σ).
+Hence our SDE admits a unique global solution.
+sim. seen ⇓
+8, C
+(b) To calculate the solution without using Stratonovich let’s use the hint. Calculate
+dYt = d
+
+exp Z t
+0
+a(s)ds
+Xt
+
+=
+= Xtd exp Z t
+0
+a(s)ds
++ exp Z t
+0
+a(s)ds
+dXt =
+= Xt exp Z t
+0
+a(s)ds
+d
+Z t
+0
+a(s)ds
++ exp Z t
+0
+a(s)ds
+((−a(t)Xt)dt + σ(t)dWt) =
+= Xt exp Z t
+0
+a(s)ds
+a(t)dt
++ exp Z t
+0
+a(s)ds
+((−a(t)Xt)dt + σ(t)dWt)
+= exp Z t
+0
+a(s)ds
+σ(t)dWt
+.
+Thus
+dYt = exp Z t
+0
+a(s)ds
+σ(t)dWt
+.
+This is a very easy SDE to integrate, as Y is not on the right hand side. We simply
+integrate both sides between 0 and T:
+YT − Y0 =
+Z T
+0
+exp Z t
+0
+a(s)ds
+σ(t)dWt
+.
+Recalling that Yt = exp R t
+0
+a(s)ds
+Xt for all t > 0 and substituting this in the
+last equation above for YT we get:
+exp Z T
+0
+a(s)ds
+XT − X0 =
+Z T
+0
+exp Z t
+0
+a(s)ds
+σ(t)dWt
+.
+Now multiply both sides for exp 
+−
+R T
+0
+a(s)ds
+to get
+XT − e
+−
+R T
+0
+a(s)dsX0
+= e
+−
+R T
+0
+a(s)ds Z T
+0
+e
+R t
+0
+a(s)dsσ(t)dWt
+
+.
+leading to
+XT = e
+−
+R T
+0
+a(s)ds 
+X0 +
+Z T
+0
+e
+R t
+0
+a(s)dsσ(t)dWt
+
+or
+XT = e
+−
+R T
+0
+a(s)dsx0 +
+Z T
+0
+e
+−
+R T
+t
+a(s)dsσ(t)dWt
+.
+sim. seen ⇓
+6, A
+(c) We compute
+E[XT ] = E[e
+−
+R T
+0
+a(s)dsx0] + E
+Z T
+0
+e
+−
+R T
+t
+a(s)dsσ(t)dWt
+
+.
+Now, the first quantity inside expectation on the right hand side is deterministic,
+so we can remove expectation. Moreover, we recall that the expected value of an
+Ito integral is zero. We get
+E[XT ] = e
+−
+R T
+0
+a(s)dsx0.
+The informal intuition behind the Ito integral having zero expectation is that
+the increments of Brownian motions dWt are independent and each has zero
+expectation, so adding them up even when multiplied by deterministic constants
+gives a final result of zero.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2024)
+Page 3 of 15
+meth seen ⇓
+5, A
+2. (a) To draw a plot of Y it is best to re-write it in different areas of the S domain.
+We note that the two options will have different values depending on ST > K1 or
+ST > K2 so we distinguish three cases:
+(i) ST < K2, (ii) K2 < ST < K1, (iii) K1 < ST .
+Let us look at the three cases:
+(i) ST < K2 =⇒ the put option is in the money, the call option is out of the
+money and it is worth zero. The payoff is Y = K2 − ST .
+(ii) K2 < ST < K1 =⇒ the put option is out of the money, and the call too. So
+the payoff is zero, Y = 0.
+(iii) K1 < ST ⇒ the put option is out of the money and has zero payoff, while
+the call is in-the-money and has positive payoff ST − K1, so short the call is
+−(ST − K1) = K1 − ST .
+We get
+Y = −(ST − K1)
++ + (K2 − ST )
++ =
+
+
+
+K2 − ST for ST ≤ K2
+0 for K2 < ST < K1
+K1 − ST for ST ≥ K1
+If we include the initial price of Y in the payoff itself, the initial price may be
+positive or negative depending on the strikes and other parameters. We would then
+have to shift the plot of the initial price to include the initial price of the trade in
+the overall payoff.
+We can also write the payoff using indicator functions:
+Y = (K2 − ST )1{ST ≤K2} + (K1 − ST )1{ST >K1}
+.
+We can now draw a plot easily.
+What kind of investor would buy this payoff? The payoff decreases with the stock,
+except in the interval [K2, K1] where it stays constant to zero.
+The payoff will make more money if the stock moves below K2, and the more it
+moves below K2 the more money it makes. The extreme case is the stock going
+to zero, which would give a value of K2 to the payoff. This is the maximum value
+the payoff can take.
+If the stock is between K2 and K1 the payoff is worth nothing, as both options
+expire out of the money.
+Finally, if the stock is larger than K1 then the put is worth nothing but the short
+call gives a negative payoff K1 − ST , and the payoff becomes negative, the more
+negative the more the stock becomes larger compared to K1. Note that here the
+loss is potentially unlimited, as there is no bound for the stock to grow, as opposed
+for the put options where the stock could not go below zero.
+It follows that an investor will buy this payoff only if she expects the stock price
+to move significantly below K2 and will not be interested in buying this payoff (or
+might sell it) if she expects the stock to grow significantly above K1.
+meth seen ⇓
+10, B
+(b) To price the risk reversal we need the price of a put with strike K2 and maturity T
+minus the price of a call with strike K1 and maturity T, both prices in the Black
+Scholes model. For the call we recall that
+V
+CALL
+BS (0, S0, K1, T, σ, r) = s0Φ(d
+(1)
+1
+) − K1e
+−rT Φ(d
+(1)
+2
+)
+where Φ is the CDF of a standard normal and where
+d
+(1)
+1 =
+ln(s0/K1) + (r + σ
+2/2)T
+σ
+√
+T
+, d(1)
+2 = d
+(1)
+1 − σ
+√
+T .
+For the put, we derive its price by put-call parity. Write the argument and the
+derivation here, as it has been done in the lecture, using the put call parity and the
+price of a forward contract. We get
+V
+P UT
+BS (0, S0, K2, T, σ, r) = K2e
+−rT Φ(−d
+(2)
+2
+) − s0Φ(−d
+(2)
+1
+).
+d
+(2)
+1 =
+ln(s0/K2) + (r + σ
+2/2)T
+σ
+√
+T
+, d(2)
+2 = d
+(2)
+1 − σ
+√
+T .
+We can now calculate the Short Risk Reversal (SRR) price as
+V
+SRR
+BS (0) = −V
+CALL
+BS (0, K1) + V
+P UT
+BS (0, K2) =
+= −s0Φ(d
+(1)
+1
+) + K1e
+−rT Φ(d
+(1)
+2
+) + K2e
+−rT Φ(−d
+(2)
+2
+) − s0Φ(−d
+(2)
+1
+) =
+= K1e
+−rT Φ(d
+(1)
+2
+) + K2e
+−rT Φ(−d
+(2)
+2
+) − s0
+
+Φ(d
+(1)
+1
+) + Φ(−d
+(2)
+1
+)
+
+.
+sim. seen ⇓
+5, A
+(c) From the fact that the risk reversal is
+V
+SRR
+BS (0) = −V
+CALL
+BS (0, s0, K1) + V
+P UT
+BS (0, s0, K2)
+we can calculate the delta quickly as
+∂V SRR
+BS (0)
+∂s0
+= −
+∂V CALL
+BS (0, s0, K1)
+∂s0
++
+∂V P UT
+BS (0, s0, K2)
+∂s0
+.
+We know from memory (otherwise derive it, see lecture notes) that, in the basic
+theory of Black Scholes, the delta of a call option is
+∂V CALL
+BS (0, s0, K1)
+∂S0
+= Φ(d
+(1)
+1
+).
+For the delta of a put, we use again put-call parity to derive the delta of a put from
+the delta of call and forward contract (see lecture notes). We obtain the formula
+∂V P UT
+BS (0, s0, K2)
+∂S0
+= −Φ(−d
+(2)
+1
+).
+The total delta of the SRR is
+∂V SRR
+BS (0)
+∂s0
+= −
+∂V CALL
+BS (s0, K1)
+∂s0
++
+∂V P UT
+BS (s0, K2)
+∂s0
+= −Φ(d
+(1)
+1
+) − Φ(−d
+(2)
+1
+).
+Note that the delta of the SRR is negative, meaning that the price of the SRR will
+go down when the stock S0 increases. This is in agreement with our intuition of
+the payoff and the discussion in point a), as the payoff is decreasing in ST .
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2024)
+Page 6 of 15
+unseen ⇓
+10, D
+3. (a) We know from the lectures that the formula for a call option in a Bachelier model
+is
+V
+Call
+BaM (0, s0, K, T, σ) = (s0 − K)Φ 
+s0 − K
+σ
+√
+T
+
++ σ
+√
+T pN
+
+s0 − K
+σ
+√
+T
+
+.
+If you don’t recall the formula, derive it, it’s basic integration. Here Φ is the
+standard normal CDF and pN is the standard normal P DF.
+For the put option, we can use put-call parity:
+VCall − VP ut = VF orward.
+Recall the price of a forward when r = 0 is s0 − K, so that
+VCall − VP ut = s0 − K ⇒ VP ut = VCall − (s0 − K).
+It follows that
+VStraddle = VCall + VP ut = 2VCall − (s0 − K)
+and recalling the call formula above,
+V
+Str
+BaM (0, s0, K, T, σ) = 2 
+(s0 − K)Φ 
+s0 − K
+σ
+√
+T
+
++ σ
+√
+T pN
+
+s0 − K
+σ
+√
+T
+−(s0−K)
+unseen ⇓
+6, D
+(b) From the previous point we obtained that
+V
+Str
+BaM (0, s0, K, T, σ) = 2 
+(s0 − K)Φ 
+s0 − K
+σ
+√
+T
+
++ σ
+√
+T pN
+
+s0 − K
+σ
+√
+T
+−(s0−K)
+We can take a partial derivative with respect to s0 to compute delta. We obtain
+∂V Str
+BaM
+∂s0
+= 2 
+Φ
+
+s0 − K
+σ
+√
+T
+
++ (s0 − K)pN
+
+s0 − K
+σ
+√
+T
+
+1
+σ
+√
+T
++σ
+√
+T p′
+N
+
+s0 − K
+σ
+√
+T
+
+1
+σ
+√
+T
+
+− 1
+where p
+′
+N is the first derivative of the standard normal PDF and we used the fact
+that Φ
+′ = pN . We now need to compute
+p
+′
+N (x) = 1
+√
+2π
+e
+− 1
+2
+x
+2
+(−x) = −xpN (x)
+so that, substituting,
+∂V Str
+BaM
+∂s0
+= 2 
+Φ
+
+s0 − K
+σ
+√
+T
+
++ (s0 − K)pN
+
+s0 − K
+σ
+√
+T
+
+1
+σ
+√
+T
+−(s0 − K)pN
+
+s0 − K
+σ
+√
+T
+
+1
+σ
+√
+T
+
+− 1 = 2Φ 
+s0 − K
+σ
+√
+T
+
+− 1
+This quantity sign depends on the argument of Φ. Given that Φ(0) = 1/2 and that
+Φ is increasing, we see that
+∂V Str
+BaM
+∂s0
+= 2 
+Φ
+
+s0 − K
+σ
+√
+T
+
+−
+1
+2
+
+= 2 
+Φ
+
+s0 − K
+σ
+√
+T
+
+− Φ(0)
+from which it will follow that delta is positive (the straddle price increases with s0)
+when s0 > K, and it is negative when s0 < K.
+unseen ⇓
+4, C
+(c) For the vega, we start again from
+V
+Str
+BaM (0, s0, K, T, σ) = 2 
+(s0 − K)Φ 
+s0 − K
+σ
+√
+T
+
++ σ
+√
+T pN
+
+s0 − K
+σ
+√
+T
+−(s0−K)
+and differentiate with respect to σ.
+∂V Str
+BaM
+∂σ = 2 
+(s0 − K)pN
+
+s0 − K
+σ
+√
+T
+
+s0 − K
+√
+T
+−1
+σ
+2
++
+√
+T pN
+
+s0 − K
+σ
+√
+T
+
++ σ
+√
+T p′
+N
+
+s0 − K
+σ
+√
+T
+
+s0 − K
+√
+T
+−1
+σ
+2
+
+= . . .
+Using again p
+′
+N (x) = −xpN (x) we get
+= 2 
+(s0 − K)pN
+
+s0 − K
+σ
+√
+T
+
+s0 − K
+√
+T
+−1
+σ
+2
++
+√
+T pN
+
+s0 − K
+σ
+√
+T
+
+− (s0 − K)pN
+
+s0 − K
+σ
+√
+T
+
+s0 − K
+√
+T
+−1
+σ
+2
+
+= 2√
+T pN
+
+s0 − K
+σ
+√
+T
+
+Given that the normal PDF is always positive, being a probability density, vega is
+also always positive. This tells us that the straddle price will always increase with
+the volatility.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2024)
+Page 8 of 15
+seen ⇓
+6, A
+4. (a) To define ES we need first to define value at Risk (VaR). VaR is related to the
+potential loss on our portfolio over the time horizon T. Define this loss LT as the
+difference between the value of the portfolio today (time 0) and in the future T.
+LT = Portfolio0 − PortfolioT .
+VaR with horizon T and confidence level α is defined as that number q = qT,α such
+that
+P[LT < q] = α
+so that our loss at time T is smaller than q with P-probability α. Recall that ES is
+then defined as the expectation of the loss conditional on the loss exceeding VaR:
+EST,α = E
+P
+[LT |LT > VaRT,α] =
+EP
+[LT 1{LT >VaRT ,α}
+]
+1 − α
+[see lecture notes for the steps to get to the last expression] meth seen ⇓
+6, B
+(b) In the Bachelier model the equity process follows the dynamics
+dSt = µ dt + σ dWt
+, s0,
+where µ, σ are positive constants and W is a Brownian motion under the physical
+measure P.
+We know that ST can be written as
+ST = S0 + µT + σWT , (1)
+and recalling the distribution of WT ∼
+√
+T N (0, 1),
+ST = s0 + µT + σ
+√
+T N (0, 1) (2)
+so that in our case LT = N(S0 − ST ), namely
+LT = N
+
+S0 − (S0 + µT + σ
+√
+T N (0, 1))
+= N
+
+−µT − σ
+√
+T N (0, 1)
+Hence, if q = V aRT,α, we get
+α = P[LT < q] = P
+h
+N
+
+−µT − σ
+√
+T N (0, 1)
+< qi
+α = P
+
+−N (0, 1) <
+q
+N + µT
+σ
+√
+T
+
+= Φ  q
+N + µT
+σ
+√
+T
+
+where we used the fact that −N (0, 1) is still distributed as the standard normal.
+Then, taking Φ
+−1 on both sides,
+Φ
+−1
+(α) =
+q
+N + µT
+σ
+√
+T
+(3)
+and therefore
+q = N(−µT + σ
+√
+TΦ
+−1
+(α)).
+This is our V aRT,α for the stock position. To compute ES we need to look at
+EST,α =
+EP
+[LT 1{LT >VaRT ,α}
+]
+1 − α
+=
+EP
+[N(S0 − ST )1{N(S0−ST )>VaRT ,α}
+]
+1 − α
+=
+EP
+[N
+
+−µT − σ
+√
+T N (0, 1)
+1{N(−µT −σ
+√
+T N (0,1))>q}
+]
+1 − α
+= . . .
+We can compute the expectation through an integral:
+E
+P
+[N
+
+−µT − σ
+√
+T N (0, 1)
+1{N(−µT −σ
+√
+T N (0,1))>q}
+] =
+=
+Z +∞
+−∞
+h
+N
+
+−µT − σ
+√
+T x
+1{N(−µT −σ
+√
+T x)>q}
+i
+pN (0,1)(x)dx =
+=
+Z +∞
+−∞
+N
+
+−µT − σ
+√
+T x
+1{x<(−q−NµT)/(Nσ√
+T)}
+1
+√
+2π
+e
+− x
+2
+2 dx
+=
+Z (−q−NµT)/(Nσ√
+T)
+−∞
+N
+
+−µT − σ
+√
+T x 1
+√
+2π
+e
+− x
+2
+2 dx
+= −NµT Z −q−NµT
+Nσ√
+T
+−∞
+1
+√
+2π
+e
+− x
+2
+2 dx − Nσ√
+T
+Z −q−NµT
+Nσ√
+T
+−∞
+x
+1
+√
+2π
+e
+− x
+2
+2 dx
+= −NµTΦ
+
+−q − NµT
+Nσ√
+T
+
+− Nσ√
+T
+Z (−q−NµT)/(Nσ√
+T)
+−∞
+x
+1
+√
+2π
+e
+− x
+2
+2 dx
+= −NµTΦ
+
+−q − NµT
+Nσ√
+T
+
++ Nσ√
+T
+Z (−q−NµT)/(Nσ√
+T)
+−∞
+1
+√
+2π
+d
+
+e
+− x
+2
+2
+
+= −NµTΦ
+
+−q − NµT
+Nσ√
+T
+
++ Nσ√
+T
+
+1
+√
+2π
+e
+− x
+2
+2
+
+|
+−q−NµT
+Nσ√
+T
+−∞ =
+= −NµTΦ
+
+−q − NµT
+Nσ√
+T
+
++ Nσ√
+T (ϕ(x))|
+−q−NµT
+Nσ√
+T
+−∞ =
+−NµTΦ
+
+−q − NµT
+Nσ√
+T
+
++ Nσ√
+T ϕ 
+−q − NµT
+Nσ√
+T
+
+where ϕ is the density of the standard normal, ϕ(x) = pN (0,1)(x) = √
+1
+2π
+e
+− x
+2
+2 and
+we used that limx→−∞ ϕ(x) = 0. Substituting back we get
+. . . = EST,α =
+−NµTΦ
+
+−q−NµT
+Nσ√
+T
+
++ Nσ√
+T ϕ 
+−q−NµT
+Nσ√
+T
+
+1 − α
+The above is acceptable as final solution with full marks. However, using (3), this
+can be simplified further as
+. . . = EST,α =
+−NµTΦ
+
+−Φ
+−1
+(α)
+
++ Nσ√
+T ϕ
+−Φ
+−1
+(α)
+
+1 − α
+=
+−NµT
+1 − Φ
+
+Φ
+−1
+(α)
+ + Nσ√
+T ϕ
+−Φ
+−1
+(α)
+
+1 − α
+=
+−NµT (1 − α) + Nσ√
+T ϕ
+−Φ
+−1
+(α)
+
+1 − α
+= −NµT +
+Nσ√
+T ϕ
+−Φ
+−1
+(α)
+
+1 − α
+seen ⇓
+4, A
+(c) ES does not completely look at the tail structure of the Loss, but does so only
+in expectation. So if 99% VaR is 10 billions, we can have the remaining 1% loss
+concentrated
+(i) either on 10.1 billions,
+(ii) or on 10 trillions,
+as two stylized cases, without VaR being able to tell us anything on whether we
+are in case (i) or (ii).
+ES does a little better than VaR, in that it averages the tail. The average in case
+(ii) will be much larger than the average of case (i), thus alerting one to more risk
+in case (ii). Still, it won’t tell us exactly how the tail risk looks like or where exactly
+the loss is concentrated on the tail.
+Another problem of ES is that it is homogeneous with respect to the portfolio size.
+Namely, if k is a positive constant, then
+V aR(k P ortfolio) = k V aR(P ortfolio)
+and
+ES(k P ortfolio) = k ES(P ortfolio).
+This is unrealistic and completely neglects liquidity risk. Buying one million of
+shares is more than one million times risky than buying one share. Placing the
+order for one million shares will move the whole market and change the share price
+(theory of maket impact/market microstructure) with potential additional losses
+due to market impact, whereas placing the order for one share willl not move the
+market. Liquidity risk strongly disagrees with the homogeneous assumption. meth seen ⇓
+4, B
+(d) No the dynamics is not the same, to price an option we need to use the risk neutral
+dynamics, where the drift parameter µ of S is replaced by the risk free rate r = 0
+of the bank account. So to price an option we need to use the dynamics under Q,
+dSt = σdWQ. To compute value at risk or expected shortfall the dynamics that
+is relevant up to the risk horizon is the dynamics under P, i.e. the dynamics with
+drift µ.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2024)
+Page 11 of 15
+5. (a) Black Scholes economy consists of two assets: 5, M
+dBt = Btrdt, B0 = 1,
+dSt = µ St dt + σ St dWt
+, 0 ≤ t ≤ T,
+The second asset (a stock) is risky and its price is described by the process St
+.
+Furthermore, it is assumed that
+* (i) there are no transaction costs in trading the stock;
+* (ii) the stock pays no dividends or other distributions;
+* (iii) shares are infinitely divisible;
+* (iv) short selling is allowed without any restriction or penalty. Short selling:
+investor borrows a security and sells it on the market, planning to buy it back
+later for less money to give it back to the lender and make a profit. This
+assumes total absence of credit /default risk.
+These assumptions are Black & Scholes’ ideal conditions.
+Note that the stock price is a positive process, as should be, being a geometric
+Brownian motion. Note that the cash account B is Bt = e
+rt and grows
+exponentially at the risk free rate. This is a risk free asset.
+5, M
+(b) We now assume that the value of the simple claim at time t is a function of the
+underlying stock S at the same time, namely Vt = V (t, St). This is the candidate
+claim (option) value at time t. Assume the function V (t, S) of time t and of
+the stock price S to have regularity V ∈ C
+1,2
+([0, T] × R
++). In other terms, we
+assume V is twice continously differentiable with respect to S and once continuously
+differentiable with respect to t. Apply Ito’s formula to V :
+dV (t, St) = ∂V
+∂t (t, St) dt +
+∂V
+∂S (t, St) dSt +
+1
+2
+∂
+2V
+∂S2
+(t, St) dSt dSt
+. (4)
+Substituting the equation for dSt = µStdt + σStdWt and recalling that dt dt =
+0, dt dWt = 0, dWtdWt = dt, we get
+dV (t, St) = 
+∂V
+∂t (t, St) + ∂V
+∂S (t, St)µSt +
+1
+2
+∂
+2V
+∂S2
+(t, St)σ
+2S
+2
+t
+
+dt
++
+∂V
+∂S (t, St)σStdWt
+. (5)
+Now, if we are looking to attain our claim with a self financing strategy ϕ
+S
+, ϕB, so
+that V (t, St) = ϕ
+S
+t St + ϕ
+B
+t Bt
+, this will have to satisfy the self financing condition,
+namely
+dV (t, St) = ϕ
+B
+t dBt + ϕ
+S
+t dSt
+. (6)
+Compare this last Eq to Eq (4) in the previous slide and match the dSt terms. We
+get, for each 0 ≤ t ≤ T,
+ϕ
+S
+t =
+∂V
+∂S (t, St), ϕB
+t = (Vt − ϕ
+S
+t St)/Bt
+. (7)
+where the first equation comes from the matching, and the second equation comes
+by construction, as the value of the strategy at time t must be V itself, and clearly
+V (t, St) = ϕ
+B
+t Bt + ϕ
+S
+t St
+. In other terms, to get the second equation solve
+V (t, St) = ϕ
+B
+t Bt + ϕ
+S
+t St
+in ϕ
+B
+t
+.
+Now we can explicit the self financing condition for ϕ:
+dVt = ϕ
+B
+t dBt + ϕ
+S
+t dSt (8)
+=
+
+V (t, St) −
+∂V
+∂S (t, St)St
+
+rdt +
+∂V
+∂S (t, St)St(µdt + σdWt).
+Then by equating (5) and (8) (ITO + SELF FINANCING), we obtain that Vt
+satisfies
+∂V
+∂t (t, St) + ∂V
+∂S (t, St)rSt +
+1
+2
+∂
+2V
+∂S2
+(t, St)σ
+2S
+2
+t = rV (t, St), (9)
+which is the celebrated Black and Scholes partial differential equation with terminal
+condition VT = (ST − K)
++.
+5, M
+(c) The Feynman-Kac Theorem allows to interpret the solution of a parabolic PDE such
+as the Black and Scholes PDE in terms of expected values of a diffusion process.
+In general, given suitable regularity and integrability conditions, the solution of the
+PDE
+∂V
+∂t (t, x) + ∂V
+∂x (t, x)b(x) + 1
+2
+∂
+2V
+∂x2
+(t, x)σ
+2
+(x) = rV (t, x), V (T, x) = f(x), (10)
+can be expressed as
+V (t, x) = e
+−r(T −t)E
+Q
+t,x{f(XT )|Ft} (11)
+where the diffusion process X has dynamics starting from x at time t
+dXs = b(Xs)ds + σ(Xs)dWQ
+s
+, s ≥ t, Xt = x (12)
+under the probability measure Q under which the expectation E
+Q
+t,x{·} is taken. The
+process WQ is a standard Brownian motion under Q.
+By applying this theorem to the Black and Scholes setup, with b(x) = rx,
+σ(x) = σ x (so that the general PDE of the theorem coincides with the BeS
+PDE) we obtain:
+The unique no-arbitrage price of the integrable contingent claim Y = (ST − K)
++
+(European call option) at time t, 0 ≤ t ≤ T, is given by
+VBS(t) = E
+Q
+
+e
+−r(T −t)Y |Ft
+
+. (13)
+The expectation is taken with respect to the so-called martingale measure Q,
+i.e. a probability measure Q ∼ P under which the risky–asset price St/Bt = e
+−rtSt
+measured with respect to the risk-free asset price Bt
+is a martingale, which is
+equivalent to S having drift rate r under Q:
+dSt = St
+[rdt + σdWQ
+t
+], 0 ≤ t ≤ T, (14)
+5, M
+(d) We apply Girsanov’s theorem to move from
+d St = µSt dt + σSt dWP
+t
+to
+d St = rSt dt + σSt dWQ
+t
+and obtain the Radon Nykodym derivative connecting Q with P.
+dQ
+dP = exp (
+−
+1
+2
+
+µ − r
+σ
+2
+T −
+µ − r
+σ
+WT
+)
+. (15)
+Note that the Novikov condition needed for Girsanov to work is satisfied trivially:
+E
+"
+exp
+1
+2
+Z T
+0
+
+µSt − rSt
+σSt
+2
+dt!# = exp
+1
+2
+
+µ − r
+σ
+2
+!
+< +∞
+The quantity
+µ − r
+σ
+is called “market price of risk”, or sometimes, in finance circles, the Sharpe ratio.
+It tells us how much better the stock S is doing with respect to the risk free rate,
+divided by the volatility. In the real world the stock local growth rate or “return”
+is µ. So µ − r is the difference between S’s return and the risk free rate, telling us
+how much better S is doing than a cash account B.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2024)
+Page 14 of 15
+Review of mark distribution:
+Total A marks: 32 of 32 marks
+Total B marks: 20 of 20 marks
+Total C marks: 12 of 12 marks
+Total D marks: 16 of 16 marks
+Total marks: 100 of 80 marks
+Total Mastery marks: 20 of 20 marks
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2024)
+Page 15 of 15
+Question Marker's comment
+MATH60130 Stochastic Differential Equations in Financial Modelling
+First marker comments.nbsp;This question was expected to be easy, having
+been covered in the lectures and being a special case of the mock exam
+problem to which students had been alerted, also written in the lecture notes.
+The performances were mixed, with marks ranging from 0 to 20 but quite a
+number ranging around high marks 17-20.Point a),nbsp; existence and
+uniqueness of solutions of the linear SDE, some students commented on
+measurability of a(t) and \sigma(t) in t but not of a(t) x in x. Also, somenbsp;
+students didn't comment about measurability at all, or the condition on x0 at
+all, focusing only on Lipschitz and linear growth, but I was lenient for this.On
+the core Lipschitz and linear growth conditions, a few students used \mu(t,x) =
+a(t) instead of a(t)x, and got a wrong condition. I was surprised by this common
+error, as it was very clear in the mock exam and in the lectures that $-a(t)x$
+was the drift, and not $-a(t)$ alone. Other students made basic mistakes with
+absolute values, like |-ax + ay |= a|x-y| instead of the correct |a||x-y| and other
+similar very basic errors.nbsp;nbsp;Point b), solving the SDE, was again
+relatively easy, integration of a linear SDE with a suggested change of variable
+that made the integration completely trivial. Here again I found occasional
+basic mistakes on integration and differentiation. The errors in point b) carried
+over to point c) (computing the expectation of the solution) for quite a few
+students, although I have marked keeping in mind also correctness in context.
+Some students couldn't explain properly the intuition behind the Wiener
+integral having zero mean, which was discussed at length several times in
+class and also in the mock exam in the lecture notes the students had been
+alerted to, during the lectures. A few students, rather than calculating the
+expectation from the SDE solution theynbsp; had derived, decided to derive an
+ODE for the mean and solve it. This was basically an overkill, as the other
+method was much faster, but I gave full marks for this too if
+correct.nbsp;nbsp;Overall this question went a little worse than I expected,
+being one of the simplest possible SDEs and having been done and
+emphasized in one of the mock exams in more general form, although quite a
+number of students got full marks 20/20 or close to full marks.nbsp;
+1
+Question Marker's comment
+MATH70130 Stochastic Differential Equations in Financial Modelling
+First marker comments.nbsp;This question was expected to be easy, having
+been covered in the lectures and being a special case of the mock exam
+problem to which students had been alerted, also written in the lecture notes.
+However, the performances were relatively poor, with marks ranging from 7 to
+20 (excluding cases with zero input) and quite a number ranging around
+10.Point a),nbsp; existence and uniqueness of solutions of the linear SDE,
+many students commented on measurability of a(t) and \sigma(t) in t but not of
+a(t) x in x. Also, many students didn't comment about measurability or the
+condition on x0 at all, but I was lenient for this.On the core Lipschitz and linear
+growth conditions, quite a few students used \mu(t,x) = a(t) instead of a(t)x,
+and got a wrong condition. I was surprised by this common error, as it was very
+clear in the mock exam and in the lectures that $-a(t)x$ was the drift, and not $-
+a(t)$ alone. Other students made basic mistakes with absolute values that I
+wasn't expecting in year 4/MSc, like |-ax + ay |= a|x-y| instead of the correct
+|a||x-y| and other similar errors.nbsp;Point b), solving the SDE, was again
+relatively easy, integration of a linear SDE with a suggested change of variable
+that made the integration completely trivial. Here again I found basic mistakes
+on integration and differentiation that I wasn't expecting from students in year
+4/MSc. A couple of students, despite me asking not to use Stratonovich
+calculus in the problem, did. The errors in point b) carried over to point c)
+(computing the expectation of the solution) for quite a few students, although I
+have marked keeping in mind also correctness in context. Some students
+couldn't explain properly the intuition behind the Wiener integral having zero
+mean, which was discussed at length several times in class and also in the
+mock exam the students had been alerted to during the lectures.nbsp;Overall
+this question went worse than I expected, being one of the simplest possible
+SDEs and having been done and emphasized in one of the mock exams in
+more general form.nbsp;
+1

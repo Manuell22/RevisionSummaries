@@ -1,0 +1,1325 @@
+© 2025 Imperial College London
+MATH70130
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+Summer 2025
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Stochastic Differential Equations in Financial Modelling
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO DO SO
+Date: Monday, April 28, 2025
+Time: Start time 14:00 – End time 16:30 (BST)
+Time Allowed: 2.5 hours
+This paper has 5 Questions.
+Please Answer Each Question in a Separate Answer Booklet
+This is a closed book examination.
+Candidates should start their solutions to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Allow margins for marking.
+1. SDE.
+Consider the SDE
+dXt =
+1
+2
+Xtdt +
+q
+1 + X2
+t dWt
+,
+where X0 = x0 is the deterministic initial condition and W is a standard Brownian motion.
+(a) Prove that this SDE admits a unique global solution. (6 marks)
+(b) Calculate the solution. [Hint: transform in Stratonovich form and remember
+R
+√
+dx
+1+x2 = sinh−1
+(x) + C where sinh−1
+is the inverse function of hyperbolic sine and C is an
+integration constant] (8 marks)
+(c) Calculate the expected value of the solution at a time T > 0. [Hint: it may be easier
+obtaining and solving an ODE for the mean rather than attempting a direct calculation from
+the solution] (6 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2025) Page 2 of 6
+2. Black-Scholes Option Pricing, Bull Call Spread.
+Given a stock with price St at time t, t ≥ 0, consider a payoff Y that is the difference between a
+call option with smaller strike and a call option with a larger strike. The underlying asset S and
+the option maturities T are the same. In formula: if the two strikes are K1 > K2, then the bull
+call spread payoff is
+Y = (ST − K2)
++ − (ST − K1)
++.
+(a) Draw a plot of this payoff as a function of ST . Explain what type of investor would be
+interested in buying this payoff and what views on the stock market this investor would have.
+(5 marks)
+(b) Write a formula for the price of the bull call spread in a Black-Scholes model, where the stock
+price dynamics under the the physical measure P is
+dSt = µStdt + σStdWP
+t
+,
+with S0 = s0 the deterministic initial condition, and where interest rates r are constant and
+deterministic. Here WP
+is a Brownian motion under the measure P. You can use the formula
+for a call option without deriving it if you remember it. (10 marks)
+(c) Write a formula for the delta of the bull call spread, namely its sensitivity to the stock price
+at time 0. In other words, if V0 is the price you computed in point b), write a formula for
+∂V0
+∂s0
+. What does the sign of the delta allow you to conclude on the behaviour of the bull call
+spread with respect to the underlying stock and does this confirm your intuition on the payoff
+interpretation in point a)? (5 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2025) Page 3 of 6
+3. Option pricing Bachelier (butterfly spread).
+Consider a stock market where the stock price S follows the Bachelier dynamics, assuming the risk
+free interest rate is zero, namely r = 0,
+dSt = σ dWt
+, S0 = s0,
+where W is a Brownian motion under the risk neutral measure Q, with deterministic initial stock
+price s0 > 0. σ is a positive real volatility. Consider a butterfly spread option on the stock S with
+maturity T. This is a strategy based on buying one in-the-money call option with a low strike
+L = S0 − X, selling two at-the-money call options with a middle strike M = S0, and buying one
+out-of-the-money call option with a higher strike price H = S0 + X, where X is a positive real
+constant. All options have maturity T. The payoff at maturity is
+Y = (ST − L)
++ − 2(ST − M)
++ + (ST − H)
++.
+(a) Write a formula for the butterfly spread price at time 0 in the Bachelier model, call it V0.
+Simplify the formula as much as possible. (10 marks)
+(b) Write a formula for the delta of the butterfly spread in the Bachelier model, namely ∂V0
+∂s0
+,
+simplify it as much as possible and comment on the sign of the delta and on its significance.
+[Hint: remember we ask for the sensitivity to the stock and not the joint sensitivity to stock
+and strikes] (6 marks)
+(c) Draw a plot of the butterfly spread final payoff Y as a function of ST . Consider the limit
+situation when X ↓ 0. Deduce intuitively the price of the butterfly by looking at the plot
+of the payoff and by thinking about what happens to the plot when X ↓ 0. Check with a
+limit calculation for X ↓ 0 from point a) whether the Bachelier price for the butterfly spread
+confirms this intuition. (4 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2025) Page 4 of 6
+4. VaR for bond and stock with different maturities in Black Scholes.
+Consider a portfolio with a first bond position in a notional N of zero-coupon bond with maturity
+U in an economy where we have a deterministic constant risk free interest rate r. Assume that
+in the same portfolio we are short a bond with maturity T < U on the same notional, and that
+we hold an amount M of stock S, where the stock price follows the following dynamics under the
+measure P: dSt = µStdt + σStdWt
+, s0. We assume M > 0, N > 0.
+(a) Define Value at Risk (VaR) for a time horizon T with confidence level α for a general portfolio.
+(6 marks)
+(b) Compute the value at risk of this portfolio for a confidence level α at a risk horizon h < T.
+Simplify the formula as much as you can.
+(6 marks)
+(c) Explain the drawback of VaR as a risk measure that is completely solved by expected shortfall.
+(4 marks)
+(d) Is the equity dynamics you used for VaR the same you would have used to price an equity
+call option in the Black Scholes model? Discuss any possible differences. (4 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2025) Page 5 of 6
+5. Mastery question.
+The introduction of risk measures has been triggered by a number of crises and market incidents.
+Consider the Barings collapse.
+(a) Write a short history of the Baring collapse, who caused it and how.
+(5 marks)
+(b) What option combination, in particular, turned out to create a huge loss? Explain the idea
+behind this option combination and draw the payoff as a function of the final stock price ST .
+(5 marks)
+(c) In that particular historical moment, what was the point of setting up this position and what
+went wrong, leading to further huge losses that sank the bank? (5 marks)
+(d) What risk measure has been introduced shortly after to limit the possibility that similar cases
+may happen again? Give a verbal definition of what this risk measure represents and what it
+may achieve. (5 marks)
+(Total: 20 marks)
+MATH60130/MATH70130 Stochastic Differential Equations in Financial Modelling (2025) Page 6 of 6
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+April 2025
+This paper is also taken for the relevant examination for the Associateship.
+Math60130/70130
+Stochastic Differential Equations in Financial Modeling (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2025 Imperial College London Math60130/70130 Page 1 of 14
+sim. seen ⇓
+6, A
+1. (a) A sufficient condition for existence and uniqueness of a global strong solution is that
+we have two conditions regarding Lipschitz continuity and linear growth. We know
+from the theory that for the SDE dXt = µ(t, Xt)dt + σ(t, Xt)dWt
+, X0 = Z with
+Z independent of σ({Wt
+, t ≤ T)} and E[Z
+2
+] < +∞, and with µ : [0, T]×R → R
+(the drift) and σ : [0, T] × R → R (the diffusion coefficient) being measurable, if
+we have global Lipschitz continuity
+|µ(t, x) − µ(t, y)| + |σ(t, x) − σ(t, y)| ≤ K|x − y| for all t ∈ [0, T] and all x ∈ R
+and linear growth
+|µ(t, x)| + |σ(t, x)| ≤ K′
+(1 + |x|)| for all t ∈ [0, T] and all x ∈ R
+for two constants K, K′
+, then our SDE has a unique global solution Xt
+.
+Let’s check our conditions.
+The initial condition has to be squared integrable, E[X2
+0
+] < +∞, which is true
+in our case as X0 = x0 is a finite deterministic constant and E[X2
+0
+] = x
+2
+0 < ∞.
+Then we need to prove that the the drift and diffusion coefficient are measurable
+functions of X, t.
+This is trivially true as the drift is a linear function of X and does not depend on
+t, µ(t, X) = X/2. Also, the diffusion coefficient σ(t, X) = p
+1 + X2
+t
+is trivially
+measurable as it is a continuous function of X and does not depend on t.
+Next we need to check the Lipschitz continuity and linear growth condition. I will
+present a brute force proof of the Lipschitz condition but alternative proofs are ok
+and get full marks. For example, proving that x 7→
+√
+1 + x
+2 is 1-Lipschitz can be
+considerably shortened by noting that its derivative on the positive reals is bounded
+in modulus by 1 and appealing to the Mean Value Theorem. There are also other
+approaches that are shorter than the brute force approach below and that can get
+full marks.
+Brute force proof. The Lipschitz condition reads
+|µ(t, x) − µ(t, y)| + |σ(t, x) − σ(t, y)| =
+= |x/2 − y/2| + |
+p
+1 + x
+2 −
+p
+1 + y
+2| ≤ . . . (1)
+At this point we need to deal with the second term before the inequality, as the
+first one is trivially 1
+2
+|x − y|. We claim that
+|
+p
+1 + x
+2 −
+p
+1 + y
+2| ≤ ||x| − |y||.
+To prove this, let us assume that |x| ≥ |y| (and hence also x
+2 > y2
+). If the
+opposite holds, we can swap the terms and proceed analogously, as they are inside
+an absolute value and swapping them does not affect the reasoning. With |x| ≥ |y|,
+we can rewrite the above inequality as
+p
+1 + x
+2 −
+p
+1 + y
+2 ≤ (|x| − |y|).
+To check that this is true, and remembering that both sides are positive given
+|x| ≥ |y|, we may square both sides and see if the inequality holds. Given positivity,
+if it holds for the squares it holds for the bases too. Squaring both sides, we get
+(
+p
+1 + x
+2 −
+p
+1 + y
+2)
+2 ≤ (|x| − |y|)
+2 ⇐⇒
+⇐⇒ 1 + x
+2 + 1 + y
+2 − 2
+p
+(1 + x
+2)(1 + y
+2) ≤ x
+2 + y
+2 − 2|x||y| ⇐⇒
+⇐⇒ x
+2 + y
+2 − 2
+p
+(1 + x
+2)(1 + y
+2) ≤ x
+2 + y
+2 − 2|x||y| ⇐⇒
+−2
+p
+(1 + x
+2)(1 + y
+2) ≤ −2|x||y| ⇐⇒ 2
+p
+(1 + x
+2)(1 + y
+2) ≥ 2|x||y|
+which is true since 1 + x
+2 ≥ x
+2
+, 1 + y
+2 ≥ y
+2
+and √
+· is an increasing
+function, so that √
+1 + x
+2 >
+√
+x
+2 = |x| and similarly for y. So we have clearly
+−2
+p
+(1 + x
+2)(1 + y
+2) < −2|x||y| which, for the chain of ⇐⇒ above, is equivalent
+to
+(
+p
+1 + x
+2 −
+p
+1 + y
+2)
+2 ≤ (|x| − |y|)
+2
+,
+or
+p
+1 + x
+2 −
+p
+1 + y
+2 ≤ |x| − |y|.
+Substituting this in (1) we conclude
+|µ(t, x) − µ(t, y)| + |σ(t, x) − σ(t, y)| ≤ 1
+2
+|x − y| + ||x| − |y||. (2)
+This is not yet a Lipschitz condition. We need to show that
+||x| − |y|| ≤ |x − y|.
+To check this, let us look at all four cases.
+a) x ≥ 0, y ≥ 0. Then the above inequality becomes an identity and we are done.
+b) x ≥ 0, y ≤ 0. Then the above inequality becomes
+||x| − |y|| = |x − (−y)| = |x + y| ≤ |x − y|
+where the inequality holds because of the signs of x and y, in particular with y
+being negative.
+c) x ≤ 0, y ≥ 0. Then the above inequality becomes
+||x| − |y|| = | − x − y| ≤ |x − y|
+as −x is positive, so it offsets −y leading to a smaller absolute value for the left
+hand side.
+d) x ≤ 0, y ≤ 0. Then the above inequality becomes
+||x| − |y|| = | − x − (−y)| = | − x + y| ≤ |x − y|
+as −x is positive and offsets the negative +y on the left hand side, leading to a
+smaller absolute value.
+So we have proven that ||x| − |y|| ≤ |x − y|, and substituting in (2) we get
+|µ(t, x) − µ(t, y)| + |σ(t, x) − σ(t, y)| ≤ 1
+2
+|x − y| + ||x| − |y|| ≤
+≤
+1
+2
+|x − y| + |x − y| =
+3
+2
+|x − y|
+which is Lipschitz continuity with constant 3/2.
+So we have proven Lipschitz continuity. For autonomous SDEs, Lipschitz implies
+linear growth so we can say that and stop. Or prove linear growth too as follows.
+To prove linerar growth, we need to show that
+|µ(t, x)| + |σ(t, x)| ≤ K′
+(1 + |x|)| for all t ∈ [0, T] and all x ∈ R
+We have
+|µ(t, x)| + |σ(t, x)| = |x| +
+p
+1 + x
+2 ≤
+1
+2
+|x| +
+√
+1 + √
+x
+2 = 1 +
+3
+2
+|x| ≤ 3
+2
+(1 + |x|)
+for all t ∈ [0, T] and all x ∈ R
+as in general, for two positive real number a and b,
+√
+a + b ≤
+√
+a +
+√
+b (square
+both sides, that are positive, to convince yourself of this).
+So we have a unique global solution.
+sim. seen ⇓
+8, C
+(b) Calculation of the solution using Stratonovich calculus is based on transforming
+the Ito SDE in a Stratonovich SDE. We know that the transformation changes the
+drift into
+1
+2
+x 7→
+1
+2
+x −
+1
+2
+σ(t, x)
+∂σ(t, x)
+∂x .
+In our specific case,
+1
+2
+σ(t, x)
+∂σ(t, x)
+∂x =
+1
+2
+p
+1 + x
+2
+1
+2
+2x
+√
+1 + x
+2
+= −
+1
+2
+x
+so that the Stratonovich drift becomes
+1
+2
+x 7→
+1
+2
+x −
+1
+2
+x = 0.
+The equivalent Stratonovich SDE with the same solution is therefore
+dXt =
+q
+1 + X2
+t
+◦ dWt
+, x0.
+With Stratonovich, we can use formal rules of calculus. We can separate variables
+as in
+p
+dXt
+1 + X2
+t
+= ◦dWt
+,
+and integrate both sides
+Z Xt
+x0
+dX
+√
+1 + X2
+=
+Z t
+0
+dWt
+,
+leading to
+sinh−1
+(X)|
+Xt
+x0 = Wt
+or
+sinh−1
+(Xt) − sinh−1
+(x0) = Wt
+sinh−1
+(Xt) = sinh−1
+(x0) + Wt
+Xt = sinh
+sinh−1
+(x0) + Wt
+
+.
+sim. seen ⇓
+6, A
+(c) To calculate the expected value we could use the solution directly and proceed to a
+direct calculation but this is not convenient, as it involves a much more complicated
+calculation. Let us use the Ito SDE instead. Consider
+dXt =
+1
+2
+Xtdt +
+q
+1 + X2
+t
+dWt
+,
+and write it in integral form
+Xt = x0 +
+Z t
+0
+1
+2
+Xsds +
+Z t
+0
+p
+1 + X2
+s dWs,
+and now take the expected value conditional on information at time 0 on both sides.
+Recall the that expectation of an Ito integral is zero and that x0 is deterministic,
+so we get
+E0[Xt
+] = x0 + E0[
+Z t
+0
+1
+2
+Xsds] + 0,
+or
+E0[Xt
+] = x0 +
+Z t
+0
+1
+2
+E0[Xs]ds + 0,
+using Fubini’s theorem. Let us now call mt = E0[Xt
+] for all t ≥ 0. The above
+equation can be written as
+mt = x0 +
+Z t
+0
+1
+2
+ms ds.
+Now differentiate both sides with respect to t, obtaining
+dmt
+dt =
+1
+2
+mt
+,
+with initial condition m0 = E0[X0] = E0[x0] = x0. The last differential equation
+is immediate to integrate. We have
+dm
+m
+=
+1
+2
+dt
+so that, integrating both sides
+ln(m)|
+mt
+m0 =
+1
+2
+t
+or
+ln(mt) − ln(m0) = 1
+2
+t
+or, rearranging,
+mt = m0 exp 
+1
+2
+t
+
+so that
+E[Xt
+] = x0 exp 
+1
+2
+t
+
+.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2025)
+Page 5 of 14
+meth seen ⇓
+5, A
+2. (a) The payoff can also be written as
+Y = (K1 − K2)1ST >K1 + (S − K2)1K2<ST ≤K1 + 0 1S≤K2
+.
+This contingent claim consists of one long call with a lower strike price and one
+short call with a higher strike.
+Note that the initial price of Y would be positive to us, since it is an in-the-money
+call minus an out-of-the-money call. This means that to purchase this payoff we
+need to pay.
+As for the plot of the payoff of a bull call spread, excluding the initial payment
+needed to buy the product, the payoff looks like
+What type of investor would buy this payoff? A bull call spread profits when the
+underlying stock rises in price, but profit is limited as the stock price rises above the
+strike price K1, and the loss is also limited as the stock price falls below the strike
+price K2. So differently from payoffs like risk reversals, the bull call spread allows
+for limited gain and limited losses, whichever the model (we know for example that
+under the Bachelier model a risk reversal can lead to an unlimited loss, potentially).
+Therefore, as a payoff it will be less risky than a bull or long risk reversal, but at
+the same time it will allow for less profit in case of strong positive performance of
+the stock at maturity.
+Indeed, the loss is floored after the stock drops below K2, but the potential profits
+are also capped as the stock rises above K1. Hence this contract will be sought
+by a trader who does not want excessive risk and who is expecting the stock to
+increase.
+The contract may be of interest to a trader with limited funds, because it is less
+expensive than a call option with stike K2, as it reduces the price of the call by
+selling another call with a higher strike K1. So one finances the purchase of a call
+with the sale of another call.
+meth seen ⇓
+10, B (b) To price this payoff, we just need to price the two call options and substract.
+Indeed, we know from the Black Scholes formulas that the price of the payoff Y at
+time 0 is the Black-Scholes price of the call with strike K2 minus the Black-Scholes
+price of the call with strike K1, namely
+V0 = S0Φ(d1(K2)) − K2e
+−rT Φ(d2(K2)) − [S0Φ(d1(K1)) − K1e
+−rT Φ(d2(K1))]
+where
+d1,2(K) = ln(St/K) +
+r ±
+1
+2
+σ
+2
+
+(T − t)
+σ
+√
+T − t
+.
+The sign of the price is positive, V0 > 0. Indeed, the payoff itself is non-negative in
+every scenario, so its Q-expectation, leading to the price, will be positive. Another
+way to look at it is to consider that we are taking the difference of two call options
+with the same maturity, same stock and different strikes. The first option has a
+lower strike K2 with S0 > K2, so the first call option is in-the-money. The call
+option we subtract or sell, has larger strike K1 and S0 < K1, so the second call is
+out of the money. As a call that is in the money is more valuable than a call that
+is out of the money, everything else being equal, we deduce that the difference will
+be positive. sim. seen ⇓
+5, A
+(c) To compute the delta, we need to take the partial derivative of V0 with respect to
+s0.
+Recall that the delta at time 0 of a call options with stock S, strike K, maturity
+T, volatility σ and risk free rate r is given by
+∆call(K) = Φ(d1(K)), d1(K) = ln(S0/K) +
+r +
+1
+2
+σ
+2
+
+T
+σ
+√
+T
+.
+Since our bull call spread (BuCS) is the difference of two call options with strikes
+K2 and K1 respectively, we have
+∆BuCS =
+∂V0
+∂s0
+=
+∂(CallPrice(K2) − CallPrice(K1))
+∂s0
+=
+=
+∂CallPrice(K2)
+∂s0
+−
+∂CallPrice(K1)
+∂s0
+= Φ(d1(K2)) − Φ(d1(K1)).
+We can discuss the sign of the Delta to see the pattern of the BuCS price with
+respect to s0. To do this, we wish to understand whether the delta of a call option,
+Φ(d1(K)), is increasing or decreasing in K, or neither. We know Φ is an increasing
+function as it is the normal CDF, so the question is whether d1(K) is increasing,
+decreasing or neither in K. We can write d1(K) as
+d1(K) = ln(S0) − ln(K) +
+r +
+1
+2
+σ
+2
+
+T
+σ
+√
+T
+.
+Then
+∂d1(K)
+∂K =
+1
+σ
+√
+T
+∂(ln(S0) − ln(K) +
+r +
+1
+2
+σ
+2
+
+T)
+∂K =
+1
+σ
+√
+T
+(−
+1
+K
+) < 0.
+If K is positive, this is a negative numer. This means that d1(K) is decreasing in
+K. As the total delta is
+∆BuCS = Φ(d1(K2)) − Φ(d1(K1))
+with K2 < K1, and the delta is decreasing in K, it follows that the difference is
+positive. Therefore the delta of a BuCS is positive. This is confirmed by looking
+at the shape of the payoff.
+We see from the picture that if S increases, the value of the payoff increases.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2025)
+Page 7 of 14
+unseen ⇓
+10, D
+3. (a) We recall the price of a call option in the Bachelier model:
+V
+Call
+BaM (0, s0, K, T, σ) = (s0 − K)Φ 
+s0 − K
+σ
+√
+T
+
++ σ
+√
+T ϕ 
+s0 − K
+σ
+√
+T
+
+,
+where ϕ is the pdf of a standard normal. From our previous points, the payoff Y
+of a butterfly satisfies
+E
+Q[e
+−rT Y ] = E
+Q[e
+−rT (ST −L)
++]−2E
+Q[e
+−rT (ST −M)
++]+E
+Q[e
+−rT (ST −H)
++]
+or, if S follows the Bachelier model,
+V
+Butter
+BaM = V
+Call
+BaM (K = L) − 2V
+Call
+BaM (K = M) + V
+Call
+BaM (K = H), (3)
+or, recalling r = 0 and L = S0 − X, M = S0, H = S0 + X
+V
+Butter
+BaM = XΦ
+
+X
+σ
+√
+T
+
++ σ
+√
+T ϕ 
+X
+σ
+√
+T
+
+−2σ
+√
+T ϕ (0) +
+−XΦ
+
+−X
+σ
+√
+T
+
++ σ
+√
+T ϕ 
+−X
+σ
+√
+T
+
+Note that ϕ(0) = 1/
+√
+2π.
+Recalling that Φ(−x) = 1 − Φ(x) and that ϕ(−x) = ϕ(x) we get
+V
+Butter
+BaM = X
+
+2Φ 
+X
+σ
+√
+T
+
+− 1
+
+− 2σ
+√
+T
+
+ϕ(0) − ϕ
+
+X
+σ
+√
+T
+ (4)
+Note that, as X is positive, Φ
+
+X
+σ
+√
+T
+
+is calculated in a positive point and is
+therefore larger than 1
+2
+, since Φ(0) = 1/2 and Φ is strictly increasing. It follows
+that 2Φ 
+X
+σ
+√
+T
+
+− 1 is larger than one, or that the first term in the VBaM formula
+above is positive.
+As concerns ϕ, the Gaussian standard pdf, this has a maximum in 0, so that the
+second term in the VBaM formula above being subtracted is also positive. The
+price is thus the difference of two positive terms related to the Gaussian CDF and
+PDF respectively:
+V
+Butter
+BaM = X
+
+2Φ 
+X
+σ
+√
+T
+
+− 1
+
+| {z }
+positive
+− 2σ
+√
+T
+
+ϕ(0) − ϕ
+
+X
+σ
+√
+T
+
+| {z }
+positive
+.
+unseen ⇓
+6, D
+(b) Careful here. You might be tempted to differentiate directly Formula (4) with
+respect to s0 and conclude that the delta is 0, as Eq. (4) does not depend on
+s0. However, as explained in the lectures for Black Scholes and as seen in some
+previous mock exams, if the strike depends on s0, to calculate the delta you need
+to differentiate the price with a general K and susbstitute the specific K that is
+a function of s0 after you differentiate, not before. This is because we want the
+sensitivity to s0 as initial stock and not the joint sensitivity to s0 and K. Thus,
+the equation you need to differentiate with respect to s0 is (3), leaving the strikes
+L, M, H as generic and not as functions of s0 yet.
+We recall the delta for a call with strike K in the Bachelier model, if you don’t
+remember it derive it as in the lecture notes.
+∂VBaM (0)
+∂s0
+=
+∂
+
+(s0 − K)Φ 
+s0−K
+σ
+√
+T
+
+∂s0
++ σ
+√
+T
+∂ pN
+
+s0−K
+σ
+√
+T
+
+∂s0
+= Φ 
+s0 − K
+σ
+√
+T
+
+.
+The butterfly spread payoff is call with strike L minus 2 calls with strike M plus
+a call with strike H. The delta is thus obtained by differentiating the three call
+prices in Eq (3) and is
+∂V Butter
+BaM
+∂s0
+= Φ 
+s0 − K
+σ
+√
+T
+
+|K=L − 2Φ 
+s0 − K
+σ
+√
+T
+
+|K=M + Φ 
+s0 − K
+σ
+√
+T
+
+|K=H =
+Φ
+
+s0 − L
+σ
+√
+T
+
+− 2Φ 
+s0 − s0
+σ
+√
+T
+
++ Φ 
+s0 − H
+σ
+√
+T
+
+= Φ 
+s0 − (s0 − X)
+σ
+√
+T
+
+− 2Φ (0) + Φ 
+s0 − (s0 + X)
+σ
+√
+T
+
+= Φ 
+X
+σ
+√
+T
+
+− 2
+1
+2
++ Φ 
+−X
+σ
+√
+T
+
+= Φ 
+X
+σ
+√
+T
+
+− 1 + 1 − Φ
+
+X
+σ
+√
+T
+
+= 0
+where we used Φ(−x) = 1 − Φ(x). So we conclude the delta is zero:
+∂
+∂S0
+V
+Butter
+BaM = 0.
+We obtained the same result as we would obtained with the wrong method,
+namely by differentiating Eq. (4), but this is a coincidence. You need to avoid
+differentiating Eq. (4) directly, even if in this case you would have obtained the
+same result.
+Zero delta means that the butterfly has always the same price in Bachelier,
+regardless of the initial stock price S0. This is due to the special dynamics of
+the model and to the specific choice of strikes L = S0 − X and H = S0 + X.
+unseen ⇓
+4, C
+(c) The payoff plot is
+Looking at the payoff we see that when X ↓ 0 the payoff tends to be zero
+everywhere. As such, it will be worth 0 in terms of initial price.
+The Bachelier prices are continuous in X around X = 0, so we can set X = 0
+direcly in the formulas to compute the limit for X ↓ 0.
+V
+Butter
+BaM (X = 0) = 0 
+2Φ 
+0
+σ
+√
+T
+
+− 1
+
+− 2σ
+√
+T
+
+ϕ(0) − ϕ
+
+0
+σ
+√
+T
+
+= (1 − 1) − 2σ
+√
+T(ϕ(0) − ϕ(0)) = 0
+again, as expected from the payoff analysis.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2025)
+Page 10 of 14
+seen ⇓
+6, A
+4. (a) We define value at Risk (VaR). VaR is related to the potential loss on our portfolio
+over the time horizon h. Define this loss Lh as the difference between the value of
+the portfolio today (time 0) and in the future h.
+Lh = Portfolio0 − Portfolioh.
+VaR with horizon h and confidence level α is defined as that number q = qh,α such
+that
+P[Lh < q] = α
+so that our loss at time h is smaller than q with P-probability α. In words, it’s the
+level of loss over a period h that will not be exceeded with confidence α. meth seen ⇓
+6, B
+(b) Let us analyze the three positions and in particular their value at time h, where
+we have to assess VaR. A zero coupon bond with maturity U on a notional N
+promises to pay the notional N at time U. Its value at time h < U is obtained by
+risk neutral pricing as
+E
+Q
+h
+[e
+−r(U−h)N] = e
+−r(U−h)N
+where we could take away the expectation as there is nothing random in the payoff
+or in the discount rate r.
+A similar approach leads to the price −e
+−r(T −h)N for the short bond position,
+where the minus sign is due to the short position.
+The value of the stock at time h is simply MSh, namely the amount of stock we
+hold times the price of the stock at time h.
+Putting all terms together the value of the portfolio is
+The value of the portfolio at time h is
+Vh = Ne−r(U−h) − Ne−r(T −h) + MSh.
+The value of the portfolio at time 0 is instead, trivially,
+V0 = Ne−rU − Ne−rT + MS0.
+The loss of the portfolio over the time h is
+Lh = V0 − Vh = Ne−rU − Ne−rT + MS0 − Ne−r(U−h) + Ne−r(T −h) − MSh.
+We can set
+K = Ne−rU − Ne−rT + MS0 − Ne−r(U−h) + Ne−r(T −h)
+and rewrite the loss as
+Lh = K − MSh.
+The only random term here is Sh, which in the Black Scholes model is written,
+under the measure P, as
+Sh = S0 exp µ −
+1
+2
+σ
+2
+
+h + σWh
+
+where as usual we recall that Wh ∼ N (0, h) ∼
+√
+hN (0, 1) ∼
+√
+hN where we
+abbreviate N = N (0, 1). To compute qh,α = V aRh,α we need to find the percentile
+such that
+P{Lh < qh,α} = α.
+Write q = qh,α for brevity, and calculate
+P{Lh < q} = P{K − MSh < q} = P
+
+Sh >
+K − q
+M
+
+= P
+
+S0 exp µ −
+1
+2
+σ
+2
+
+h + σ
+√
+hN
+
+>
+K − q
+M
+
+= P
+(
+N >
+ln K−q
+MS0
+−
+
+µ −
+1
+2
+σ
+2
+
+h
+σ
+√
+h
+)
+= 1 − Φ
+
+ln K−q
+MS0
+−
+
+µ −
+1
+2
+σ
+2
+
+h
+σ
+√
+h
+!
+= Φ
+−
+ln K−q
+MS0
+−
+
+µ −
+1
+2
+σ
+2
+
+h
+σ
+√
+h
+!
+.
+Thus the equation
+P{Lh < qh,α} = α
+becomes
+Φ
+
+−
+ln K−q
+MS0
+−
+
+µ −
+1
+2
+σ
+2
+
+h
+σ
+√
+h
+!
+= α
+or
+−
+ln K−q
+MS0
+−
+
+µ −
+1
+2
+σ
+2
+
+h
+σ
+√
+h
+= Φ−1
+(α)
+from which we can solve in q, obtaining
+q = V aRh,α = K − MS0 exp 
+−σ
+√
+hΦ
+−1
+(α) + 
+µ −
+1
+2
+σ
+2
+
+h
+
+seen ⇓
+4, A
+(c) VaR may violate subadditive behaviour, meaning that the VaR of the sum of two
+portfolios may happen to be larger than the sum of the single VaRs of each portfolio,
+violating the principle of diversifications. ES is a risk measure that is subadditive
+and respects the principle of diversification. meth seen ⇓
+4, B
+(d) No the dynamics is not the same, to price an option we need to use the risk neutral
+dynamics, where the drift parameter µ of S is replaced by the risk free rate r = 0
+of the bank account. So to price an option we need to use the dynamics under Q,
+dSt = σdWQ. To compute value at risk or expected shortfall the dynamics that
+is relevant up to the risk horizon is the dynamics under P, i.e. the dynamics with
+drift µ.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2025)
+Page 12 of 14
+5. (a) The Barings collapse was caused by a rogue trader named Leeson, operating from 5, M
+the Singapore Branch. Leason had been trading massively in futures and masking
+his losses using accounting tricks. At some point, to recoup on the losses, he sold a
+straddle, an option strategy that allowed him to cash in the option premium at time
+0 and hoping the payoff at maturity would be very small, so that he would keep the
+initial sale profit without paying much at maturity. However, the market moved in
+a way he didn’t expect and the straddle strategy backfired, causing further losses.
+5, M
+(b) The option combination is a short straddle, consisting of selling a call and a put
+option on the same asset with the same maturity and the same strike. The plot is
+entirely negative and is a reversed V shaped plot with the vertex on the ST axis at
+the point K.
+The idea is that by selling this combination of options we cash in the price of the
+call and the price of the put at time 0 and hope the stock does not move. The
+more the stock moves, one way or the other, whether decreasing (activating the
+put payoff) or increasing (activating the call payoff), the more we have to pay at
+maturity, so we hope the stock doesn’t move and we keep the cash made with the
+sale at time 0.
+5, M
+(c) An earthquake hit the Asian markets where the underlying asset was based, so the
+underlying asset moved a lot, causing the payoff to be paid to become very large
+and causing big losses in the straddle position. This compounded the crisis instead
+of helping, and the bank finally defaulted.
+5, M
+(d) Value at Risk was introduced to tackle situations like Barings. Every traded portfolio
+risk has to be measured with VaR. VaR is related to the potential loss on our
+portfolio over the time horizon h. Define this loss Lh as the difference between the
+value of the portfolio today (time 0) and in the future h.
+Lh = Portfolio0 − Portfolioh.
+VaR with horizon h and confidence level α is defined as that number q = qh,α such
+that
+P[Lh < q] = α
+so that our loss at time h is smaller than q with P-probability α. In words, it’s the
+level of loss over a period h that will not be exceeded with confidence α. Leeson’s
+positions VaR would have been to high to allow Leeson to take further positions
+and so would have avoided him reaching a level of losses that become impossible
+to recover.
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2025)
+Page 13 of 14
+Review of mark distribution:
+Total A marks: 32 of 32 marks
+Total B marks: 20 of 20 marks
+Total C marks: 12 of 12 marks
+Total D marks: 16 of 16 marks
+Total marks: 100 of 80 marks
+Total Mastery marks: 20 of 20 marks
+Math60130/70130 Stochastic Differential Equations in Financial Modeling (Solutions) (2025)
+Page 14 of 14
+MATH70130 Stochastic Differential Equations in Financial Modelling Markers
+Comments
+Question 1 Most students did the problem quite well. Most common mistakes
+are: for the existence of the solution, forgetting that the initial
+condition must be independent of the Brownian filtration; not
+applying the triangular inequality in one of the proofs of Lipschitz
+continuity; Forgetting to say why the SDE coefficients are
+measurable. Almost everyone solved the SDE correctly and almost
+everyone made the correct calculation for the mean solution through
+the ODE, although at times mentioning a somewhat wrong reason for
+the zero mean of the Ito integral or omitting Fubini's theorem
+mention. A few students made a mistake in the very basic ODE
+solution. Overall it went quite well though.
+Question 2 This question was answered very well by most students. Many
+students received full marks and most reductions in points were
+minor and due to imprecise statements / missing details in (a) and
+(c).
+Question 3 This question was quite standard, and most candidates performed
+well overall. For parts (a) and (b), some candidates incorrectly
+recalled the formulae for the price and delta of the option or
+unnecessarily spent significant time deriving them from scratch
+instead of directly referring to the lecture notes. Additionally, a few
+students neglected to comment on the sign of the delta they
+computed, which was required for full marks.
+In part (c), a small number of students failed to explicitly 'deduce the
+price' as instructed by the question. Even though their analysis of the
+payoff behaviour was correct, omitting this step led to the loss of one
+mark.
+Question 4 The question was generally answered well. There were a few cases of
+confusion regarding what subadditivity means and also relatively
+common arithmetic slips in the derivation of value at risk for the
+portfolio (which were understandable given the length of the
+computation, hence treated leniently). Beyond subadditivity, the
+inability to see the tail of the loss distribution beyond the confidence
+level was also accepted as a shortcoming of VaR that is solved by ES
+(although one can debate whether that issue is "completely" solved
+by ES).
+Question 5 Most students gave a satisfactory answer ranging in the distinction
+interval (at or above 14). Few students noticed that the Leeson's
+straddle was at the money, K=S_0, to gamble on the market not
+moving, that is necessary. In the lecture notes this was hidden in the
+numerical example where both K and S_0 where the same, but it was
+not caught up by most students. Other common mistakes include
+not mentioning that VaR has also an holding period, but only he
+confidence level, and not mentioning that ES was introduced after
+VaR. Some students actually only talked about ES skipping VaR
+altogether, which is not the response the industry gave at the time.
+Some students went in more detail on the Barings history but most
+got the essentials right. Overall a good performance for this question
+with very few exceptions and an empty booklet.
