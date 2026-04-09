@@ -1,0 +1,1549 @@
+5
+MONTE CARLO METHODS FOR LEARNING
+In this chapter, we show how sampling methods can be utilised for statistical learning of parameters
+in latent variable models.
+7
+Another application where sampling methods come in handy is model learning problems. So
+far, we have covered probabilistic inference problems where we typically introduced a prior p(x)
+and a likelihood p(y|x). Our sampling algorithms usually handled unnormalised likelihoods –
+therefore, we could just set p¯?(x) = p(y|x)p(x) and run the sampling algorithm (say MCMC).
+However, in many cases, we are interested in learning the parameters of the model. In fact,
+in fields like generative models (e.g. energy-based models), the density of interest could be
+completely parameterised with a flexible neural network (as we will see in the next section). In
+this section, we will see such methods and general principles to learn parametric probabilistic
+models from data and the use of stochastic simulation methods for this task.
+5.1 maximum marginal likelihood estimation
+Let us start, from the simple Bayesian inference scenario. Assume that, we have a prior pθ1
+(x)
+and a likelihood pθ2
+(y|x), where θ1 and θ2 are the parameters of the prior and the likelihood,
+respectively. Let θ = (θ1, θ2) and we will typically from now on write the joint density pθ(x, y) to
+leave the dependence on θ explicit. Assume that y is observed and fixed data. Then, the maximum
+marginal likelihood estimation (MMLE) problem is defined as
+θ
+? = arg max
+θ
+log pθ(y) = arg max
+θ
+log Z
+pθ(x, y)dx.
+We note that, despite its conceptual similarity, this is a very different problem than a pure
+maximum likelihood estimation (MLE) problem. In MLE, we would have log pθ(y) available
+and we could treat this as a simple optimisation problem. In contrast, the MMLE problem above
+138
+involves an intractable integral. This is suitable for the earlier methods we introduced in this
+course, as in this case, we need to solve the integration and optimisation problem together.
+Example 5.1. Consider the following model
+pθ(x) = N (x; θ, σ2
+0
+),
+p(y|x) = N (y; ax, σ2
+).
+where a 6= 0 is a known constant and σ
+2
+0
+, σ2 > 0 are known variances. Given the observation y,
+derive the MMLE solution for θ.
+Solution. We can write the marginal likelihood as
+pθ(y) = Z
+p(y|x)pθ(x)dx,
+= N (y; aθ, a2σ
+2
+0 + σ
+2
+).
+Computing the log pθ(y), we have
+log pθ(y) = −
+1
+2
+log(2π(a
+2σ
+2
+0 + σ
+2
+)) −
+(y − aθ)
+2
+2(a
+2σ
+2
+0 + σ
+2
+)
+.
+Compute now
+∂ log pθ(y)
+∂θ =
+a(y − aθ)
+a
+2σ
+2
+0 + σ
+2
+.
+By setting this to zero, we obtain θ
+? = y/a.
+5.1.1 the expectation-maximisation algorithm
+A standard method to learn parameters in the presence of hidden, latent, or unobserved variables is the Expectation-Maximisation (EM) algorithm. The EM algorithm is a well-established
+algorithm, first proposed by Dempster et al. (1977) and widely studied in several forms. In this
+text, we will introduce the main template of the algorithm and prove the ascend property to show
+that the EM algorithm can maximise the likelihood (in the absence of local minima).
+The EM algorithm aims at producing iterates (θt)t≥0 that converge to a local maximum of the
+marginal likelihood. Given a parameter estimate θt−1, the EM algorithm is a two-step iterative
+algorithm that alternates between two steps to obtain the next estimate:
+1. Expectation step (E-step): Compute the expected value of the log likelihood with respect
+to the posterior distribution of the latent variables: Q(θ, θt−1) = Epθt−1
+(x|y)
+[log pθ(x, y)].
+2. Maximisation step (M-step): Maximise the expected log likelihood with respect to the
+parameters: θt = arg maxθ Q(θ, θt−1).
+139
+More compactly, we can write the two steps in a single line:
+θt ∈ argmax
+θ
+Epθt−1
+(x|y)
+[log pθ(x, y)]. (5.1)
+The main challenges of implementing this method is obvious: E-step is usually intractable, as we
+have seen throughout this course. Q(θ, θt−1) is an integral with respect the posterior pθt−1
+(x|y)
+which cannot be usually found in closed form (and even usually not possible to sample i.i.d).
+Similarly, the maximisation step for Q(θ, θt−1) (or its approximations) is intractable. We can
+easily prove, however, the base scheme does maximise the likelihood.
+Proposition 5.1 (EM algorithm ascends the likelihood). The EM algorithm is guaranteed to
+ascend the likelihood, i.e., the likelihood at each iteration is greater or equal to the previous iteration,
+i.e., log pθt
+(y) ≥ log pθt−1
+(y).
+Proof. We write:
+log pθ(y) = log Z
+pθ(x, y)dx
+= log Z
+pθk
+(x, y)
+pθk
+(x, y)
+pθ(x, y)dx
+= log pθk
+(y) + log Z
+pθk
+(x|y)
+pθ(x, y)
+pθk
+(x, y)
+dx
+≥ log pθk
+(y) + Z
+pθk
+(x|y) log pθ(x, y)dx −
+Z
+pθk
+(x|y) log pθk
+(x, y)dx
+| {z }
+∆(θ,θk)
+where
+∆(θ, θk) = Q(θ, θk) − Q(θk, θk). (5.2)
+In other words, let θk+1 ∈ arg maxθ Q(θ, θk). Then
+log pθk+1 (y) ≥ log pθk
+(y) + Q(θk+1, θk) − Q(θk, θk)
+| {z }
+≥0
+Ascent is achieved by this method.
+Example 5.2. Consider again
+pθ(x) = N (x; θ, σ2
+0
+),
+p(y|x) = N (y; ax, σ2
+),
+with σ
+2
+0
+, σ2 > 0 known and y observed. Assume a 6= 0. Derive the EM recursions for this model
+and show that EM converges to the MMLE solution.
+140
+Solution. At iteration k, the E-step computes pθk
+(x|y). By Gaussian conjugacy,
+pθk
+(x|y) = N (x; mk, s2
+),
+where
+s
+2 =
+
+1
+σ
+2
+0
++
+a
+2
+σ
+2
+!−1
+=
+σ
+2
+0σ
+2
+σ
+2 + a
+2σ
+2
+0
+,
+mk = s
+2
+
+θk
+σ
+2
+0
++
+ay
+σ
+2
+!
+=
+σ
+2
+θk + aσ2
+0
+y
+σ
+2 + a
+2σ
+2
+0
+.
+The joint log-likelihood is
+log pθ(x, y) = C(y, x) −
+(x − θ)
+2
+2σ
+2
+0
+,
+so
+Q(θ, θk) = Epθk
+(x|y)
+[log pθ(x, y)]
+= Ck −
+1
+2σ
+2
+0
+Epθk
+(x|y)
+[(x − θ)
+2
+]
+= Ck −
+1
+2σ
+2
+0
+
+(θ − mk)
+2 + s
+2
+
+,
+for a constant Ck independent of θ. Hence, the M-step yields
+θk+1 = arg max
+θ
+Q(θ, θk) = mk =
+σ
+2
+σ
+2 + a
+2σ
+2
+0
+θk +
+aσ2
+0
+σ
+2 + a
+2σ
+2
+0
+y.
+Define
+r :=
+σ
+2
+σ
+2 + a
+2σ
+2
+0
+∈ (0, 1), b :=
+aσ2
+0
+σ
+2 + a
+2σ
+2
+0
+y.
+Then EM is the affine recursion
+θk+1 = rθk + b.
+We can then write, starting from θ0,
+θk+1 = r
+k+1θ0 + b
+X
+k
+i=0
+r
+i = r
+k+1θ0 + b
+1 − r
+k+1
+1 − r
+,
+since r 6= 1. Taking the limit as k → ∞ and using |r| < 1, we have r
+k+1 → 0 and 1 − r
+k+1 → 1.
+Hence, We obtain then
+lim
+k→∞
+θk =
+b
+1 − r
+=
+aσ2
+0
+σ
+2 + a
+2σ
+2
+0
+y
+σ
+2 + a
+2σ
+2
+0
+a
+2σ
+2
+0
+=
+y
+a
+= θ
+?
+.
+141
+5.1.2 gradient based optimisation for mmle
+As mentioned above, E and M steps of the EM algorithm are usually intractable. Therefore, a
+common approach is to combine sampling methods to approximate the E-step and gradientbased optimisation methods to approximate the M-step. We turn now to the gradient-based
+optimisation methods for MMLE, and will clarify the connection between the method below
+and the EM algorithm at the end of this section.
+Assume that we would like to maximise log pθ(y) w.r.t. θ using a gradient-based method.
+Ideally, this method would look like:
+θt+1 = θt + δ∇θ log pθt
+(y) (5.3)
+where δ > 0 is the step size. The difficulty is that, we cannot perform standard optimisation
+here, as log pθ(y) in general not available as pθ(y) is given as an integral. Therefore, a direct
+computation of ∇ log pθ(y) is not possible. Luckily, we can prove the following result.
+Proposition 5.2 (Fisher’s identity). The gradient of the log marginal likelihood can be written as
+∇θ log pθ(y) = Z
+pθ(x|y)∇θ log pθ(x, y)dx,
+in other words, this gradient can be written as an expectation:
+∇θ log pθ(y) = Epθ(x|y)
+[∇θ log pθ(x, y)].
+Proof. The proof of this result is simple. We first use the fact that
+∇θ log pθ(y) = ∇θpθ(y)
+pθ(y)
+.
+Then, we can substitute pθ(y) = R
+pθ(x, y)dx and exchange differentiation and integration
+∇θ log pθ(y) = ∇θ
+R
+pθ(x, y)dx
+R
+pθ(x, y)dx ,
+=
+R
+∇θpθ(x, y)dx
+R
+pθ(x, y)dx ,
+=
+R
+∇θ log pθ(x, y)pθ(x, y)dx
+R
+pθ(x, y)dx ,
+=
+Z
+∇θ log pθ(x, y)pθ(x|y)dx,
+where we used the fact that pθ(x|y) = pθ(x,y)
+pθ(y)
+in the last line.
+This formula is particularly useful as it provides a recipe to approximate the gradient of the
+log marginal likelihood. Assume that (xk)
+K
+k=1 are (approximate) samples from pθ(x|y), then we
+can approximate the gradient as
+∇θ log pθ(y) = Epθ(x|y)
+[∇θ log pθ(x, y)] ≈
+1
+K
+X
+K
+k=1
+∇θ log pθ(xk, y).
+142
+Algorithm 14 Stochastic Optimisation via Unadjusted Langevin (SOUL)
+1: Input: Initial parameter θ0, step size δ > 0, Langevin step size γ > 0, number of Langevin
+steps K, burn-in steps B, X
+(M)
+0
+.
+2: for t = 1, . . . , T do
+3: Initialise X
+(0)
+t = X
+(M)
+t−1
+.
+4: for m = 1, . . . , M do
+5: X
+(m)
+t = X
+(m−1)
+t + γ∇x log pθt−1
+(X
+(m−1)
+t
+, y) + √
+2γZk, where Zk ∼ N (0, I).
+6: end for
+7: θt = θt−1 + δ
+1
+M−B
+PM
+m=B+1 ∇θ log pθt−1
+(X
+(m)
+t
+, y).
+8: end for
+We summarise below one full algorithm to realise this method, called stochastic optimisation via
+unadjusted Langevin (SOUL) method (De Bortoli et al., 2021).
+5.1.3 stochastic optimisation via unadjusted langevin (soul)
+As summarised above, we would like to implement the gradient ascent procedure given in Eq.(5.3)
+where the gradient is approximated with samples from pθ(x|y). The SOUL method is a simple
+method to implement this procedure by running an unadjusted Langevin dynamics to sample
+from pθ(x|y) and then using these samples to approximate the gradient.
+Assume that we have at the iteration θt−1 and we would like to obtain θt
+. Using Fisher’s
+identity, we can see that our gradient at θt−1 can be written as an expectation
+∇θ log pθt−1
+(y) = Epθt−1
+(x|y)
+[∇θ log pθt−1
+(x, y)].
+Therefore, at iteration θt−1, we need to sample from pθt−1
+(x|y) to approximate this gradient.
+We can run an unadjusted Langevin dynamics targeting pθt−1
+(x|y) to obtain these samples. In
+particular, we can run the following dynamics for m = 1, . . . , M:
+X
+(m)
+t = X
+(m−1)
+t + γ∇x log pθt−1
+(X
+(m−1)
+t
+, y) + √
+2γZk, (5.4)
+where γ > 0 is the step size and Zk ∼ N (0, I). X
+(0)
+t can be initialised with any value, but a
+common choice is to use the last sample from the previous iteration, i.e., X
+(0)
+t = X
+(M)
+t−1
+. After
+running this dynamics for M steps, we can use the samples after the burn-in (B) iterations to
+approximate the gradient as
+∇θ log pθt−1
+(y) ≈
+1
+M − B
+X
+M
+m=B+1
+∇θ log pθt−1
+(X
+(m)
+t
+, y).
+This can then be used for the gradient ascent step to obtain θt as
+θt = θt−1 + δ
+1
+M − B
+X
+M
+m=B+1
+∇θ log pθt−1
+(X
+(m)
+t
+, y).
+The full algorithm is summarised in Algorithm 14.
+The issue with this algorithm is that it is computationally expensive as we need to run a long
+Langevin dynamics at each iteration. Motivated by this, several particle-based versions have been
+143
+developed which take the perspective of joint sampling of (x, θ) with a single interacting particle
+SDE system, see, e.g., Kuntz et al. (2023); Akyildiz et al. (2025) for recent developments in this
+direction.
+Remark 5.1. Obviously, this is a generic recipe to perform gradient-based optimisation for
+MMLE problems. We can replace the unadjusted Langevin dynamics in (5.4) with any other
+sampling method we have seen so far, e.g., MH, MALA, Gibbs, SGLD, or more advanced methods
+like Hamiltonian Monte Carlo (HMC) etc. Similarly, we can replace the gradient ascent step with
+any other optimisation method, e.g., Adam, RMSProp, etc. The main point is that we need to use
+the samples from pθt−1
+(x|y) to approximate the gradient and then use this approximation for the
+optimisation step.
+5.2 bayesian estimation of parameters
+In this section, we will also put priors on parameters θ. This is a very common approach in
+Bayesian statistics and machine learning, as it allows us to incorporate prior knowledge about the
+parameters and also to quantify uncertainty about the parameters. To be specific, we will consider
+the following model. We have a prior on parameters, p(θ), and on latent variables (potentially
+dependent on θ), p(x|θ). We also have a likelihood p(y|x, θ)
+1
+.
+In this setting, we are primarily interested in sampling from p(θ|y) for parameter estimation.
+However, this is not possible in general as p(θ|y) is given as an integral
+p(θ|y) = Z
+p(θ, x|y)dx,
+where
+p(θ, x|y) = p(y|x, θ)p(x|θ)p(θ)
+p(y)
+.
+In the following sections, we describe a couple of ways to sample from p(θ|y).
+5.2.1 sampling from the posterior p(θ, x|y)
+A simple way to sample from p(θ|y) is to sample from the joint posterior p(θ, x|y) and then
+marginalise out x. This can be done with any of the sampling methods we have seen so far. For
+example, we can run a Metropolis-Hastings algorithm targeting p(θ, x|y) and then use the θsamples to approximate the posterior p(θ|y). Similarly, we can run a Langevin dynamics targeting
+p(θ, x|y) and then use the samples of θ to approximate the posterior p(θ|y). We can also run
+a Gibbs sampler by alternating between sampling θ given x and sampling x given θ. The main
+point is that we need to sample from the joint posterior p(θ, x|y) and then use these samples to
+approximate the posterior p(θ|y).
+As an example, we provide the Metropolis-Hastings algorithm for sampling from p(θ, x|y) in
+Algorithm 15.
+1We moved θ from being in the subscript to the argument of the likelihood to make the dependence on θ explicit.
+In other words, we write p(y|x, θ) instead of pθ(y|x) and p(y|θ) instead of pθ(y) and so on.
+144
+Algorithm 15 Metropolis-Hastings for sampling from p(θ, x|y)
+1: Input: Initial parameter θ0, initial latent variable x0, number of iterations T.
+2: for t = 1, . . . , T do
+3: Propose (θ
+0
+, x0
+) ∼ q(θ
+0
+, x0
+|θt−1, xt−1).
+4: Compute the acceptance probability
+α = min
+1,
+p(y|x
+0
+, θ0
+)p(x
+0
+|θ
+0
+)p(θ
+0
+)q(θt−1, xt−1|θ
+0
+, x0
+)
+p(y|xt−1, θt−1)p(xt−1|θt−1)p(θt−1)q(θ
+0
+, x0
+|θt−1, xt−1)
+!
+.
+5: With probability α, set (θt
+, xt) = (θ
+0
+, x0
+), otherwise set (θt
+, xt) = (θt−1, xt−1).
+6: end for
+Remark 5.2. The joint sampling idea can be computationally expensive when x is highdimensional as we need to sample from the joint posterior p(θ, x|y) which can be very complex.
+Moreover, the acceptance probability can be very low if the proposal distribution is not welldesigned, which can lead to slow convergence. Therefore, it is important to design good proposal
+distributions that can efficiently explore the joint posterior p(θ, x|y).
+5.2.2 pseudo-marginal metropolis-hastings
+Another way to sample from p(θ|y) is to use pseudo-marginal MCMC methods. The idea is to
+construct an unbiased estimator of the marginal likelihood p(y|θ) and then use this estimator in
+a Metropolis-Hastings algorithm to sample from p(θ|y). This method is particularly useful when
+the marginal likelihood is intractable but we can obtain an unbiased estimator of it, e.g., with
+importance sampling. The main advantage of this method is that it allows us to sample from
+p(θ|y) without having to sample from the joint posterior p(θ, x|y), which can be computationally
+tricky when x is high-dimensional. However, the main challenge of this method is that the
+variance of the estimator can be very high, which can lead to slow convergence. Therefore, it is
+important to design good estimators of the marginal likelihood that have low variance.
+The basis of this method is the fact that the MH algorithm remains valid if one replaces
+p¯?(·) in the usual acceptance ratio with its unbiased estimate pb?(·) (Andrieu and Roberts, 2009).
+This version of the method is termed pseudo-marginal Metropolis-Hastings (PMMH). This is
+particularly useful when p¯?(·) is intractable to evaluate, which will be our setting.
+Consider the problem that we would like to sample from p(θ|y) ∝ p(y|θ)p(θ). In our setting,
+the marginal likelihood p(y|θ) is given as an integral
+p(y|θ) = Z
+p(y|x, θ)p(x|θ)dx,
+For any θ, we know that we can estimate this quantity in an unbiased way using importance
+145
+sampling (IS) since we can evaluate p(y|x, θ)p(x|θ) pointwise, e.g.
+p(y|θ) = Z
+p(y|x, θ)p(x|θ)dx,
+=
+Z
+p(y|x, θ)p(x|θ)
+q(x|θ)
+q(x|θ)dx,
+= Eq(x|θ)
+"
+p(y|x, θ)p(x|θ)
+q(x|θ)
+#
+,
+where q(x|θ) is any proposal distribution. Therefore, we can construct an unbiased estimator of
+p(y|θ) as
+p\(y|θ) = 1
+N
+X
+N
+i=1
+p(y|Xi
+, θ)p(Xi
+|θ)
+q(Xi
+|θ)
+,
+where Xi ∼ q(x|θ) i.i.d. (we kept θ dependence but we didn’t have to). It is easy to see that
+E[p\(y|θ)] = p(y|θ). The acceptance rate in the algorithm in this case would take the form
+αb = min
+
+1,
+p\(y|θ
+0
+)p(θ
+0
+)q(θt−1|θ
+0
+)
+p(\y|θt−1)p(θt−1)q(θ
+0
+|θt−1)
+
+ .
+The full algorithm is summarised in Algorithm 16 below. The following result guarantees the
+correctness of this method.
+Proposition 5.3 (Correctness of PMMH). Assume that for each θ we can construct a non-negative
+estimator p\(y|θ) = g(y, θ, u) using auxiliary randomness U ∼ mθ(·) such that
+EU∼mθ
+[g(y, θ, U)] = p(y|θ).
+Define the extended target on (θ, u) by
+pf?(θ, u) ∝ p(θ) mθ(u) g(y, θ, u).
+Then the MH kernel with proposal q(θ
+0
+|θ)mθ
+0(u
+0
+) and acceptance probability
+αb
+
+(θ, u),(θ
+0
+, u0
+)
+
+= min
+1,
+g(y, θ0
+, u0
+)p(θ
+0
+)q(θ|θ
+0
+)
+g(y, θ, u)p(θ)q(θ
+0
+|θ)
+!
+leaves pf? invariant. Moreover, the θ-marginal of pf? is p(θ|y). Hence PMMH is exact for sampling
+from p(θ|y).
+Proof. For the augmented target pf?(θ, u) and proposal
+r
+
+(θ
+0
+, u0
+) | (θ, u)
+
+= q(θ
+0
+|θ)mθ
+0(u
+0
+),
+146
+Algorithm 16 Pseudo-Marginal Metropolis-Hastings (PMMH)
+1: Input: Initial parameter θ0, number of iterations T.
+2: for t = 1, . . . , T do
+3: Propose θ
+0 ∼ q(θ
+0
+|θt−1).
+4: Estimate p\(y|θ
+0
+) (e.g. with N importance samples) (Estimate of p(\y|θt−1) can be reused
+from the previous iteration).
+5: Compute the acceptance probability
+αb = min
+
+1,
+p\(y|θ
+0
+)p(θ
+0
+)q(θt−1|θ
+0
+)
+p(\y|θt−1)p(θt−1)q(θ
+0
+|θt−1)
+
+ .
+6: With probability αb, set θt = θ
+0
+, otherwise set θt = θt−1.
+7: end for
+the standard MH acceptance probability is
+αb
+
+(θ, u),(θ
+0
+, u0
+)
+
+= min
+
+1,
+pf?(θ
+0
+, u0
+) r
+
+(θ, u) | (θ
+0
+, u0
+)
+
+pf?(θ, u) r
+
+(θ
+0
+, u0
+) | (θ, u)
+
+
+ ,
+with reverse proposal r
+
+(θ, u) | (θ
+0
+, u0
+)
+
+= q(θ|θ
+0
+)mθ(u). Substituting pf?(θ, u) ∝ p(θ)mθ(u)g(y, θ, u)
+gives
+αb
+
+(θ, u),(θ
+0
+, u0
+)
+
+= min
+1,
+p(θ
+0
+)mθ
+0(u
+0
+)g(y, θ0
+, u0
+) q(θ|θ
+0
+)mθ(u)
+p(θ)mθ(u)g(y, θ, u) q(θ
+0
+|θ)mθ
+0(u
+0
+)
+!
+= min
+1,
+g(y, θ0
+, u0
+)p(θ
+0
+)q(θ|θ
+0
+)
+g(y, θ, u)p(θ)q(θ
+0
+|θ)
+!
+,
+since mθ(u) and mθ
+0(u
+0
+) cancel exactly. Therefore this kernel is precisely a standard MH kernel
+on the augmented space, and standard MH detailed balance gives invariance of pf?. For the
+marginal,
+Z
+pf?(θ, u) du ∝ p(θ)
+Z
+mθ(u)g(y, θ, u) du = p(θ) p(y|θ) ∝ p(θ|y),
+where unbiasedness was used in the middle equality.
+Remark 5.3. The PMMH algorithm is a powerful method for sampling from p(θ|y) when the
+marginal likelihood is intractable. However, the main challenge of this method is that the variance
+of the estimator p\(y|θ) can be very high, which can lead to slow convergence. Therefore, it is
+important to design good estimators of the marginal likelihood that have low variance. One
+common approach to reduce the variance is to use control variates or to use more sophisticated
+proposal distributions for the importance sampling step.
+147
+5.3 solved examples
+Example 5.3 (Exact PMMH acceptance under a two-point likelihood-noise model). Assume a
+symmetric proposal q(θ
+0
+|θ) = q(θ|θ
+0
+). Suppose the likelihood estimator has multiplicative noise
+p\(y|θ) = p(y|θ) U, U =
+
+
+
+1 + c, with probability 1/2,
+1 − c, with probability 1/2,
+0 < c < 1.
+Then E[U] = 1, so pb(y|θ) is unbiased. Show how the mean PMMH acceptance probability
+changes with c and how it compares to the original MH acceptance probability α.
+Solution. Let g(y, θ, u) = p(y|θ)u and m(u) be the distribution of U. Then the extended target is
+pf?(θ, u) ∝ p(θ)m(u)g(y, θ, u) = p(θ)m(u)p(y|θ)u.
+At stationarity on the extended space, the PMMH acceptance probability is
+αb = min
+
+1,
+p\(y|θ
+0
+)p(θ
+0
+)
+p\(y|θ)p(θ)
+
+
+= min
+1,
+p(y|θ
+0
+)U
+0p(θ
+0
+)
+p(y|θ)Up(θ)
+!
+= min
+1, r
+U
+0
+U
+!
+, r :=
+p(y|θ
+0
+)p(θ
+0
+)
+p(y|θ)p(θ)
+=
+p(θ
+0
+|y)
+p(θ|y)
+.
+Hence the original MH acceptance probability is
+α = min(1, r).
+Moreover at stationarity, we have
+p(u) ∝ m(u)u,
+means that the current noise U is distributed as
+P(U = 1 + c) = 1 + c
+2
+, P(U = 1 − c) = 1 − c
+2
+,
+while the proposed noise satisfies
+P(U
+0 = 1 + c) = P(U
+0 = 1 − c) = 1
+2
+.
+Then the four possible (U
+0
+, U) pairs have probabilities
+P(1 + c, 1 + c) = 1 + c
+4
+, P(1 − c, 1 + c) = 1 + c
+4
+,
+P(1 + c, 1 − c) = 1 − c
+4
+, P(1 − c, 1 − c) = 1 − c
+4
+.
+148
+These stationary pair probabilities induce
+U
+0
+U
+∈
+
+1,
+1 + c
+1 − c
+,
+1 − c
+1 + c
+
+,
+with probabilities 1/2,
+1−c
+4
+,
+1+c
+4
+respectively.
+Now define
+r :=
+p(θ
+0
+|y)
+p(θ|y)
+, α := min(1, r), κ+ :=
+1 + c
+1 − c
+, κ− :=
+1 − c
+1 + c
+.
+The stationary conditional mean PMMH acceptance is
+α¯(r, c) := E[αb | θ, θ0
+] = 1
+2
+min(1, r) + 1 + c
+4
+min(1, κ−r) + 1 − c
+4
+min(1, κ+r).
+Equivalently, let us consider the following cases.
+1. Assume r ≥ κ+. In this case, the original MH acceptance rate α = 1. Also κ+r ≥ κ−r ≥ 1,
+so
+α¯(r, c) = 1
+2
++
+1
+4
++
+1
+4
+= 1.
+Therefore, PMMH does not degrade accept/reject discrimination for very good moves, i.e.,
+for r ≥
+1+c
+1−c
+.
+2. Assume 1 ≤ r < κ+. This is still the regime that the original acceptance rate α = 1 i.e.
+the original sampler accepts at this regime. Note now that
+κ−r < κ−κ+ = 1,
+and κ+r ≥ 1 (since both κ+ and r are ≥ 1), so
+α¯(r, c) = 1
+2
++
+1 + c
+4
+κ−r +
+1 − c
+4
+=
+3 − c
+4
++
+1 − c
+4
+r.
+Moreover,
+α − α¯(r, c) = 1 −
+
+3 − c
+4
++
+1 − c
+4
+r
+
+=
+1 + c − (1 − c)r
+4
+> 0,
+because r < κ+ =
+1+c
+1−c
+. Hence α¯(r, c) < α = 1. Thus, PMMH starts rejecting some
+moves that the original MH would accept.
+3. Assume κ− ≤ r < 1. Then α = min(1, r) = r. Also, κ−r < 1, and κ+r ≥ κ+κ− = 1
+(since r ≥ κ−), so
+α¯(r, c) = 1
+2
+r +
+1 + c
+4
+κ−r +
+1 − c
+4
+=
+1 − c
+4
++
+3 − c
+4
+r.
+149
+Indeed,
+α¯(r, c) − α =
+1 − c − (1 + c)r
+4
+≤ 0,
+with equality if and only if r = κ− =
+1−c
+1+c
+. Hence α¯(r, c) ≤ α in this regime, with equality
+only at the lower boundary r = κ−. Thus, in this intermediate region, PMMH has a smaller
+mean acceptance probability than exact MH.
+4. Assume 0 ≤ r < κ−. Then α = r, κ−r < 1, and κ+r < 1, so
+α¯(r, c) = 1
+2
+r +
+1 + c
+4
+κ−r +
+1 − c
+4
+κ+r = r = α.
+In this regime, the mean PMMH acceptance matches the original MH acceptance.
+In summary, the behaviour relative to the exact MH acceptance α is:
+α¯(r, c) =
+
+
+
+1, r ≥ κ+,
+3 − c
+4
++
+1 − c
+4
+r, 1 ≤ r < κ+,
+1 − c
+4
++
+3 − c
+4
+r, κ− ≤ r < 1,
+r, r < κ−.
+Thus PMMH behaves exactly like MH for very good moves (r ≥ κ+) and very bad moves
+(r ≤ κ−). Noise only affects the intermediate region κ− < r < κ+.
+Example 5.4 (EM vs exact gradient ascent in the same Gaussian model). Consider Example 5.1
+with a 6= 0. Compare EM with exact gradient ascent on log pθ(y).
+Solution. From the previous example, EM has recursion
+θ
+EM
+k+1 = r
+k+1
+EM θ0 + b
+1 − r
+k+1
+EM
+1 − rEM
+,
+where
+rEM :=
+σ
+2
+σ
+2 + a
+2σ
+2
+0
+, b :=
+aσ2
+0
+σ
+2 + a
+2σ
+2
+0
+y.
+Recall that
+b
+1 − rEM
+=
+y
+a
+= θ
+?
+,
+150
+On the other hand, the exact gradient ascent with step size δ > 0 has recursion
+θ
+GD
+k+1 = θ
+GD
+k + δ∇θ log pθ(y)
+
+
+
+θ=θGD
+k
+= θ
+GD
+k + δ
+a
+σ
+2 + a
+2σ
+2
+0
+(y − aθGD
+k
+)
+= rGDθ
+GD
+k + δ
+a
+σ
+2 + a
+2σ
+2
+0
+y,
+where
+rGD := 1 − δ
+a
+2
+σ
+2 + a
+2σ
+2
+0
+.
+Unrolling the GD recursion gives
+θ
+GD
+k+1 = r
+k+1
+GD θ0 + δ
+a
+σ
+2 + a
+2σ
+2
+0
+y
+1 − r
+k+1
+GD
+1 − rGD
+.
+There are a few remarks:
+• Both EM and GD have the same fixed point θ
+? =
+y
+a
+as k → ∞, provided |rGD| < 1.
+• EM has a fixed contraction factor rEM which is independent of the iteration, while GD has
+a contraction factor rGD which depends on the step size δ. By choosing δ appropriately so
+that |rGD| < rEM, GD can converge faster than EM in this case.
+Example 5.5. Derive a gradient based MMLE method assuming that gradients are estimated
+with SNIS at every iteration with a sequence of proposal distributions qk(x).
+Solution. The gradient based MMLE iterations are given by
+θk+1 = θk + δ∇θ log pθk
+(y).
+Using Fisher’s identity, we can write
+∇θ log pθk
+(y) = Epθk
+(x|y)
+[∇θ log pθk
+(x, y)].
+151
+We can estimate this expectation with SNIS using the proposal distribution qk(x) as
+∇θ log pθk
+(y) = Z
+∇θ log pθk
+(x, y)pθk
+(x|y)dx,
+=
+Z
+∇θ log pθk
+(x, y)
+pθk
+(x|y)
+qk(x)
+qk(x)dx,
+=
+R
+∇θ log pθk
+(x, y)
+pθk
+(x,y)
+qk(x)
+qk(x)dx
+R pθk
+(x,y)
+qk(x)
+qk(x)dx
+,
+≈
+1
+N
+PN
+i=1 ∇θ log pθk
+(X
+(i)
+k
+, y)
+pθk
+(X
+(i)
+k
+,y)
+qk(X
+(i)
+k
+)
+1
+N
+PN
+i=1
+pθk
+(X
+(i)
+k
+,y)
+qk(X
+(i)
+k
+)
+,
+=
+PN
+i=1 Wi,k∇θ log pθk
+(X
+(i)
+k
+, y)
+PN
+i=1 Wi,k
+,
+=
+X
+N
+i=1
+w¯i,k∇θ log pθk
+(X
+(i)
+k
+, y),
+where X
+(i)
+k ∼ qk(x) i.i.d., Wi,k =
+pθk
+(X
+(i)
+k
+,y)
+qk(X
+(i)
+k
+)
+, and
+w¯i,k =
+Wi,k
+PN
+j=1 Wj,k
+are the normalised importance weights. Therefore, the gradient based MMLE method with SNIS
+gradient estimation is given by
+θk+1 = θk + δ
+X
+N
+i=1
+w¯i,k∇θ log pθk
+(X
+(i)
+k
+, y).
+Example 5.6. Consider the target density on θ ∈ [0, 1] and x = (x1, . . . , xd) ∈ [0, 1]d
+:
+π(θ, x) ∝ 1[0,1](θ)
+Y
+d
+i=1
+1[0,1](xi).
+Hence θ and xi are independent uniforms under π, and the marginal target of interest is
+πθ(θ) ∝ 1[0,1](θ).
+With a jump ±h proposal, compare the average acceptance probabilities of a joint sampler that
+updates θ and x together with a pseudo-marginal parameter-only sampler that updates only θ
+with an unbiased estimator of πθ(θ) with multiplicative noise as in the previous example.
+152
+Solution. We start with the joint sampler. Fix h ∈ (0,
+1
+2
+].
+Joint sampler. At state (θ, x), propose
+θ
+0 = θ + η0h, x0
+i = xi + ηih, i = 1, . . . , d,
+where η0, η1, . . . , ηd are i.i.d. on {−1, +1} with probability 1/2 each. The proposal is symmetric,
+and π is constant on [0, 1]d+1 and zero outside. Therefore
+αjoint((θ, x),(θ
+0
+, x0
+)) = min
+1,
+π(θ
+0
+, x0
+)
+π(θ, x)
+!
+= 1{θ
+0 ∈ [0, 1], x0
+i ∈ [0, 1] ∀i} .
+So acceptance is exactly the probability that all proposed coordinates stay in the box.
+At stationarity, θ, x1, . . . , xd are i.i.d. Unif(0, 1). For one generic coordinate Z ∼ Unif(0, 1)
+with proposal Z
+0 = Z + ηh:
+P(Z
+0 ∈ [0, 1] | Z = z) =
+
+
+
+1
+2
+, z ∈ [0, h),
+1, z ∈ [h, 1 − h],
+1
+2
+, z ∈ (1 − h, 1].
+Hence
+P(Z
+0 ∈ [0, 1]) = Z h
+0
+1
+2
+dz +
+Z 1−h
+h
+1 dz +
+Z 1
+1−h
+1
+2
+dz
+=
+h
+2
++ (1 − 2h) + h
+2
+= 1 − h.
+By independence across coordinates,
+α¯joint := Eπ
+h
+αjointi
+= (1 − h)
+d+1
+.
+Pseudo-marginal parameter-only sampler. Now update only θ with θ
+0 = θ + ηh, η ∈ {−1, +1}
+equiprobable, and use an unbiased multiplicative estimator
+πcθ(θ) = πθ(θ) W, W =
+
+
+
+1 + c, with probability 1/2,
+1 − c, with probability 1/2,
+0 < c < 1.
+Since E[W] = 1, this is unbiased. At stationarity,
+P(W = 1 + c) = 1 + c
+2
+, P(W = 1 − c) = 1 − c
+2
+,
+while
+P(W0 = 1 + c) = P(W0 = 1 − c) = 1
+2
+.
+153
+Hence
+αPM(θ, θ0
+) = min
+1,
+πcθ(θ
+0
+)
+πcθ(θ)
+!
+= 1{θ
+0∈[0,1]} min
+1,
+W0
+W
+!
+,
+because πθ(θ) = 1[0,1](θ). At stationarity, θ ∼ Unif(0, 1), so
+P(θ
+0 ∈ [0, 1]) = 1 − h.
+Also,
+ξ(c) := E
+"
+min
+1,
+W0
+W
+!# =
+1 + c
+4
+· 1 +
+1 + c
+4
+·
+1 − c
+1 + c
++
+1 − c
+4
+· 1 +
+1 − c
+4
+· 1 = 1 −
+c
+2
+.
+Therefore
+α¯PM := E[αPM] = (1 − h) ξ(c) = (1 − h)
+
+1 −
+c
+2
+
+.
+Comparison.
+α¯joint = (1 − h)
+d+1
+, α¯PM = (1 − h)
+
+1 −
+c
+2
+
+.
+Hence
+α¯PM
+α¯joint
+=
+
+1 −
+c
+2
+
+(1 − h)
+−d
+.
+So for fixed h ∈ (0,
+1
+2
+] and fixed noise level c ∈ (0, 1), joint-sampling acceptance decays exponentially in d, while pseudo-marginal acceptance is dimension-free in d (it only pays the noise
+factor 1 −
+c
+2
+and the one-dimensional boundary factor 1 − h).
+154
+BIBLIOGRAPHY
+Agapiou, Sergios; Papaspiliopoulos, Omiros; Sanz-Alonso, Daniel; and Stuart, Andrew M. 2017.
+Importance sampling: Intrinsic dimension and computational cost. In Statistical Science, pp.
+405–431. Cited on pp. 85 and 86.
+Akyildiz, O Deniz; Crucinio, Francesca Romana; Girolami, Mark; Johnston, Tim; and Sabanis, Sotirios. 2025. Interacting particle Langevin algorithm for maximum marginal likelihood
+estimation. In ESAIM: Probability and Statistics, vol. 29, pp. 243–280. Cited on p. 144.
+Akyildiz, Omer Deniz. March 2019. Sequential and adaptive Bayesian computation for inference
+and optimization. Ph.D. thesis, Universidad Carlos III de Madrid. Can be accessed from:
+http://akyildiz.me/works/thesis.pdf. Cited on pp. 63, 67, and 75.
+Akyildiz, Ömer Deniz and Míguez, Joaquín. 2021. Convergence rates for optimised adaptive
+importance samplers. In Statistics and Computing, vol. 31, no. 2, pp. 1–17. Cited on pp. 78
+and 86.
+Andrieu, Christophe and Roberts, Gareth O. 2009. The pseudo-marginal approach for efficient
+Monte Carlo computations. In . Cited on p. 145.
+Branchini, Nicola. 2024. Simple Monte Carlo is independent of dimension. Or is it? https:
+//branchini.fun/posts/monte_carlo_indep/. Blog post. Cited on p. 65.
+Cemgil, A Taylan. 2014. A tutorial introduction to Monte Carlo methods, Markov Chain Monte
+Carlo and particle filtering. In Academic Press Library in Signal Processing, vol. 1, pp. 1065–1114.
+Cited on p. 114.
+De Bortoli, Valentin; Durmus, Alain; Pereyra, Marcelo; and Vidal, Ana F. 2021. Efficient
+stochastic optimisation by unadjusted Langevin Monte Carlo: Application to maximum marginal
+likelihood and empirical Bayesian estimation. In Statistics and Computing, vol. 31, no. 3, p. 29.
+Cited on p. 143.
+Dempster, Arthur P; Laird, Nan M; and Rubin, Donald B. 1977. Maximum likelihood from
+incomplete data via the EM algorithm. In Journal of the Royal Statistical Society: Series B
+(Methodological), vol. 39, no. 1, pp. 1–22. Cited on p. 139.
+Devroye, Luc. 1986. Non-Uniform Random Variate Generation. Cited on p. 17.
+Douc, Randal; Moulines, Eric; Priouret, Pierre; and Soulier, Philippe. 2018. Markov chains.
+Springer. Cited on pp. 103, 106, and 109.
+155
+Douc, Randal; Moulines, Éric; and Stoffer, David. 2013. Nonlinear Time Series: Theory, Methods
+and Applications with R Examples. Chapman & Hall. Cited on p. 103.
+Elvira, Víctor; Martino, Luca; and Robert, Christian P. 2018. Rethinking the effective sample size.
+In International Statistical Review. Cited on p. 95.
+Hwang, Chii-Ruey. 1980. Laplace’s method revisited: weak convergence of probability measures.
+In The Annals of Probability, pp. 1177–1182. Cited on p. 133.
+Kallenberg, Olav. 2021. Foundations of Modern Probability. Probability Theory and Stochastic
+Modelling. Springer Cham, 3rd edn. isbn 978-3-030-61871-1. doi:https://doi.org/10.1007/978-
+3-030-61871-1. 1 b/w illustration. Cited on p. 30.
+Kuntz, Juan; Lim, Jen Ning; and Johansen, Adam M. 2023. Particle algorithms for maximum
+likelihood training of latent variable models. In International Conference on Artificial Intelligence
+and Statistics, pp. 5134–5180. PMLR. Cited on p. 144.
+Martino, Luca; Luengo, David; and Míguez, Joaquín. 2018. Independent random sampling
+methods. Springer. Cited on pp. 18, 34, 35, and 39.
+Murphy, Kevin P. 2007. Conjugate Bayesian analysis of the Gaussian distribution. In def, vol. 1,
+no. 2σ2, p. 16. Cited on p. 6.
+Robert, Christian P and Casella, George. 2004. Monte Carlo statistical methods. Springer. Cited
+on pp. 63 and 94.
+———. 2010. Introducing Monte Carlo methods with R, vol. 18. Springer. Cited on p. 76.
+Walters, Peter. 2000. An introduction to ergodic theory, vol. 79. Springer Science & Business
+Media. Cited on p. 19.
+Yıldırım, Sinan. 2017. Sabanci University IE 58001 Lecture notes: Simulation Methods for
+Statistical Inference. Cited on pp. 48, 102, and 115.
+Zhang, Ying; Akyildiz, Ömer Deniz; Damoulas, Theodoros; and Sabanis, Sotirios. 2023.
+Nonasymptotic estimates for stochastic gradient Langevin dynamics under local conditions in
+nonconvex optimization. In Applied Mathematics & Optimization, vol. 87, no. 2, p. 25. Cited on
+p. 136.

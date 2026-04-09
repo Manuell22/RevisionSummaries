@@ -1,0 +1,2797 @@
+3
+MONTE CARLO INTEGRATION
+In this section, we introduce Monte Carlo integration and importance sampling in detail. We will
+show how these ideas can be applied to a variety of problems such as computing integrals, computing
+expectations, sampling from complex distributions, and computing marginal likelihoods.
+4
+3.1 introduction to monte carlo integration
+We have repeatedly highlighted that we are interested in sampling from a probability measure p?.
+One reason we are interested in this is to estimate expectations of certain measures, i.e., we can
+estimate moments of distributions. Of course, so far, we have been considering drawing samples
+from known distributions (for which moments might be readily available). However, it is often
+the case in sampling applications that, in most cases, the primary goal is to compute expectations
+for distributions which are not available to us in closed form.
+We will call this task as Monte Carlo integration. Briefly, given a probability distribution p?,
+we are interested in computing expectations of the form
+ϕ¯ = Ep?
+[ϕ(X)] = Z
+ϕ(x)p?(x)dx = (ϕ, p?),
+where ϕ(x) is called a test function. For example, ϕ(x) = x would give us the mean, ϕ(x) =
+x
+2
+the second moment, or ϕ(x) = log(x) would give us the entropy. For example, given
+X(1), . . . , X(N) ∼ p? i.i.d, we know that (intuitively, at this point) the mean estimator is given by
+Ep?
+[X] = Z
+xp?(x)dx ≈
+1
+N
+X
+N
+i=1
+X
+(i)
+,
+which is simply the empirical average of the samples. While this can be intuitive, it underlies a
+certain choice about the approximation of the probability measure p?(dx) := p?(x)dx using its
+56
+samples. In order to do this, we build an empirical distribution of the samples, using
+p
+N
+?
+(dx) = 1
+N
+X
+N
+i=1
+δX(i) (dx). (3.1)
+In order to understand how this works, we first need to understand the Dirac delta measure δx.
+The Dirac delta measure is defined as
+f(y) = Z
+f(x)δy(dx) (3.2)
+Here, the Dirac can be thought as a point mass at y. In other words, the Dirac delta measure is a
+measure which is concentrated at a single point. To understand it intuitively, the object δy(x) can
+be informally thought as a function centered at y (and only takes value 1 at y)
+1
+δy(x) =
+
+
+
+1 if x = y
+0 otherwise.
+One can see that then p
+N
+?
+is a sample based approximation of p?, where the samples are equally
+weighted. While we never may use this particular approximation of as a density approximation,
+it is useful to build estimates of expectations. Generalising the above scenario, let us consider the
+estimation of the general expectation
+ϕ¯ = (ϕ, p?) = Ep?
+[ϕ(X)] = Z
+ϕ(x)p?(x)dx.
+Given samples X(1), . . . , X(N)
+, we can build p
+N
+?
+as in (3.1) and approximate this expectation as
+ϕ¯ = Ep?
+[ϕ(x)] = (ϕ, p?)
+=
+Z
+ϕ(x)p?(x)dx
+≈
+Z
+ϕ(x)p
+N
+?
+(dx) = (ϕ, pN
+?
+)
+=
+Z
+ϕ(x)
+1
+N
+X
+N
+i=1
+δXi
+(dx)
+=
+1
+N
+X
+N
+i=1
+Z
+ϕ(x)δXi
+(dx)
+=
+1
+N
+X
+N
+i=1
+ϕ(Xi) = ˆϕ
+N
+MC, (3.3)
+where we have used (3.2) in the approximate integral to arrive at the final expression. Note that
+this generalises the example above about the mean (which was ϕ(x) = x case). In this course,
+we will also be interested in the properties of these estimators.
+1This is not correct rigorously – just for intuition! Note that the Diracs always make sense with an integral
+attached to them.
+57
+Remark 3.1. As we can see that, the Monte Carlo estimator can be used to estimate expectations.
+We can also use this idea to estimate integrals. Consider a standard integration problem
+I =
+Z
+f(x)dx,
+where f(x) is a function. We can use the Monte Carlo (MC) estimator to estimate this integral as
+I =
+Z
+f(x)
+p(x)
+p(x)dx
+≈
+Z
+f(x)
+p(x)
+p
+N (dx) where p
+N (dx) = 1
+N
+X
+N
+i=1
+δX(i) (dx)
+=
+1
+N
+X
+N
+i=1
+f(Xi)
+p(Xi)
+. using (3.1)
+In this case, we have ϕ(x) = f(x)
+p(x)
+. This is particularly easy for the integrals of type
+I =
+Z 1
+0
+f(x)dx,
+where f(x) is a function. In this case, we can use the uniform distribution as the base distribution
+p and use the Monte Carlo estimator to estimate the integral without needing to compute any
+ratios.
+In the following, we prove some results about the properties of the Monte Carlo estimator
+(3.3) when samples are i.i.d from p?.
+Proposition 3.1. Let X1, . . . , XN be i.i.d samples from p?. Then, the Monte Carlo estimator
+ϕˆ
+N
+MC =
+1
+N
+X
+N
+i=1
+ϕ(Xi)
+is unbiased, i.e.,
+Ep?
+[ ˆϕ
+N
+MC] = ¯ϕ.
+58
+Proof. We have
+Ep?
+[ ˆϕ
+N
+MC] = Ep?
+"
+1
+N
+X
+N
+i=1
+ϕ(Xi)
+#
+=
+1
+N
+X
+N
+i=1
+Ep?
+[ϕ(Xi)]
+=
+1
+N
+X
+N
+i=1
+Z
+ϕ(x)p?(x)dx
+=
+Z
+ϕ(x)p?(x)dx
+= ¯ϕ,
+which proves the result.
+Next, we can also compute the variance of the Monte Carlo estimator.
+Proposition 3.2. Let X1, . . . , XN be i.i.d samples from p?. Then, the Monte Carlo estimator
+ϕˆ
+N
+MC =
+1
+N
+X
+N
+i=1
+ϕ(Xi)
+has variance
+varp?
+[ ˆϕ
+N
+MC] = 1
+N
+varp?
+[ϕ(X)],
+where
+varp?
+[ϕ(X)] = Z
+(ϕ(x) − ϕ¯)
+2
+p?(x)dx.
+Proof. We have
+varp?
+[ ˆϕ
+N
+MC] = varp?
+"
+1
+N
+X
+N
+i=1
+ϕ(Xi)
+#
+=
+1
+N2
+X
+N
+i=1
+varp?
+[ϕ(Xi)]
+=
+1
+N2
+X
+N
+i=1
+Z
+(ϕ(x) − ϕ¯)
+2
+p?(x)dx
+=
+1
+N
+varp?
+[ϕ(X)] = σ
+2
+ϕ
+N
+Provided that varp?
+[ϕ(X)] < ∞ and the estimator is consistent as N → ∞. This proves the
+result.
+59
+Remark 3.2. The expression varp?
+[ ˆϕ
+N
+MC] is the variance of the MC estimator but this expression
+requires the true mean ϕ¯ to be known. In practice, we do not know the true mean but also
+have an MC estimator for it. We can plug this estimator into the variance in order to obtain an
+empirical variance estimator. Note that
+varp?
+[ ˆϕ
+N
+MC] = 1
+N
+varp?
+[ϕ(X)]
+=
+1
+N
+Z
+(ϕ(x) − ϕ¯)
+2
+p?(x)dx
+≈
+1
+N2
+X
+N
+i=1
+(ϕ(Xi) − ϕˆ
+N
+MC)
+2
+= σ
+2
+ϕ,N .
+This estimator then can be used to estimate the variance of the MC estimator.
+We can therefore obtain a central limit theorem for our estimator, i.e.,
+( ˆϕ
+N
+MC − ϕ¯)
+σϕ,N
+→ N (0, 1) as N → ∞.
+This can be used to build empirical confidence intervals for the estimators. However, this is not
+a principled estimate and may not be valid in many scenarios. We can also see that we have a
+standard deviation estimate (which follows from the variance estimate) given by
+stdp?
+[ ˆϕ
+N
+MC] = q
+varp?
+[ ˆϕ
+N
+MC] = σϕ
+√
+N
+.
+This is a typical display of a convergence rate O(1/
+√
+N).
+Remark 3.3. One of the most common application of sampling is to estimate probabilities. We
+have seen that different choices of ϕ can lead to estimating different quantities such as the mean
+and nth moments. However, the MC estimators can also be used to estimate probabilities. In
+order to see this, assume that we would like to estimate P(X ∈ A) where X ∼ p?. We know that
+this is given as
+P(X ∈ A) = Z
+A
+p?(x)dx,
+see, e.g., Definition ??. For example, A can simply be an interval. Given the definition above, we
+can write
+P(X ∈ A) = Z
+A
+p?(x)dx
+=
+Z
+1A(x)p?(x)dx,
+60
+Figure 3.1: Estimating π using the Monte Carlo method.
+where 1A(x) is the indicator function of A. We can therefore set ϕ(x) = 1A(x) and given the
+samples from p?, we can build an estimator
+P(X ∈ A) = Z
+1A(x)p?(x)dx,
+≈
+Z
+1A(x)p
+N
+?
+(dx),
+=
+Z
+1A(x)
+1
+N
+X
+N
+i=1
+δXi
+(dx),
+=
+1
+N
+X
+N
+i=1
+Z
+1A(x)δXi
+(dx),
+=
+1
+N
+X
+N
+i=1
+1A(Xi).
+This estimator also leads to an intuitive procedure: We sample X1, . . . , XN from p? and we
+effectively just count the samples in A and divide it by N.
+We can now return to the example of estimating π using the Monte Carlo method.
+Example 3.1. Recall the problem of estimating π using the Monte Carlo method. Frame it as a
+Monte Carlo integration problem and derive the algorithm rigorously.
+61
+Figure 3.2: Relative error (see next section) of the Monte Carlo estimate provided by sampling within the disk.
+Solution. The logic that was used in this example was to estimate the area of a disk that lies
+within a square. To be precise, consider the square [−1, 1] × [−1, 1] and define the uniform
+distribution on this square as p(x, y) = Unif([−1, 1] × [−1, 1]). We can simply phrase the
+problem as estimating the area of the disk which we define as A ⊂ [−1, 1] × [−1, 1]. The set A is
+given as
+A = {(x, y) ∈ [−1, 1] × [−1, 1] s.t. x
+2 + y
+2 ≤ 1}.
+We can then formalise this problem as estimating the probability that a point lies within the disk.
+This is given as
+P(X ∈ A) = Z
+A
+p?(x, y)dxdy,
+=
+Z
+1A(x, y)p?(x, y)dxdy.
+Sampling (Xi
+, Yi) ∼ p?(x, y) (a uniform sample within a square), we can estimate this integral
+using the standard MC method. More formally, we can write
+P(A) = Z
+A
+p?(x, y)dxdy
+=
+Z
+1A(x, y)p?(x, y)dxdy,
+≈
+1
+N
+X
+N
+i=1
+1A(Xi
+, Yi) →
+π
+4
+as N → ∞.
+A trajectory of the estimation procedure π can be seen from Fig. 3.1 w.r.t. varying sample size.
+62
+Figure 3.3: Monte Carlo integration of h(x) = [cos(50x) + sin(20x)]2
+Nonasymptotic results showing the convergence rate of O(1/
+√
+N) are also available (see,
+e.g., Akyildiz (2019, Corollary 2.1)) – see Fig. 3.2 for a demonstration.
+Example 3.2 (Example 3.4 from Robert and Casella (2004)). Let us consider an example of
+estimating an integral:
+I =
+Z 1
+0
+h(x)dx =
+Z 1
+0
+[cos(50x) + sin(20x)]2
+dx.
+The exact value of this integral is 0.965. Describe a Monte Carlo method to estimate this integral.
+Solution. We can just choose p(x) = Unif(0, 1) and set ϕ(x) = h(x). We can then write
+I =
+Z 1
+0
+h(x)dx,
+=
+Z 1
+0
+ϕ(x)p(x)dx,
+and apply the standard MC estimator. The results (together with the empirical variance estimate)
+can be seen from Fig. 3.3.
+Finally, we provide an example of estimating the probability of a random variable.
+Example 3.3. Consider X ∼ N (0, 1) and we would like to estimate the probability that X > 2.
+Describe the MC method.
+63
+Figure 3.4: Monte Carlo estimation of the tail probability X > 2. The “true value” is computed via numerical
+integration.
+Solution. The way to do this is to choose
+p(x) = N (0, 1), ϕ(x) = 1{x>2}(x).
+We can then write that
+P(X > 2) = Z ∞
+−∞
+1{x>2}(x)N (0, 1)dx,
+≈
+1
+N
+X
+N
+i=1
+1{Xi>2}(Xi).
+where X1, . . . , XN ∼ N (0, 1). The results can be seen from Fig. 3.4.
+Exercise 3.1. Suppose given a distribution pX(x), we would like to estimate its cumulative
+distribution function (CDF) FX(x). Recall that pointwise, the CDF is defined as
+FX(x) = Z x
+−∞
+pX(s)ds.
+Convert this problem to a Monte Carlo integration problem by suitably identifying the test
+function. Provide the Monte Carlo estimator by using N samples X1, . . . , XN from pX (called
+empirical distribution function) for fixed x. Compute its variance in terms of FX(x).
+64
+Exercise 3.2. (Kernel density estimation) Consider a set of samples xi ∼ p(x), i = 1, . . . , N.
+We would like to estimate the density p(x) using kernel density estimation. The kernel density
+estimate is in general given by
+pˆ(x) = 1
+N
+X
+N
+i=1
+Kh(x − xi) = 1
+Nh
+X
+N
+i=1
+K
+
+x − xi
+h
+
+,
+for some kernel K and bandwidth h. Show that, for fixed x, the KDE pˆ(x) is a Monte Carlo
+estimator. What is the test function?
+Exercise 3.3. Consider the following integral:
+I =
+Z 1
+0
+(1 − x
+2
+)
+1/2
+dx.
+Take the sampling distribution as uniform on [0, 1]. Build the Monte Carlo estimate for varying
+N and compute the mean and the variance, i.e., for ϕ(x) = (1 − x
+2
+)
+1/2
+and given X1, . . . , XN
+from Unif(0, 1), compute
+ϕˆ
+N =
+1
+N
+X
+N
+i=1
+ϕ(Xi) (3.4)
+and the empirical variance
+var d[ ˆϕ
+N ] = 1
+N2
+X
+N
+i=1
+(ϕ(Xi) − ϕˆ
+N )
+2
+. (3.5)
+Discuss the difference between this empirical estimator vs. the correct one for the variance (using
+the true value). Plot your mean estimates (3.4), standard deviation estimates (by taking the square
+root of (3.5)), and the true value I = π/4. Can you always trust the variance estimates?
+Exercise 3.4. It is often stated in textbooks that the variance (hence the MSE) of the MC estimator
+derived in Proposition 3.2 does not depend on the dimension of the state-space. We will examine
+this claim below (also see Branchini (2024) for a fun blogpost covering one of the examples below
+as well as commentary about the central texts where this claim appears).
+Consider the multivariate Gaussian target distribution
+p(x) = N (x; 0, Id),
+where Id is the d × d identity matrix. Consider the following test functions:
+65
+(i)
+ϕ(x) = e
+−kxk
+2/4
+.
+(ii)
+ϕ(x) = kxk
+2
+/2
+(iii)
+ϕ(x) = e
+kxk
+2/8
+.
+For each example, compute the variance of the MC estimators as given in Proposition 3.2 as a
+function of the dimension d.
+3.2 error metrics
+In order to quantify convergence, we will have a number of error metrics in the following section.
+Let us generically denote ϕˆ
+N as an estimator of ϕ¯ within this section – which can be standard
+Monte Carlo estimator or any other estimator we will introduce later.
+We start with defining the bias as
+bias( ˆϕ
+N ) = E[ ˆϕ
+N ] − ϕ, ¯ (3.6)
+where ϕ¯ is the true value. We call an estimator unbiased if the bias is zero. In the case where we
+sample i.i.d from p(x), we can build unbiased estimators of expectations and integrals. We recall
+the variance
+var( ˆϕ
+N ) = E[( ˆϕ
+N − E[ ˆϕ
+N ])2
+]. (3.7)
+If the estimator is unbiased, we can then replace E[ ˆϕ
+N ] with ϕ¯. Next, we define the mean squared
+error (MSE)
+MSE( ˆϕ
+N ) = E[( ˆϕ
+N − ϕ¯)
+2
+]. (3.8)
+One can see that the MSE and the variance coincides if the estimator is unbiased. We have also
+the following decomposition of the MSE
+MSE( ˆϕ
+N ) = bias( ˆϕ
+N )
+2 + var( ˆϕ
+N ). (3.9)
+We define the root mean square error (RMSE) as
+RMSE( ˆϕ
+N ) = q
+MSE( ˆϕN ). (3.10)
+Finally, we define the relative absolute error (RAE) as
+RAE( ˆϕ
+N ) = |ϕˆ
+N − ϕ¯|
+|ϕ¯|
+. (3.11)
+66
+Figure 3.5: Estimating the marginal likelihood p(y) for y = 1. One can clearly see the displayed error rate that is
+O(1/
+√
+N).
+We usually plot the absolute error of the estimator, as we only run the experiment once in general2
+.
+We note that this absolute error |ϕˆ
+N − ϕ¯| is a random variable (since no expectations are taken).
+However, this quantity provably converges with a rate of O(1/
+√
+N) (see, e.g., Akyildiz (2019,
+Corollary 2.1)) for the standard Monte Carlo estimator. More precisely, we can write
+|ϕˆ
+N
+MC − ϕ¯| ≤ V
+√
+N
+, (3.12)
+where V is an almost surely finite random variable. This error rate will be displayed empirically
+in the following sections (see also Fig . 3.2).
+Example 3.4 (Marginal likelihood estimation). Recall that, given a prior pX(x) and a likelihood
+pY |X(y|x), we can compute the marginal likelihood pY (y) as
+pY (y) = Z
+pY |X(y|x)pX(x)dx.
+Describe the MC method to estimate pY (y).
+Solution. This defines a nice integration problem that we can solve using MC. Assume that we
+are given the following model
+pX(x) = N (x; µ0, σ2
+0
+),
+pY |X(y|x) = N (y; x, σ2
+).
+Assume that µ0 = 0, σ0 = 1, σ = 2, and y = 1. For example, for fixed y = 1, we would want to
+estimate pY (y). This integral becomes
+pY (y) = Z
+pY |X(y|x)pX(x)dx,
+2However, if you were to do a proper experimentation, then you would have to run the same experiment M
+times (Monte Carlo runs) and average the error to estimate the RMSE.
+67
+Figure 3.6: Cauchy density of Example 3.5.
+where we can set ϕ(x) = pY |X(y|x). We can then compute the integral using MC estimation
+procedure as
+p
+N
+Y
+(y) = 1
+N
+X
+N
+i=1
+pY |X(y|Xi),
+where X1, . . . , XN ∼ pX(x). The results can be seen from Fig. 3.5.
+This naive approach does not work well in high dimensions as the variance of the estimator
+can be very large. We will see later how to improve this estimator using importance sampling.
+We will next consider another example of estimating a probability where we show how to
+quantify the variance using the true value.
+Example 3.5. Consider the following density
+p(x) = 1
+π(1 + x
+2
+)
+.
+We would like to compute the probability of X ∼ p(x) being larger than 2, i.e., P(X > 2).
+Describe the method and suggest an improvement.
+Solution. We can compute this probability using MC estimation as we can set
+ϕ(x) = 1{x>2}(x).
+68
+We can compute
+P(X > 2) = Z ∞
+2
+p(x)dx
+=
+Z
+1{x>2}(x)p(x)dx.
+We can also compute the real value of this integral as (see Example 2.3 for the CDF of this density)
+I = ¯ϕ =
+Z ∞
+2
+p(x)dx = FX(∞) − FX(2) = 1
+2
+−
+1
+π
+tan−1
+(2) = 0.1476.
+Let us compute the variance of the Monte Carlo estimator for N = 10 samples:
+var( ˆϕ
+N
+MC) = varp(ϕ)
+N
+So we need to compute:
+varp(ϕ) = Z
+ϕ(x)
+2
+p(x)dx −
+Z
+ϕ(x)p(x)dx
+2
+=
+Z
+1{x>2}(x)
+2
+p(x)dx −
+Z
+1{x>2}(x)p(x)dx
+2
+=
+Z
+1{x>2}(x)p(x)dx −
+Z
+1{x>2}(x)p(x)dx
+2
+= 0.1476 − 0.14762 = 0.125.
+The variance of the estimator then
+var( ˆϕ
+N
+MC) = 0.125
+10
+= 0.0125.
+Could we do better? An idea is to use the fact that the density is symmetric around zero: This
+means P(X > 2) = P(X < −2) (see Fig . 3.6). So we could compute:
+P(|X| > 2) = P(X > 2) + P(X < −2) = 2I.
+Therefore, our new problem is I =
+1
+2
+P(|X| > 2). Let us write it as
+I =
+1
+2
+Z
+|x|>2
+p(x)dx,
+=
+Z
+1
+2
+1{|x|>2}(x)p(x)dx,
+Now define the test function
+ϕ(x) = 1
+2
+1{|x|>2}(x).
+69
+As before, we need to compute varp(ϕ):
+varp(ϕ) = Z
+ϕ(x)
+2
+p(x)dx −
+Z
+ϕ(x)p(x)dx
+2
+=
+Z
+1
+4
+1
+2
+{|x|>2}
+p(x)dx −
+Z
+1
+2
+1{|x|>2}p(x)dx
+2
+=
+Z
+1
+4
+1{|x|>2}p(x)dx −
+Z
+1
+2
+1{|x|>2}p(x)dx
+2
+=
+1
+4
+× 2 × 0.1476 −
+1
+4
+× (2 × 0.1476)2
+,
+= 0.052.
+Therefore, the variance of the estimator for N = 10 samples is
+var( ˆϕ
+N
+MC) = 0.052
+10
+= 0.0052.
+Improvement over the previous estimator! This kind of variance improvements are crucial in
+safety critical applications.
+Exercise 3.5. We have seen two ways to compute P(X > 2) for a Cauchy r.v. X with density
+p(x) = 1
+π(1 + x
+2
+)
+.
+Now we will explore a third way.
+• Express the integral we want to compute, that is P(X > 2) in terms of P(0 < X < 2).
+• Estimate
+P(0 < X < 2) = Z 2
+0
+1
+π(1 + x
+2
+)
+dx
+using Monte Carlo integration. Note that you can convert this into an expectation by
+choosing a suitable density on [0, 2] (the simplest one works but be careful about constants).
+• Determine your test function and compute the variance of this estimate as we have done
+in the class (using true value of this integral – can you deduce it since we know P(X >
+2) = 0.1476?)
+• The variance of this estimate (of λ) would be the same as the variance of the main estimate
+I, why?
+70
+3.3 importance sampling
+While the estimators constructed using samples exactly coming from p has desirable properties
+as we have seen above, in the majority of cases, we need to employ more complex sampling
+strategies. A few cases where we need this are summarised below.
+• A typical problem arises when computing tail probabilities (also called rare events). We
+may have access to samples directly from p?(x), however, sampling from the tail of p?(x)
+might be extremely difficult. For example, consider the Gaussian random variable X
+with mean 0 and variance 1. The probability of X being larger than 4 is very small, i.e.,
+P(X > 4) ≈ 0.00003. Sampling from the tail of this density directly would be very
+inefficient without further tricks.
+• Another typical scenario where we may want to compute expectations with respect to
+p(x) when we do not have direct samples from it. The standard example for this is the
+Bayesian setting. Given a prior p(x) and a likelihood p(y|x), we may want to compute the
+expectations w.r.t. the posterior density p(x|y), i.e., Ep(x|y)
+[ϕ(X)]. In this case, we do not
+have access to samples from p(x|y) so we need to employ other strategies.
+A strategy we will pursue in this section is specific to Monte Carlo integration. In other words, we
+will next describe a strategy where we can compute integrals and expectations w.r.t. a probability
+density without having access to samples from it. This is slightly different than directly aiming at
+sampling from the density (which can also be used to estimate integrals). While we will look at
+sampling methods in the following chapters, it is important to note that importance sampling is
+primarily an integration technique.
+3.3.1 basic importance sampling
+Consider the basic task of estimating the integral
+ϕ¯ = Ep?
+[ϕ(X)] = Z
+ϕ(x)p?(x)dx.
+In this section, as opposed to previous sections, we assume that we cannot sample from p? directly
+(or exactly, e.g., using rejection sampling3
+). However, we assume (in this section) we can evaluate
+the density p?(x) pointwise. We can still estimate this expectation (and compute integrals more
+generally), using samples from an instrumental, proposal distribution q. In other words, we
+can sample from a proposal and we can repurpose these samples to estimate expectations w.r.t.
+p?(x). This resembles the rejection sampling where we have also used a proposal to accept-reject
+samples. However, in this case, we will employ a different strategy of weighting samples and will
+not throw any of the samples away. The weights we will compute will weight samples so that the
+integral estimate gets closer to the true integral. In order to see how to do this, we compute
+ϕ¯ =
+Z
+ϕ(x)p?(x)dx,
+=
+Z
+ϕ(x)
+p?(x)
+q(x)
+q(x)dx, “identity trick” (3.13)
+=
+Z
+ϕ(x)w(x)q(x)dx, (3.14)
+3Recall that rejection sampling draws i.i.d samples from the density, not approximate.
+71
+where w(x) = p?(x)/q(x) (which is called the weight function). We know from Section 3.1 that
+we can estimate the integral in (3.14) using samples from q. Let Xi ∼ q be i.i.d samples from q
+for i = 1, . . . , N. We can then estimate the integral in (3.14), hence the expectation ϕ¯ using
+ϕ¯ =
+Z
+ϕ(x)w(x)q(x)dx
+≈
+1
+N
+X
+N
+i=1
+wiϕ(Xi) = ˆϕ
+N
+IS , (3.15)
+where wi = w(Xi) = p?(Xi)/q(Xi) are called the weights. The weights will play a crucial role
+throughout this section. The key idea of importance sampling is that, instead of throwing away
+the samples by rejection, we could reweight them according to their importance. This is why this
+strategy is called importance sampling (IS).
+The importance sampling algorithm for this case then can be described relatively straightforwardly. Given p?(x) (which we assume to be known in this section), we choose a proposal q(x).
+Then, we sample Xi ∼ q(x) for i = 1, . . . , N and compute the IS estimator as
+ϕˆ
+N
+IS =
+1
+N
+X
+N
+i=1
+wiϕ(Xi),
+where wi =
+p?(Xi)
+q(Xi)
+for i = 1, . . . , N are the importance weights. We summarise the method in
+Algorithm 7. In what follows, we will discuss some details of the method.
+Algorithm 7 Pseudocode for basic importance sampling
+1: Input: The number of samples N
+2: for i = 1, . . . , N do
+3: Sample Xi ∼ q(x)
+4: Compute weights wi =
+p?(Xi)
+q(Xi)
+5: end for
+6: Report the estimator
+ϕˆ
+N
+IS =
+1
+N
+X
+N
+i=1
+wiϕ(Xi).
+Remark 3.4. Note that one can also consider IS approximations as the approximation to the
+probability measure p?(dx) as
+p
+N
+IS (dx) = 1
+N
+X
+N
+i=1
+wiδXi
+(dx),
+and hence ϕˆ
+N
+IS = (ϕ, pN
+IS ). This is a useful way to think about the IS estimator later on in some
+proofs.
+72
+Figure 3.7: An example of target density p?(x), the proposal q(x) and the associated weight function w(x).
+One can see that if q(x) < p?(x) (which means fewer samples would be drawn from q(x) in this region), then
+w(x) > 1 to account for this effect. The opposite is also true, since if q(x) > p?(x), this means that we would draw
+more samples than necessary, which should be downweighted, hence w(x) < 1 in these regions.
+Remark 3.5. Unlike rejection sampling, in importance sampling, the proposal does not have
+to dominate the target density. Instead, the crucial requirement for the IS is that the support of
+the proposal should be the same as the support of the density. More precisely, we need q(x) > 0
+whenever p?(x) > 0. This is far less restrictive than the requirement of rejection sampling. Of
+course, the choice of proposal can still effect the performance of the IS. We will discuss this in
+more detail.
+From Fig. 3.7, one can see an example plot of the target density p?(x), the proposal q(x) and
+the associated weight function w(x). See the caption for more details and intuition.
+Example 3.6. Consider the problem of estimating P(X > 4) for X ∼ N (0, 1). Describe a
+potential problem of using the naive MC method.
+Solution. While we can exactly sample from this density, given that
+P(X > 4) = 3.16 × 10−5
+,
+it will be the case that very few of the samples from exact distribution will fall into this tail (Note
+that, while we know the exact value in this case, we will not know this in general – this is just
+a demonstrative example). In fact, a standard run with N = 10000 gives exactly zero samples
+that satisfy Xi > 4, hence provides the estimate as zero! It is obvious that this is not a great way
+to estimate the probability and we can use importance sampling for this. Consider a proposal
+q(x) = N (6, 1). This will draw a lot of samples from the region X > 4 and we can reweight this
+73
+samples w.r.t. the target density using the IS estimator in (3.15). A standard run in this case with
+N = 10000 results in
+ϕˆ
+N
+IS = 3.18 × 10−5
+,
+which is obviously a much closer number to the truth.
+One can next prove that the estimator ϕˆ
+N
+IS is unbiased.
+Proposition 3.3. The estimator ϕˆ
+N
+IS is unbiased, i.e.,
+Eq[ ˆϕ
+N
+IS ] = ¯ϕ.
+Proof. We simply write
+Eq[ ˆϕ
+N
+IS ] = Eq(x)
+"
+1
+N
+X
+N
+i=1
+wiϕ(Xi)
+#
+= Eq
+"
+1
+N
+X
+N
+i=1
+p?(Xi)
+q(Xi)
+ϕ(Xi)
+#
+=
+1
+N
+X
+N
+i=1
+Eq
+"
+p?(Xi)
+q(Xi)
+ϕ(Xi)
+#
+=
+1
+N
+X
+N
+i=1
+Z
+p?(x
+0
+)
+q(x
+0
+)
+ϕ(x
+0
+)q(x
+0
+)dx
+0
+since Xi ∼ q(x)
+=
+Z
+ϕ(x
+0
+)p?(x
+0
+)dx
+0
+,
+= ¯ϕ,
+which completes the proof.
+An important quantity in IS is the variance of the estimator ϕˆ
+N
+IS . The variance of the estimator
+is a measure of how much the estimator fluctuates around its expected value. The variance of the
+IS estimator (3.15) is given by the following proposition.
+Proposition 3.4. The variance of the estimator ϕˆ
+N
+IS is given by
+varq[ ˆϕ
+N
+IS ] = 1
+N
+
+Eq[w
+2
+(X)ϕ
+2
+(X)] − ϕ¯
+2
+
+.
+74
+Figure 3.8: The importance sampling estimator ϕˆ
+N
+IS is plotted against the number of samples N for the example
+in in Fig . 3.7, for ϕ(x) = x
+2
+. This demonstrates that the random error in the IS case also satisfies O(1/
+√
+N)
+convergence rate.
+Proof. Next we write out the estimator ϕˆ
+N
+IS in (3.15)
+varq[ ˆϕ
+N
+IS ] = varq
+"
+1
+N
+X
+N
+i=1
+wiϕ(Xi)
+#
+=
+1
+N2
+varq
+"X
+N
+i=1
+w(Xi)ϕ(Xi)
+#
+=
+1
+N
+varq [w(X)ϕ(X)] where X ∼ q(x)
+=
+1
+N
+
+Eq
+h
+w
+2
+(X)ϕ
+2
+(X)
+i
+− Eq [w(X)ϕ(X)]2
+
+=
+1
+N
+
+Eq
+h
+w
+2
+(X)ϕ
+2
+(X)
+i
+− ϕ¯
+2
+
+,
+which concludes the proof. We have used the fact that the variance of the sum of independent
+random variables is the sum of the variances.
+One can see that this easily leads to the bound for the standard devation stdq[ ˆϕ
+N
+IS ] ≤ O 
+√
+1
+N
+
+.
+Also, we still have the result for the relative absolute error as
+|ϕˆ
+N
+IS − ϕ¯| ≤ V
+√
+N
+,
+where V is an almost surely finite random variable. As in the perfect MC case, we will not prove
+this result as it is beyond our scope, but curious reader can refer to Corollary 2.2 in Akyildiz (2019)
+75
+    
+
+ 
+
+
+
+
+
+
+	
+
+
+
+
+Figure 3.9: Estimating P(2 < X < 6) where X is Cauchy with q(x) = N (0, 1). The true value is plotted in red
+and the estimator value in black.
+(which also holds for the self normalised case which will be introduced below). A demonstration
+of this rate for importance sampling can be seen from Fig. 3.8.
+We can see that the variance of the IS estimator is finite if
+Eq[w
+2
+(X)ϕ
+2
+(X)] < ∞.
+This implies that
+Z
+w
+2
+(x)ϕ
+2
+(x)q(x)dx =
+Z
+p?(x)
+q(x)
+ϕ
+2
+(x)p?(x)dx < ∞.
+In other words, for our importance sampling estimate to be well-defined, the ratio
+p
+2
+?
+(x)
+q(x)
+ϕ
+2
+(x)
+has to be integrable. We will see next an example where this condition is not satisfied.
+Example 3.7 (Infinite variance IS, Example 3.8 from Robert and Casella (2010)). Consider the
+target
+p?(x) = 1
+π
+1
+1 + x
+2
+,
+76
+which is the Cauchy density. Let us choose the proposal
+q(x) = N (x; 0, 1) = 1
+√
+2π
+exp
+−
+x
+2
+2
+!
+.
+Discuss whether the IS estimator is well-defined.
+Solution. We can compute the ratio p?(x)
+q(x) ∝ exp(x
+2/2)/(1 + x
+2
+) and see that it is explosive
+(precisely, its integral is infinite). This can result in problematic situations even if ϕ ensures that
+the variance is finite. For example, consider the problem of estimating P(2 < X < 6). One
+example run for this case can be seen from Fig. 3.9. One can see that the estimator in this case is
+unstable and cannot be reliably used.
+Remark 3.6 (Optimal proposal). We can try to inspect the variance expression to figure out
+which proposals can give us variance reduction. From Prop. 3.4, it follows that we have
+varq[ ˆϕ
+N
+IS ] = 1
+N
+varq [w(X)ϕ(X)] .
+This means that minimising the variance of the IS estimator is the same as minmising the variance
+of the function w(x)ϕ(x). Moreover, looking at the expression,
+varq[ ˆϕ
+N
+IS ] = 1
+N
+
+Eq
+h
+w
+2
+(X)ϕ
+2
+(X)
+i
+− ϕ¯
+2
+
+,
+we can see that since ϕ¯
+2 > 0 (which is independent of the proposal), we should choose a proposal
+that minimises Eq [w
+2
+(X)ϕ
+2
+(X)]. We can lower bound this quantity using Jensen’s inequality:
+Eq
+h
+w
+2
+(X)ϕ
+2
+(X)
+i
+≥ Eq [w(X)|ϕ(X)|]
+2
+,
+where we used the fact that (·)
+2
+is a convex function (For a convex function f, Jensen’s inequality
+states that Eq[f(X)] ≥ f(Eq[X]).). Using w(x) = p?(x)/q(x), we arrive at the following lower
+bound:
+Eq
+h
+w
+2
+(X)ϕ
+2
+(X)
+i
+≥ Ep?
+[|ϕ(X)|]
+2
+. (3.16)
+Now let us expand the term Eq [w
+2
+(X)ϕ
+2
+(X)] out and write
+Eq
+h
+w
+2
+(X)ϕ
+2
+(X)
+i
+= Eq
+"
+p
+2
+?
+(X)
+q
+2
+(X)
+ϕ
+2
+(X)
+#
+=
+Z
+p
+2
+?
+(x)
+q
+2
+(x)
+ϕ
+2
+(x)q(x)dx
+=
+Z
+p?(x)
+p?(x)
+q(x)
+ϕ
+2
+(x)dx,
+= Ep?
+h
+w(X)ϕ
+2
+(X)
+i
+. (3.17)
+77
+The last equation, eq. (3.17), suggests that we can choose a proposal such that we attain the lower
+bound of this function (3.16) (which means that it would be the minimiser). In particular, if we
+choose a proposal q(x) such that
+w(x) = p?(x)
+q(x)
+=
+Ep?
+[|ϕ(X)|]
+|ϕ(x)|
+is satisfied, then (3.17) would be equal to the lower bound (3.16). This implies that
+q?(x) = p?(x)
+|ϕ(x)|
+Ep?
+[|ϕ(X)|]
+, (3.18)
+would minimise the variance of the importance sampling estimator.
+Choosing q? as the proposal, one can see that the variance of the IS estimator satisfies
+varq?
+[ ˆϕ
+N
+IS ] = 1
+N
+Ep?
+[|ϕ(X)|]
+2 −
+1
+N
+ϕ¯
+2
+≤
+1
+N
+Ep?
+h
+ϕ
+2
+(X)
+i
+−
+1
+N
+ϕ¯
+2
+= varp?
+[ ˆϕ
+N
+MC],
+therefore we obtain
+varq?
+[ ˆϕ
+N
+IS ] ≤ varp?
+[ ˆϕ
+N
+MC],
+i.e., a variance reduction. In fact, one can show that, if ϕ(x) ≥ 0 for all x ∈ R, then the variance
+of the IS estimator with optimal proposal q? is equal to zero.
+We note that this optimal construction of the proposal (3.18) is not possible to implement in
+practice. It requires the knowledge of the very quantity we want to estimate, namely, Ep?
+[|ϕ(X)|]!
+But in general, we can choose proposals that minimise the variance of the IS estimator where
+possible. This idea has been used in the literature to construct proposals that minimise the
+variance of the estimator, see, e.g., Akyildiz and Míguez (2021) and references therein. We will
+construct some simple examples next.
+3.3.2 choosing the optimal importance sampling proposal within a
+family
+While we may not be able to choose the optimal proposal q? as shown above (as it requires us to
+know the target density), we can still optimise the proposal within a family of distributions. Recall
+the discussion for this in the case of rejection sampling, where we optimised the acceptance rate
+aˆ in order to choose the optimal parameter of a proposal. In the case of importance sampling,
+the target is to minimise the variance. Let qθ be a parametric family of proposals. Recall that in
+Prop. 3.4, we have defined the variance of the IS estimator as
+varqθ
+[ ˆϕ
+N
+IS ] = 1
+N
+
+Eqθ
+h
+w
+2
+θ
+(X)ϕ
+2
+(X)
+i
+− ϕ¯
+2
+
+,
+78
+   	    	 
+
+
+
+
+
+
+
+p
+μ
+Figure 3.10: The density of the exponential distribution pλ, the proposal qµ and K = 6
+where ϕ¯ = Ep?
+[ϕ(X)] and
+wθ(x) = p?(x)
+qθ(x)
+.
+Note that 1/N does not change the location of the minimum andϕ¯
+2
+is independent of θ. Therefore,
+we drop these terms and see that in order to minimise this variance w.r.t. θ, we need to solve the
+following optimisation problem
+θ? = argmin
+θ
+Eqθ
+h
+w
+2
+θ
+(X)ϕ
+2
+(X)
+i
+.
+We will now demonstrate this with an example.
+Example 3.8 (Minimum variance IS). We are given an exponential distribution
+pλ(x) = λ exp(−λx),
+and want to compute P(X > K). For example, λ = 2 and K = 6, we can analytically compute
+P(X > 6) = 6.144 × 10−6
+. Therefore, the standard MC estimator would be very inefficient
+to compute this probability. In order to mitigate the problem, we would like to use another
+exponential proposal qµ(x) which may have higher probability concentration around 6. We
+would like to design our proposal using the minimum variance criterion (see Remark 3.6). Find
+the optimal µ? that would make the estimator variance minimal.
+79
+Solution. Accordingly, we would like to find µ such that
+µ? = argmin
+µ
+Eq
+h
+w
+2
+(X)ϕ
+2
+(X)
+i
+.
+In this case, note that we have ϕ(x) = 1{x>K}(x). In order to do this, we write next
+Eqµ
+hw
+2
+(X)ϕ
+2
+(X)
+i =
+Z
+pλ(x)
+2
+qµ(x)
+2
+qµ(x)ϕ
+2
+(x)dx,
+=
+Z ∞
+K
+pλ(x)
+qµ(x)
+pλ(x)dx,
+=
+Z ∞
+K
+λ
+2
+e
+−2λx
+µe−µx
+dx,
+=
+λ
+2
+µ
+Z ∞
+K
+e
+−(2λ−µ)x
+dx.
+Note at this stage that in order for this integral to be finite, we need to have 2λ−µ > 0. Therefore,
+we limit for µ ∈ (0, 2λ). In order to compute this, we can multiply and divide by (2λ − µ) and
+obtain
+Eqµ
+hw
+2
+(X)ϕ
+2
+(X)
+i =
+λ
+2
+µ(2λ − µ)
+Z ∞
+K
+(2λ − µ)e
+−(2λ−µ)x
+dx,
+and using the CDF of the exponential distribution, we obtain
+g(µ) = Eqµ
+hw
+2
+(X)ϕ
+2
+(X)
+i =
+λ
+2
+µ(2λ − µ)
+h
+1 − 1 + e
+−(2λ−µ)K
+i
+. (3.19)
+Now we optimise g(µ) w.r.t. µ. As usual, we compute first log (and drop the terms unrelated to
+µ as they will not matter in optimisation)
+log g(µ) =c − log µ − log(2λ − µ) + µK.
+Computing
+d
+dµ
+log g(µ) = −
+1
+µ
++
+1
+2λ − µ
++ K,
+Setting this to zero, we obtain
+−
+1
+µ
++
+1
+2λ − µ
++ K = 0,
+⇒ − (2λ − µ) + µ + Kµ(2λ − µ) = 0,
+⇒Kµ2 − 2Kµλ + 2λ − 2µ = 0,
+⇒Kµ2 − 2(Kλ + 1)µ + 2λ = 0.
+80
+This is a quadratic equation, therefore we will have two solutions:
+µ =
+2(Kλ + 1) ±
+q
+(2Kλ + 2)2 − 8Kλ
+2K
+,
+=
+2(Kλ + 1) ±
+√
+4K2λ
+2 + 4
+2K
+.
+If we inspect this solution, if we choose µ to be the sum of the two terms, we will then have
+µ > 2λ which is a violation of a condition condition we imposed for the integral to be finite.
+Therefore, we arrive at
+µ? =
+2(Kλ + 1) −
+√
+4K2λ
+2 + 4
+2K
+.
+After this tedious computation, we can now verify the reduction in variance and estimation
+quality. Let us now set K = 6 and λ = 2. See Fig. 3.10 for plot of pλ, K = 6 and qµ?
+(the optimal
+exponential proposal). We can see that the proposal puts much higher mass to the right of K.
+A standard run for N = 105
+samples gives us zero samples in the region of X > 6, therefore
+the standard MC estimate is zero! Compared to ϕˆ
+N
+MC = 0, using qµ?
+as a proposal, we obtain
+ϕˆ
+N
+IS = 6.08 × 10−6 which is a much better estimate.
+Let us compare the theoretical variances of two estimators. The standard variance of ϕˆ
+N
+MC is
+varp( ˆϕ
+N
+MC) = 1
+N
+varp(ϕ(X)),
+where
+varp(ϕ(X)) = Z
+ϕ(x)
+2
+pλ(x)dx −
+Z
+ϕ(x)pλ(x)dx
+2
+,
+=
+Z ∞
+K
+pλ(x)dx −
+Z ∞
+K
+pλ(x)dx
+2
+.
+Using CDFs, we can compute this quantity hence can obtain the estimate of the variance for ϕˆ
+N
+MC.
+Now set µ = µ?. The variance of ϕˆ
+N
+IS is given by (see Prop. 3.4)
+varq[ ˆϕ
+N
+IS ] = 1
+N
+
+Eq[w
+2
+(X)ϕ
+2
+(X)] − ϕ¯
+2
+
+,
+We have already computed the term Eq[w
+2
+(X)ϕ
+2
+(X)] in Eq. (3.19). The second term is the true
+integral, which we also summarised how to compute above, i.e., ϕ¯ =
+R ∞
+K pλ(x)dx which can be
+computed using the exponential CDF. In this particular case, we compute
+varq[ ˆϕ
+N
+IS ] = 1
+N
+
+g(µ?) − ϕ¯
+2
+
+.
+The theoretical variance of the naive MC estimator is given by 6.14 × 10−7
+for N = 10 samples
+vs. the IS estimator variance is 6.04 × 10−11 for the same amount of samples. This is a huge
+improvement in the variance of the estimation.
+81
+Exercise 3.6. Minimum variance is a good design principle when choosing proposals. However,
+as can be seen from Example 3.8, this can be tedious. In this example, we will artificially simplify
+this process in order to not solve quadratic equations to find optimum. Let p(x) be the exponential
+distribution with λ = 1, i.e.,
+p(x) = e
+−x
+, x ≥ 0.
+Assume that we would like to estimate the expectation of ϕ(x) w.r.t. this distribution where
+ϕ(x) = e
+− Kx
+2
+where K > 0. While this test function is artificial, it is good for testing your skills. Consider the
+exponential proposal
+qµ(x) = µe−µx
+.
+Find the optimal µ? in terms of K that minimises the variance of the IS estimate (see Example 4.9
+in the lecture notes – but the computation here is much simpler!).
+Once you obtain µ? in terms of K, then evaluate varqµ?
+( ˆϕ
+N
+IS ) and varp( ¯ϕ
+N
+MC) (MC is the case
+of the usual Monte Carlo estimator). Note that both cases do not require any sampling (find
+them analytically). Verify the variance reduction.
+Exercise 3.7. Let p(x) = N (x; 0, 1) and ϕ(x) = x.
+• Verify that that the standard MC estimator, X1, . . . , XN ∼ p(x):
+ϕˆ
+N
+MC =
+1
+N
+X
+N
+i=1
+ϕ(Xi) = 1
+N
+X
+N
+i=1
+Xi
+,
+has variance 1/N, i.e.,
+varp( ˆϕ
+N
+MC) = 1
+N
+.
+What would be the variance if we had p(x) = N (x; µ, σ2
+)?
+• Let
+qλ(x) = N (x; 0, 1/λ).
+Find the minimum variance IS proposal, i.e., find λ? that minimises the IS estimator
+variance (again follow Example 4.9 and no quadratic equations are needed for this case
+either). Show that the variance is less than 1/N at this value by computing the exact
+number.
+82
+• Implement the MC sampler and IS sampler using this optimal λ?. Compute the estimate
+of the mean (= 0) and verify that your estimators work. Then compute the variance of
+your estimator empirically (in other words, choose N and run the same experiment M
+times (Monte Carlo runs)). Verify that the IS estimator variance is, indeed, less than naive
+MC estimator variance!
+Exercise 3.8 (Stochastic Simulation, Final Exam Q2, 2024). Consider the following Rayleigh
+density function:
+p(x) = x exp
+−
+x
+2
+2
+!
+, x ∈ [0,∞).
+Suppose we would like to estimate the mean of this distribution.
+(a) Consider the importance sampling (IS) task for this problem. We would like to use another
+Rayleigh density function qλ(x) as the proposal:
+qλ(x) = x
+λ
+2
+exp
+−
+x
+2
+2λ
+2
+!
+, x ∈ [0, ∞), λ > 0.
+(i) State the test function ϕ(x) for this problem. Show that R
+ϕ(x)p(x)dx =
+q
+π/2.
+Hint: Gaussian second moment identity: R ∞
+−∞ x
+2
+√
+1
+2π
+exp 
+−
+x
+2
+2
+
+dx = 1.
+(ii) State the IS estimator ϕˆ
+N
+IS in terms of N samples X1, . . . , XN ∼ qλ(x).
+(iii) State the variance expression var( ˆϕ
+N
+IS ) in terms of p, ϕ, qλ, and N (You do not have
+to derive it).
+(iv) By explicitly computing the quantity you provided in Part (a)(iii), show that
+var( ˆϕ
+N
+IS ) = 1
+N
+
+2λ
+6
+(2λ
+2 − 1)−2 −
+π
+2
+
+.
+Hint: You can use integration by parts (or any other technique of your choice). In
+integration by parts, recognise that the second term can be completed to an integral
+of a Rayleigh density.
+(v) Show that the optimal λ? that minimises the variance is λ? =
+q
+3/2.
+(vi) Derive the expression for the variance var( ˆϕ
+N
+IS ) with this optimal choice λ?.
+(b) Now consider perfect Monte Carlo (MC) sampling for the same problem with the same
+test function used in Part (a).
+(i) Provide the MC estimator ϕˆ
+N
+MC in terms of N samples X1, . . . , XN ∼ p(x).
+(ii) State the variance expression var( ˆϕ
+N
+MC) in terms of p, ϕ, and N (You do not have to
+derive it).
+83
+(iii) By explicitly computing the quantity you provided in Part (b)(ii), show that
+var( ˆϕ
+N
+MC) = 1
+N
+
+2 −
+π
+2
+
+.
+Hint: The computation here is a special case of Part (a)(iv), so you can directly
+compute the integral using your earlier result.
+(iv) Compare var( ˆϕ
+N
+MC) and var( ˆϕ
+N
+IS ) derived in Part (a)(vi) and discuss why we would
+perform IS rather than MC even if we have access to i.i.d samples.
+Exercise 3.9. Let us consider the standard Gaussian model
+p(x) = N (x; 0, 1)
+p(y|x) = N (y; x, 1),
+and, again, we would like to estimate the marginal likelihood p(y) = R
+p(y|x)p(x)dx using i.i.d
+Monte Carlo (MC) and importance sampling (IS). This is a quantity that computes the model’s
+likelihood under a particular observation.
+1. Write the analytical expression of p(y) (this is provided in lecture notes – you don’t have to
+prove it). Now assume that we observe y = 9. Compute p(y = 9) using your exact p(y)
+expression. (Hint: It is a small number)
+2. What happened? We observed an unlikely observation that could come from the model.
+It is of practical interest to estimate such probabilities (unlikely events under the model).
+Next, implement the standard MC estimator (i.i.d) to estimate the integral p(y = 9) =
+R
+p(y = 9|x)p(x)dx by drawing i.i.d samples from p(x). Describe your test function and
+estimator clearly. Provide results for N = 10, 100, 1000, 10000, 100000 by computing the
+relative absolute error (RAE) (note that you know the true value from Part 1, therefore use
+that to compute your RAE) for these N and plot it w.r.t. N.
+3. Next choose a proposal of the form
+q(x) = N
+
+x; µ,
+1
+2
+
+.
+For any observation y, find the minimum variance proposal mean, i.e., µ? that minimises the variance in terms of y. Then set y = 9 and compute µ? for this case.
+Implement the IS estimator with µ? as the proposal mean and compute the RAE for
+N = 10, 100, 1000, 10000, 100000 by computing the relative absolute error (RAE) (note
+that you know the true value from Part 1, therefore use that to compute your RAE) for
+these N and plot it w.r.t. N.
+4. Compare the RAE for MC and IS to each other (provide a plot w.r.t. N by plotting them
+together). What is the difference? Comment about the difference about the accuracy of
+these two estimators.
+Use plt.loglog to plot throughout this exercise to have clear figures.
+84
+3.3.3 self-normalised importance sampling
+As mentioned several times in past chapters, in many scenarios, we have access to the unnormalised
+density, i.e., given p?, we can evaluate it up to a normalising constant. As usual, we denote this
+density p¯?(x) and recall that it is related to p? by
+p?(x) = p¯?(x)
+Z
+where Z =
+R
+p¯?(x)dx. In the context of Bayesian inference, we usually have an unnormalised
+posterior density p¯?(x) := ¯p(x|y) ∝ p(y|x)p(x). In the previous section, we have built an
+importance sampling estimator for the case where we have access to the normalised density. In
+this section, we will generalise the idea and assume we only have access to the unnormalised
+density.
+Consider, again, the problem of estimating expectations of a given density p?. For the case
+where we can only evaluate p¯?(x), one way to estimate this expectation is to sample from a
+proposal distribution q and rewrite the integral as
+ϕ¯ =
+Z
+ϕ(x)p?(x)dx,
+=
+R
+ϕ(x)
+p¯?(x)
+q(x)
+q(x)dx
+R p¯?(x)
+q(x)
+q(x)dx
+, (3.20)
+where we use the fact that p?(x) = ¯p?(x)/Z. This gives us two separate integration problems, one
+to estimate the numerator and one to estimate the denominator. We will estimate both quantities
+using samples from q(x).
+Let us now introduce the unnormalised weight function W(x)
+W(x) = p¯?(x)
+q(x)
+,
+which is analogous to the normalised weight function w(x) in the previous section. Using
+Xi ∼ q(x) and building the Monte Carlo estimator of the numerator and denominator, we arrive
+at the following estimator of the (3.20):
+ϕˆ
+N
+SNIS =
+1
+N
+PN
+i=1 ϕ(Xi)W(Xi)
+1
+N
+PN
+i=1 W(Xi)
+,
+=
+PN
+i=1 ϕ(Xi)W(Xi)
+PN
+i=1 W(Xi)
+=
+X
+N
+i=1
+w¯iϕ(Xi), (3.21)
+where
+w¯i =
+W(Xi)
+PN
+i=1 W(Xi)
+,
+85
+Algorithm 8 Pseudocode for self-normalised importance sampling
+1: Input: The number of samples N
+2: for i = 1, . . . , N do
+3: Sample Xi ∼ q(x)
+4: Compute unnormalised weights W(Xi) = p¯?(Xi)
+q(Xi)
+5: Normalise:
+w¯i =
+W(Xi)
+PN
+i=1 W(Xi)
+.
+6: end for
+7: Report the estimator
+ϕˆ
+N
+SNIS =
+X
+N
+i=1
+w¯iϕ(Xi).
+are the normalised weights. This estimator (3.21) is called the self-normalised importance sampling (SNIS) estimator The full scheme given in Algorithm 8.
+Remark 3.7 (Bias and variance). As opposed to the normalised case, the estimator ϕˆ
+N
+SNIS is biased.
+The reason of this bias can be seen by recalling the integral (3.20). By sampling from q(x), we
+can construct unbiased estimates of the numerator and denominator. However, the ratio of these
+two quantities is biased in general. However, it can be shown that the bias of the SNIS estimator
+decreases with a rate O(1/N) (Agapiou et al., 2017).
+Since the SNIS estimator is biased, we cannot use the same variance formula as in the previous
+section. It makes sense to consider the MSE( ˆϕ
+N
+SNIS) instead. However, this quantity is challenging
+to control in general – without bounded test functions. With bounded test functions, it is possible
+to show that the MSE( ˆϕ
+N
+SNIS) is controlled with a rate O(1/N) (Agapiou et al., 2017; Akyildiz
+and Míguez, 2021), which we show below.
+In the following, we provide the MSE bound for the SNIS estimator see, e.g., Agapiou et al.
+(2017) or Akyildiz and Míguez (2021). We use here the notation of Akyildiz and Míguez (2021,
+Theorem 1) for the proof.
+Proposition 3.5. Assume for simplicity that supx
+|ϕ(x)| ≤ 1. Then,
+MSE( ˆϕ
+N
+SNIS) = Eq
+h
+( ˆϕ
+N
+SNIS − ϕ¯)
+2
+i
+≤
+4
+N
+Eq [W2
+(X)]
+(Eq [W(X)])2
+.
+Proof. We start by recalling our notation for integrals (ϕ, p?) := R
+ϕ(x)p?(x)dx and Monte
+Carlo approximations (ϕ, pN
+?
+) := (1/N)
+PN
+i=1 ϕ(Xi) for Xi ∼ p? which will come in handy in
+86
+this proof. Let us write our SNIS approximation of the measure p? as (recall Remark 3.4)
+p
+N
+SNIS(dx) = 1
+N
+X
+N
+i=1
+w¯iδXi
+(dx),
+where Xi ∼ q, hence that ϕˆ
+N
+SNIS = (ϕ, pN
+SNIS). Let us also recall in this notation
+ϕ¯ = (ϕ, p?) = Z
+ϕ(x)p?(x)dx =
+R
+ϕ(x)
+p¯?(x)
+q(x)
+q(x)dx
+R p¯?(x)
+q(x)
+q(x)dx
+=
+(ϕW, q)
+(W, q)
+.
+With a similar derivation, we can also write
+ϕˆ
+N
+SNIS =
+(ϕW, qN )
+(W, qN )
+.
+Now next we write
+|(ϕ, p) − (ϕ, pN
+SNIS)| =
+
+
+
+
+
+(ϕW, q)
+(W, q)
+−
+(ϕW, qN )
+(W, qN )
+
+
+
+
+
+=
+
+
+
+
+
+(ϕW, q)
+(W, q)
+−
+(ϕW, qN )
+(W, qN )
++
+(ϕW, qN )
+(W, q)
+−
+(ϕW, qN )
+(W, q)
+
+
+
+
+
+≤
+
+
+
+
+
+(ϕW, q)
+(W, q)
+−
+(ϕW, qN )
+(W, q)
+
+
+
+
+
++
+
+
+
+
+
+(ϕW, qN )
+(W, q)
+−
+(ϕW, qN )
+(W, qN )
+
+
+
+
+
+=
+1
+(W, q)
+
+
+(ϕW, q) − (ϕW, qN )
+
+
+ +
+
+
+(ϕW, qN )
+
+
+
+
+
+
+
+
+1
+(W, q)
+−
+1
+(W, qN )
+
+
+
+
+
+.
+At this point, we use supx
+|ϕ(x)| ≤ 1 (note that, this is without loss of generality for bounded
+test functions) and get |(ϕW, qN )| ≤ |(W, qN )|. Using this, we can write
+|(ϕ, p) − (ϕ, pN
+SNIS)| ≤ 1
+(W, q)
+
+
+(ϕW, q) − (ϕW, qN )
+
+
+ + |(W, qN )|
+
+
+
+
+
+(W, qN ) − (W, q)
+(W, qN )(W, q)
+
+
+
+
+
+=
+1
+(W, q)
+
+
+(ϕW, q) − (ϕW, qN )
+
+
+ +
+
+
+(W, qN ) − (W, q)
+
+
+
+
+.
+Next, we take squares of both sides (since both sides are nonnegative), use (a + b)
+2 ≤ 2(a
+2 + b
+2
+)
+and take expectations
+E
+
+
+(ϕ, p) − (ϕ, pN
+SNIS)
+
+
+
+2
+
+≤ 2E
+"
+1
+(W, q)
+2
+
+
+(ϕW, q) − (ϕW, qN )
+
+
+
+2
++
+
+
+(W, qN ) − (W, q)
+
+
+
+2
+#
+=
+2
+(W, q)
+2
+(varq[ϕW, q] + varq[W, q]),
+≤
+2
+(W, q)
+2
+
+Eq[ϕ
+2
+(X)W2
+(X)] + Eq[W2
+(X)]
+,
+by using supx
+|ϕ(x)| ≤ 1, we conclude the proof.
+87
+3.4 bayesian inference with importance sampling
+In this section, we demonstrate the applications of the Monte Carlo and importance sampling
+estimators to Bayesian inference. Self normalised IS is a natural choice for Bayesian inference.
+Assume that we have a prior p(x) and a likelihood p(y|x). The posterior is given by
+p(x|y) = p(y|x)p(x)
+R
+p(y|x)p(x)dx
+.
+Let p¯(x|y) := p(y|x)p(x) as usual and design an importance sampler to estimate expectations of
+the form
+Ep(x|y)
+[ϕ(x)] = Z
+ϕ(x)p(x|y)dx.
+Assume that we choose q(x) and decided to perform SNIS. We first sample X1, . . . , XN ∼ q(x)
+and construct
+Wi =
+p¯(Xi
+|y)
+q(Xi)
+=
+p(y|Xi)p(Xi)
+q(Xi)
+.
+We can now normalise these weights and obtain
+w¯i =
+Wi
+PN
+i=1 Wi
+,
+which will give us the Monte Carlo estimator:
+Ep(x|y)
+[ϕ(x)] ≈
+X
+N
+i=1
+w¯iϕ(Xi).
+It is useful to recall that this estimator is biased, since it is a SNIS estimator. However, as a
+byproduct of this estimator, we can also obtain an unbiased estimate of the marginal likelihood
+p(y). Note that, this is already provided by the SNIS estimator
+p(y) ≈
+1
+N
+X
+N
+i=1
+Wi
+.
+Proposition 3.6. The marginal likelihood estimator given by
+p
+N (y) = 1
+N
+X
+N
+i=1
+Wi
+,
+is an unbiased estimator of the marginal likelihood p(y).
+88
+Proof. We can easily show this
+Eq
+"X
+N
+i=1
+Wi
+#
+=
+X
+N
+i=1
+Eq
+"
+p(y|Xi)p(Xi)
+q(Xi)
+#
+= NEq
+"
+p(y|Xi)p(X)
+q(X)
+#
+= N
+Z
+p(y|x)p(x)
+q(x)
+q(x)dx
+= Np(y).
+
+As we have seen before, a number of interesting problems require computing normalising
+constants, including model selection and prediction. SNIS estimators are very useful in the sense
+that they provide an unbiased estimate of it. Let us now look at an example using the optimal
+importance proposal as introduced in Remark 3.6.
+Example 3.9 (Marginal likelihood using optimal importance proposal). We have seen that
+we can get unbiased estimates of the marginal likelihood. Find the optimal proposal q? for
+estimating the marginal likelihood.
+Solution. We will now see how to find the optimal importance proposal to compute the marginal
+likelihood. Note that, we have
+p(y) = Z
+p(y|x)p(x)dx,
+for some prior p(x) and likelihood p(y|x). Note, as we mentioned before, in this case p(x) can
+be seen as the distribution to sample from and ϕ(x) = p(y|x) to obtain the standard problem of
+integration R
+ϕ(x)p(x)dx. A naive way to approximate this quantity (as we have seen before) is
+to sample i.i.d from p(x) and approximate the integral, i.e., X1, . . . , XN ∼ p(x) and write
+p
+N
+MC(y) = 1
+N
+X
+N
+i=1
+ϕ(Xi) = 1
+N
+X
+N
+i=1
+p(y|Xi).
+We can now look at the variance of this estimator
+varp
+h
+p
+N
+MC(y)
+i
+=
+1
+N
+varp(x)
+[p(y|x)].
+This quantity may depend on the prior-likelihood selection and can be large.
+Let us take Remark 3.6 seriously as the question suggested and search for the optimal proposal
+q?. From (3.18), we can see that
+q?(x) = p(x)
+|ϕ(x)|
+Ep(x)[|ϕ(x)|]
+.
+89
+In this case, however, we have ϕ(x) = p(y|x) (and |ϕ(x)| = ϕ(x) since the likelihood is positive
+everywhere). We can now write
+q?(x) = p(x)
+p(y|x)
+Ep[p(y|x)] = p(x)
+p(y|x)
+p(y)
+.
+In other words, the optimal proposal is the posterior itself! Now we can compute the IS estimator
+variance where we plug q? = p(x|y). Note to explore variance, we write
+varq?
+[p
+N
+IS (y)] = 1
+N
+
+Eq?
+
+
+
+p(x)
+q?(x)
+!2
+p(y|x)
+2
+
+ − p(y)
+2
+
+ .
+We compute the first term in brackets,
+Eq?
+
+
+
+p(x)
+q?(x)
+!2
+p(y|x)
+2
+
+ =
+Z
+p
+2
+(x)
+q
+2
+?
+(x)
+p(y|x)
+2
+q?(x)dx
+=
+Z
+p
+2
+(x)
+q?(x)
+p(y|x)
+2
+dx
+=
+Z
+p
+2
+(x)
+p(x|y)
+p(y|x)
+2
+dx
+=
+Z
+p
+2
+(x)p(y)
+p(y|x)p(x)
+p(y|x)
+2
+dx
+= p(y)
+Z
+p(x)p(y|x)dx
+= p(y)
+2
+.
+Plugging this back into the above variance expression varq?
+[p
+N
+IS (y)], we obtain
+varq?
+[p
+N
+IS (y)] = 1
+N
+
+p(y)
+2 − p(y)
+2
+
+= 0.
+It can be seen that we can achieve zero variance, but as we mentioned before, this required us to
+know the posterior density.
+Exercise 3.10. In this exercise, we will use our toy Gaussian model to perform Bayesian inference:
+p(x) = N (x; µ0, σ2
+0
+),
+p(yi
+|x) = N (yi
+; x, σ2
+),
+where i = 1, . . . , M, i.e., yi are conditionally independent given x. In the first implementation
+of this exercise, you can set µ0 = 0, σ
+2 = 1 and σ
+2
+0 = 1, but you should also explore other
+parameters to gain intuition.
+90
+1. First simulate M = 1000 data points from this model. In particular, you should perform
+X ∼ p(x) and fixing the sample X = x, and then yi ∼ p(yi
+|x) for i = 1, . . . , M.
+2. For these particular datapoints, compute the true posterior mean estimate using the expression µp in Example 3.6. This is the true posterior mean estimate for this model.
+3. Now we will use SNIS to estimate the posterior mean. For this, we will use the following
+proposal
+q(x) = N (x; µq, σ2
+q
+),
+In the first implementation, you can set µq = 0 and σ
+2
+q = 1, but you should also explore
+other parameters to gain intuition. Implement the SNIS estimator for this model. Note
+that your unnormalized posterior is
+p¯(x|y1:n) = p(y1:n|x)p(x) = Y
+M
+i=1
+p(yi
+|x)p(x),
+as given in Exercise 3.6. You should compute the weights in the log-domain. Compare the
+posterior mean estimate when you compute the weights without the log-trick and with the
+log-trick. You should observe that the log-trick is necessary for this model.
+4. Finally compute effective sample size (ESS) and vary your N to see how it affects the ESS.
+Plot the ESS w.r.t. N.
+Exercise 3.11. In this example, we will work on R
+2
+. Let us assume the following “banana” prior
+p(x) ∝ exp(−x
+2
+1
+/10 − x
+2
+2
+/10 − 2(x2 − x
+2
+1
+)
+2
+),
+where x ∈ R
+2
+. We would like to then use the following likelihood:
+p(y|x) = N (y; Hx, σ2
+I),
+where H = [1, 0] and y ∈ R. Now assume that we are given y = 1 and σ = 0.05 (note that this
+is standard deviation). Our goal is to sample from p(x|y).
+1. First visualise the prior p(x) using the following code:
+1 import numpy as np
+2 import matplotlib .pyplot as plt
+3
+4 def bar_p(x):
+5 return np.exp(-x[0]**2/10 - x[1]**2/10 - 2 * (x[1] - x[0]**2)**2)
+6
+7 x_bb = np.linspace(-4, 4, 100)
+8 y_bb = np.linspace(-2, 6, 100)
+9 X_bb , Y_bb = np.meshgrid(x_bb , y_bb)
+91
+10 # evaluate barp on this grid
+11 Z_bb = np.zeros((100 , 100))
+12 for i in range(100):
+13 for j in range(100):
+14 Z_bb[i, j] = bar_p([X_bb[i, j], Y_bb[i, j]])
+15 # plot barp
+16 plt.contourf(X_bb , Y_bb , Z_bb , 100 , cmap='RdBu')
+17 plt.show ()
+You will see that this gives you a 2D (unnormalised) density. Now try to interpret our task.
+We assume that y = 1 with σ = 0.05. By just looking at the prior and the likelihood, try
+to guess how the posterior should look like (before proceeding).
+2. Now we will use SNIS to estimate the posterior mean. For this, we will use the following
+proposal
+q(x) = N (x; µq, σ2
+q
+I),
+Note that this is also defined on R
+2
+and you can set µq = [0, 0] and σ
+2
+q = 1. Compute
+the posterior mean using SNIS (do not forget using log-prior and log-likelihood and
+performing the log-trick) and compute the ESS (choose varying N. Start with N = 1000).
+3. Now using the idea of importance sampling resampling (Section 4.6.2) in lecture notes,
+resample N samples from this weighted sample. Recall that SNIS will result in a set of
+weights and samples {w¯i
+, xi}
+N
+i=1. You should resample from this set to obtain a new set of
+resampled samples {x¯i}
+N
+i=1. Then scatter these samples to plot against the prior using the
+following code:
+1 # plot resampled samples
+2 # x_res are the resampled samples (note that samples are 2D)
+3 x_bb = np.linspace(-4, 4, 100)
+4 y_bb = np.linspace(-2, 6, 100)
+5 X_bb , Y_bb = np.meshgrid(x_bb , y_bb)
+6 Z_bb = np.zeros((100 , 100))
+7 for i in range(100):
+8 for j in range(100):
+9 Z_bb[i, j] = bar_p([X_bb[i, j], Y_bb[i, j]])
+10 plt.contourf(X_bb , Y_bb , Z_bb , 100 , cmap='RdBu')
+11 plt.scatter(x_res[0, :], x_resampled[1, :], s=10 , c='white')
+12 plt.show ()
+Now interpret the result and compare it to your educated guess you have done in Part 1.
+3.5 implementation, algorithms, diagnostics
+When implementing the IS or SNIS, there are several numerical considerations that need to be
+taken into account. Especially for SNIS, where the weight normalisation takes place, several
+numerical problems can arise for complex distributions that would prevent us from implementing
+92
+them successfully.
+3.5.1 computing weights
+In the case of SNIS, we have stated that the weights are computed as
+w¯i =
+W(Xi)
+PN
+i=1 W(Xi)
+,
+where W(x) = p¯(x)
+q(x)
+. However, this formula can be numerically ill-behaved for complex distributions. To mitigate this, the weighting step is implemented as follows. We first compute log
+unnormalised weights:
+log Wi = log ¯p(Xi) − log q(Xi).
+However, directly applying exponentiation and normalisation can also lead to numerical problems.
+Note that, we will normalise these weights (e.g. multiplying them with a constant does not change
+the result), we can use this to our advantage. A common numerical trick is to subtract the
+maximum log weight from all weights:
+log W˜
+i = log ¯p(Xi) − log q(Xi) − max
+i=1,...,N
+log Wi
+.
+This ensures that the maximum weight is 0 and all other weights are negative. We can now
+exponentiate the weights and normalise them:
+w¯i =
+exp(log W˜
+i)
+PN
+i=1 exp(log W˜
+i)
+.
+Note that, this does not change the computation, just done for numerical stability.
+Exercise 3.12. Consider a computed log-weight vector
+1 logW = [1000 , 1001 , 999 , 1002 , 950]
+These are computed log-weights which are, for various reasons, often the only available quantities
+in practice (people implement quadratics, rather than Gaussians, for example). Implement the
+naive normalisation procedure
+wi =
+exp(log Wi)
+PN
+i=1 exp(log Wi)
+.
+Implement the trick introduced in Sec. 4.4.1 in lecture notes and verify that the latter computation
+is stable.
+93
+Figure 3.11: Top left shows the target density, the proposal, and the weight function. Top right shows the samples
+with their respective weights. Bottom left shows that these samples are indeed approximately distribution w.r.t. q(x)
+(just with attached weights). Bottom right shows that we can resample these existing samples to obtain a new set of
+samples X¯
+i that are distributed (approximately )according to p(x).
+3.5.2 sampling importance resampling
+We can also use the SNIS estimator as a sampler (Robert and Casella, 2004). Recall that, the SNIS
+estimator provides us an estimator of the distribution p?(x) as
+p?(x)dx ≈ p˜
+N
+?
+(dx) = X
+N
+i=1
+w¯iδXi
+(dx).
+This p˜
+N
+?
+can be seen as a weighted distribution. By drawing samples from this distribution, we
+may also approximately sample from p?(x) (recall that IS based ideas here are just introduced for
+integration so far). We can then draw4
+k ∼ Discrete(w¯1, . . . , w¯N ),
+and set new samples
+X¯
+i = Xk.
+This amounts to resampling the existing samples w.r.t. their weights. A demonstration of this
+idea can be seen from Figure 3.11.
+3.5.3 diagnostics for importance sampling
+It is important to have a good intuition and diagnostic tools to understand the performance of
+the IS and SNIS estimators. We first start with the effective sample size (ESS).
+4Note that here the weights w¯i are normalised. Even in the basic IS case, we need to normalise weights (just for
+resampling) as they do not naturally sum up to one.
+94
+Definition 3.1 (Effective Sample Size). To measure the sample efficiency, one measure that is used
+in the literature is the effective sample size (ESS) which is given by
+ESSN =
+1
+PN
+i=1 w¯
+2
+i
+,
+for the SNIS estimator.
+In order to see the meaning of the ESS, consider the case where w¯i = 1/N where we have an
+equally weighted sample. This means all samples are equally considered and in this case we have
+ESSN = N. On the other hand, if we have a sample Xi where w¯i = 1 and, hence, w¯j = 0 for
+every j 6= i, we obtain ESSN = 1. This means, we effectively have one sample which is the goal
+of the estimator. ESS is used to measure importance samplers and importance sampling-based
+estimators in the literature (Elvira et al., 2018). Note that the ESSN takes values between 1 and
+N, i.e., 1 ≤ ESSN ≤ N.
+3.5.4 mixture importance sampling
+Sometimes the target density p(x) can be multimodal, therefore it is beneficial to use mixture
+densities as proposals (Owen, 2013). We have seen in previous chapters how to sample from a
+mixture. Let us define a proposal
+qα(x) = X
+K
+k=1
+αkqk(x),
+where αk ≥ 0 and PK
+k=1 αk = 1. In this version of the method, we just sample from the mixture
+proposal Xi ∼ qα(x) and then, given an unnormalised target p¯, compute the importance weights
+as
+w¯i =
+W(Xi)
+PN
+i=1 W(Xi)
+,
+where
+W(Xi) = p¯(Xi)
+PK
+k=1 αkqk(Xi)
+.
+The computational concerns may arise in this situation too, as the denominator as a sum of
+densities and its log can be tricky to compute. In these cases, we can use the log-sum-exp trick to
+compute the log of the denominator.
+95
+BIBLIOGRAPHY
+Agapiou, Sergios; Papaspiliopoulos, Omiros; Sanz-Alonso, Daniel; and Stuart, Andrew M. 2017.
+Importance sampling: Intrinsic dimension and computational cost. In Statistical Science, pp.
+405–431. Cited on p. 86.
+Akyildiz, Omer Deniz. March 2019. Sequential and adaptive Bayesian computation for inference
+and optimization. Ph.D. thesis, Universidad Carlos III de Madrid. Can be accessed from:
+http://akyildiz.me/works/thesis.pdf. Cited on pp. 63, 67, and 75.
+Akyildiz, Ömer Deniz and Míguez, Joaquín. 2021. Convergence rates for optimised adaptive
+importance samplers. In Statistics and Computing, vol. 31, no. 2, pp. 1–17. Cited on pp. 78
+and 86.
+Branchini, Nicola. 2024. Simple Monte Carlo is independent of dimension. Or is it? https:
+//branchini.fun/posts/monte_carlo_indep/. Blog post. Cited on p. 65.
+Devroye, Luc. 1986. Non-Uniform Random Variate Generation. Cited on p. 17.
+Elvira, Víctor; Martino, Luca; and Robert, Christian P. 2018. Rethinking the effective sample size.
+In International Statistical Review. Cited on p. 95.
+Kallenberg, Olav. 2021. Foundations of Modern Probability. Probability Theory and Stochastic
+Modelling. Springer Cham, 3rd edn. isbn 978-3-030-61871-1. doi:https://doi.org/10.1007/978-
+3-030-61871-1. 1 b/w illustration. Cited on p. 30.
+Martino, Luca; Luengo, David; and Míguez, Joaquín. 2018. Independent random sampling
+methods. Springer. Cited on pp. 18, 34, 35, and 39.
+Murphy, Kevin P. 2007. Conjugate Bayesian analysis of the Gaussian distribution. In def, vol. 1,
+no. 2σ2, p. 16. Cited on p. 6.
+Owen, Art B. 2013. Monte Carlo theory, methods and examples. Cited on p. 95.
+Robert, Christian P and Casella, George. 2004. Monte Carlo statistical methods. Springer. Cited
+on pp. 63 and 94.
+———. 2010. Introducing Monte Carlo methods with R, vol. 18. Springer. Cited on p. 76.
+Walters, Peter. 2000. An introduction to ergodic theory, vol. 79. Springer Science & Business
+Media. Cited on p. 19.
+Yıldırım, Sinan. 2017. Sabanci University IE 58001 Lecture notes: Simulation Methods for
+Statistical Inference. Cited on p. 48.

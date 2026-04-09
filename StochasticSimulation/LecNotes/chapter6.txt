@@ -1,0 +1,1177 @@
+6
+SEQUENTIAL MONTE CARLO
+In this chapter, we introduce sequential Monte Carlo (SMC) methods. These methods are used to
+approximate a sequence of target distributions rather than just a single, fixed target. This can have
+a number of applications, including filtering and smoothing in state space models. We will briefly
+introduce state-space models, SMC and its connection to importance sampling, and application of
+SMC to filtering in state-space models, which is also called particle filtering.
+B
+6.1 introduction
+In this section, we depart from our standard setting where we have a single, fixed target p?(x). In
+many problems in the real world, the target distributions are evolving over time. For example,
+consider the example of tracking a target, a straightforward extension of the source localisation
+problem we discussed in Example 4.8. Instead of a fixed target and fixed measurements, we could
+have easily the case of a moving target and fixed/moving sensors. In this case, we could recompute
+our posterior every time we get a new measurement, however, this could become very prohibitive
+(imagine every time you get new data, you need to run a new MCMC chain!). However, the
+applications of this framework is not limited to simple localisation examples, it broadly generalises
+to many dynamical systems. A few examples are volatility estimation in financial time series,
+robotics (tracking and control of moving arms), infectious disease modelling (tracking the spread
+of a disease), and many more. The idea of evolving sequence of distributions can also be used to
+target static problems, as we have seen in the example of simulated annealing.
+Our running example in this section will be state-space models. A good example within this
+setting will be the target tracking example which summarises the notion of a hidden state and a
+sequence of observations. However, it is crucial to observe that the example generalises to any
+situation where a hidden, evolving quantity to be estimated (out in the wild) and a stream of data
+is received to update our latest belief on the state of the object.
+155
+y1 y2
+. . .
+x0 x1 x2
+. . . xt
+yt
+Figure 6.1: The conditional independence structure of a state-space model.
+6.2 state-space models
+Consider a Markov process (Xt)t≥0 defined on the measurable space X with X ⊂ R
+dx
+. This
+process denotes the signal of interest, e.g., the state of an object, the velocity field of a partial
+differential equation (PDE), hence we call it the signal process. Similarly, we define another
+sequence of random variables (yt)t≥1, defined on Y ⊂ R
+dy
+, to denote our observation sequence,
+or the observation process. This sequence denotes the observed data coming from the signal
+process and it can typically consist of noisy sensor measurements or noisy observations. Based
+on this two sequences, we can define a model which we name as a state-space model. This is
+typically by three distributions (Doucet et al., 2000)
+X0 ∼ µ(x0)
+Xt
+|{Xt−1 = xt−1} ∼ f(xt
+|xt−1),
+Yt
+|{Xt = xt} ∼ g(yt
+|xt),
+where µ is called the prior distribution, f is a Markov transition kernel defined on X, and g as
+the likelihood function. For convenience, we always assume the densities exist in this document
+but a general construction is possible. See Fig. 6.1 for the conditional independence structure of
+this class of models.
+An important consequence of the conditional independence structure described above is that
+we can write the joint distribution as
+π¯t(x0:t
+, y1:t) = µ(x0)
+Y
+t
+k=1
+f(xk|xk−1)g(yk|xk).
+This is going to be important. To see the analogy with standard Bayesian inference, recall
+that with a given prior p(x) and a likelihood p(y|x), we could write the joint distribution as
+p(x, y) = p(y|x)p(x). This is a similar structure above for the joint distribution.
+Recall also that we have used joint distributions as unnormalised densities throughout. This
+will be the same in this section where the joint distribution above will act like an unnormalised
+density. Another way to look at it is to consider y1:t completely fixed. This also makes it clear
+that we have distributions of the form πt(x0:t) (normalised) and π¯t(x0:t) (unnormalised). We
+will then apply what we have covered in Chapter 3 to this setting. The final thing to note is the
+definition of the marginal likelihood in this setting. Let p(y1:t) denote the marginal likelihood of
+the observations y1:t
+, then we can write
+p(y1:t) = Z
+µ(x0)
+Y
+t
+k=1
+f(xk|xk−1)g(yk|xk)dx0:t
+. (6.1)
+156
+6.2.1 the filtering problem
+Given a sequence of observations y1:t
+, a typical problem is to estimate the conditional distributions
+of the signal process (Xt)t≥0 given the observed data. We denote this distribution with πt(xt
+|y1:t)
+which is called the filtering distribution. The problem of sequentially updating the sequence of
+filtering distributions (πt(xt
+|y1:t))t≥1 is called the filtering problem.
+To introduce the idea intuitively, consider the scenario of tracking a target. We denote the
+states of the target with (xt)t≥0 which may include positions and velocities. We assume that
+the target moves in space w.r.t. f, i.e., the transition model of the target is given by f(xt
+|xt−1).
+Observations may consist of the locations of the target on R
+2 or power measurements with
+associated sensors (which may result in high-dimensional observations). At each time t, we
+receive a measurement vector yt conditional on the true state of the system xt
+. The likelihood of
+each observation is assumed to follow g(yt
+|xt).
+We now provide a simple recursion to demonstrate one possible solution to the filtering
+problem. Assume that we are given the distribution at time t − 1 (to define our sequential
+recursion) and would like to incorporate a recent observation yt
+. One way to do so is to first
+perform prediction
+ξt(xt
+|y1:t−1) = Z
+f(xt
+|xt−1)πt−1(xt−1|y1:t−1)dxt−1, (6.2)
+and obtain the predictive measure and then perform update
+πt(xt
+|y1:t) = ξt(xt
+|y1:t−1)
+g(yt
+|xt)
+p(yt
+|y1:t−1)
+, (6.3)
+where p(yt
+|y1:t−1) = R
+ξt(xt
+|y1:t−1)g(yt
+|xt)dxt
+is the incremental marginal likelihood.
+Remark 6.1. We remark that the celebrated Kalman filter (Kalman, 1960) exactly implements
+recursions (6.2)–(6.3) in the case of
+µ(x0) = N (x0; µ0, Σ0),
+f(xt
+|xt−1) = N (xt
+; Axt−1, Q),
+g(yt
+|xt) = N (yt
+; Cxt
+, R).
+For this Gaussian system, computing the integral(6.2) and the update (6.3)is analytically tractable,
+which results in Kalman filtering recursions of the mean and the covariance of the filtering
+distribution πt(xt
+|y1:t). We skip the update rules of the Kalman filter, as our main aim is to focus
+on sequential Monte Carlo in this course.
+Finally, we can move on to show how to update joint filtering distribution of the states x0:t
+.
+157
+To see this, note the recursion
+πt(x0:t
+|y1:t) = π¯t(x0:t
+, y1:t)
+p(y1:t)
+=
+π¯t−1(x0:t−1, y1:t−1)
+p(y1:t−1)
+f(xt
+|xt−1)g(yt
+|xt)
+p(yt
+|y1:t−1)
+= πt−1(x0:t−1|y1:t−1)
+f(xt
+|xt−1)g(yt
+|xt)
+p(yt
+|y1:t−1)
+.
+This recursion will be behind the sequential Monte Carlo method we use for filtering in the next
+sections.
+6.3 sequential monte carlo for filtering
+6.3.1 importance sampling: recap
+Before we introduce the sequential Monte Carlo sampling for filtering, we recall the basic importance sampling idea and its terminology accounting for the change of notation within this
+chapter. Assume that we aim at estimating expectations of a given density π, i.e., we would like
+to compute
+Eπ[ϕ(X)] = Z
+ϕ(x)π(x)dx.
+We also assume that sampling from this density is not possible and we can only evaluate the
+unnormalised density π¯(x). One way to estimate this expectation is to sample from a proposal
+measure q and rewrite the integral as
+Eπ[ϕ(X)] = Z
+ϕ(x)π(x)dx,
+=
+R
+ϕ(x)
+π¯(x)
+q(x)
+q(x)dx
+R π¯(x)
+q(x)
+q(x)dx
+,
+≈
+1
+N
+PN
+i=1 ϕ(x
+(i)
+)
+π¯(x
+(i)
+)
+q(x(i))
+1
+N
+PN
+i=1
+π¯(x(i))
+q(x(i))
+, x(i) ∼ q, i = 1, . . . , N. (6.4)
+Let us now introduce the unnormalised weight function1
+W(x) = π¯(x)
+q(x)
+. (6.5)
+With this, the Eq. (6.4) becomes
+ϕˆ
+N
+IS =
+1
+N
+PN
+i=1 ϕ(x
+(i)
+)W(x
+(i)
+)
+1
+N
+PN
+i=1 W(x
+(i)
+)
+, x(i) ∼ q, i = 1, . . . , N,
+=
+PN
+i=1 ϕ(x
+(i)
+)W(i)
+PN
+i=1 W(i)
+, x(i) ∼ q, i = 1, . . . , N,
+1More technically, these weights are the evaluations of the Radon-Nikodym derivative W(x) = dγ
+dq
+(x) (which,
+in this case, is just a ratio as we assume absolute continuity implicitly).
+158
+where W(i) = W(x
+(i)
+) are called the unnormalised weights. Finally, we can obtain the estimator
+in a more convenient form,
+ϕˆ
+N
+IS =
+X
+N
+i=1
+w
+(i)ϕ(x
+(i)
+),
+by introducing the normalised importance weights
+w
+(i) =
+W(i)
+PN
+i=1 W(i)
+, (6.6)
+for i = 1, . . . , N. We note that the particle approximation of π in this case is given as
+π
+N (dx) = X
+N
+i=1
+w
+(i)
+δx(i) (dx). (6.7)
+In the following section, we will derive the importance sampler aiming at building particle
+approximations of πt(x0:t
+|y1:t) for a state-space model.
+6.3.2 importance sampling for state-space models: the emergence of
+the general particle filter
+In this section, we simply derive an importance sampler for the joint filtering distribution
+πt(x0:t
+|y1:t). We will see in the process that the particle filter is a special case of this conceptually
+simple importance sampler (defined just in many variables instead of one) and the infamous
+bootstrap particle filter is a further simplified case.
+Let us assume that, in order to build an estimator of πt(x0:t
+|y1:t), we have a proposal distribution over the entire path space x0:t denoted q(x0:t). Note that, we also denote the unnormalised
+distribution of x0:t as π¯(x0:t
+, y1:t) which is given as
+π¯(x0:t
+, y1:t) = µ(x0)
+Y
+t
+k=1
+f(xk|xk−1)g(yk|xk). (6.8)
+This simply the joint distribution of all variables (x0:t
+, y1:t). Just as in the regular importance
+sampling case in eq. (6.5), we write
+W0:t(x0:t) = π¯(x0:t
+, y1:t)
+q(x0:t)
+.
+Obviously, given samples from the proposal x
+(i)
+0:t ∼ q(x0:t), one can easily build the same weighted
+measure as in (6.7) on the path space by evaluating the weight W
+(i)
+0:t = W0:t(x
+(i)
+0:t
+) for i = 1, . . . , N
+and building a particle approximation
+π
+N (dx0:t) = X
+N
+i=1
+w
+(i)
+0:t
+δ
+x
+(i)
+0:t
+(dx0:t).
+where
+w
+(i)
+0:t =
+W
+(i)
+0:t
+PN
+i=1 W
+(i)
+0:t
+.
+159
+However, this would be an undesirable scheme: We would need to store all variables in memory
+which is infeasible as t grows. Furthermore, with the arrival of a new observation yt+1, this
+would have to be re-done, as this importance sampling procedure does not take into account
+the dynamic properties of the SSM. Therefore, implementing this sampler to build estimators
+sequentially is out of question.
+Fortunately, we can design our proposal in certain ways so that this process can be done
+sequentially, starting from 0 to t. Furthermore, this would allow us to run the filter online and
+incorporate new observations. The clever choices of the proposal here lead to a variety of different
+particle filters as we shall see next. Let us consider a decomposition of the proposal
+q(x0:t) = q(x0)
+Y
+t
+k=1
+q(xk|x1:k−1).
+Note that, based on this, we can build a recursion for the function W(x0:t) by writing
+W0:t(x0:t) = π¯(x0:t
+, y1:t)
+q(x0:t)
+,
+=
+π¯(x0:t−1, y1:t−1)
+q(x0:t−1)
+f(xt
+|xt−1)g(yt
+|xt)
+q(xt
+|x0:t−1)
+,
+= W0:t−1(x0:t−1)
+f(xt
+|xt−1)g(yt
+|xt)
+q(xt
+|x0:t−1)
+,
+= W0:t−1(x0:t−1)Wt(x0:t). (6.9)
+That is, under this scenario, the weights can be computed recursively – given the weights of time
+t − 1, one can evaluate W0:t(x0:t) and update the weights. However, this would not solve the
+infeasibility problem mentioned earlier, as the cost of evaluating using the whole path of samples
+is still out of question. Finally, to remedy this, we can further simplify our proposal
+q(x0:t) = q(x0)
+Y
+t
+k=1
+q(xk|xk−1).
+by removing dependence to the past, essentially choosing a Markov process as a proposal. This
+allows us to obtain purely recursive weight computation
+W0:t(x0:t) = π¯(x0:t
+, y1:t)
+q(x0:t)
+, (6.10)
+=
+π¯(x0:t−1, y1:t−1)
+q(x0:t−1)
+f(xt
+|xt−1)g(yt
+|xt)
+q(xt
+|xt−1)
+, (6.11)
+= W0:t−1(x0:t−1)
+f(xt
+|xt−1)g(yt
+|xt)
+q(xt
+|xt−1)
+, (6.12)
+= W0:t−1(x0:t−1)Wt(xt
+, xt−1), (6.13)
+using only the samples from time t − 1 and time t. The advantage of this scheme is explicit in the
+notation: Note that the final weight function Wt only depends on (xt
+, xt−1), but not the whole
+past as in (6.9). The function Wt(xt
+, xt−1) is called the incremental weight function.
+160
+6.3.3 sequential importance sampling
+We can now see how the one-step update of this sampler works given a new observation. Assume
+that we have computed the unnormalised weights W
+(i)
+1:t−1 = W(x
+(i)
+0:t−1
+) recursively and obtained
+samples x
+(i)
+0:t−1
+. As we mentioned earlier, we only need the last sample x
+(i)
+t−1
+to obtain the weight
+update given in (6.13). And also note that W
+(i)
+1:t−1
+for i = 1, . . . , N are just numbers, they do not
+need the storage of previous samples. Given this, we can now sample from the Markov proposal
+x
+(i)
+t ∼ q(xt
+|x
+(i)
+t−1
+) and compute the weights of the path sampler at time t as
+W
+(i)
+1:t = W
+(i)
+1:t−1 × W
+(i)
+t
+,
+where
+W
+(i)
+t =
+f(x
+(i)
+t
+|x
+(i)
+t−1
+)g(yt
+|x
+(i)
+t
+)
+q(x
+(i)
+t
+|x
+(i)
+t−1
+)
+.
+What we described in other words is that, given the samples x
+(i)
+t−1
+, we first perform sampling step
+x
+(i)
+t ∼ q(xt
+|xt−1)
+and then compute
+W
+(i)
+t =
+f(x
+(i)
+t
+|x
+(i)
+t−1
+)g(yt
+|x
+(i)
+t
+)
+q(x
+(i)
+t
+|x
+(i)
+t−1
+)
+.
+and update
+W
+(i)
+1:t = W
+(i)
+1:t−1 × W
+(i)
+t
+.
+These are unnormalised weights and we normalise them to obtain,
+w
+(i)
+1:t =
+W
+(i)
+1:t
+PN
+i=1 W
+(i)
+1:t
+,
+which finally leads to the empirical measure,
+π
+N (dx0:t) = X
+N
+i=1
+w
+(i)
+1:t
+δ
+x
+(i)
+0:t
+(dx0:t).
+The full scheme is given in Algorithm 17. This method is called sequential importance sampling
+(SIS). This is not very popular in the literature due to the well known weight degeneracy problem.
+We next introduce a resampling step to this method and will obtain the first particle filter in this
+lecture.
+6.3.4 sequential importance sampling with resampling: the general
+particle filter
+We finally describe the general particle filter by extending the above method with a resampling
+step employed after the weighting step. We will show in a practical session that the SIS method
+161
+Algorithm 17 Sequential Importance Sampling (SIS)
+1: Sample x
+(i)
+0 ∼ q(x0) for i = 1, . . . , N.
+2: for t ≥ 1 do
+3: Sample: x
+(i)
+t ∼ q(xt
+|x
+(i)
+t−1
+),
+4: Compute weights:
+W
+(i)
+t =
+f(x
+(i)
+t
+|x
+(i)
+t−1
+)g(yt
+|x
+(i)
+t
+)
+q(x
+(i)
+t
+|x
+(i)
+t−1
+)
+.
+and update
+W
+(i)
+1:t = W
+(i)
+1:t−1 × W
+(i)
+t
+.
+Normalise weights,
+w
+(i)
+1:t =
+W
+(i)
+1:t
+PN
+i=1 W
+(i)
+1:t
+.
+5: Report
+π
+N
+t
+(dx0:t) = X
+N
+i=1
+w
+(i)
+1:t
+δ
+x
+(i)
+0:t
+(dx0:t).
+6: end for
+without resampling easily degenerates, i.e., after some time, only a single weight approximates
+to 1 and others to 0, rendering the method a point estimate. To keep the particle diversity, a
+resampling method is introduced in between weighting and sampling steps. This step does not
+introduce a systematic bias, although, it adds additional terms to the overall Lp error.
+With the additional resampling step, the sequential importance sampling with resampling
+(SISR) takes the form given in Algorithm 18. We note that, effectively, resampling step sets
+W
+(i)
+1:t−1 = 1/N for i = 1, . . . , N. Therefore, we only need to compute the last incremental
+weight and weight our particles with the current weight. Also, note that the resampling step does
+introduce extra error but does not induce bias, since moments of π
+N
+t does not change.
+6.3.5 the bootstrap particle filter
+In the general particle filter, the proposal q(xt
+|xt−1) is a design choice to be made and this
+depends on our specific knowledge of a good proposal for a given system. For example, one can
+incorporate future observations into this proposal in an ad-hoc or use the proposal choices like
+in the auxiliary particle filter (APF).
+A generic choice exists, however, that is simply setting q(xt
+|xt−1) = f(xt
+|xt−1), i.e., using
+the transition density of the SSM under consideration as a proposal. The algorithm simplifies
+considerably in this case and the resulting method is called the bootstrap particle filter (BPF)
+which is given in Alg. 19. This algorithm has multiple appealing intuitive explanations beyond
+162
+Algorithm 18 Sequential Importance Sampling with Resampling (SISR)
+1: Sample x
+(i)
+0 ∼ q(x0) for i = 1, . . . , N.
+2: for t ≥ 1 do
+3: Sample: x˜
+(i)
+t ∼ q(xt
+|x
+(i)
+t−1
+),
+4: Compute weights:
+W
+(i)
+t =
+f(˜x
+(i)
+t
+|x
+(i)
+t−1
+)g(yt
+|x˜
+(i)
+t
+)
+q(˜x
+(i)
+t
+|x
+(i)
+t−1
+)
+.
+Normalise weights,
+w
+(i)
+t =
+W
+(i)
+t
+PN
+i=1 W
+(i)
+t
+.
+5: Report
+π
+N
+t
+(xt)dxt =
+X
+N
+i=1
+w
+(i)
+t δ
+x˜
+(i)
+t
+(dxt).
+6: Resample:
+x
+(i)
+t ∼
+X
+N
+i=1
+w
+(i)
+t δ
+x˜
+(i)
+t
+(dxt).
+7: end for
+the derivation we provided based on importance sampling here. It can be most generally thought
+as an evolutionary method. To uncover some of this intuition, see Fig. 6.2.
+To elaborate the interpretation, consider a set of particles x
+(i)
+t−1
+representing the state of the
+system at time t − 1. If our state-space transition model f(xt
+|xt−1) is well-specified (that is,
+if the underlying system we aim at tracking does indeed move according to f), then the first
+intuivite step we can do to predict where the state would be at time t would be to move particles
+according to f, that is sampling x˜
+(i)
+t ∼ f(xt
+|x
+(i)
+t−1
+) which is the first step of the BPF. This gives us
+a predictive distribution which consists of x˜
+(i)
+t
+for i = 1, . . . , N. The prediction step (naturally)
+does not require to observe the data point at yt
+. Once we observe the data point yt
+, we can then
+use this data point to evaluate a fitness measure for our particles. In other words, if a predictive
+particle x˜
+(i)
+t
+is a good fit to the observation, we would expect its likelihood g(yt
+|x˜
+(i)
+t
+) to be high.
+Otherwise, this likelihood would be low. Thus, it intuitively makes sense to use our likelihood
+evaluations as “weights”, that is to compute a measure of fitness for each particle. That is exactly
+what the BPF does at the second step by computing weights using the likelihood evaluations. The
+final step is then to use these relative weights to resample – a step that is used to refine the cloud
+of particles we have. Simply, the resampling step removes some of the particles with low weights
+(that are bad fits to the observation) and regenerates the particles with high weights.
+The connection to evolutionary terms are clearer within this interpretation. The sampling step
+in the BPF can be seen as “mutation” that introduces changes to an individual particle according
+163
+Figure 6.2: Intuitive model of BPF (Figure courtesy Victor Elvira).
+to some mutation mechanism (in our case, the dynamics). Then, weighting and resampling
+correspond to “selection” step, where individual particles are evaluated w.r.t. a fitness measure
+coming from the environment (defined by an observation) and individuals are reproduced in a
+random manner w.r.t. their fitness.
+6.3.6 practical implementation of the bpf
+Of course, the BPF can become numerically unstable if the weights are too small or too large.
+This is in line with the theme we have seen about computing small or large numbers (especially
+involving normalisation) throughout this course. To avoid a problem here, too, we need to
+perform the comptutations in the log-domain. For example, after sampling from the proposal
+x˜
+(i)
+t ∼ f(xt
+|xt−1), we can compute the log-weights as
+log W
+(i)
+t = log g(yt
+|x˜
+(i)
+t
+)
+We can then compute the normalised weights w
+(i)
+t using the trick introduced in Sec. 3.5. This
+will ensure the stable computation of weights and prevent instability.
+6.3.7 marginal likelihood computation with bpf
+The BPF can naturally be used to compute p(y1:t) sequentially. In order to see that we have the
+decomposition
+p(y1:t) = p(y1:t−1)p(yt
+|y1:t−1).
+164
+Algorithm 19 Bootstrap particle filter (BPF)
+1: Sample x
+(i)
+0 ∼ q(x0) for i = 1, . . . , N.
+2: for t ≥ 1 do
+3: Sample: x˜
+(i)
+t ∼ f(xt
+|x
+(i)
+t−1
+),
+4: Compute weights:
+W
+(i)
+t = g(yt
+|x˜
+(i)
+t
+).
+Normalise weights,
+w
+(i)
+t =
+W
+(i)
+t
+PN
+i=1 W
+(i)
+t
+.
+5: Report
+π
+N
+t
+(xt)dxt =
+X
+N
+i=1
+w
+(i)
+t δ
+x˜
+(i)
+t
+(dxt).
+6: Resample:
+x
+(i)
+t ∼
+X
+N
+i=1
+w
+(i)
+t δ
+x˜
+(i)
+t
+(dxt).
+7: end for
+In order to recursively compute p(y1:t), we need to estimate p(yt
+|y1:t−1) using the BPF. This is
+possible via the use of the predictive density
+p(yt
+|y1:t−1) = Z
+g(yt
+|xt)ξ(xt
+|y1:t−1)dxt
+. (6.14)
+We note that the predictive density can be built using the particles after sampling (as explained
+above). In short, we can build the predictive density
+ξ
+N (dxt
+|y1:t−1) = 1
+N
+X
+N
+i=1
+δ
+x˜
+(i)
+t
+(dxt),
+if the resampling is done at every iteration (otherwise, the weights from the previous iteration
+has to be used). Plugging this back into Eq. (6.14), we arrive at the empirical estimate of the
+predictive density
+p
+N (yt
+|y1:t−1) = 1
+N
+X
+N
+i=1
+g(yt
+|x˜
+(i)
+t
+).
+Finally, the full marginal likelihood can be computed as
+p
+N (y1:t) = Y
+t
+k=1
+p
+N (yk|y1:k−1). (6.15)
+165
+Incredibly, this estimate is unbiased (see Lemma 2 of (Crisan et al., 2018) for a proof). This is
+incredibly useful for many things, including model selection.
+Note that, computation of the marginal likelihood requires numerical care, as the product
+of likelihoods can easily underflow. To avoid this, we can use logsumexp trick to compute the
+log-marginal likelihood as
+log p
+N (y1:t) = logX
+N
+i=1
+exp 
+log g(yt
+|x˜
+(i)
+t
+)
+
+− log N,
+= logX
+N
+i=1
+exp 
+log W
+(i)
+t
+)
+
+− log N
+6.4 particle markov chain monte carlo
+The unbiasedness property mentioned above of the marginal likelihood estimator can also be
+used to build MCMC algorithms for parameter inference in these models. We will look at one
+such method here, called particle MCMC (Andrieu et al., 2010). The idea relies on the fact that
+one can use “unbiased” estimates of various terms in the acceptance ratio and this would still
+leave the original target invariant (Andrieu and Roberts, 2009).
+To formalise, the estimator in Eq. (6.15) satisfies
+p(y1:T ) = E
+h
+p
+N (y1:T )
+i
+.
+Now let us see how we can use this for parameter inference in state-space models. Assume that
+we have a parameter θ that we would like to infer in the SSM. We further have a prior distribution
+p(θ). The existence of parameter means that the transition density fθ(xt
+|xt−1) and the likelihood
+gθ(yt
+|xt) are now parameterised by θ. Let us for now fix θ and write the marginal likelihood of
+the SSM as given in (6.1) for fixed θ as
+p(y1:T |θ) = Z
+π¯θ(x0:T , y1:T )dx0:T .
+It is obvious that for every θ, we can estimate this using the BPF and the estimator in (6.15). To
+be completely explicit, for every θ, we can get estimators p
+N (y1:T |θ) of the marginal likelihood
+such that
+p(y1:T |θ) = E
+h
+p
+N (y1:T |θ)
+i
+.
+Assume next for simplicity that we have the knowledge of p(y1:T |θ) and p(θ) and want to design
+a Metropolis-Hastings sampler for the posterior p(θ|y1:T ). As we have seen before, we can do
+this via choosing a proposal q(θ
+0
+|θ) and writing the Metropolis-Hastings method as
+• Sample θ
+0 ∼ q(θ
+0
+|θn).
+• Compute the acceptance ratio
+α(θn, θ0
+) = min (
+1,
+p(y1:T |θ
+0
+)p(θ
+0
+)q(θn|θ
+0
+)
+p(y1:T |θn)p(θn)q(θ
+0
+|θn)
+)
+.
+• Accept θ
+0 with probability α(θn, θ0
+) and set θn+1 = θ
+0
+.
+166
+• Otherwise, reject θ
+0
+and set θn+1 = θn.
+We have everything we want to sample from the parameter posterior p(θ|y1:T ) except the fact that
+we do not have p(y1:T |θ) in closed form. However, we can use the unbiased estimator p
+N (y1:T |θ)
+instead. This would still leave the target invariant (Andrieu and Roberts, 2009; Andrieu et al.,
+2010). Assume now that we have run the particle filter and obtained p
+N (y1:T |θn) for the current
+parameter θn. Then the particle MH algorithm can be summarised as
+• Sample θ
+0 ∼ q(θ
+0
+|θn).
+• Run the particle filter with θ
+0
+and compute the estimator:
+p
+N (y1:T |θ
+0
+) = Y
+T
+k=1
+p
+N (yk|y1:k−1, θ0
+).
+• Compute the acceptance ratio
+α(θn, θ0
+) = min (
+1,
+p
+N (y1:T |θ
+0
+)p(θ
+0
+)q(θn|θ
+0
+)
+p
+N (y1:T |θn)p(θn)q(θ
+0
+|θn)
+)
+.
+• Accept θ
+0 with probability α(θn, θ0
+) and set θn+1 = θ
+0
+.
+• Otherwise, reject θ
+0
+and set θn+1 = θn.
+Remarkably, this can work out of the box, in the sense that, it functions as a valid MCMC method
+and will sample from the marginal p(θ|y1:T ) asymptotically!
+6.5 examples
+We will next consider some examples of the BPF in action.
+Example 6.1 (Tracking a moving target in 2D). Let us assume that we would like to track a
+2D moving target. The model is given by In this experiment, we consider a tracking scenario
+where a target is observed through sensors collecting radio signal strength (RSS) measurements
+contaminated with additive heavy-tailed noise. The target dynamics are described by the model,
+xt = Axt−1 + ut
+,
+where xt ∈ R
+4 denotes the target state, consisting of its position rt ∈ R
+2
+and its velocity, vt ∈ R
+2
+,
+hence xt =
+"
+rt
+vt
+#
+∈ R
+4
+. Each element in the sequence {ut}t∈N is a zero-mean Gaussian random
+vector with covariance matrix Q. The parameters A and Q are selected as
+A =
+"
+I2 κI2
+0 0.99I2
+#
+,
+167
+and
+Q =
+"
+κ
+3
+3
+I2
+κ
+2
+2
+I2
+κ
+2
+2
+I2 κI2
+#
+,
+where I2 is the 2 × 2 identity matrix and κ = 0.04. The observation model is given by
+yt = Hxt + vt
+,
+where yt ∈ R
+2
+is the measurement assumed to be noisy. Implement the particle filter for this
+problem (see the code companion).
+Example 6.2 (Tracking Lorenz 63 system). In this example, we consider the tracking of a discretised stochastic Lorenz 63 system given by
+x1,t = x1,t−1 − γs(x1,t − x2,t) + √
+γξ1,t,
+x2,t = x2,t−1 + γ(rx1,t − x2,t − x1,tx3,t) + √
+γξ2,t,
+x3,t = x3,t−1 + γ(x1,tx2,t − bx3,t) + √
+γξ3,t,
+where γ = 0.01, r = 28, b = 8/3, s = 10, and ξ1,t, ξ2,t, ξ3,t ∼ N (0, 1) are independent Gaussian
+random variables. The observation model is given by
+yt = [1, 0, 0]xt + ηt
+,
+where ηt ∼ N (0, σ2
+y
+)is a Gaussian random variable. Implement the particle filter for this problem
+(see the code companion).
+168
+BIBLIOGRAPHY
+Agapiou, Sergios; Papaspiliopoulos, Omiros; Sanz-Alonso, Daniel; and Stuart, Andrew M. 2017.
+Importance sampling: Intrinsic dimension and computational cost. In Statistical Science, pp.
+405–431. Cited on pp. 85 and 86.
+Akyildiz, O Deniz; Crucinio, Francesca Romana; Girolami, Mark; Johnston, Tim; and Sabanis, Sotirios. 2025. Interacting particle Langevin algorithm for maximum marginal likelihood
+estimation. In ESAIM: Probability and Statistics, vol. 29, pp. 243–280. Cited on p. 144.
+Akyildiz, Omer Deniz. March 2019. Sequential and adaptive Bayesian computation for inference
+and optimization. Ph.D. thesis, Universidad Carlos III de Madrid. Can be accessed from:
+http://akyildiz.me/works/thesis.pdf. Cited on pp. 63, 67, and 75.
+Akyildiz, Ömer Deniz and Míguez, Joaquín. 2021. Convergence rates for optimised adaptive
+importance samplers. In Statistics and Computing, vol. 31, no. 2, pp. 1–17. Cited on pp. 78
+and 86.
+Andrieu, Christophe; Doucet, Arnaud; and Holenstein, Roman. 2010. Particle Markov chain
+Monte Carlo methods. In Journal of the Royal Statistical Society: Series B (Statistical Methodology), vol. 72, no. 3, pp. 269–342. Cited on pp. 166 and 167.
+Andrieu, Christophe and Roberts, Gareth O. 2009. The pseudo-marginal approach for efficient
+Monte Carlo computations. In . Cited on pp. 145, 166, and 167.
+Branchini, Nicola. 2024. Simple Monte Carlo is independent of dimension. Or is it? https:
+//branchini.fun/posts/monte_carlo_indep/. Blog post. Cited on p. 65.
+Cemgil, A Taylan. 2014. A tutorial introduction to Monte Carlo methods, Markov Chain Monte
+Carlo and particle filtering. In Academic Press Library in Signal Processing, vol. 1, pp. 1065–1114.
+Cited on p. 114.
+Crisan, Dan; Míguez, Joaquín; and Ríos-Muñoz, Gonzalo. 2018. On the performance of parallelisation schemes for particle filtering. In EURASIP Journal on Advances in Signal Processing,
+vol. 2018, pp. 1–18. Cited on p. 166.
+De Bortoli, Valentin; Durmus, Alain; Pereyra, Marcelo; and Vidal, Ana F. 2021. Efficient
+stochastic optimisation by unadjusted Langevin Monte Carlo: Application to maximum marginal
+likelihood and empirical Bayesian estimation. In Statistics and Computing, vol. 31, no. 3, p. 29.
+Cited on p. 143.
+169
+Dempster, Arthur P; Laird, Nan M; and Rubin, Donald B. 1977. Maximum likelihood from
+incomplete data via the EM algorithm. In Journal of the Royal Statistical Society: Series B
+(Methodological), vol. 39, no. 1, pp. 1–22. Cited on p. 139.
+Devroye, Luc. 1986. Non-Uniform Random Variate Generation. Cited on p. 17.
+Douc, Randal; Moulines, Eric; Priouret, Pierre; and Soulier, Philippe. 2018. Markov chains.
+Springer. Cited on pp. 103, 106, and 109.
+Douc, Randal; Moulines, Éric; and Stoffer, David. 2013. Nonlinear Time Series: Theory, Methods
+and Applications with R Examples. Chapman & Hall. Cited on p. 103.
+Doucet, Arnaud; Godsill, Simon; and Andrieu, Christophe. 2000. On sequential Monte Carlo
+sampling methods for Bayesian filtering. In Statistics and computing, vol. 10, no. 3, pp. 197–208.
+Cited on p. 156.
+Elvira, Víctor; Martino, Luca; and Robert, Christian P. 2018. Rethinking the effective sample size.
+In International Statistical Review. Cited on p. 95.
+Hwang, Chii-Ruey. 1980. Laplace’s method revisited: weak convergence of probability measures.
+In The Annals of Probability, pp. 1177–1182. Cited on p. 133.
+Kallenberg, Olav. 2021. Foundations of Modern Probability. Probability Theory and Stochastic
+Modelling. Springer Cham, 3rd edn. isbn 978-3-030-61871-1. doi:https://doi.org/10.1007/978-
+3-030-61871-1. 1 b/w illustration. Cited on p. 30.
+Kalman, Rudolph Emil. 1960. A new approach to linear filtering and prediction problems. In
+Journal of Fluids Engineering, vol. 82, no. 1, pp. 35–45. Cited on p. 157.
+Kuntz, Juan; Lim, Jen Ning; and Johansen, Adam M. 2023. Particle algorithms for maximum
+likelihood training of latent variable models. In International Conference on Artificial Intelligence
+and Statistics, pp. 5134–5180. PMLR. Cited on p. 144.
+Martino, Luca; Luengo, David; and Míguez, Joaquín. 2018. Independent random sampling
+methods. Springer. Cited on pp. 18, 34, 35, and 39.
+Murphy, Kevin P. 2007. Conjugate Bayesian analysis of the Gaussian distribution. In def, vol. 1,
+no. 2σ2, p. 16. Cited on p. 6.
+Robert, Christian P and Casella, George. 2004. Monte Carlo statistical methods. Springer. Cited
+on pp. 63 and 94.
+———. 2010. Introducing Monte Carlo methods with R, vol. 18. Springer. Cited on p. 76.
+Walters, Peter. 2000. An introduction to ergodic theory, vol. 79. Springer Science & Business
+Media. Cited on p. 19.
+Yıldırım, Sinan. 2017. Sabanci University IE 58001 Lecture notes: Simulation Methods for
+Statistical Inference. Cited on pp. 48, 102, and 115.
+Zhang, Ying; Akyildiz, Ömer Deniz; Damoulas, Theodoros; and Sabanis, Sotirios. 2023.
+Nonasymptotic estimates for stochastic gradient Langevin dynamics under local conditions in
+nonconvex optimization. In Applied Mathematics & Optimization, vol. 87, no. 2, p. 25. Cited on
+p. 136.

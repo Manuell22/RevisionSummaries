@@ -1,0 +1,2954 @@
+4
+MARKOV CHAIN MONTE CARLO
+In this chapter, we introduce Markov chains and then Markov Chain Monte Carlo (MCMC) methods.
+These methods are at the heart of Bayesian statistics, generative modelling, statistical physics, and
+many other fields. We will introduce the Metropolis-Hastings algorithm and then introduce the
+celebrated Gibbs sampler and, if time permits, some others.
+5
+In this chapter, we introduce a new sampling methodology using Markov chains to generate
+samples from complicated target distributions. This is a powerful and widely used idea in
+statistics and machine learning. The idea is to design Markov chains with prescribed stationary
+distributions so that, after they mix, their states are distributed according to the target.
+4.1 discrete state space markov chains
+A good setting for an introduction to Markov chains is the discrete space setting. In this setting,
+we have a finite set of states X = {1, 2, . . . , d}, where the cardinality of X is finite. We first define
+the Markov chain in this context.
+Definition 4.1 (Markov chain). A discrete-time, discrete-state Markov chain on X is a stochastic
+process (Xn)n≥0 with values in X such that for all n ≥ 0 and all x0, . . . , xn+1 ∈ X with P(X0 =
+x0, . . . , Xn = xn) > 0,
+P(Xn+1 = xn+1 | X0 = x0, . . . , Xn = xn) = P(Xn+1 = xn+1 | Xn = xn).
+96
+In other words, a Markov chain is a sequence of random variables such that the state at time n
+is conditionally independent of all earlier states given the state at time n − 1. This captures many
+real-world systems, whose evolution is determined by the current state and an evolution law.
+An important object in the study of Markov chains is the transition matrix (or kernel in the
+continuous space case). It encodes the evolution of the chain and determines its properties. The
+transition matrix is defined as follows.
+Definition 4.2 (Transition matrix). For a discrete-time Markov chain (Xn)n≥0 on X = {1, . . . , d},
+the transition matrix is the d × d matrix M with entries
+Mij = P(Xn+1 = j | Xn = i), for all i, j ∈ X and all n ≥ 0.
+In particular, Mij ≥ 0 for all i, j and Pd
+j=1 Mij = 1 for each i.
+A usual way to depict Markov chains is the following conditional independence structure
+which sums the structure of the Markov chain up. We note that we will only consider the case
+X0 X1 X2
+· · · Xn
+Figure 4.1: A Markov chain with n states.
+where the transition matrix is time-homoegeneous, i.e., the transition matrix is the same for all
+times. We can see then that a Markov chain’s behaviour is completely determined by its initial
+distribution and the transition matrix. We will denote the initial distribution of the chain as p0
+and note that this is a discrete distribution over the state space X (in this case)1
+. The transition
+matrix M is a matrix of size d × d where d = |X|.
+M =
+
+
+
+
+
+
+M11 M12 · · · M1d
+M21 M22 · · · M2d
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+Md1 Md2 · · · Mdd
+
+
+
+
+
+
+.
+We note that this matrix is stochastic, i.e. each row sums to 1:
+X
+d
+j=1
+Mij = 1,
+since Mij = P(Xn+1 = j|Xn = i) and
+X
+d
+j=1
+P(Xn+1 = j|Xn = i) = 1.
+Next we will consider an example.
+1When we move to continuous spaces, we will use the same notation for densities.
+97
+Example 4.1 (Discrete space Markov chain). Consider the state transition diagram
+1 2
+3
+0.6
+0.2
+0.2
+0.3
+0.5
+0.2
+0
+0.3
+0.7
+of a Markov chain. Write out the transition matrix of this chain and decsribe the simulation
+procedure.
+Solution. We can write the transition matrix as
+M =
+
+
+
+0.6 0.2 0.2
+0.3 0.5 0.2
+0 0.3 0.7
+
+
+ , where X = {1, 2, 3}.
+The state transition diagram of this matrix can be described as follows.
+This Markov chain can be simulated using the following idea. Given the above diagram, we
+can denote its transition matrix as a table:
+M Xt = 1 Xt = 2 Xt = 3
+Xt−1 = 1 0.6 0.2 0.2
+Xt−1 = 2 0.3 0.5 0.2
+Xt−1 = 3 0 0.3 0.7
+Given X0 = 1, how to simulate this chain? This boils down to just selecting the correct row from
+this matrix and then sampling using the discrete distribution given by that row. For example, if
+we sample from the first row, we get X1 = 1 with probability 0.6, X1 = 2 with probability 0.2
+and X1 = 3 with probability 0.2. We can then repeat this process for X2 and so on. This is a
+simple way to simulate a Markov chain. The precise sampler is given below.
+Xt
+|Xt−1 = xt−1 ∼ Discrete(Mxt−1,·),
+where the notation Mxt−1,· denotes the xt−1th row of the transition matrix M (where xt−1 ∈
+{1, 2, 3} naturally).
+Markov chains can be seen everywhere in the real world, hence we will skip their applications.
+But one exciting example can be provided from the field of language modelling. Let us describe a
+character-level Markov model of English.
+98
+Example 4.2 (Character-level Markov model of English). Consider the task of modelling
+an English language text as a Markov model. Describe a possible way of doing this on a
+character-level.
+Solution. We can model the English language as a Markov chain on a character-level. In this
+case, we can define the state space as X = {a, b, . . . , z, .} (where for simplicity the character
+dot models the space character and no other special characters are considered). We can then
+define the transition matrix as follows. Let xt−1 be the previous character and xt be the current
+character. Of course, writing out the transition matrix by hand is an impossible task, hence we
+can learn it from data. For this, we simply choose a large corpus of English text and count the
+number of times a character is followed by another character. We have provided an example code
+for this in our online companion. By estimating the transition matrix from data, we can then
+simulate English text by sampling from this Markov chain. For example, one simulated text reads
+as
+g.l.se.t.bin.s.lese.ry..wolked.t.hered.e.ly.hr.impefatrt.mofe.mouroreand
+and goes on (see lecture for a longer simulation). We can see that while this captures very
+vague structure, it is not a good model of English. However, this character-level model can still
+be useful for some applications. Because we can use this model to estimate the probability of a
+given text. For example, we can compute
+P(the quick brown fox jumps over the lazy dog)
+by breaking down this text into characters and ‘reading’ the transition matrix. This is a very
+simple example of a Markov chain model of English.
+Let us look at a more intelligent way of using Markov chains to model language.
+Example 4.3 (Word-level Markov model of English). Consider the task of modelling an English
+language text as a Markov model. Describe a possible way of doing this on a word-level.
+Solution. We can model the English language as a Markov chain on a word-level. As you can
+see, there is no single state-space for this (as we can expand our word list (state-space) possibly
+indefinitely). A good idea is to pick a book or a large text corpus and count all possible word
+transitions. Note that modern language models do not use words, but rather sub-word units,
+called tokens. Here we will stick to words and we will pick the book ‘A Study in Scarlet’ by Sir
+Arthur Conan Doyle. We have provided an example code for this in our online companion. By
+estimating the transition matrix from data, we can then simulate English text by sampling from
+this Markov chain. For example, one simulated text reads as
+Sherlock Holmes, “because you will place where you remember, in his
+cudgel, only one in summer are grey with a vague shadowy terrors which
+hung over my hand, and eyeing the strange contrast to the name a walking
+in time before twelve, you are.”
+99
+While this is much more intelligible and seems to follow some English rules, it is nothing but
+a simulation from a Markov chain given a transition matrix as estimated in our online companion.
+Modern language models, however, do not use Markov models either – their structure is much
+more complex and they are based on neural networks.
+We can also compute the n-step transition matrix. Define M(n) by its entries
+M
+(n)
+ij = P(Xn = j | X0 = i), i, j ∈ X,
+where M(n)
+is a d × d matrix. By the law of total probability and the Markov property, for n ≥ 1
+we have
+M
+(n)
+ij = P(Xn = j|X0 = i)
+=
+X
+k∈X
+P(Xn = j, X1 = k|X0 = i)
+=
+X
+k∈X
+P(Xn = j|X1 = k, X0 = i)P(X1 = k|X0 = i)
+=
+X
+k∈X
+P(Xn = j|X1 = k)P(X1 = k|X0 = i)
+=
+X
+k∈X
+MikM
+(n−1)
+kj = (MM(n−1))ij .
+This last equality is precisely the definition of the (i, j) entry of the matrix product MM(n−1)
+.
+Therefore, by induction on n, M(n) = Mn
+, the nth power of the transition matrix. Note that we
+can compute in general the conditional distributions of the Markov chain by summing out the
+variables in the middle. For example, in order to compute P(Xn+2 = xn+2|Xn = xn), we can
+write
+P(Xn+2 = xn+2 | Xn = xn) = X
+xn+1∈X
+P(Xn+2 = xn+2 | Xn+1 = xn+1)P(Xn+1 = xn+1 | Xn = xn).
+This leads to the Chapman–Kolmogorov equations: for all m, n ≥ 0 and i, j ∈ X,
+M
+(m+n)
+ij = P(Xm+n = j | X0 = i)
+=
+X
+k∈X
+P(Xm+n = j | Xn = k)P(Xn = k | X0 = i)
+=
+X
+k∈X
+M
+(m)
+ik M
+(n)
+kj .
+Therefore, in matrix form, M(m+n) = M(m)M(n)
+.
+It is also important to define the evolution of the chain. Note that we defined our initial
+distribution as p0 and it is important to quantify how this distribution evolves over time. We
+denote the distribution at time n as pn and write Then, the density of the chain at time n is given
+100
+by:
+pn(i) = P(Xn = i)
+=
+X
+k
+P(Xn = i, Xn−1 = k)
+=
+X
+k
+P(Xn = i|Xn−1 = k)P(Xn−1 = k)
+=
+X
+k
+Mkipn−1(k).
+This implies that
+pn = pn−1M.
+Therefore,
+pn = p0Mn
+.
+These are important equations, which will have corresponding equations in the continuous case
+(however, they will be integrals).
+Since we have expressed our interest in Markov chains because of their potential utility in
+sampling, we will now discuss the properties we need to ensure that we can use Markov chains
+for sampling. In short, we need Markov chains that have (i) invariant distributions, (ii) their
+convergence to invariant distributions are ensured, (iii) the invariant distribution is unique. We
+will now discuss the properties we need to ensure these in detail.
+4.1.1 irreducibility
+The first property we need to ensure is that the Markov chain is irreducible. This means that
+there is a path from any state to any other state . To be precise, let x, x0 ∈ X be any two states.
+We write x x
+0
+if there is a path from x to x
+0
+:
+∃n > 0, s.t. , P(Xn = x
+0
+|X0 = x) > 0.
+If x x
+0
+and x
+0 x, then we say that x and x
+0
+communicate. We then define the communication
+class C ⊂ X which is a set of states such that x ∈ C and x
+0 ∈ C if and only if x x
+0
+and x
+0 x.
+A chain is irreducible if X is a single communication class. This simply means that there is a
+positive probability of moving around to every other state. This makes sense as without ensuring
+this, we won’t be sampling from the full support.
+4.1.2 recurrence and transience
+We now define the notion of recurrence and transience. A state i ∈ X is recurrent if there is a
+positive probability of returning to i. In order to see define this, consider the return time
+τi = inf{n ≥ 1 : Xn = i}.
+We say that the state i is recurrent if
+P(τi < ∞|X0 = i) = 1.
+101
+In other words, the probability of waiting time being finite is 1. If a chain is not recurrent, it is
+said to be transient. We can also further define the positive recurrence which is a slightly stronger
+(better) condition. We say that i is positively recurrent if
+E[τi
+|X0 = i] < ∞.
+This means that the expected waiting time is finite. If a chain is recurrent but not positive
+recurrent, then it is called null recurrent.
+4.1.3 invariant distributions
+In the discrete time case, a distribution p? is called invariant if
+p? = p?M.
+This means that the chain is reach stationarity, i.e., evolving further (via M) does not change the
+distribution. We have then the following theorem (Yıldırım, 2017).
+Theorem 4.1. If M is irreducible, then M has a unique invariant distribution if and only if it is
+positive recurrent.
+This is encouraging however for actual convergence of the chain to this distribution, we will
+need more conditions.
+4.1.4 reversibility and detailed balance
+We define the detailed balance condition as
+p?(i)Mij = p?(j)Mji.
+This trivially implies that p? = p?M, hence the invariance of p?. We will have a more detailed
+discussion of this condition in the continuous state space case.
+4.1.5 convergence to invariant distribution
+Finally, we need the ergodicity condition to ensure that the chain converges to the invariant
+distribution. For this, we require the chain to be aperiodic, which is defined as follows. A state i
+is called aperiodic if
+{n > 0 : P(Xn+1 = i|X1 = i) > 0}
+has no common divisor other than 1. A Markov chain is called aperiodic if all states are aperiodic.
+An irreducible Markov chain is called ergodic if it is positive recurrent and aperiodic. If (Xn)n∈N
+is an ergodic Markov chain with initial p0 and p? as its invariant distribution, then
+limn→∞
+pn(i) = p?(i).
+Moreover, for i, j ∈ X
+limn→∞
+P(Xn = i|X1 = j) = p?(i).
+In other words, the chain will converge to its invariant distribution from every state.
+102
+4.2 continuous state space markov chains
+Our main interest is in the continuous case. However, it is important to understand the definitions
+above – as we will not go into analogous definitions in the continuous case. The reason for this
+is that, in continuous cases, the individual states have zero probability (i.e. a point has zero
+probability) and all the notions above are defined using sets and measure theoretic concepts. We
+focus on simulation methods within this course, therefore, we will not go into reviewing this
+material. A couple of very good books for this are Douc et al. (2018) and Douc et al. (2013).
+Let X be an uncountable set from now on, e.g., X = R or X = R
+d
+. We denote the initial density
+as p0(x) as usual and the marginal density of the chain at time n as pn(x). A (time-homogeneous)
+Markov transition kernel is a mapping K(·|·) such that for each x
+0 ∈ X, A 7→ K(A|x
+0
+) is a
+probability measure on X, and for each measurable A ⊆ X, x
+0
+7→ K(A|x
+0
+) is measurable. When
+K(·|x
+0
+) admits a density with respect to a reference measure dx, we denote this density using the
+same letter K(x|x
+0
+), so that K(A|x
+0
+) = R
+A K(x|x
+0
+) dx.
+We can write the Markov property in this case as follows. For any measurable A
+P(Xn ∈ A|X1 = x1, . . . , Xn−1 = xn−1) = P(Xn ∈ A|Xn−1 = xn−1).
+This implies that if we write down the joint distribution of X1:n, then the following factorisation
+holds
+p(x0, . . . , xn) = p0(x0)
+Yn
+k=1
+K(xk|xk−1).
+Similarly to the discrete case, we will assume that the density is time-homogeneous (i.e. same for
+every n). Note that the transition density is a density in its first variable, i.e.,
+Z
+X
+K(xn|xn−1)dxn = 1.
+It is a function of xn−1 otherwise. We give an example of a continuous state-space Markov chain
+in what follows.
+Example 4.4 (Simulation of a Markov process). Consider the following Markov chain with
+X0 = 0
+Xn|Xn−1 = xn−1 ∼ N (xn; axn−1, 1), (4.1)
+with 0 < a < 1. Describe the simulation procedure for this chain in terms of a recursion.
+Solution. We can simulate this chain by
+X1 ∼ N (0, 1)
+X2 ∼ N (aX1, 1)
+X3 ∼ N (aX2, 1)
+.
+.
+.
+Xn ∼ N (aXn−1, 1).
+103
+How to do this? We also note that Eq. (4.1) can also be expressed as
+Xn = aXn−1 + n
+where n ∼ N (0, 1). This is also called AR(1) process. From the last equation, it must be clear
+how to simulate this as you only need a for loop and samples from N (0, 1).
+Exercise 4.1. Consider weights
+w1 = 0.2993 and w2 = 0.7007,
+and the following matrices A1, A2 and vectors b1, b2
+A1 =
+"
+0.4 −0.3733
+0.06 0.6
+#
+and b1 =
+"
+0.3533
+0.0
+#
+A2 =
+"
+−0.8 −0.1867
+0.1371 0.8
+#
+and b2 =
+"
+1.1
+0.1
+#
+Now we will define a Markov chain on R
+2
+and we will denote our chain with (xk)k≥0. For this,
+consider two deterministic functions:
+f1(x) = A1x + b1
+f2(x) = A2x + b2.
+Simulate the following Markov process
+in ∼ Discrete(w1, w2)
+xn+1 = fin
+(xn)
+for 1 ≤ n ≤ N where N = 10000. You can use x0 = [0, 0]>. Plot a scatter plot of the Markov
+chain. For a pretty plot, you can use the following plotting function
+1 plt.scatter(x[0, 20:k], x[1, 20:k], s=0.1, color = [0.8, 0, 0])
+2 plt.gca ().spines['top']. set_visible (False)
+3 plt.gca ().spines['right']. set_visible (False)
+4 plt.gca ().spines['bottom']. set_visible (False)
+5 plt.gca ().spines['left']. set_visible (False)
+6 plt.gca (). set_xticks ([])
+7 plt.gca (). set_yticks ([])
+8 plt.gca ().set_xlim(0, 1.05)
+9 plt.gca ().set_ylim(0, 1)
+10 plt.show ()
+As you can see, I chose burnin as 20 iterations here. Be careful about matrix products in Python:
+A*x is not performing matrix product, you should use A@x where A is a 2 × 2 matrix and x is a
+2 × 1 vector. Try to simulate from this system until you see a nice picture.
+104
+Similar to the discrete case, we can define the distribution of Xn given a past variable Xn−k by integrating out the variables in between. It is important to note that Xn isconditionally independent of
+past variables given Xn−1 (the Markov property), i.e., p(xn|x0:n−1) = p(xn|xn−1) = K(xn|xn−1).
+Otherwise, we can write down the densities as
+p(xn|xn−k) = Z
+X
+· · · Z
+X
+K(xn|xn−1)K(xn−1|xn−2)· · · K(xn−k+1|xn−k) dxn−1 · · · dxn−k+1.
+In other words, p(xn|xn−k) = K(k)
+(xn|xn−k).
+We define the m-step transition kernel as
+K(m)
+(xm+n|xn) = Z
+X
+· · · Z
+X
+K(xm+n|xm+n−1)· · · K(xn+1|xn) dxm+n−1 · · · dxn+1.
+We now provide the definition of invariance in this context, w.r.t. to the transition kernel.
+Definition 4.3 (K-invariance). A density p? on X is called K-invariant if, for x ∈ X,
+p?(x) = Z
+X
+K(x|x
+0
+) p?(x
+0
+)dx
+0
+. (4.2)
+It can be seen that p? being invariant means that the kernel operating on p? results in the
+same distribution p? (the integral against the kernel can be seen as a transformation, similar to
+the matrix product in the discrete case). Finally, we get to the detailed balance condition.
+Definition 4.4 (Detailed balance). A transition kernel K is said to satisfy detailed balance if
+K(x
+0
+|x)p?(x) = K(x|x
+0
+)p?(x
+0
+). (4.3)
+Remark 4.1. It is also important to note the more general version of the detailed balance written
+using the integral form. In general, the transition kernel is a probability measure w.r.t. first
+argument so the above relationship can be written as
+Z
+f(x, x0
+)K(x
+0
+|x)p?(x)dx
+0
+dx =
+Z
+f(x, x0
+)K(x|x
+0
+)p?(x
+0
+)dx
+0
+dx,
+for f defined on X × X.
+We note that this is a sufficient condition for stationarity of p?.
+105
+Proposition 4.1 (Detailed balance implies stationarity). If K satisfies detailed balance, then p? is
+the invariant distribution.
+Proof. The proof is a one-liner:
+Z
+p?(x)K(x
+0
+|x)dx
+0 =
+Z
+p?(x
+0
+)K(x|x
+0
+)dx
+0
+,
+which is just integrating both sides after writing the detailed balance condition. The lhs of this
+equation is p?(x)since K(x
+0
+|x)integrates to 1 which leaves us with the definition of K-invariance
+as given in (4.2).
+Remark 4.2 (Convergence). Convergence to an invariant density requires additional regularity. A
+standard set of sufficient conditions (see, e.g., Douc et al. (2018)) is that the chain be φ-irreducible
+(every set of positive reference measure is eventually reachable), aperiodic, and Harris recurrent.
+Under these assumptions the invariant density, if it exists, is unique and for any initial density p0,
+pn(x) → p?(x) in total variation as n → ∞.
+Stronger drift or minorisation conditions yield quantitative rates (geometric ergodicity), but the
+qualitative message mirrors the discrete case: irreducibility, aperiodicity, and recurrence deliver
+convergence to stationarity.
+Let us see an example of a continuous space Markov chain (or rather go back to AR(1)
+example).
+Exercise 4.2. Consider the real-valued Markov kernel
+K(xn|xn−1) = N (xn; axn−1, 1).
+Show that this kernel satisfies the detailed balance condition w.r.t.
+p?(x) = N
+
+x; 0,
+1
+1 − a
+2
+
+.
+Exercise 4.3. Show that the kernel in the previous exercise satisfies
+p?(x) = limn→∞
+K(n)
+(x|x
+0
+).
+106
+In other words, regardless from where we start, the kernel would converge to the stationary
+distribution.
+Hint: Start from writing the recursions xn+1 = axn + n where n ∼ N (0, 1) and x0 = x
+0
+.
+Try to first derive the expression of xn+1 in terms of x0. Compute the mean and the variance of
+xn+1, then take the limit n → ∞.
+Remark 4.3. Consider the multivariate extension of the above AR(1) process:
+Xn = AXn−1 + b + Σ1/2
+n,
+where Xn, n, b ∈ R
+d
+, n ∼ N (0, Id), A ∈ R
+d×d with spectral radius ρ(A) < 1, and Σ ∈ R
+d×d
+is a positive definite matrix. The stationary distribution is given by
+p?(x) = N (x; µ, Γ),
+where
+µ = (Id − A)
+−1
+b,
+Γ = X∞
+k=0
+A
+kΣ(A
+>)
+k
+.
+Alternatively, you can also show for Γ that it is the solution of the following Lyapunov equation:
+Γ = AΓA
+> + Σ.
+We have now almost everything we need to move on to discuss Metropolis-Hastings method.
+4.3 metropolis-hastings algorithm
+We finally have all the ingredients to define the celebrated Metropolis-Hastings algorithm. We
+will not need more technicalities in defining it.
+The Metropolis-Hastings (MH) algorithm is a remarkable method which allows us to define
+transition kernels (defined implicitly via the algorithm) where the detailed balance is satisfied
+w.r.t. any p? we wish to sample from. I call this remarkable because it rids us of the need of
+designing Markov kernels for specific probability distributions and provides a generic way to
+design samplers that will target any measure we want. The algorithm relies on the idea of using
+local proposals q(x
+0
+|x) and accepting them with a certain acceptance ratio. The acceptance ratio
+is designed so that the resulting samples X1, . . . , Xn from the method form a Markov chain
+that leaves p? invariant. We will provide the algorithm below, as seen from Algorithm 9. Note,
+as mentioned in the lecture, the last step of the method: When a sample is rejected, we do not
+sample again – we set Xn = Xn−1 and continue sampling the next sample. This means that, if the
+rejection rate is high, there will be a lot of duplicated samples and this is the expected behaviour.
+107
+Algorithm 9 Pseudocode for Metropolis Hastings method
+1: Input: The number of samples N, and starting point X0.
+2: for n = 1, . . . , N do
+3: Propose (sample): X0 ∼ q(x
+0
+|Xn−1)
+4: Accept the sample X0 with probability
+α(Xn−1, X0
+) = min (
+1,
+p?(X0
+)q(Xn−1|X0
+)
+p?(Xn−1)q(X0
+|Xn−1)
+)
+.
+5: Otherwise reject the sample and set Xn = Xn−1.
+6: end for
+7: Discard first burnin samples and return the remaining samples.
+Another important note is about the burnin period. Any Markov chain started at a random point
+will take some time to reach stationarity (the whole magic is to be able to make them converge
+faster). Therefore, we discard the first burnin samples and only return the remaining ones. This
+is a common practice in MCMC methods.
+We define the acceptance ratio as
+r(x, x0
+) = p?(x
+0
+)q(x|x
+0
+)
+p?(x)q(x
+0
+|x)
+. (4.4)
+We also note that in the practical algorithm, one does not need to implement the min operation.
+For accepting with a certain probability (like in the rejection sampling), we draw U ∼ Unif(0, 1)
+and check if U ≤ α(Xn−1, X0
+). However, if the ratio r(Xn−1, X0
+) is greater than 1, this sample
+is always going to be accepted anyway. The min operation is important however for theoretical
+properties of the kernel to hold.
+As we mentioned above, the algorithm provides us with an implicit kernel K(xn|xn−1) – if
+you think about it, it is just a way to get Xn given Xn−1. The specific structure of the algorithm,
+however, ensures that we leave the right kind of distribution invariant – i.e. p? – that is our target
+measure. We elucidate this in the following proposition.
+Proposition 4.2 (Metropolis-Hastings satisfies detailed balance). The Metropolis-Hastings algorithm satisfies detailed balance w.r.t. p?, i.e.,
+p?(x)K(x
+0
+|x) = p?(x
+0
+)K(x|x
+0
+),
+where K is the kernel defined by the MH algorithm.
+Proof. We first define the kernel induced by the MH algorithm. This can be seen by inspecting
+the algorithm - and we write it intuitively as (by writing Dirac functions instead of measures)
+K(x
+0
+|x) = α(x, x0
+)q(x
+0
+|x) + (1 − a(x))δx(x
+0
+),
+108
+where δx is the Dirac delta function and
+a(x) = Z
+X
+α(x, x0
+)q(x
+0
+|x)dx
+0
+,
+is the probability of accepting a sample (hence 1 − a(x) is the probability of rejecting a new
+sample while at point x). See Sec. 2.3.1 of Douc et al. (2018) for a rigorous derivation. Given this,
+to check detailed balance, we use Remark 4.1 and write for a function f
+Z
+f(x, x0
+)p?(x)K(x
+0
+|x)dxdx
+0 =
+Z
+f(x, x0
+)p?(x)q(x
+0
+|x)α(x, x0
+)dxdx
+0
++
+Z
+f(x, x0
+)p?(x)(1 − a(x))δx(dx
+0
+)dx,
+and check if the equality in Remark 4.1 holds. For the first term, we can easily see that
+p?(x)q(x
+0
+|x)α(x, x0
+) = p?(x)q(x
+0
+|x) min (
+1,
+p?(x
+0
+)q(x|x
+0
+)
+p?(x)q(x
+0
+|x)
+)
+= min {p?(x)q(x
+0
+|x), p?(x
+0
+)q(x|x
+0
+)}
+= min (
+p?(x)q(x
+0
+|x)
+p?(x
+0
+)q(x|x
+0
+)
+, 1
+)
+p?(x
+0
+)q(x|x
+0
+),
+= p?(x
+0
+)q(x|x
+0
+)α(x
+0
+, x).
+Since the second term involves a Dirac measure, we will check it against the integral form directly:
+Z
+f(x, x0
+)p?(x)(1 − a(x))δx(dx
+0
+)dx =
+Z
+f(x, x)p?(x)(1 − a(x))dx
+=
+Z
+f(x
+0
+, x0
+)p?(x
+0
+)(1 − a(x
+0
+))dx
+0
+=
+Z
+f(x, x0
+)p?(x
+0
+)(1 − a(x
+0
+))δx0(dx)dx
+0
+.
+All in all, we can see that
+Z
+f(x, x0
+)p?(x)K(x
+0
+|x)dxdx
+0 =
+Z
+f(x, x0
+)p?(x
+0
+)K(x|x
+0
+)dxdx
+0
+,
+which is the detailed balance condition.
+One can see that the algorithm works just the same with unnormalised densities, i.e., recall
+p?(x) = p¯?(x)
+Z
+,
+where Z is the normalisation constant. In this case, the acceptance ratio becomes
+r(x, x0
+) = p¯?(x
+0
+)q(x|x
+0
+)
+p¯?(x)q(x
+0
+|x)
+,
+without any change as the normalising constants cancel out in (4.4). We will next describe certain
+classes of proposals to sample from various kinds of distributions and assess their performance.
+109
+4.3.1 independent proposals
+An important class of proposals that is used in practice is the independent proposal. Note that in
+general we denoted our proposal with q(x
+0
+|x), in particular, we would sample from q(x
+0
+|xn−1)
+implying that in general the proposal uses the current state of the chain. This does not have to be
+the case and we can as well chose just an independent proposal q(x
+0
+) to ease computations. The
+acceptance ratio in this specific case becomes
+r(x, x0
+) = p¯?(x
+0
+)q(x)
+p¯?(x)q(x
+0
+)
+.
+In the algorithm, this means that we compute
+α(Xn−1, X0
+) = min (
+1,
+p¯?(X0
+)q(Xn−1)
+p¯?(Xn−1)q(X0
+)
+)
+.
+We will see one example as follows.
+Example 4.5 (Independent Gaussian proposal). Consider a Gaussian (artificial) target:
+p?(x) = N (x; µ, σ2
+)
+Assume we want to use MH to sample from it. Choose a proposal
+q(x) = N (x; µq, σ2
+q
+).
+Compute the acceptance ratio.
+Solution. The acceptance ratio can be computed in this case as:
+r(x, x0
+) = p?(x
+0
+)q(x)
+p?(x)q(x
+0
+)
+=
+N (x
+0
+; µ, σ2
+)N (x; µq, σ2
+q
+)
+N (x; µ, σ2
+)N (x
+0
+; µq, σ2
+q
+)
+=
+√
+1
+2πσ2
+exp 
+−
+(x
+0−µ)
+2
+2σ2
+
+p
+1
+2πσ2
+q
+exp 
+−
+(x−µq)
+2
+2σ2
+q
+
+√
+1
+2πσ2
+exp 
+−
+(x−µ)
+2
+2σ2
+
+p
+1
+2πσ2
+q
+exp 
+−
+(x0−µq)
+2
+2σ2
+q
+
+=
+exp 
+−
+(x
+0−µ)
+2
+2σ2
+
+exp 
+−
+(x−µq)
+2
+2σ2
+q
+
+exp 
+−
+(x−µ)
+2
+2σ2
+
+exp 
+−
+(x0−µq)
+2
+2σ2
+q
+
+= e
+
+− 1
+2σ2
+
+(x
+0−µ)
+2−(x−µ)
+2
+
+e
+
+− 1
+2σ2
+q
+
+(x−µq)
+2−(x
+0−µq)
+2
+
+
+110
+2 1 0 1 2 3 4 5
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+The density and its histogram
+0 200 400 600 800 1000
+1
+0
+1
+2
+3
+4
+Markov chain
+Figure 4.2: Random walk Gaussian proposal for a mixture of two Gaussians.
+4.3.2 random walk (symmetric) proposals
+Another important class of proposals is the random walk proposal. In this case, the proposal does
+use the current state Xn−1 to define a proposal q(x
+0
+|xn−1). These proposals in the random walk
+(and more generally symmetric) case result in a density that is symmetric, i.e., q(x
+0
+|x) = q(x|x
+0
+).
+This leads to a considerable simplification in the acceptance ratio calculations. We will see some
+examples below.
+Example 4.6 (Random walk Gaussian proposal). Consider a mixture Gaussian target:
+p?(x) = w1N (x; µ1, σ2
+1
+) + w2N (x; µ2, σ2
+2
+),
+with some w1, w2 > 0 and w1 + w2 = 1. Assume we want to use MH to sample from it. Choose
+a proposal
+q(x
+0
+|x) = N (x
+0
+; x, σ2
+q
+),
+and derive the acceptance ratio.
+Solution. This proposal is symmetric so we can write
+r(x, x0
+) = p?(x
+0
+)q(x|x
+0
+)
+p?(x)q(x
+0
+|x)
+=
+p?(x
+0
+)
+p?(x)
+,
+=
+w1N (x
+0
+; µ1, σ2
+1
+) + w2N (x
+0
+; µ2, σ2
+2
+)
+w1N (x; µ1, σ2
+1
+) + w2N (x; µ2, σ2
+2
+)
+,
+which is a considerable simplification. See Fig. 4.2 for a demonstration.
+111
+4 2 0 2 4
+2
+0
+2
+4
+6 Target Distribution
+4 2 0 2 4
+2
+0
+2
+4
+6 Random Walk Metropolis
+Figure 4.3: Banana density estimation using Random walk metropolis and plotting the histogram.
+Example 4.7 (The banana density). Consider the following density:
+p(x, y) ∝ exp
+−
+x
+2
+10
+−
+y
+4
+10
+− 2(y − x
+2
+)
+2
+!
+.
+This is only available in unnormalised form and it is an excellent test problem for many
+algorithms to fail. Design an MH algorithm for this density.
+Solution. We have
+p¯?(x, y) = exp
+−
+x
+2
+10
+−
+y
+4
+10
+− 2(y − x
+2
+)
+2
+!
+.
+and let us choose the proposal
+q(x
+0
+, y0
+|x, y) = N (x
+0
+; x, σ2
+q
+)N (y
+0
+; y, σ2
+q
+).
+This is a symmetric proposal so the acceptance ratio is
+r(x, y, x0
+, y0
+) = p¯?(x
+0
+, y0
+)
+p¯?(x, y)
+.
+Note that it makes sense to only compute log-acceptance ratio here
+log r(x, y, x0
+, y0
+) = log ¯p?(x
+0
+, y0
+) − log ¯p?(x, y),
+and implement the acceptance rate by drawing U ∼ Unif(0, 1) and accepting if log U <
+log r(x, y, x0
+, y0
+). The result can be seen from Fig. 4.3.
+112
+4.3.3 gradient based (langevin) proposals
+One of the powerful proposal alternatives is to choose the proposal based on the gradient of the
+target distribution p?. Note that we can compute ∇ log p?(x) without necessarily needing the
+normalising constant, since
+∇ log p?(x) = ∇ log ¯p?(x) − ∇ log Z
+| {z }
+0
+Therefore, without doing much more than what we are already doing (using unnormalised
+density), we can inform the proposal by using the gradient of the target distribution:
+q(x
+0
+|x) = N (x
+0
+; x + γ∇ log p?(x), 2γI),
+This algorithm is widely popular in the fields of statistics and especially in machine learning. This
+approach is called Metropolis adjusted Langevin algorithm (MALA)
+Exercise 4.4. Sample from the banana density using MH sampler:
+p(x, y) ∝ exp
+−
+x
+2
+10
+−
+y
+4
+10
+− 2(y − x
+2
+)
+2
+!
+.
+1. Use a symmetric random walk proposal for each dimension
+q(x
+0
+, y0
+|x, y) = N (x
+0
+; x, σ2
+q
+)N (y
+0
+; y, σ2
+q
+).
+Compute your acceptance ratio using log density and accept if log U < log r (for practice).
+2. Use the Metropolis-adjusted Langevin algorithm proposal (MALA).
+Use the following snippet for 2D plotting:
+1 x_bb = np.linspace(-4, 4, 100)
+2 y_bb = np.linspace(-2, 6, 100)
+3 X_bb , Y_bb = np.meshgrid(x_bb , y_bb)
+4 Z_bb = np.exp(banana(X_bb , Y_bb)) # your banana function
+5 plt.subplot(1, 3, 1)
+6 plt.contourf(X_bb , Y_bb , Z_bb , 100 , cmap='RdBu')
+7 plt.subplot(1, 3, 2)
+8 plt.hist2d( samples_RW[0, burnin:n], samples_RW[1, burnin:n], 100 , cmap='
+RdBu', range=[[-4, 4], [-2, 6]],
+density=True)
+9 plt.title('Random Walk Metropolis')
+10 plt.subplot(1, 3, 3)
+11 plt.hist2d( samples_Langevin[0, burnin:n], samples_Langevin[1, burnin:n],
+100 , cmap='RdBu', range=[[-4, 4], [-2
+, 6]], density=True)
+12 plt.title('Metropolis Adjusted Langevin Algorithm')
+13 plt.show ()
+113
+4.3.4 bayesian inference with metropolis-hastings
+We can finally use the Metropolis-Hastings method for Bayesian inference. In what follows, we
+will provide some examples for this and visualisations resulting from the sampling procedures.
+Recall that, with conditionally independent observations y1, . . . , yn, we have the Bayes theorem as
+p(x|y1:n) = p(y1:n|x)p(x)
+p(y1:n)
+=
+Qn
+i=1 p(yi
+|x)p(x)
+p(y1:n)
+.
+We write
+p(x|y1:n) ∝
+Yn
+i=1
+p(yi
+|x)p(x),
+and set
+p¯?(x) = Yn
+i=1
+p(yi
+|x)p(x),
+which is the unnormalised posterior density. We can then use the Metropolis-Hastings algorithm
+to sample from this posterior density. A generic Metropolis-Hastings method for Bayesian
+inference is described in Algorithm 10.
+Algorithm 10 Pseudocode for Metropolis Hastings method for Bayesian inference
+1: Input: The number of samples N, and starting point X0.
+2: for i = 1, . . . , N do
+3: Propose (sample): X0 ∼ q(x
+0
+|Xn−1)
+4: Accept the sample Xn = X0 with probability
+α(Xn−1, X0
+) = min (
+1,
+p¯?(x
+0
+)q(xn−1|x
+0
+)
+p¯?(xn−1)q(x
+0
+|xn−1)
+)
+.
+5: Otherwise reject the sample and set Xn = Xn−1.
+6: end for
+7: Discard first burnin samples and return the remaining samples.
+Example 4.8 (Source localisation). This example is taken from Cemgil (2014). Consider the
+problem of source localisation in the presence of three sensors with three noisy observations.
+The setup in this example can be seen from the left part of Fig. 4.4. We have three sensors
+surrounding an object we are trying to locate. The sensors receive noisy observations on R
+2
+. We
+are trying to locate the object based on these observations. We define our prior rather broadly:
+p(x) = N (x; µ, σ2
+I) where µ = [0, 0] and σ
+2 = 20. We assume that the observations are coming
+from
+p(yi
+|x, si) = N (yi
+; kx − sik, σ2
+y
+),
+114
+where si
+is the location of the ith sensor on R
+2
+for i = 1, 2, 3. We assume that the observations
+are independent and that the noise is independent of the location of the object (of course, for
+the sake of the example, we simulate our observations from the true model which is not the
+case in the real world). Devise a MH sampler to sample from the posterior density of x, i.e., the
+distribution over the location of the hidden object.
+Solution. We can write the posterior density as
+p(x|y1, y2, y3, s1, s2, s3) ∝ p(y1, y2, y3|x, s1, s2, s3)p(x),
+and given conditional independence we have
+p(x|y1, y2, y3, s1, s2, s3) ∝ p(x)
+Y
+3
+i=1
+p(yi
+|x, si).
+This sort of Bayes update follows from the conditional Bayes rule introduced in Prop. 1.1. In
+order to design the MH scheme, therefore, we need to just evaluate the likelihood and the prior
+for MH. We choose a random walk proposal:
+q(x
+0
+|x) = N (x
+0
+; x, σ2
+I).
+This is symmetric so the acceptance ratio is:
+r(x, x0
+) = p(x
+0
+)p(y1|x
+0
+, s1)p(y2|x
+0
+, s2)p(y3|x
+0
+, s3)
+p(x)p(y1|x, s1)p(y2|x, s2)p(y3|x, s3)
+.
+An example solution to this problem can be seen from Fig. 4.4 and the code can be accessed from
+our online companion.
+Example 4.9 (Gaussian with unknown mean and variance Example 5.13 in Yıldırım (2017)).
+Assume that we observe
+Y1, . . . , Yn|z, s ∼ N (yi
+; z, s)
+where we do not know z and s. Assume we have an independent prior on z and s:
+p(z)p(s) = N (z; m, κ2
+)IG(s; α, β).
+where IG(s; α, β) is the inverse Gamma distribution
+IG(s; α, β) = β
+α
+Γ(α)
+s
+−α−1
+exp
+−
+β
+s
+!
+.
+Design an MH algorithm to sample from the posterior distribution p(z, s|y1:n).
+115
+3 2 1 0 1 2
+3
+2
+1
+0
+1
+2
+3
+The object, the sensors, the posterior
+Samples
+True
+Sensor
+0 1000 2000 3000 4000
+3
+2
+1
+0
+1
+Path traces of the 2D Markov chain
+Figure 4.4: Solution of the source localisation problem.
+Solution. We can explicitly write the priors as
+p(z)p(s) = 1
+√
+2πκ2
+exp
+−
+(z − m)
+2
+2κ
+2
+!
+β
+α
+Γ(α)
+s
+−α−1
+exp
+−
+β
+s
+!
+.
+We are after the posterior distribution
+p(z, s|y1, . . . , yn) ∝ p(y1, . . . , yn|z, s)p(z)p(s),
+=
+Yn
+i=1
+N (yi
+; z, s)N (z; m, κ2
+)IG(s; α, β).
+Let us call our unnormalised posterior as p¯?(z, s|y1:n). In order to do this, we need to design
+proposals over z and s. We choose a random walk proposal for z:
+q(z
+0
+|z) = N (z
+0
+; z, σ2
+q
+).
+and an independent proposal for s:
+q(s
+0
+) = IG(s
+0
+; α, β).
+The joint proposal therefore is
+q(z
+0
+, s0
+|z, s) = N (z
+0
+; z, σ2
+q
+)IG(s
+0
+; α, β).
+When we design the MH algorithm, we see that the acceptance ratio is
+r(z, s, z0
+, s0
+) = p¯?(z
+0
+, s0
+|y1:n)q(z, s|z
+0
+, s0
+)
+p¯?(z, s|y1:n)q(z
+0
+, s0
+|z, s)
+=
+p(z
+0
+)p(s
+0
+) [Qn
+k=1 N (yk; z
+0
+, s0
+)] N (z; z
+0
+, σ2
+q
+)p(s)
+p(z)p(s) [Qn
+k=1 N (yk; z, s)] N (z
+0
+; z, σ2
+q
+)p(s
+0
+)
+=
+N (z
+0
+; m, κ2
+) [Qn
+k=1 N (yk; z
+0
+, s0
+)]
+N (z; m, κ2
+) [Qn
+k=1 N (yk; z, s)]
+116
+Exercise 4.5. Consider a generic target p(x) and a proposal q(x). Consider two algorithms: (i)
+The rejection sampler with proposal q(x) and (ii) the independent MH sampler with proposal
+q(x). Assume that M is chosen optimally for the rejection sampler. Prove that, for a given x, the
+MH acceptance ratio is always higher than the rejection sampler acceptance ratio, i.e., the MH
+algorithm accepts more often than the rejection sampler.
+4.4 gibbs sampling
+We will now go into another major class of MCMC samplers, called Gibbs samplers. The idea of
+Gibbs samplers is that, given a joint distribution of many variables p(x1, . . . , xd), one can build a
+Markov chain that samples from this distribution by sampling from the conditional distributions.
+This will also allow us straightforwardly sample from high-dimensional distributions. The
+downside of this approach is that, one has to derive the conditional distributions, which can be
+difficult. However, if one can do this, then the Gibbs sampler can be a very efficient method.
+In this chapter, we denote our target similarly as p?(x) where x ∈ R
+d
+and define the full
+conditional distributions as
+pm,?(xm|x1, . . . , xm−1, xm+1, . . . , xd) = pm,?(xm|x1:m−1, xm+1:d) = pm,?(xm|x−m),
+where x−m = (x1, . . . , xm−1, xm+1, . . . , xd) is the vector of all variables except xm. For a moment, assume that the full conditionals are available. Also assume, we obtain Xn−1 ∈ R
+d
+at the
+n − 1’th iteration of the algorithm. To denote individual components, we use Xn−1,m to denote
+the m’th component of Xn−1. Of course, the key aspect of the Gibbs sampler is to derive the
+Algorithm 11 Pseudocode for the Gibbs sampler
+1: Input: The number of samples N, and starting point X0 ∈ R
+d
+.
+2: for n = 1, . . . , N do
+3: Sample
+Xn,1 ∼ p1,?(Xn,1|Xn−1,2, . . . , Xn−1,d)
+Xn,2 ∼ p2,?(Xn,2|Xn,1, Xn−1,3, . . . , Xn−1,d)
+Xn,3 ∼ p3,?(Xn,3|Xn,1, Xn,2, Xn−1,4, . . . , Xn−1,d)
+Xn,d ∼ pd,?(Xn,d|Xn,1, Xn,2, . . . , Xn,d−1)
+4: end for
+5: Discard first burnin samples and return the remaining samples.
+full conditional distributions. We will come back to this point, but we will first investigate why
+the Gibbs sampling approach provides us a valid MCMC kernel, in other words, how the Gibbs
+sampler satisfies the detailed balance.
+Let us denote x = (xm, x−m). It is easy to see from Algorithm 11 that the Gibbs sampler for
+every iteration (at time n) is defined as d separate operations, each sampling from the conditional
+117
+distribution. We can first look at what goes on in each of these d updates . It is also easy to see
+that, the kernel defined in each of these d updates is given as
+Km(x
+0
+|x) = pm,?(x
+0
+m|x−m)δx−m(x
+0
+−m),
+where δx−m(x
+0
+−m) is the Dirac delta function. Intuitively, each step samples from the full conditional pm,?(·|x−m) for mth dimension where m ∈ {1, . . . , d} and leaves others unchanged,
+which is enforced by the term δx−m(x
+0
+−m). One can then see that the entire Gibbs kernel can be
+written as
+K = K1K2 . . . Kd.
+Note that each kernel is an integral operator – therefore the above equation is almost symbolic, it
+does not mean multiplication of kernels. We will now show that the Gibbs kernel satisfies the
+detailed balance.
+Proposition 4.3. The Gibbs kernel K leaves the target distribution p? invariant.
+Proof. We first show that each kernel Km satisfies the detailed balance condition:
+p?(x)Km(x
+0
+|x) = p?(x)pm,?(x
+0
+m|x−m)δx−m(x
+0
+−m)
+= p?(x−m)pm,?(xm|x−m)pm,?(x
+0
+m|x−m)δx−m(x
+0
+−m)
+= p?(x
+0
+−m)pm,?(x
+0
+m|x
+0
+−m)pm,?(xm|x
+0
+−m)δx
+0
+−m
+(x−m)
+= p?(x
+0
+)Km(x|x
+0
+).
+The steps of this derivation follows from the fact that the use of Dirac allows us to exchange
+variables x and x
+0
+. This shows that Km satisfies the detailed balance condition, therefore, we have
+Z
+Km(x
+0
+|x)p?(x)dx = p?(x
+0
+),
+i.e., Km leaves p? invariant. Let us denote now the integral
+(Km, p?) = Z
+Km(x
+0
+|x)p?(x)dx = p?.
+One can see that we have (K2,(K1, p?)) = (K2, p?) = p?, which is true for all m = 1, . . . , d.
+Therefore, we see that application of d kernels K1, . . . , Kd will leave p? invariant.
+We can also see why Gibbs sampling works by relating it to the Metropolis-Hastings algorithm.
+Recall that we can see our sampling from the conditional as a proposal, i.e.,
+qm(x
+0
+|x) = pm,?(x
+0
+m|x−m)δx−m(x
+0
+−m).
+If we calculate the acceptance ratio for this proposal
+αm(x
+0
+|x) = min (
+1,
+p?(x
+0
+)qm(x|x
+0
+)
+p?(x)qm(x
+0
+|x)
+)
+,
+= min (
+1,
+p?(x
+0
+)Km(x|x
+0
+)
+p?(x)Km(x
+0
+|x)
+)
+.
+118
+Original Image Noisy Image Denoised Image
+Figure 4.5: Denoising of an image using Gibbs sampler. The left column shows the original image, the middle
+column shows the noisy image, and the right column shows the denoised image. I used σ = 1, J = 4 for this and
+the Gibbs sampler scanned the entire image only 10 times.
+We see that this is equal to 1 as the detailed balance is satisfied for qm (which is Km – see the
+proof of Proposition 4.3).
+As we noted before, we have shown that the kernel K would leave p? invariant, but this would
+not give us proper convergence guarantees. Note that the version of the algorithm we presented
+is called deterministic scan Gibbs sampler. The reason for this is that the algorithm in Alg. 11
+is implemented so that we sample x1, . . . , xd in order, scanning the variables deterministically.
+It turns out, while this sampler’s convergence guarantees cannot be established easily, there is
+an algorithmic fix which results in a procedure that is also guaranteed to converge. Instead of
+scanning the variables deterministically, we can sample them in a random order. This is called
+the random scan Gibbs sampler. The algorithm is given in Alg. 12. We will now see an example.
+Algorithm 12 Random scan Gibbs sampler
+1: Input: The number of samples N, and starting point X0 ∈ R
+d
+.
+2: for n = 1, . . . , N do
+3: Sample j ∼ {1, . . . , d}
+Xn,j ∼ pj,?(Xn,j |Xn,−j ),
+4: end for
+Example 4.10 (Image denoising). A biologist knocked your door as some of the images from the
+microscope were too noisy. You decide to help and use the Gibbs sampler for this. The model is
+given as follows.
+Consider a set of random variables Xij for i = 1, . . . , m and j = 1, . . . , n. This is a matrix
+modeling an m × n image. We assume that we have an image that takes values Xij ∈ {−1, 1} –
+note that this is an “unusual” image, as the images usually take values between [0, 255] (or [0, 1]).
+We assume that the image is corrupted by noise, i.e., we have a noisy image
+Yij = Xij + σij ,
+119
+where ij ∼ N (0, 1) and σ is the standard deviation of the noise. We assume that the noise is
+independent of the image. We want to recover the image Xij from the noisy image Yij and utilise
+Gibbs sampler for this purpose.
+The goal is obtain (conceptually) p(X|Y ), i.e., samples from p(X|Y ) given Y . For this, we
+need to specify a prior p(X). We take this from the literature and place as a prior a smooth
+Markov random field (MRF) assumption. This is formalised as
+p(Xij |X−ij ) = 1
+Z
+exp(JXijWij ),
+where Wij is the sum of the Xij ’s in the neighbourhood of Xij , i.e.,
+Wij =
+X
+kl:neighbourhood of (i,j)
+Xkl = Xi−1,j + Xi+1,j + Xi,j−1 + Xi,j+1.
+This is an intuitive model of the image, making the current value of the pixel depend on the
+values of its neighbours. The exercise is to design the Gibbs sampler for this problem.
+Solution. We aim at using a Gibbs sampler approach from sampling the posterior p(X|Y ). Note
+that now we need to sample from full conditionals, e.g., for each (i, j), we need to sample from
+Xij ∼ p(Xij |X−ij , Yij ). We derive the full conditional as
+p(Xij = k|X−ij , Yij ) = p(Yij |Xij = k)p(Xij = k|X−ij )
+P
+k∈{−1,1} p(Yij |Xij = k)p(Xij = k|X−ij )
+,
+where p(Yij |Xij = k) = N (Yij ; k, σ2
+) is the likelihood of the noisy image given the value of the
+pixel. We can easily compute these probabilities since each term in the Bayes rule is computable
+(and 1/Z cancels). Therefore, we can get explicit expressions for q = p(Xij = 1|X−ij , Yij ) and
+1 − q = p(Xij = −1|X−ij , Yij ). We can then sample from the full conditional as
+Xij ∼
+
+
+
+1 with probability q,
+−1 with probability 1 − q.
+We can now loop over (i, j) (to sample from each full conditional) and sample from the full
+conditionals. This is the Gibbs sampler algorithm as described above. The results of this procedure
+can be seen from Fig. 4.5.
+Let us consider another example.
+Example 4.11 (Beta-Binomial Gibbs sampler). Consider the following model
+p(θ) = Beta(θ; α, β) = Γ(α + β)
+Γ(α)Γ(β)
+θ
+α−1
+(1 − θ)
+β−1
+,
+120
+and
+p(x|θ) = Bin(x; n, θ) =
+n
+x
+!
+θ
+x
+(1 − θ)
+n−x
+.
+Derive the Gibbs sampler to sample from the joint distribution p(x, θ).
+Solution. We know that, for this, we need full conditionals, i.e., we need p(x|θ) and p(θ|x). We
+can see that p(x|θ) is already provided in the definition of the model. Therefore, we only need to
+derive the posterior. We can write the joint distribution as
+p(x, θ) = p(x|θ)p(θ) =
+n
+x
+!
+θ
+x
+(1 − θ)
+n−x Γ(α + β)
+Γ(α)Γ(β)
+θ
+α−1
+(1 − θ)
+β−1
+,
+=
+Γ(α + β)
+Γ(α)Γ(β)
+
+n
+x
+!
+θ
+x+α−1
+(1 − θ)
+n−x+β−1
+.
+For Bayes theorem p(θ|x) = p(x|θ)p(θ)/p(x), we also need to compute p(x). This is given by
+p(x) = Z 1
+0
+p(x, θ)dθ =
+Z 1
+0
+Γ(α + β)
+Γ(α)Γ(β)
+
+n
+x
+!
+θ
+x+α−1
+(1 − θ)
+n−x+β−1
+dθ,
+=
+
+n
+x
+!
+Γ(α + β)
+Γ(α)Γ(β)
+Γ(x + α)Γ(n − x + β)
+Γ(n + α + β)
+.
+Therefore, we can compute the posterior as
+p(θ|x) = p(x, θ)
+p(x)
+=
+✘
+
+n✘✘✘✘✘
+x
+
+Γ(α+β)
+Γ(α)Γ(β)
+θ
+x+α−1
+(1 − θ)
+n−x+β−1
+✘
+
+n✘✘✘✘✘
+x
+
+Γ(α+β)
+Γ(α)Γ(β)
+Γ(x+α)Γ(n−x+β)
+Γ(n+α+β)
+,
+= Beta(θ; x + α, n − x + β).
+Therefore we can sample from p(θ|x) using any method to simulate a Beta variable. The Gibbs
+sampler is then defined as follows:
+• Initialise x0, θ0
+• For k = 1, 2, . . .:
+– Sample θk ∼ p(θ|xk−1)
+– Sample xk ∼ p(x|θk)
+• Return xk, θk for k = 1, 2, . . ..
+We also note that simulated xk are approximately from p(x) which also gives us a way to approximate p(x).
+121
+Exercise 4.6. Assume that you are given conditional distributions
+p(x|y) = Exp(y)
+p(y|x) = Exp(x),
+and you have implemented the Gibbs sampler using these conditionals.
+1. Write the Gibbs sampler algorithm (on paper) assuming only accessing uniform random
+numbers.
+2. Now show that these conditionals are consistent with a target of the form p(x, y) ∝
+exp(−xy).
+3. Show that the “target density” is not a valid density. What issue does this highlight about
+Gibbs sampling implementations?
+4. Finally, assume that we have the joint density p(x, y) in the same form as you derived in
+Part 2, but constrained to (x, y) ∈ (0, 1) × (0, 1). In this case, derive the Gibbs sampler by
+deriving full conditionals.
+4.4.1 metropolis-within-gibbs
+One remarkable feature of the Gibbs sampler is that when we cannot derive the full conditionals
+(or too lazy to do it), we can instead target the full conditional with a single Metropolis step at
+each iteration. This is called the Metropolis-within-Gibbs algorithm and, remarkably, it samples
+from the correct posterior!
+Consider a generic target p(x, y). In many situations, it is easier to write unnormalised full
+conditionals, i.e., we would have access to p¯(x|y) and p¯(y|x), but not p(x|y) and p(y|x). In this
+case, we can use the Metropolis-within-Gibbs algorithm – meaning that instead of sampling
+from the full conditional, we can take a Metropolis step to sample from the full conditional. The
+algorithm would be summarised as follows. Given (xn−1, yn−1)
+1. Sample x
+0 ∼ qx(x
+0
+|xn−1) and accept x
+0 with probability
+rx =
+p¯(x
+0
+|yn−1)qx(xn−1|x
+0
+)
+p¯(xn−1|yn−1)qx(x
+0
+|xn−1)
+i.e., set xn = x
+0 with probability rx and xn = xn−1 otherwise.
+2. Sample y
+0 ∼ qy(y
+0
+|yn−1) and accept y
+0 with probability
+ry =
+p¯(y
+0
+|xn)qy(yn−1|y
+0
+)
+p¯(yn−1|xn)qy(y
+0
+|yn−1)
+i.e., set yn = y
+0 with probability ry and yn = yn−1 otherwise.
+122
+Example 4.12 (Metropolis-within-Gibbs for Example 4.9). Let us return to Example 4.9. To
+recall the model, assume that we observe
+Y1, . . . , Yn|z, s ∼ N (yi
+; z, s)
+where we do not know z and s. Assume we have an independent prior on z and s:
+p(z)p(s) = N (z; m, κ2
+)IG(s; α, β).
+where IG(s; α, β) is the inverse Gamma distribution
+IG(s; α, β) = β
+α
+Γ(α)
+s
+−α−1
+exp
+−
+β
+s
+!
+.
+In other words, we have
+p(z)p(s) = 1
+√
+2πκ2
+exp
+−
+(z − m)
+2
+2κ
+2
+!
+β
+α
+Γ(α)
+s
+−α−1
+exp
+−
+β
+s
+!
+.
+We are after the posterior distribution
+p(z, s|y1, . . . , yn) ∝ p(y1, . . . , yn|z, s)p(z)p(s),
+=
+Yn
+i=1
+N (yi
+; z, s)N (z; m, κ2
+)IG(s; α, β).
+Let us call our unnormalised posterior as p¯?(z, s|y1:n). Now instead of MH or defining Gibbs
+(requires us to derive full conditionals), derive the Metropolis-within-Gibbs algorithm.
+Solution. For this, note the unnormalised full conditionals:
+p¯?(z|s, y1:n) = Yn
+i=1
+N (yi
+; z, s)N (z; m, κ2
+),
+and
+p¯?(s|z, y1:n) = Yn
+i=1
+N (yi
+; z, s)IG(s; α, β).
+In order to do this, we need to design proposals over z and s to target p¯(z|s, y1:n) and p¯(s|z, y1:n)
+respectively. This step will be a standard Metropolis as if we are solving each problem independently. We choose a random walk proposal for z:
+q(z
+0
+|z) = N (z
+0
+; z, σ2
+q
+).
+and an independent proposal for s:
+q(s
+0
+) = IG(s
+0
+; α, β).
+Therefore, we Metropolis-within-Gibbs can be implemented as follows
+123
+• Initialise z0, s0
+• For k = 1, 2, . . .:
+• Metropolis step for z-marginal:
+– Sample z
+0 ∼ q(z
+0
+|zk−1)
+– Accept z
+0
+and set zk = z
+0 with probability
+rz =
+p¯?(z
+0
+|sk−1, y1:n)
+p¯?(zk−1|sk−1, y1:n)
+which is simplified due to the symmetric proposal.
+– Otherwise set zk = zk−1.
+• Metropolis step for s-marginal:
+– Sample s
+0 ∼ q(s
+0
+)
+– Accept s
+0
+and set sk = s
+0 with probability
+rs =
+p¯?(s
+0
+|zk, y1:n)q(sk−1)
+p¯?(sk−1|zk, y1:n)q(s
+0
+)
+=
+Qn
+i=1 N (yi
+; z, s0
+)
+Qn
+i=1 N (yi
+; z, sk−1)
+– Otherwise set sk = sk−1.
+• Return zk, sk for k = 1, 2, . . ..
+4.5 langevin mcmc methods
+We briefly introduced Metropolis-adjusted Langevin algorithm (MALA) in Sec. 4.3.3. MALA
+is just one example of a more general class of samplers, called Langevin MCMC algorithms,
+which are based on Langevin dynamics. These approaches are at the forefront of modern MCMC
+methods, used in a variety of settings, including sampling from high-dimensional targets, deep
+learning, sampling from Bayesian neural networks, and so on. We will now introduce the
+Langevin MCMC methods and see how they work.
+Consider again our target p? defined on R
+d
+. It turns out, we can use stochastic differential
+equations (SDEs) to sample from p? (recall that SDEs are differential equations with a stochastic
+term). Consider the following SDE:
+dXt = ∇ log p?(Xt)dt +
+√
+2dBt
+, (4.5)
+where Bt
+is a standard Brownian motion. It turns out the marginal distributions of Xt driven by
+this SDE converge to p? as t → ∞. In other words, in many suitable metrics, we can quantify the
+convergence d(pt
+, p?) → 0 as t → ∞. This means that all we need to draw samples from p? is to
+124
+numerically solve this SDE which can be done with a variety of numerical methods (akin to ODE
+solvers) . One caveat in this situation is that, while the SDE would target p?, its discretisation
+would incur bias. This is why MALA is “Metropolised”.
+Let us recall the MALA algorithm. We start with a point X0 and then define the proposal
+q(xn|xn−1) = N (xn; xn−1 + γ∇ log p?(xn−1), 2γId), (4.6)
+where γ > 0 is a step size. We then sample from q to obtain Xn. We then accept Xn with
+probability
+α(Xn, Xn−1) = min
+1,
+p?(Xn)q(Xn−1|Xn)
+p?(Xn−1)q(Xn|Xn−1)
+!
+. (4.7)
+Recall that the MALA proposal would not define a symmetric proposal, therefore, we would
+need to compute the ratio. Now one can see that, Eq . (4.6) can be equivalently written as
+Xn = Xn−1 + γ∇ log p?(Xn−1) + √
+2γWn, (4.8)
+where Wn ∼ N (0, I). The relationship of Eq. (4.8) to (4.5) can be seen by noting that the
+discretisation of the SDE in (4.5) would exactly take the form of Eq. (4.8). Therefore, MALA uses
+this Langevin SDE as the proposal and then accept/reject its samples. This has a beneficial effect
+of correcting the bias of the discretisation.
+However, the Metropolis step can be computationally infeasible in higher dimensions, just
+as in the case of rejection sampling. Higher dimensional problems cause the acceptance rate to
+vanish, which results in slow convergence. To remedy this situation, a common approach is to
+simply drop the Metropolis step and use the following iteration:
+Xn = Xn−1 + γ∇ log p?(Xn−1) + √
+2γWn. (4.9)
+This is a simple (and biased) MCMC method - which is called the unadjusted Langevin algorithm
+(ULA). The ULA is a discretisation of the SDE, and as such, its stationary measure is not p?.
+However, under various conditions, it can be shown that the limiting distribution of ULA p
+γ
+?
+can
+be made arbitrarily close to p? as γ → 0. This means that the ULA can be a viable alternative.
+Example 4.13. Consider the target p?(x) = N (x; µ, σ2
+). Write down the ULA for this target
+and derive the stationary distribution of the chain.
+Solution. We can write the ULA as
+∂
+∂x log p?(x) = −
+x − µ
+σ
+2
+.
+We can then write the iterates of ULA as
+Xn = Xn−1 + γ
+∂
+∂x log p?(Xn−1) + √
+2γWn,
+= Xn−1 − γ
+Xn−1 − µ
+σ
+2
++
+√
+2γWn,
+=
+
+1 −
+γ
+σ
+2
+
+Xn−1 +
+γ
+σ
+2
+µ +
+√
+2γWn,
+125
+where Wn ∼ N (0, 1). In this simple case, we can compute the stationary distribution of the
+chain and analyse its relationship to the true target p?. Let
+a = 1 −
+γ
+σ
+2
+, b =
+γ
+σ
+2
+µ.
+We can write now the iterates beginning at x0 as
+x1 = ax0 + b +
+√
+2γW1,
+x2 = a
+2x0 + ab + a
+√
+2γW1
+| {z }
+ax1
++b +
+√
+2γW2,
+x3 = a
+3x0 + a
+2
+b + a
+2√
+2γW1 + ab + a
+√
+2γW2
+| {z }
+ax2
++b +
+√
+2γW3,
+.
+.
+.
+xn = a
+nx0 +
+nX−1
+k=0
+a
+k
+b +
+nX−1
+k=0
+a
+k√
+2γWn−k.
+We can compute the expected value
+E[Xn] = a
+nx0 +
+nX−1
+k=0
+a
+k
+b,
+since Wk are zero mean. As n → ∞, we have
+µ∞ = limn→∞
+E[Xn] = X∞
+k=0
+a
+k
+b =
+b
+1 − a
+= µ.
+since 0 < a < 1. The variance of the iterates as n → ∞ can also be computed. Note that for
+finite n, we have
+var(xn) = var nX−1
+k=0
+a
+k√
+2γWk
+!
+,
+= 2γ
+nX−1
+k=0
+(a
+2
+)
+k
+,
+= 2γ
+1 − a
+2n
+1 − a
+2
+.
+Therefore, we obtain the limiting variance as
+limn→∞
+var(xn) = 2γ
+1
+1 − a
+2
+= 2γ
+1
+1 −
+
+1 −
+γ
+σ2
+2
+= 2γ
+1
+2γ
+σ2 −
+γ
+2
+σ4
+,
+=
+2σ
+4
+2σ
+2 − γ
+.
+126
+Therefore, we obtained the target measure of ULA as
+p
+γ
+?
+(x) = N
+
+x; µ,
+2σ
+4
+2σ
+2 − γ
+!
+,
+which is different than p?. Note that in this particular case, the means of the p
+γ
+?
+and p? agree. It
+can be seen that the bias enters the picture through the variance, but this vanishes as γ → 0.
+Exercise 4.7 (Stochastic Simulation, Final Exam Q3(c), 2025). Consider the following modified
+unadjusted Langevin algorithm (ULA):
+Xk+1 = Xk + γ∇ log p?(Xk) + σqWk,
+where Wk ∼ N (0, 1) (assuming the chain is 1D), γ > 0, and σq > 0. Consider the target
+distribution:
+p?(x) = N (x; µ, σ2
+).
+(i) Derive the limiting distribution of the chain (Xk)k≥0. Provide any necessary constraints
+on γ for this to be well-defined.
+(ii) Can you make ULA unbiased in the limit with an appropriate choice of σq? If no, provide
+your reasoning. If yes, provide the expression of σq.
+Let us look at the ULA for the Banana density.
+Example 4.14. Consider the Banana density
+p(x, y) ∝ exp
+−
+x
+2
+10
+−
+y
+4
+10
+− 2(y − x
+2
+)
+2
+!
+.
+Derive ULA for this density.
+Solution. Note the density is only available in unnormalised form:
+p¯?(x, y) = exp
+−
+x
+2
+10
+−
+y
+4
+10
+− 2(y − x
+2
+)
+2
+!
+.
+Recall that ∇ log ¯p?(x, y) = ∇ log p?(x, y). Therefore, we will directly compute the unnormalised gradients:
+∇ log p?(x, y) = " −x
+5 + 8x(y − x
+2
+)
+−2y
+3
+5 − 4(y − x
+2
+)
+#
+.
+127
+Therefore, the update in 2D is given by
+"
+xn+1
+yn+1#
+=
+"
+xn
+yn
+#
++ γ∇ log p?(xn, yn) + √
+2γVn
+where Vn ∼ N
+0,
+"
+1 0
+0 1#!.
+Example 4.15 (Bayesian inference with ULA). Show that we can also straightforwardly perform
+Bayesian inference in this setting by derive ULA for a generic posterior density given p(y|x) and
+p(x).
+Solution. Recall the target posterior density in this setting
+p¯?(x|y) = p(x)
+Yn
+k=1
+p(yk|x),
+where p(x) is the prior density and p(yk|x) is the likelihood where observations are conditionally
+i.i.d given x. We can write the ULA iterates as
+Xn = Xn−1 + γ∇ log ¯p?(Xn−1|y) + √
+2γVn,
+= Xn−1 + γ
+
+∇ log p(Xn−1) + Xn
+k=1
+∇ log p(yk|Xn−1)
+!
++
+√
+2γVn.
+Exercise 4.8. Let
+p?(x) = Γ( ν+1
+2
+)
+√
+νπ Γ( ν
+2
+)
+
+1 +
+x
+2
+ν
+!−(ν+1)/2
+,
+where ν > 0 is a parameter. This is called Student’s t-distribution. Derive the gradient of log p?(x)
+and implement the unadjusted Langevin algorithm and Metropolis-adjusted Langevin algorithm
+for this distribution. Plot the histogram of the samples for different values of ν and γ and discuss
+any interesting result you observe.
+A common problem arising in machine learning and statistics is big data, where the number
+of observations n is large. In this case, both ULA and MALA are infeasible as both require the
+iterates above to be evaluated, e.g., each iteration involves summing n terms. If n is order of
+millions, this is computationally infeasible. In this case, we can use the stochastic gradients. This
+is only applicable in the setting of ULA as we will see below, which is one reason why ULA-type
+methods are more popular than MALA-type methods.
+128
+4.5.1 stochastic gradient langevin dynamics
+The problem of large number of data points arise in the setting of ULA as a sum, therefore, we
+should look for estimating large sums with something cheaper. Consider the following sum of
+(arbitrary) numbers:
+g =
+1
+n
+Xn
+k=1
+gi
+.
+If n is simply too large to compute this sum efficiently, we can instead resort to unbiased estimates
+of it. This can be done by sampling i1, . . . , iK ∼ {1, . . . , n} uniformly and constructing
+gˆ =
+1
+K
+X
+K
+k=1
+gik
+.
+This estimate is an unbiased estimate of g, i.e.,
+E[ˆg] = E
+"
+1
+K
+X
+K
+k=1
+gik
+#
+=
+1
+K
+X
+K
+k=1
+E[gik
+] = g.
+This idea can be used to construct stochastic gradients. We provide some examples below.
+Example 4.16 (Large scale Bayesian inference). Recall the problem setting in Example 4.15:
+Xt = Xt−1 + γ
+
+∇ log p(x) + Xn
+k=1
+∇ log p(yk|Xt−1)
+!
++
+√
+2γVt
+.
+Design the stochastic gradient sampler for this case.
+Solution. Assume we sample uniformly i
+t
+1
+, . . . , it
+K ∼ {1, . . . , n} at iteration t. We can then
+construct the following unbiased estimate of the sum:
+Xn
+k=1
+∇ log p(yk|Xt−1) ≈
+n
+K
+X
+K
+k=1
+∇ log p(yi
+t
+k
+|Xt−1).
+Note that (n/K) factor comes here as the sum itself did not have (1/n) term (as opposed to the
+sum example above). Therefore, the stochastic gradient Langevin dynamics (SGLD) iterate can
+be written as
+Xt = Xt−1 + γ
+
+∇ log p(x) + n
+K
+X
+K
+k=1
+∇ log p(yi
+t
+k
+|Xt−1)
+!
++
+√
+2γVt
+.
+This is also called data subsampling as one can see that the gradient only uses a subset of the data.
+Every iteration is cheap and computable as we only need to compute K terms. This is a very
+popular method in Bayesian inference and is used in many applications.
+129
+4.6 monitoring and postprocessing mcmc output
+There are a number of ways to monitor the MCMC samples to ensure that the algorithm is
+working as expected. We will discuss a few of them here.
+4.6.1 trace plots
+The simplest way to monitor the MCMC output is to plot the trace of the samples. This is a plot of
+the samples against the iteration number. This is what we have been doing in previous examples.
+If the trace plots show you that the chain is still “moving”, then you can conclude that the chain is
+not yet converged. On the other hand, a trace plot from MH can also show you that the chain is
+stuck. It is then straightforward to conclude simple convergence issues from trace plots.
+4.6.2 autocorrelation plots
+The autocorrelation plot is a plot of the autocorrelation function of the samples. The autocorrelation function is defined as
+ρk =
+Cov(Xt
+, Xt+k)
+Var(Xt)
+.
+This can be empirically computed on the samples coming from the Markov chain (xk)k∈N. Since
+the aim of MCMC is to obtain nearly independent samples from a target p?, we expect a good
+MCMC chain to exhibit low autocorrelation. A bad chain which is not mixing well will exhibit
+high autocorrelation. An example can be seen from Fig. 4.6 and see its caption for more details.
+One way to choose the proposal variance is to ensure that the chain has a low autocorrelation.
+This is a very simple way to monitor the chain.
+4.6.3 effective sample size
+There is a notion of effective sample size for MCMC methods. However, its computation is
+trickier than the IS one and it is usually implemented using software packages. The definition of
+the ESS for MCMC chains is given as
+ESS =
+N
+1 + 2 P∞
+k=1 ρk
+,
+where ρk is the autocorrelation function. The ESS is an approximate measure of the number of
+independent samples that we have. For example, if the chain exhibits no autocorrelation, then
+the ESS is equal to the number of samples. If the chain exhibits high autocorrelation, then the
+ESS will be very low, as the sum in denominator will be large.
+The computation of effective sample size in MCMC is usually done by software packages. We
+will not go into the details of this computation here.
+4.6.4 thinning the mcmc output
+One way to reduce the autocorrelation of the MCMC samples is to thin them. This is a postprocessing step that is done after the MCMC chain has been generated. The idea is to discard
+130
+2 1 0 1 2 3 4 5
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+The density and its histogram
+0 200 400 600 800 1000
+1
+0
+1
+2
+3
+4
+Markov chain
+0 20 40 60 80 100
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Autocorrelation
+2 1 0 1 2 3 4 5
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+The density and its histogram
+0 200 400 600 800 1000
+1
+0
+1
+2
+3
+4
+Markov chain
+0 20 40 60 80 100
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Autocorrelation
+Figure 4.6: Random walk Metropolis-Hastings for a mixture of two Gaussians. The top panel shows the situation
+where σq = 0.5, so chain gets stuck in modes. This causes a high autocorrelation, and as such, this sampler is
+not considered to be a good one. When we set σq = 4, then the chain exhibits low autocorrelation and is a good
+sampler.
+2 0 2 4
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0 200 400 600 800
+1
+0
+1
+2
+3
+4
+Acceptance rate: 0.24672467246724672
+0 20 40 60 80 100
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Autocorrelation
+0 20 40 60 80 100
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Autocorrelation (every 10th sample)
+Figure 4.7: Thinning of MCMC samples. We keep every 10th sample for the same mixture of Gaussians example
+with σq = 2. It can be seen that the thinned MCMC chain exhibits significantly lower autocorrelation.
+some of the samples and keep only a subset of them. This is done by keeping every kth sample.
+Since autocorrelation in an MCMC chain decays naturally over time, after reaching stationary,
+we can choose every kth of them and discard the rest. This will still give us a chain with the same
+stationary measure but with a lower autocorrelation. A demonstration of this can be seen from
+Fig .4.7.
+131
+4.7 mcmc for optimisation
+4.7.1 an introduction to optimisation
+Optimisation is a fundamental task we face repeatedly in numerical computation, virtually all
+fields of engineering, machine learning, statistics, and so on. The task is to find the minima of
+a cost function f : R
+d → R. More formally, in this section, we will look at simulation-based
+methods to solve the problem of the form
+x
+? ∈ argmin
+x∈X
+f(x). (4.10)
+We will usually take X = R
+d
+, although simulation methods will adapt easily to the case where X
+could be a closed, bounded set. The typical algorithms to solve (4.10) are gradient-based. This
+means that the typical numerical way to solve the problem (4.10) is to construct a sequence
+(xt)t≥0 so that
+xn+1 = xn − γ∇f(xn), (4.11)
+where γ > 0 is a step size. This is the gradient descent algorithm. Particularly relevant to
+this chapter is the fact that the gradient descent algorithm can be seen as a discretisation of a
+continuous-time ordinary differential equation (ODE) called the gradient flow:
+dxt
+dt
+= −∇f(xt), (4.12)
+which can also be written informally as
+dxt = −∇f(xt)dt.
+The gradient flow has the intriguing property of converging to the minimisers exponentially fast
+for convex functions f.
+Exercise 4.9. Consider the function f : R
+d → R given by
+f(x) = kxk
+2
+.
+1. Show that f has a unique global minimiser x
+?
+and find it.
+2. Show that the solution of the gradient flow (4.12) is given by
+xt = e
+−2tx0.
+3. Consider the (discrete-time) gradient descent recursion (4.11) with step size γ > 0:
+xn+1 = xn − γ∇f(xn), n ≥ 0. (4.13)
+Derive a closed-form expression for xn in terms of x0.
+4. Prove that xn → x
+?
+as n → ∞ for every x0 ∈ R
+d
+if and only if 0 < γ < 1. Moreover,
+show that the convergence is geometric and give an explicit rate.
+132
+The gradient descent algorithm is a simple and effective way to solve optimisation problems.
+However, it has its own limitations. For example, the gradient descent algorithm can get stuck
+in local minima, saddle points, or plateaus. In this section, we will see how we can use MCMC
+methods to solve the global optimisation problem (4.10) – that is, to find the global minima of
+the cost function f without getting stuck in local minima.
+Exercise 4.10. [A toy nonconvex loss where gradient descent converges to a local minimum]
+Consider the function f : R → R defined by
+f(x) =
+
+
+
+(x + 1)2
+, x ≤ 1,
+(x − 2)2 + 3, x ≥ 1.
+(4.14)
+1. Show that f has a unique global minimiser at x
+? = −1 and a (strict) local minimiser at
+xloc = 2.
+2. Consider the discrete-time gradient descent recursion with step size γ > 0,
+xn+1 = xn − γf0
+(xn), n ≥ 0, (4.15)
+where f
+0
+is the derivative of the corresponding branch (assume x0 6= 1 so that the iterates
+never hit the kink). Prove that for any γ ∈ (0,
+1
+2
+):
+if x0 > 1 then xn → 2, and if x0 < 1 then xn → −1.
+Conclude that gradient descent can converge to a local minimum depending on the initialisation.
+Randomness can help escape local minima and saddle points, and as such, MCMC methods
+can be a good candidate to solve optimisation problems. Indeed, certain MCMC methods were
+originally motivated by optimisation problems. These methods are a good candidate to solve
+challenging, nonconvex optimisation problems with multiple minima due to the intrinsic noise
+in the algorithms. In this section, we will briefly look at two MCMC methods that can be used
+for optimisation: (i) simulated annealing and (ii) Langevin MCMC.
+Remark 4.4. It is important to note how a sampler can be used as an optimiser. Consider the
+target density
+p
+β
+?
+(x) ∝ exp(−βf(x)),
+where β > 0 is a parameter. It is known in the literature that the density p
+β
+?
+(x) concentrates
+around the minima of f as β → ∞ (Hwang, 1980). This connection between probability
+distributions and optimisation spurred the development of sampling methods for optimisation.
+In what follows, we describe two methods that exploit this connection.
+133
+Algorithm 13 Simulated Annealing
+1: X0.
+2: for t = 1, 2, . . . do
+3: X0 ∼ q(x|Xt−1) (symmetric proposal, e.g., random walk)
+4: Set βt (e.g. βt =
+√
+1 + t)
+5: Accept Xt with probability
+min (
+1,
+p¯
+βt
+?
+(X0
+)
+p¯
+βt
+? (Xt−1)
+)
+.
+6: Otherwise set Xt = Xt−1.
+7: end for
+4.7.2 simulated annealing
+Consider now a sequence of target distributions defined as
+p
+βt
+?
+(x) ∝ exp(−βtf(x)),
+where βt > 0 is a sequence of increasing parameters. This algorithm annealsthe target distribution
+so that p
+βt
+?
+(x) becomes concentrated around the minima of f. Typically an increasing sequence
+of βt
+’s are chosen, so that as t → ∞, βt → ∞, making the target distribution concentrated on the
+minima. Drawing from previous chapter’s MH algorithm, we can easily develop the simulated
+annealing (SA) algorithm as seen in Algorithm 13.
+One can see that this simulated annealing method takes a special and intuitive case for
+optimisation. If we look at the acceptance ratio
+p¯
+βt
+?
+(X0
+)
+p¯
+βt
+? (Xt−1)
+=
+exp(−βtf(X0
+))
+exp(−βtf(Xt−1)) = exp(βt(f(Xt−1) − f(X
+0
+))),
+we can see that the acceptance ratio is a function of the difference in the objective function values.
+If f(X0
+) ≤ f(Xt−1), this proposal will take higher values, possibly bigger than 1 depends on
+the improvement. If, however, f(X0
+) ≥ f(Xt−1), the acceptance ratio will be small as it should
+be. Scheduling of (βt)t≥0 is a design problem that depends on the specific cost function under
+consideration.
+Example 4.17. Consider the following challenging cost function
+f(x) = − (cos(50x) + sin(20x))2
+exp(−5x
+2
+), x ∈ [−1, 1]. (4.16)
+This is a function with multiple local minima and is nonconvex. The function has one global
+minimum and we aim at finding it. Describe the simulated annealing method with a schedule
+βt =
+√
+1 + t.
+Solution. We see that βt → ∞ as t grows. We use a random walk proposal with a standard
+deviation of σq = 0.1. We implement this on the log domain. We initialise X0 ∼ Unif(−1, 1).
+The algorithm is implemented as, given Xt−1
+134
+1.00 0.75 0.50 0.25 0.00 0.25 0.50 0.75 1.00
+3.5
+3.0
+2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+f(x)
+Xt
+Figure 4.8: Simulated annealing for the function in Eq. 4.16. The red line shows the final estimate of SA algorithm.
+• X0 ∼ q(x|Xt−1) = N (x; Xt−1, σ2
+q
+)
+• Sample u ∼ Unif(0, 1)
+• Accept if
+log(u) < βt(f(Xt−1) − f(X
+0
+))
+• Otherwise set Xt = Xt−1.
+The result can be seen from Figure 4.8. We can see that the algorithm is able to find the global
+minima.
+4.7.3 langevin mcmc for optimisation
+In this section, we will describe how the Langevin MCMC based methods can be designed and
+used for optimisation. This class of methods are very popular in machine learning literature,
+both as a global optimiser and as a model of stochastic gradient descent (SGD) which is a popular
+optimisation algorithm in machine learning.
+The use Langevin MCMC for optimisation is motivated by the fact that the following Langevin
+SDE
+dXt = −∇f(Xt)dt +
+s
+2
+β
+dWt
+, (4.17)
+leaves the target distribution p?(x) ∝ exp(−βf(x)) invariant. We have already seen that this
+sort of target concentrates around the minima of f as β → ∞, therefore we can use this as an
+135
+optimisation algorithm. A simple Euler discretisation of this SDE gives
+Xn+1 = Xn − γ∇f(Xn) + s
+2γ
+β
+Wn, (4.18)
+where Wn ∼ N (0, I) and γ is the step size. This algorithm can be shown to converge to the
+global minima of f arbitrarily close for large β and small γ (Zhang et al., 2023).
+The family of MCMC methods can be used for optimisation as well. We will showcase one
+example.
+Example 4.18 (ULA for optimisation with a nonconvex potential). We reuse the nonconvex loss
+from Exercise 4.10:
+f(x) =
+
+
+
+(x + 1)2
+, x ≤ 1,
+(x − 2)2 + 3, x ≥ 1.
+Recall that this function has a unique global minimiser at x
+? = −1 with f(x
+?
+) = 0, and a
+strict local minimiser at xloc = 2 with f(xloc) = 3. Now consider the target distribution
+p
+β
+? ∝ exp(−βf) for β > 0. Show that the relative mass of p
+β
+?
+around the local minimiser 2
+vanishes as β → ∞. Then, describe how to use the Langevin discretisation targeting p
+β
+?
+to find
+the global minimiser.
+Solution. As in simulated annealing, we turn optimisation into sampling by defining, for β > 0,
+p
+β
+?
+(x) ∝ e
+−βf(x)
+.
+Differently from simulated annealing, we have a fixed β here. In this example the (unnormalised)
+density is explicitly piecewise Gaussian:
+p¯β(x) =
+
+
+
+exp 
+− β(x + 1)2
+
+, x ≤ 1,
+exp 
+− β
+
+(x − 2)2 + 3 = e
+−3β
+exp 
+− β(x − 2)2
+
+, x ≥ 1.
+Therefore p
+β
+?
+is a “double-well” target with two modes (near −1 and 2), but the right mode is
+down-weighted by the factor e
+−3β
+.
+Fix a small ε ∈ (0, 1). Consider two small neighbourhoods around the global and local
+minimisers, respectively:
+B− := Bε(−1) = [−1 − ε, −1 + ε] ⊂ (−∞, 1),
+B+ := Bε(2) = [2 − ε, 2 + ε] ⊂ (1,∞).
+Using the form of p¯β and the change of variables u = x + 1 on B− and v = x − 2 on B+, we
+obtain
+Z
+B−
+p¯β(x) dx =
+Z ε
+−ε
+e
+−βu2
+du,
+Z
+B+
+p¯β(x) dx = e
+−3β
+Z ε
+−ε
+e
+−βv2
+dv.
+136
+Hence
+R
+B−
+p¯β(x) dx
+R
+B+
+p¯β(x) dx
+= e
+3β
+.
+In particular,
+Z
+B+
+p
+β
+?
+(x) dx =
+R
+B+
+p¯β(x)dx
+R
+R
+p¯β(x)dx
+≤
+R
+B+
+p¯β(x) dx
+R
+B−
+p¯β(x) dx
+= e
+−3β −−−→
+β→∞
+0,
+so the probability mass near the local minimiser 2 vanishes exponentially fast as β → ∞. More
+generally, one can show that p
+β
+? ⇒ δ−1 as β → ∞ (but we will not as it is more involved).
+To (approximately) sample from p
+β
+? without knowing its normalising constant, we can use
+the Langevin discretisation targeting p
+β
+? ∝ e
+−βf , which is given by
+Xn+1 = Xn − γ f0
+(Xn) + s
+2γ
+β
+Wn, Wn ∼ N (0, 1), (4.19)
+where, away from the kink at x = 1,
+f
+0
+(x) =
+
+
+
+2(x + 1), x < 1,
+2(x − 2), x > 1.
+For fixed β and small γ, the chain in (4.19) has an invariant distribution close to p
+β
+?
+(the exact
+invariant law differs from p
+β
+? due to discretisation bias, as discussed earlier for the Gaussian case).
+To use this for optimisation, one lets β = βn → ∞ (cooling), so that the targets concentrate on
+the global minimiser −1.
+Exercise 4.11. Consider the following unadjusted Langevin algorithm:
+Xn+1 = Xn + γ∇ log p?(Xn) + q
+2γβ−1Wn+1,
+where Wn+1 ∼ N (0, 1) and γ > 0 is the step size. Assume that p? is a Gaussian:
+p?(x) = N (x; µ, σ2
+),
+where µ ∈ R
+d
+and σ
+2 > 0. Derive the limiting distribution p
+γ,β
+?
+(x) of Xn as n → ∞. Discuss
+any constraints on γ for convergence and the limit β → ∞.
+137
+BIBLIOGRAPHY
+Agapiou, Sergios; Papaspiliopoulos, Omiros; Sanz-Alonso, Daniel; and Stuart, Andrew M. 2017.
+Importance sampling: Intrinsic dimension and computational cost. In Statistical Science, pp.
+405–431. Cited on pp. 85 and 86.
+Akyildiz, Omer Deniz. March 2019. Sequential and adaptive Bayesian computation for inference
+and optimization. Ph.D. thesis, Universidad Carlos III de Madrid. Can be accessed from:
+http://akyildiz.me/works/thesis.pdf. Cited on pp. 63, 67, and 75.
+Akyildiz, Ömer Deniz and Míguez, Joaquín. 2021. Convergence rates for optimised adaptive
+importance samplers. In Statistics and Computing, vol. 31, no. 2, pp. 1–17. Cited on pp. 78
+and 86.
+Branchini, Nicola. 2024. Simple Monte Carlo is independent of dimension. Or is it? https:
+//branchini.fun/posts/monte_carlo_indep/. Blog post. Cited on p. 65.
+Cemgil, A Taylan. 2014. A tutorial introduction to Monte Carlo methods, Markov Chain Monte
+Carlo and particle filtering. In Academic Press Library in Signal Processing, vol. 1, pp. 1065–1114.
+Cited on p. 114.
+Devroye, Luc. 1986. Non-Uniform Random Variate Generation. Cited on p. 17.
+Douc, Randal; Moulines, Eric; Priouret, Pierre; and Soulier, Philippe. 2018. Markov chains.
+Springer. Cited on pp. 103, 106, and 109.
+Douc, Randal; Moulines, Éric; and Stoffer, David. 2013. Nonlinear Time Series: Theory, Methods
+and Applications with R Examples. Chapman & Hall. Cited on p. 103.
+Elvira, Víctor; Martino, Luca; and Robert, Christian P. 2018. Rethinking the effective sample size.
+In International Statistical Review. Cited on p. 95.
+Hwang, Chii-Ruey. 1980. Laplace’s method revisited: weak convergence of probability measures.
+In The Annals of Probability, pp. 1177–1182. Cited on p. 133.
+Kallenberg, Olav. 2021. Foundations of Modern Probability. Probability Theory and Stochastic
+Modelling. Springer Cham, 3rd edn. isbn 978-3-030-61871-1. doi:https://doi.org/10.1007/978-
+3-030-61871-1. 1 b/w illustration. Cited on p. 30.
+Martino, Luca; Luengo, David; and Míguez, Joaquín. 2018. Independent random sampling
+methods. Springer. Cited on pp. 18, 34, 35, and 39.
+138
+Murphy, Kevin P. 2007. Conjugate Bayesian analysis of the Gaussian distribution. In def, vol. 1,
+no. 2σ2, p. 16. Cited on p. 6.
+Owen, Art B. 2013. Monte Carlo theory, methods and examples. Cited on p. 95.
+Robert, Christian P and Casella, George. 2004. Monte Carlo statistical methods. Springer. Cited
+on pp. 63 and 94.
+———. 2010. Introducing Monte Carlo methods with R, vol. 18. Springer. Cited on p. 76.
+Walters, Peter. 2000. An introduction to ergodic theory, vol. 79. Springer Science & Business
+Media. Cited on p. 19.
+Yıldırım, Sinan. 2017. Sabanci University IE 58001 Lecture notes: Simulation Methods for
+Statistical Inference. Cited on pp. 48, 102, and 115.
+Zhang, Ying; Akyildiz, Ömer Deniz; Damoulas, Theodoros; and Sabanis, Sotirios. 2023.
+Nonasymptotic estimates for stochastic gradient Langevin dynamics under local conditions in
+nonconvex optimization. In Applied Mathematics & Optimization, vol. 87, no. 2, p. 25. Cited on
+p. 136.
