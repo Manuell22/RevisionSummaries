@@ -1,0 +1,1056 @@
+© 2023 Imperial College London
+MATH70015
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May 2023
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Quantum Mechanics 1
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO
+Date: 18 May 2023
+Time: 14:00 – 16:30 (BST)
+Time Allowed: 2.5hrs
+This paper has 5 Questions.
+Please Answer All Questions in 1 Answer Booklet
+Candidates should start their answers to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Allow margins for marking.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. A quantum wave function
+Consider a particle that can move on the positive half line with position coordinate x ∈ R+.
+Assume that the system is described by the wave function
+ψ(x) = Axe
+−λxe
+−iωt
+,
+where A, λ, ω are real positive constants.
+(a) Sketch the absolute value of the wave function as a function of x. (2 marks)
+(b) Find A such that the wave function is normalised to one. (6 marks)
+(c) Write an expression for the probability to find the particle in the interval [0, a], where a is
+a positive constant, in terms of the wave function ψ(x). You do not need to calculate the
+probability. (2 marks)
+(d) In the neighbourhood of which position is the particle most likely to be found? (4 marks)
+(e) What is the expectation value of the position x? (6 marks)
+Hint: You may use xe
+−yx = −
+d
+dy
+e
+−yx to calculate the integrals.
+(Total: 20 marks)
+MATH60015/MATH70015 Quantum Mechanics 1 (2023) Page 2
+2. The principles of QM - a three level system
+Consider a system on the Hilbert space C
+3
+spanned by the orthonormal basis {|φ1i, |φ2i, |φ3i}.
+The Hamiltonian Hˆ and another operator Aˆ are given as
+Hˆ = E0|φ1ihφ1| +
+iE1
+2
+(|φ2ihφ3| − |φ3ihφ2|),
+and
+Aˆ = a (|φ1ihφ1| + |φ2ihφ2|),
+where E0, E1 and a are real constants.
+(a) Verify that the vectors
+|χ±i =
+1
+√
+2
+(|φ2i ± i|φ3i)
+are eigenvectors of the Hamiltonian Hˆ and deduce the corresponding eigenvalues.
+(5 marks)
+(b) Assume that at some specific time t0 the system is in the state
+|ψi = |χ+i.
+(i) With what probability does a measurement of the energy Hˆ at time t0 return which result
+and what is the expectation value of the energy?
+(3 marks)
+(ii) With what probability does a measurement of the observable Aˆ at time t0 return which
+result and what is the expectation value of Aˆ?
+(5 marks)
+(iii) Assume now that a measurement of the observable Aˆ at time t0 yields the result a. What
+is the probability that a subsequent measurement of the energy at a later time t > t0
+yields the result E0?
+(7 marks)
+(Total: 20 marks)
+MATH60015/MATH70015 Quantum Mechanics 1 (2023) Page 3
+3. Energy quantisation in a non-symmetric infinite well
+Consider a potential of the form
+V (x) =
+
+
+
+∞, x ≤ −L
+0, −L < x ≤ 0
+V0, 0 < x ≤ L
+∞, L < x,
+where V0 and L are real and positive constants.
+(a) What is the range of energies for possible bound states? (2 marks)
+(b) What boundary conditions does an energy eigenfunction have to fulfill at x = ±L and x = 0?
+(4 marks)
+(c) Write down an ansatz for possible bound states for the energy region E < V0 using the
+known form of solutions of the time-independent Schrödinger equation in the different spatial
+regions. (4 marks)
+(d) (i) Use the boundary conditions between the different regions to derive a quantisation
+condition for the energies of bound states with E < V0 of the form
+s
+c
+2
+z
+2
+− 1 = f(z),
+in terms of the variable z =
+L
+~
+√
+2mE, where c is a constant depending on V0, m, L, and
+~.
+(7 marks)
+(ii) Is there a non-zero minimum value of V0 such that an energy eigenstate with E < V0
+exists? Give a reason for your answer. (3 marks)
+(Total: 20 marks)
+MATH60015/MATH70015 Quantum Mechanics 1 (2023) Page 4
+4. The quantum harmonic oscillator
+Consider the quantum harmonic oscillator described by the Hamiltonian
+Hˆ = ~ω
+
+aˆ
+†
+aˆ +
+1
+2
+
+= ~ω
+
+Nˆ +
+1
+2
+
+,
+with the ladder operators aˆ and aˆ
+†
+, fulfilling [ˆa, aˆ
+†
+] = 1, and the number operator Nˆ = ˆa
+†aˆ. The
+number operator and the ladder operators fulfil the commutation relations
+[N, ˆ aˆ] = −a, ˆ and [N, ˆ aˆ
+†
+] = ˆa
+†
+.
+(a) Let |νi denote an eigenvector of Nˆ with corresponding eigenvalue ν.
+(i) Show that the eigenvalues of Nˆ are non-negative, and that aˆ|νi is the zero vector if and
+only if ν = 0. Do this by considering the norm of the vector aˆ|νi. (3 marks)
+(ii) Show that aˆ|νi is either the zero vector or an eigenvector of Nˆ belonging to the eigenvalue
+ν − 1. (3 marks)
+(iii) Show that aˆ
+†
+|νi is either the zero vector or an eigenvector of Nˆ belonging to the
+eigenvalue ν + 1. (2 marks)
+From the above we can conclude that the eigenstates of the harmonic oscillator Hamiltonian
+are a set of orthonormal states |ni with non-negative integers n, belonging to the energy
+eigenvalues ~ω(n +
+1
+2
+).
+(b) There is a non-degenerate ground state |0i with Nˆ|0i = 0. Show that from the non-degeneray
+of the ground state it follows that all states |ni are non-degenerate. (4 marks)
+(c) Assume that the system at a given time t0 is prepared in the state |ψ(t0)i = √
+1
+2
+(|2i − i|3i).
+What is the expectation value of the rescaled position operator Qˆ = √
+1
+2
+(ˆa + ˆa
+†
+) at a later
+time t > t0? (8 marks)
+Hint: In parts (b) and (c) you may use that aˆ
+†
+|ni =
+√
+n + 1|n + 1i and aˆ|ni =
+√
+n|n − 1i.
+(Total: 20 marks)
+MATH60015/MATH70015 Quantum Mechanics 1 (2023) Page 5
+5. Mastery: Entanglement
+(a) (i) What are the names conventionally given to the two observers A and B in quantum
+information protocols? (2 marks)
+(ii) What is the difference between the CHSH (Clauser-Horne-Shimony-Holt) setup as
+compared to Bohm’s version of the EPR paradox? (2 marks)
+(iii) What does the no-cloning theorem state? (2 marks)
+(b) Consider the two-particle spin state
+|ψi = N
+
+| ↑i| ↓i − | ↓i| ↑i
+,
+where the single-particle states | ↑i and | ↓i are the normalised eigenstates of the single-particle
+Sˆ
+z operator
+Sˆ
+z =
+~
+2
+
+
+1 0
+0 −1
+
+ ,
+with eigenvalues ±
+~
+2
+. That is, Sˆ
+z| ↑i =
+~
+2
+| ↑i and Sˆ
+z| ↓i = −
+~
+2
+| ↓i.
+(i) For which value of N is the state |ψi normalised to one? (2 marks)
+(ii) Assume A measures the z-component of the spin of the first particle and obtains the
+outcome ~
+2
+. What is the state after this measurement? With what probability does B
+obtain which outcome in a measurement of the z-component of the spin of the second
+particle? (3 marks)
+(c) The x-component of the single particle spin is described by the operator
+Sˆ
+x =
+~
+2
+
+
+0 1
+1 0
+
+ .
+(i) Express the eigenvectors of the x-component of the single particle spin operator, | →i
+and | ←i, with Sˆ
+x| →i =
+~
+2
+| →i and Sˆ
+x| ←i = −
+~
+2
+| ←i, in terms of the eigenstates of
+the z-component. (2 marks)
+(ii) Express the state
+|ψi = N
+
+| ↑i| ↓i − | ↓i| ↑i
+,
+In terms of |→i and |←i. (3 marks)
+(iii) Assume that the initial state is again given by
+|ψi = N
+
+| ↑i| ↓i − | ↓i| ↑i
+,
+and A measures the x-component of the first particle, obtaining the outcome ~
+2
+. With
+what probability does B obtain which outcome in a measurement of the z-component of
+the spin of the second particle? (4 marks)
+(Total: 20 marks)
+MATH60015/MATH70015 Quantum Mechanics 1 (2023) Page 6
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2023
+This paper is also taken for the relevant examination for the Associateship.
+MATH60015/MATH70015
+Quantum Mechanics 1 (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2023 Imperial College London MATH60015/MATH70015 Page 1 of 12
+1. A quantum wave function
+Consider a particle that can move on the positive half line with position coordinate
+x ∈ R+. Assume that the system is described by the wave function
+ψ(x) = Axe
+−λxe
+−iωt
+,
+where A, λ, ω are real positive constants. seen/sim.seen ⇓
+(a) Sketch the absolute value of the wave function as a function of x.
+Solution: Full marks for sketch depicting a linear increase from zero at x=0, a peak
+and asymptotic decay to zero at infinity. 2, A
+meth seen ⇓
+(b) Find A such that the wave function is normalised to one.
+Solution: We want R ∞
+0
+|ψ(x)|
+2dx = 1. We calculate
+Z ∞
+0
+|ψ(x)|
+2dx = A
+2
+Z ∞
+0
+x
+2
+e
+−2λxdx.
+Using the hint we calculate 3, A
+Z ∞
+0
+x
+2
+e
+−2λxdx =
+1
+4
+d
+2
+dλ2
+Z ∞
+0
+e
+−2λxdx
+
+=
+1
+4
+d
+2
+dλ2
+
+−
+1
+2λ
+e
+−2λx∞
+0
+=
+1
+4
+d
+2
+dλ2
+
+1
+2λ
+
+=
+1
+4λ3
+And thus we conclude
+A = 2λ
+3/2
+.
+3, B
+seen ⇓
+(c) What is the expression for the probability in terms of the wave function ψ(x) to
+find the particle in an interval [0, a], where a is a positive constant? You do not
+need to calculate the probability.
+Solution: The probability is given by P(x ∈ [0, a]) = R a
+0
+|ψ(x)|
+2dx, assuming that
+ψ(x) is normalised to one. 2, A
+unseen ⇓
+(d) In the neighbourhood of which position is the particle most likely to be found?
+Solution: We need to calculate the location of the maximum of the probability
+density ρ(x) = A2x
+2
+e
+−2λx
+. 2, D
+Taking the derivative we find for the locations of the possible extrema
+2A
+2
+(x − λx2
+)e−2λx = 0,
+that is
+x(1 − λx) = 0.
+We have a minimum at x = 0 and a maximum at
+xmax =
+1
+λ
+.
+2, C
+meth seen ⇓
+(e) What is the expectation value of the position x?
+Solution: We need to calculate
+⟨xˆ⟩ =
+Z ∞
+0
+x|ψ(x)|
+2dx = A
+2
+Z ∞
+0
+x
+3
+e
+−2λxdx
+3, A
+Using the hint we find
+⟨xˆ⟩ =
+Z ∞
+0
+x|ψ(x)|
+2dx = A
+2
+Z ∞
+0
+x
+3
+e
+−2λxdx
+= −
+1
+8
+A
+2 d
+3
+dλ3
+
+1
+2λ
+
+=
+3
+8
+A2
+λ4
+=
+3
+2λ
+.
+3, B
+MATH60015/MATH70015 Quantum Mechanics 1 (Solutions) (2023) Page 3 of 12
+2. The principles of QM - a three level system
+Consider a system on the Hilbert space C
+3
+spanned by the orthonormal basis
+{|ϕ1⟩, |ϕ2⟩, |ϕ3⟩}. The Hamiltonian Hˆ and another operator Aˆ are given as
+Hˆ = E0|ϕ1⟩⟨ϕ1| +
+iE1
+2
+(|ϕ2⟩⟨ϕ3| − |ϕ3⟩⟨ϕ2|),
+and
+Aˆ = a (|ϕ1⟩⟨ϕ1| + |ϕ2⟩⟨ϕ2|),
+where E0, E1 and a are real constants. sim. seen ⇓
+(a) Verify that the vectors
+|χ±⟩ =
+1
+√
+2
+(|ϕ2⟩ ± i|ϕ3⟩)
+are eigenvectors of the Hamiltonian Hˆ and deduce the corresponding eigenvalues.
+Solution: To verify this, we use that ⟨ϕj |ϕk⟩ = δjk and calculate
+Hˆ |χ+⟩ = i
+E1
+2
+1
+√
+2
+(i|ϕ2⟩ − |ϕ3⟩)
+= −
+E1
+2
+1
+√
+2
+(|ϕ2⟩ + i|ϕ3⟩) = −
+E1
+2
+|χ+⟩,
+and
+Hˆ |χ−⟩ = i
+E1
+2
+1
+√
+2
+(−i|ϕ2⟩ − |ϕ3⟩)
+= −
+E1
+2
+1
+√
+2
+(|ϕ2⟩ − i|ϕ3⟩) = E1
+2
+|χ−⟩.
+That is, |χ+⟩ is an eigenvector of Hˆ belonging to the eigenvalue −
+E1
+2
+, and |χ−⟩ is
+an eigenvector of Hˆ belonging to the eigenvalue +
+E1
+2
+. 5, B
+(b) Assume that at some specific time t0 the system is in the state
+|ψ⟩ = |χ+⟩. sim. seen ⇓
+(i) With what probability does a measurement of the energy Hˆ return which result
+and what is the expectation value of the energy?
+Solution: Since |χ+⟩ is an eigenstate of the Hamiltonian, an energy
+measurement yields the corresponding eigenvalue with probability one. That
+is, the energy is measured to be −
+E1
+2
+with probability one and the expectation
+value is also given by −
+E1
+2
+. 3, A
+unseen ⇓
+(ii) With what probability does a measurement of the observable Aˆ return which
+result and what is the expectation value of Aˆ?
+Solution: The possible measurement outcomes are a and 0. The probability
+of measuring 0 is given by
+P(0) = |⟨ϕ3|ψ⟩|2 =
+1
+2
+.
+2, D
+The probability of obtaining the outcome a is given by
+P(a) = |⟨ϕ1|ψ⟩|2 + |⟨ϕ2|ψ⟩|2 =
+1
+2
+.
+2, C
+The expectation value of Aˆ is thus found as
+⟨Aˆ⟩ = a × P(a) + 0 × P(0) = a
+2
+.
+1, A
+unseen ⇓
+(iii) Assume now that a measurement of the observable Aˆ at the specific time t0
+yields the result a. What is the probability that a subsequent measurement of
+the energy at a later time t > t0 yields the result E0?
+Solution: If the measurement of Aˆ yields the outcome a, this collapses the
+state to the subspace spanned by |ϕ1⟩ and |ϕ2⟩. Since the initial state had
+no contribution in |ϕ1⟩ direction, the state directly after the measurement is
+given by
+|ψ(t
++
+0
+)⟩ = |ϕ2⟩.
+3, D
+Using the method of stationary states writing |ϕ2⟩ = √
+1
+2
+(|χ+⟩ + |χ−⟩), the
+time evolved state is then found as
+|ψ(t)⟩ =
+1
+√
+2
+(ei
+E1
+2
+t−t0
+ℏ |χ+⟩ + e−i
+E1
+2
+t−t0
+ℏ |χ−⟩).
+Since there is no contribution of |ϕ1⟩ the probability to measure E0 is zero for
+all times. 4, B
+MATH60015/MATH70015 Quantum Mechanics 1 (Solutions) (2023) Page 5 of 12
+3. Energy quantisation in a non-symmetric infinite well
+Consider a potential of the form
+V (x) =
+
+
+
+∞, x ≤ −L
+0, −L < x ≤ 0
+V0, 0 < x ≤ L
+∞, L < x,
+where V0 and L are real and positive constants.
+sim. seen ⇓
+(a) What is the range of energies for possible bound states?
+Solution: The energy has to be above the minimum of the potential, i.e. E > 0. 2, A
+(b) What boundary conditions does an energy eigenfunction have to fulfill at x = ±L
+and x = 0?
+Solution: ϕ(x) is continuous everywhere, we have ϕ(±L) = 0 and the first
+derivative is continuous at ϕ(x = 0). 4, A
+(c) Write down an ansatz for possible bound states for the energy region E < V0 using
+the known form of solutions of the time-independent Schr¨odinger equation in the
+different spatial regions.
+Solution: We have
+ϕE(x) =
+
+
+
+0, x ≤ −L
+Ae
+ikx + Be
+−ikx
+, −L < x ≤ 0
+Ce
+κx + De
+−κx
+, 0 ≤ x < L
+0, L ≤ x,
+with k =
+√
+2mE/ℏ and κ =
+p
+2m(V0 − E)/ℏ.
+4, A
+(d) (i) Use the boundary conditions between the different regions to derive a
+quantisation condition for the energies of bound states with E < V0 of the
+form
+r
+c
+2
+z
+− 1 = f(z),
+in terms of the variable z =
+L
+ℏ
+√
+2mE, where c is a constant depending on V0,
+m, L, and ℏ.
+Solution: We have
+ϕE(−L) = Ae
+−ikL + Be
+ikL = 0,
+that is
+B = −Ae
+−2ikL
+,
+and
+ϕ(L) = Ce
+κL + De
+−κL = 0,
+that is
+D = −Ce
+2κL
+.
+At x = 0 we have
+ϕ(0) = A + B = C + D,
+and
+ϕ
+′
+(0) = ik(A − B) = κ(C − D).
+Inserting B in terms of A, and D in terms of C into the boundary conditions 3, B
+at x = 0 we find
+A(1 − e
+−2ikL) = C(1 − e
+2κL)
+ikA(1 + e−2ikL) = κC(1 + e2κL).
+Dividing the second equation by the first, this can be rewritten as
+k cot(kL) = −κ coth(κL).
+Now we rewrite in terms of z = Lk using
+κ =
+r
+2mV0
+ℏ
+2
+− k
+2 =
+1
+L
+r
+2mV0L2
+ℏ
+2
+− z
+2
+as
+r
+c
+2
+z
+2
+− 1 = −
+cot(z)
+coth(√
+c
+2 − z
+2)
+,
+with
+c =
+√
+2mV0 L
+ℏ
+4, C
+(ii) Is there a non-zero minimum value of V0 such that an energy eigenstate with unseen ⇓
+E < V0 exists?
+Solution: Yes, there is a minimum value of V0 below which no such state
+exists. This can be seen by a graphic analysis of the quantisation condition.
+The right hand side is negative for z < π
+2
+, while the left hand side is positive
+and vanishes at z = c. Thus, only for c > π
+2
+is there a bound state with
+0 < E < V0. 3, D
+MATH60015/MATH70015 Quantum Mechanics 1 (Solutions) (2023) Page 7 of 12
+4. The quantum harmonic oscillator
+Consider the quantum harmonic oscillator described by the Hamiltonian
+Hˆ = ℏω
+
+aˆ
+†
+aˆ +
+1
+2
+
+= ℏω
+
+Nˆ +
+1
+2
+
+,
+with the ladder operators aˆ and aˆ
+†
+, fulfilling [ˆa, aˆ
+†
+] = 1, and the number operator
+Nˆ = ˆa
+†aˆ. The number operator and the ladder operators fulfil the commutation relations
+[N, ˆ aˆ] = −a, ˆ and [N, ˆ aˆ
+†
+] = ˆa
+†
+.
+(a) Let |ν⟩ denote an eigenvector of Nˆ with corresponding eigenvalue ν.
+(i) Prove that the eigenvalues of Nˆ are non-negative, and that aˆ|ν⟩ is the zero
+vector if and only if ν = 0. Do this by considering the norm of the vector aˆ|ν⟩.
+Solution: We have
+||aˆ|ν⟩||2 = ⟨ν|aˆ
+†
+aˆ|ν⟩ = ν⟨ν|ν⟩ ≥ 0.
+Since the state |ν⟩ is not the zero vector (as it is an eigenvector of Nˆ) we have
+ν ≥ 0. Further, for ν = 0 we have that ||aˆ|ν⟩||2 = 0, which means that aˆ|0⟩ is
+the zero vector. Also note that aˆ|ν⟩ can be the zero vector for no other value
+of ν, since it has non-zero norm. 3, A
+(ii) Prove that aˆ|ν⟩ is either the zero vector or an eigenvector of Nˆ belonging to
+the eigenvalue ν − 1.
+Solution: We consider Nˆaˆ|ν⟩:
+Nˆaˆ|ν⟩ = Nˆaˆ|ν⟩ − aˆNˆ|ν⟩ + ˆaNˆ|ν⟩
+= [N, ˆ aˆ]|ν⟩ + ˆaNˆ|ν⟩
+= −aˆ|ν⟩ + νaˆ|ν⟩
+= (ν − 1)ˆa|ν⟩
+That is either aˆ|ν⟩ is the zero vector or it is an eigenvector of Nˆ with eigenvalue
+ν − 1. 3, A
+(iii) Prove that aˆ
+†
+|ν⟩ is an eigenvector of Nˆ belonging to the eigenvalue ν + 1.
+Solution: We consider Nˆaˆ
+†
+|ν⟩:
+Nˆaˆ
+†
+|ν⟩ = [N, ˆ aˆ
+†
+]|ν⟩ + ˆa
+†Nˆ|ν⟩
+= ˆa
+†
+|ν⟩ + νaˆ
+†
+|ν⟩
+= (ν + 1)ˆa
+†
+|ν⟩
+That is either aˆ
+†
+|ν⟩ is the zero vector or it is an eigenvector of Nˆ with eigenvalue
+ν + 1. 2, A
+From the above we can conclude that the eigenstates of the harmonic oscillator
+Hamiltonian are a set of orthonormal states |n⟩ with non-negative integers n, belonging
+to the energy eigenvalues ℏω(n +
+1
+2
+).
+(b) There is a non-degenerate ground state |0⟩ with Nˆ|0⟩ = 0. Show that from the
+non-degeneray of the ground state it follows that all states |n⟩ are non-degenerate.
+Solution: Assume that the eigenvalue n is non-degenerate, but there are two
+linearly independent eigenstates |ϕn+1⟩ and |χn+1⟩ belonging to the eigenvalue
+n + 1. Applying the lowering operator to these two states we can produce the
+states |ϕn⟩ = ˆa|ϕn+1⟩ and |χn⟩ = ˆa|χn+1⟩. Now, since the eigenvalue n is nondegenerate these two vectors have to be multiples of each other, i.e. there exists a
+λ ∈ C such that
+|ϕn⟩ = λ|χn⟩. (1)
+Now acting on this relation with the raising operator aˆ
+†
+yields:
+aˆ
+†
+|ϕn⟩ = ˆa
+†
+aˆ|ϕn+1⟩ = Nˆ|ϕn+1⟩ = λaˆ
+†
+|χn⟩ = λaˆ
+†
+aˆ|χn+1⟩ = λNˆ|χn+1⟩, (2)
+that is Nˆ|ϕn+1⟩ = λNˆ|χn+1⟩. But since |ϕn+1⟩ and |χn+1⟩ are eigenstates of Nˆ
+with eigenvalue (n + 1), we have
+|ϕn+1⟩ = λ|χn+1⟩, (3)
+which means the two assumed to be linearly independent eigenvectors are linearly
+dependent after all, and the eigenvalue n+ 1 is also non-degenerate. Thus, starting
+from n = 0 we have shown that the eigenvalues are non-degenerate. 4, B
+(c) Assume that the system at a given time t0 is prepared in the state |ψ(t0)⟩ =
+√
+1
+2
+(|2⟩ − i|3⟩). What is the expectation value of the rescaled position operator
+Qˆ = √
+1
+2
+(ˆa + ˆa
+†
+) at a later time t > t0?
+Solution: The time-evolved state is given by
+|ψ(t)⟩ =
+1
+√
+2
+(e−i
+5
+2
+ω(t−t0)
+|2⟩ − ie−i
+7
+2
+ω(t−t0)
+|3⟩)
+=
+e
+−i
+5
+2
+ω(t−t0)
+√
+2
+(|2⟩ − ie−iω(t−t0)
+|3⟩)
+We thus have 2, C
+⟨ψ(t)|Qˆ|ψ(t)⟩ =
+1
+2
+√
+2
+
+⟨2| + ieiω(t−t0)
+⟨3|
+
+(ˆa + ˆa
+†
+)
+
+|2⟩ − ie−iω(t−t0)
+|3⟩
+
+=
+1
+2
+√
+2
+
+⟨2| + ieiω(t−t0)
+⟨3|
+ √
+2|1⟩ +
+√
+3|3⟩ − √
+3ie−iω(t−t0)
+|2⟩ − √
+4ie−iω(t−t0)
+|4⟩
+
+=
+1
+2
+√
+2
+
+−
+√
+3ie−iω(t−t0) +
+√
+3ieiω(t−t0)
+
+=
+r
+3
+2
+sin(ω(t − t0)).
+6, D
+MATH60015/MATH70015 Quantum Mechanics 1 (Solutions) (2023) Page 9 of 12
+5. Mastery: Entanglement
+(a) (i) What are the names conventionally given to the two observers A and B in
+quantum information protocols?
+Solution: Alice and Bob 2, M
+(ii) What is the difference between the CHSH (Clauser-Horne-Shimony-Holt) setup
+as compared to Bohm’s version of the EPR paradox?
+Solution: In the Bohm version of the EPR paradox both observers measure
+the spin in one specific direction, while in the CHSH setup both observers can
+choose between two different directions for the spin measurement. 2, M
+(iii) What does the no-cloning theorem state?
+Solution: The no-cloning theorem states that there is no unitary operator that
+can create a copy of an arbitrary state while maintaining the original. 2, M
+(b) Consider the two-particle spin state
+|ψ⟩ = N(| ↑⟩| ↓⟩ − | ↓⟩| ↑⟩),
+where the single-particle states | ↑⟩ and | ↓⟩ are the eigenstates of the single-particle
+Sˆ
+z operator
+Sˆ
+z =
+ℏ
+2
+
+1 0
+0 −1
+!
+,
+with eigenvalues ±
+ℏ
+2
+. That is,
+Sˆ
+z| ↑⟩ =
+ℏ
+2
+| ↑⟩, and Sˆ
+z| ↓⟩ = −
+ℏ
+2
+| ↓⟩.
+(i) For which value of N is the state |ψ⟩ normalised to one?
+Solution: The state is normalised for N = √
+1
+2
+. 2, M
+(ii) Assume A measures the z-component of the first particle and obtains the
+outcome ℏ
+2
+. What is the state after this measurement? With what probability
+does B obtain which outcome in a measurement of the z-component of the
+spin of the second particle?
+Solution: The measurement of the z-component of the spin of the first particle
+with outcome ℏ
+2
+collapses the state to
+| ↑⟩| ↓⟩.
+Thus, B will obtain the outcome −
+ℏ
+2
+with probability one. 3, M
+(c) The x-component of the single particle spin is described by the operator
+Sˆ
+x =
+ℏ
+2
+
+0 1
+1 0!
+.
+(i) Express the eigenvectors of the x-component of the single particle spin
+operator, | →⟩ and | ←⟩, with Sˆ| →⟩ =
+ℏ
+2
+| →⟩ and Sˆ
+x| ←⟩ = −
+ℏ
+2
+| ←⟩, in
+terms of the eigenstates of the z component.
+Solution: We can write the eigenstates of the Sˆ
+x operator as a superposition
+of the eigenstates of the Sˆ
+z as
+|→⟩ =
+1
+√
+2
+(| ↑⟩ + | ↓⟩)
+and
+|←⟩ =
+1
+√
+2
+(| ↑⟩ − | ↓⟩),
+with
+Sˆ
+x|→⟩ =
+ℏ
+2
+|→⟩, and Sˆ
+x|←⟩ = −
+ℏ
+2
+|←⟩.
+2, M
+(ii) Express the state
+|ψ⟩ = N(| ↑⟩| ↓⟩ − | ↓⟩| ↑⟩),
+In terms of |→⟩ and |←⟩.
+Solution: We have
+| ↑⟩ =
+1
+√
+2
+(|→⟩ + |←⟩),
+and
+| ↓⟩ =
+1
+√
+2
+(|→⟩ − |←⟩),
+and thus
+| ↑⟩| ↓⟩ =
+1
+2
+(|→⟩|→⟩ − |→⟩|←⟩ + |←⟩|→⟩ − |←⟩|←⟩)
+and
+| ↓⟩| ↑⟩ =
+1
+2
+(|→⟩|→⟩ + |→⟩|←⟩ − |←⟩|→⟩ − |←⟩|←⟩)
+That is,
+|ψ⟩ = N(| ↑⟩| ↓⟩ − | ↓⟩| ↑⟩) = N(|←⟩|→⟩ − |→⟩|←⟩).
+3, M
+(iii) Assume that the initial state is again given by
+|ψ⟩ = N(| ↑⟩| ↓⟩ − | ↓⟩| ↑⟩),
+and A measures the x-component of the first particle, obtaining the outcome
+ℏ
+2
+. With what probability does B obtain which outcome in a measurement of
+the z-component of the spin of the second particle?
+Solution: Using the result from part (ii), if the outcome of A’s measurement
+is ℏ
+2
+the state collapses to
+|→⟩|←⟩.
+Thus, the state of the second particle is
+|←⟩ =
+1
+√
+2
+(| ↑⟩ − | ↓⟩),
+which means that in a measurement of the z-component of the second particle
+the possible outcomes are ±
+ℏ
+2
+, both are obtained with probability 1
+2
+. 4, M
+MATH60015/MATH70015 Quantum Mechanics 1 (Solutions) (2023) Page 11 of 12
+Review of mark distribution:
+Total A marks: 32 of 32 marks
+Total B marks: 22 of 20 marks
+Total C marks: 10 of 12 marks
+Total D marks: 16 of 16 marks
+Total marks: 100 of 80 marks
+Total Mastery marks: 20 of 20 marks
+MATH60015/MATH70015 Quantum Mechanics 1 (Solutions) (2023) Page 12 of 12
+ExamModuleCode QuestionNumber Comments for Students
+MATH60015/70015 1 No Comments Received
+MATH60015/70015 2 No Comments Received
+MATH60015/70015 3 No Comments Received
+MATH60015/70015 4 No Comments Received
+MATH70015 5 No Comments Received
+If your module is taught across multiple year levels, you might have received this form for each level of the module. You are only required to fill this out once for each question.

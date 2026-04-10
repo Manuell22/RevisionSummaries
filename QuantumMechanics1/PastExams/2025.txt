@@ -1,0 +1,1339 @@
+© 2025 Imperial College London
+MATH70015
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+Summer 2025
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Quantum Mechanics I
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO DO SO
+Date: Thursday, May 8, 2025
+Time: Start time 14:00 – End time 16:30 (BST)
+Time Allowed: 2.5 hours
+This paper has 5 Questions.
+Please Answer All Questions in 1 Answer Booklet
+This is a closed book examination.
+Candidates should start their solutions to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Allow margins for marking.
+1. The principles of quantum mechanics
+Consider a system on the Hilbert space C
+3
+and a Hamiltonian Hˆ represented by the matrix
+Hˆ =
+
+
+E0 0 0
+0 2E0 0
+0 0 3E0
+
+
+,
+with E0 ∈ R. Let another observable Aˆ be described by the matrix
+Aˆ =
+
+
+0 1 0
+1 0 0
+0 0 −2
+
+
+.
+(a) Calculate the eigenvalues and a set of normalised eigenvectors of Aˆ.
+(4 marks)
+(b) Assume the system is in the state described by the vector ψ = √
+1
+2
+(1, 0, 1)T
+.
+(i) With what probability does a measurement of the energy yield which outcome?
+(3 marks)
+(ii) With what probability does a measurement of the observable Aˆ yield which outcome?
+(4 marks)
+(c) Assume that at time t = 0 a measurement of the observable Aˆ yields the outcome −2. What
+is the probability that a subsequent measurement of Aˆ at time t > 0 yields the same result?
+(4 marks)
+(d) Write down a normalised state χ in which the probability to obtain the result −2 in a
+measurement of Aˆ is zero, and for which the energy uncertainty is as large as possible.
+Do these two properties determine the expectation value of Aˆ in the state χ?
+(5 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2025) Page 2
+2. Position and momentum representation
+Consider a quantum particle in one dimension, with position and momentum operators qˆ and
+pˆ fulfilling the commutation relation [ˆq, pˆ] = iℏˆI. The eigenstates |q⟩ and |p⟩ of the position
+and momentum operators with eigenvalues q, p ∈ R, (qˆ|q⟩ = q|q⟩, and pˆ|p⟩ = p|p⟩), fulfil the
+generalised orthonormality conditions ⟨q
+′
+|q⟩ = δ(q−q
+′
+), and ⟨p
+′
+|p⟩ = δ(p−p
+′
+) and form resolutions
+of the identity, i.e.,
+Z ∞
+−∞
+|q⟩⟨q|dq = ˆI =
+Z ∞
+−∞
+|p⟩⟨p|dp.
+It holds
+⟨q|p⟩ =
+1
+√
+2π
+e
+i
+ℏ
+pq
+.
+The position and momentum representations ϕ(q) and ϕ˜(p) of a state |ϕ⟩ are given by
+ϕ(q) = ⟨q|ϕ⟩, and ϕ˜(p) = ⟨p|ϕ⟩,
+respectively, and are related to each other via
+ϕ(q) = 1
+√
+2π
+Z ∞
+−∞
+e
+i
+ℏ
+pqϕ˜(p)dp.
+(a) Show that ⟨q|pˆ
+2
+|ϕ⟩ = −ℏ
+2 d
+2
+dq
+2 ϕ(q).
+(4 marks)
+(b) (i) Show by induction that for integer n ≥ 1 it holds [ˆp, qˆ
+n
+] = −inℏqˆ
+n−1
+.
+(4 marks)
+(ii) Using the Taylor expansion of the operator exponential, show that
+[ˆp, e
+iˆq
+] = ℏe
+iˆq
+.
+(4 marks)
+(c) Using the results from (b) show that e
+iˆq
+|p⟩ is an eigenstate of pˆ with eigenvalue p + ℏ, i.e.,
+show that pˆe
+iˆq
+|p⟩ = (p + ℏ)eiˆq
+|p⟩. (Similarly, it holds pˆe
+−iˆq
+|p⟩ = (p − ℏ)e−iˆq
+|p⟩, but you do
+not need to show this.)
+(3 marks)
+(d) Consider the Hamiltonian
+Hˆ =
+pˆ
+2
+2
++ cos(ˆq).
+Express the eigenvalue equation Hˆ |ϕ⟩ = E|ϕ⟩
+(i) in position representation in terms of ϕ(q).
+(2 marks)
+(ii) in momentum representation, in terms of ϕ˜(p).
+(3 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2025) Page 3
+3. Angular Momentum
+Consider the three components Jˆ
+1, Jˆ
+2, Jˆ
+3 of the angular momentum operator in three dimensions,
+fulfilling the commutation relations
+[Jˆ
+j
+, Jˆ
+k] = iℏϵjklJˆ
+l
+,
+and the total angular momentum operator defined as Jˆ2 = Jˆ2
+1 + Jˆ2
+2 + Jˆ2
+3
+, which commutes with
+all three angular momentum components Jˆ
+k. The ladder operators Jˆ± are defined as
+Jˆ± = Jˆ
+x ± iJˆ
+y.
+(a) Verify the commutation relations [Jˆ
+3, Jˆ±] = ±ℏJˆ±, and [Jˆ+, Jˆ−] = 2ℏJˆ
+3.
+(4 marks)
+(b) Let |β, m⟩ be a joint eigenvector of Jˆ2
+and Jˆ
+3, such that
+Jˆ2
+|β, m⟩ = ℏ
+2β|β, m⟩, and Jˆ
+3|β, m⟩ = ℏm|β, m⟩.
+(i) Show that m2 ≤ β by considering the expectation value ⟨β, m|Jˆ2
+|β, m⟩.
+(5 marks)
+(ii) Show that Jˆ+|β, m⟩ is either an eigenvector of Jˆ
+3 corresponding to the eigenvalue
+ℏ(m + 1) or the zero vector, and Jˆ−|β, m⟩ is either an eigenvector of Jˆ
+3 corresponding
+to the eigenvalue ℏ(m − 1) or the zero vector.
+(4 marks)
+From the above, we can conclude that the possible eigenvalues of Jˆ2
+are given by ℏ
+2
+j(j + 1) with
+2j ∈ N, and for each given value of j the eigenvalues of Jˆ
+3 are given by ℏm with m running in
+integer steps from −j to j. We can then label the states by j and m such that
+Jˆ2
+|j, m⟩ = ℏ
+2
+j(j + 1)|j, m⟩, and Jˆ
+3|j, m⟩ = ℏm|j, m⟩,
+and furthermore we have
+Jˆ±|j, m⟩ = ℏ
+q
+j(j + 1) − m(m ± 1)|j, m ± 1⟩.
+(c) Let us consider a system with Hamiltonian Jˆ
+3, which at time t = 0 is prepared in the state
+|ψ(t = 0)⟩ = √
+1
+2
+(|j = 1, m = 1⟩ + i|j = 1, m = −1⟩). Calculate the expectation value of Jˆ
+1
+(i) At time t = 0.
+(3 marks)
+(ii) At later times t > 0.
+(4 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2025) Page 4
+4. A quantum wave function
+Consider a quantum particle, the state of which is described by the wave function
+ψ(x) = Ae
+−(x−5)2
+,
+with a real and positive normalisation constant A.
+(a) Write an expression for the probability to find the particle in the interval [0, a], where a is
+a positive constant, in terms of the wave function ψ(x). You do not need to calculate the
+probability.
+(2 marks)
+(b) Sketch the absolute value of the wave function as a function of x.
+(2 marks)
+(c) State whether it is more likely to find the particle at a position with x ≤ 0 or at a position
+x ≥ 0. Provide a reason for your answer.
+(2 marks)
+(d) Find the value of A such that the wave function ψ(x) is normalised to one.
+Hint: You may use that R ∞
+−∞ e
+−ax2
+dx =
+qπ
+a
+, for Re(a) > 0.
+(5 marks)
+(e) What is the expectation value ⟨xˆ⟩ of the position?
+(2 marks)
+(f) Assume that the wave function ψ(x) above is the eigenfunction of a Hamiltonian of the form
+Hˆ =
+pˆ
+2
+2m + V (ˆx) belonging to the eigenenergy E0. Find the potential V (x).
+(7 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2025) Page 5
+5. Mastery - Coherent states and Husimi distribution for a su(2) system
+Consider an angular momentum system with basis states |j, m⟩ defined such that
+Jˆ2
+|j, m⟩ = ℏ
+2
+j(j + 1)|j, m⟩, and Jˆ
+3|j, m⟩ = ℏm|j, m⟩.
+Specifically, we will consider the case j = 1 here and label the basis states by m as |1⟩, |0⟩, and
+| − 1⟩.
+In analogy to the coherent states of the harmonic oscillator one can define angular momentum
+coherent states as
+|ζ⟩ = N(ζ)eζJˆ+/ℏ
+| − 1⟩,
+where the complex variable ζ parameterises the spherical phase space. It can be related to spherical
+coordinates via the parameterisation ζ = −e
+−iϕ
+tan( θ
+2
+). N(ζ) is a real-valued positive normalisation
+factor.
+(a) Use the Taylor expansion of the exponential and Jˆ+|m⟩ = ℏ
+q
+2 − m(m + 1)|m+1⟩ to express
+the coherent states |ζ⟩ in the standard basis |1⟩, |0⟩, and | − 1⟩.
+(5 marks)
+(b) Verify that the normalisation constant is given by N(ζ) = cos2
+(
+θ
+2
+).
+(5 marks)
+(c) We can then define a Husimi distribution on the sphere as
+Q(θ, ϕ) = 1
+4π
+|⟨ζ|ψ⟩|2
+.
+Calculate the Husimi distribution
+(i) of the state |ψ⟩ = |0⟩;
+(4 marks)
+(ii) of the state |ψ⟩ = √
+1
+2
+(| − 1⟩ + |1⟩).
+(6 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2025) Page 6
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2025
+This paper is also taken for the relevant examination for the Associateship.
+MATH60015/70015
+Quantum Mechanics 1 (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2025 Imperial College London MATH60015/70015 Page 1 of 15
+1. The principles of quantum mechanics
+Consider a system on the Hilbert space C
+3
+and a Hamiltonian Hˆ represented by the
+matrix
+Hˆ =
+
+
+E0 0 0
+0 2E0 0
+0 0 3E0
+
+ ,
+with E0 ∈ R. Let another observable Aˆ be described by the matrix
+Aˆ =
+
+
+0 1 0
+1 0 0
+0 0 −2
+
+ .
+(a) Calculate the eigenvalues and a set of normalised eigenvectors of Aˆ.
+(Seen similar)
+Aˆ is already block diagonal with one 1 × 1 block with eigenvalue
+λ = −2,
+where the corresponding eigenvector of Aˆ is given by
+ϕ−2 =
+
+
+0
+0
+1
+
+ .
+The remaining block of Aˆ is the Pauli matrix 4, A
+σ1 =
+
+0 1
+1 0!
+,
+and we either remember or calculate the eigenvalues to be
+λ = ±1.
+The corresponding eigenvectors (up to a phase factor) of Aˆ are the found from the
+eigenvalue equation as
+ϕ± =
+1
+√
+2
+
+
+1
+±1
+0
+
+ .
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 2 of 15
+(b) Assume the system is in the state described by the vector ψ = √
+1
+2
+(1, 0, 1)T
+.
+(i) With what probability does a measurement of the energy yield which outcome?
+(Seen similar)
+The probability to measure an eigenvalue of an observable is given by
+the squared modulus of the projection of the state onto the corresponding
+eigenspace of the observable. The eigenvectors of the Hamiltonian are the three
+basis vectors, thus the probabilities are found as the absolute value squares of
+the components of the vector ϕ as 3, A
+P(E0) = 1
+2
+, P(2E0) = 0, P(3E0) = 1
+2
+.
+(ii) With what probability does a measurement of the observable Aˆ yield which
+outcome?
+(Seen similar)
+We express ψ in the eigenbasis of Aˆ as
+ψ =
+1
+√
+2
+(ϕ−2 +
+1
+√
+2
+(ϕ+ + ϕ−)) = 1
+2
+ϕ+ +
+1
+2
+ϕ− +
+1
+√
+2
+ϕ−2.
+We then read of the probabilities for the different measurement outcomes of 4, B
+Aˆ as
+P(−2) = |
+1
+√
+2
+|
+2 =
+1
+2
+, P(±1) = |
+1
+2
+|
+2 =
+1
+4
+.
+(c) Assume that at time t = 0 a measurement of the observable Aˆ yields the outcome
+−2. What is the probability that a subsequent measurement of Aˆ at time t > 0
+yields the same result?
+(Seen similar)
+The state directly after the measurement is the eigenvector of Aˆ belonging to the
+eigenvalue −2, i.e. 2, C
+ψ(t = 0) = ϕ−2.
+This is also an eigenstate of the Hamiltonian, and thus the state changes only by
+a phase factor in the time evolution. Therefore, at later times the probability to 2, B
+find the eigenvalue −2 in a measurement of Aˆ is still given by P(−2) = 1.
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 3 of 15
+(d) Write down a normalised state χ in which the probability to obtain the result −2
+in a measurement of Aˆ is zero, and for which the energy uncertainty is as large
+as possible. Do these two properties determine the expectation value of Aˆ in the
+state χ?
+(unseen)
+Given that the probability to obtain the outcome −2 in a measurement of Aˆ is
+zero, we have
+χ ∝
+
+
+x
+y
+0
+
+ .
+Now to maximise the uncertainty of the energy in this state it has to hold that 3, D
+|x|
+2 = |y|
+2
+, and for the state to be normalised we have |x|
+2 + |y|
+2 = 1. Thus
+we find that the states fulfilling the requirement (up to an overall phase) can be
+written as
+χ =
+1
+√
+2
+
+
+1
+e
+iθ
+0
+
+ , with θ ∈ R.
+This does not uniquely specify the expectation value of Aˆ. For example, we have 2, D
+⟨Aˆ⟩ = 1 for θ = 0 and ⟨Aˆ⟩ = −1 for θ = π.
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 4 of 15
+2. Position and momentum representation
+Consider a quantum particle in one dimension, with position and momentum operators
+qˆ and pˆ fulfilling the commutation relation [ˆq, pˆ] = iℏˆI. The eigenstates |q⟩ and |p⟩
+of the position and momentum operators with eigenvalues q, p ∈ R, (qˆ|q⟩ = q|q⟩, and
+pˆ|p⟩ = p|p⟩), fulfil the generalised orthonormality conditions ⟨q
+′
+|q⟩ = δ(q − q
+′
+), and
+⟨p
+′
+|p⟩ = δ(p − p
+′
+) and form resolutions of the identity, i.e.,
+Z ∞
+−∞
+|q⟩⟨q|dq = ˆI =
+Z ∞
+−∞
+|p⟩⟨p|dp.
+It holds
+⟨q|p⟩ =
+1
+√
+2π
+e
+i
+ℏ
+pq
+.
+The position and momentum representations ϕ(q) and ϕ˜(p) of a state |ϕ⟩ are given by
+ϕ(q) = ⟨q|ϕ⟩, and ϕ˜(p) = ⟨p|ϕ⟩,
+respectively, and are related to each other via
+ϕ(q) = 1
+√
+2π
+Z ∞
+−∞
+e
+i
+ℏ
+pqϕ˜(p)dp.
+(a) Show that
+⟨q|pˆ
+2
+|ϕ⟩ = −ℏ
+2 d
+2
+dq
+2
+ϕ(q).
+(Seen similar)
+We insert a resolution of the identity ˆI =
+R ∞
+−∞ |p⟩⟨p|dp to write 2, B
+⟨q|pˆ
+2
+|ϕ⟩ =
+Z ∞
+−∞
+⟨q|pˆ
+2
+|p⟩⟨p|ϕ⟩dp
+Now using that pˆ
+2
+|p⟩ = ppˆ|p⟩ = p
+2
+|p⟩, and inserting ⟨q|p⟩ = √
+1
+2π
+e
+i
+ℏ
+pq and
+ϕ˜(p) = ⟨p|ϕ⟩ we find
+⟨q|pˆ
+2
+|ϕ⟩ =
+1
+√
+2π
+Z ∞
+−∞
+p
+2
+e
+i
+ℏ
+pqϕ˜(p)dp
+Now we notice that p
+2
+e
+i
+ℏ
+pq = −ℏ
+2 d
+2
+dq
+2 e
+i
+ℏ
+pq, and thus 2, C
+⟨q|pˆ
+2
+|ϕ⟩ = −ℏ
+2 d
+2
+dq
+2
+
+1
+√
+2π
+Z ∞
+−∞
+e
+i
+ℏ
+pqϕ˜(p)dp
+
+= −ℏ
+2 d
+2
+dq
+2
+ϕ(q).
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 5 of 15
+(b) (i) Show by induction that for integer n ≥ 1 it holds [ˆp, qˆ
+n
+] = −inℏqˆ
+n−1
+.
+(seen similar)
+We know the statement holds for n = 1. Let us now assume we have proven
+it for n. We have
+[ˆp, qˆ
+n+1] = ˆq[ˆp, qˆ
+n
+] + [ˆp, qˆ]ˆq
+n
+.
+Using the induction assumption we thus have 4, A
+[ˆp, qˆ
+n+1] = −inℏqˆqˆ
+n−1 − iℏqˆ
+n = −i(n + 1)ℏqˆ
+n
+.
+(ii) Using the Taylor expansion of the operator exponential, show that
+[ˆp, e
+iˆq
+] = ℏe
+iˆq
+.
+(unseen)
+Using 2, A
+e
+iˆq =
+X∞
+n=0
+i
+n
+n!
+qˆ
+n
+,
+we have
+[ˆp, e
+iˆq
+] = X∞
+n=0
+i
+n
+n!
+[ˆp, qˆ
+n
+].
+Now using the result from part (b)(i) we find 2, C
+[ˆp, e
+iˆq
+] = X∞
+n=0
+i
+n
+n!
+(−inℏqˆ
+n−1
+) = ℏ
+X∞
+n=0
+i
+n−1
+n!
+nqˆ
+n−1
+.
+Re-labelling the sum we have
+[ˆp, e
+iˆq
+] = ℏ
+X∞
+n=0
+i
+n
+n!
+qˆ
+n = ℏe
+iˆq
+.
+(c) Using the results from (b) show that e
+iˆq
+|p⟩ is an eigenstate of pˆwith eigenvalue p+ℏ,
+i.e., show that pˆe
+iˆq
+|p⟩ = (p+ℏ)eiˆq
+|p⟩. (Similarly, it holds pˆe
+−iˆq
+|p⟩ = (p−ℏ)e−iˆq
+|p⟩,
+but you do not need to show this.)
+(unseen)
+We have 3, B
+pˆe
+iˆq
+|p⟩ =
+
+[ˆp, e
+iˆq
+] + eiˆq
+pˆ
+
+|p⟩
+using the result from (b) we thus find
+pˆe
+iˆq
+|p⟩ =
+
+ℏe
+iˆq + eiˆq
+pˆ
+
+|p⟩ = (p + ℏ)eiˆq
+|p⟩,
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 6 of 15
+(d) Consider the Hamiltonian
+Hˆ =
+pˆ
+2
+2
++ cos(ˆq).
+Express the eigenvalue equation Hˆ |ϕ⟩ = E|ϕ⟩
+(i) in position representation in terms of ϕ(q).
+(seen smiliar)
+We have
+⟨q|Hˆ |ϕ⟩ = −ℏ
+2 d
+2
+dq
+2
+ϕ(q) + cos(q)ϕ(q),
+and thus, in position representation the eigenvalue equation reads 2, A
+−ℏ
+2 d
+2
+dq
+2
+ϕ(q) + cos(q)ϕ(q) = Eϕ(x).
+(ii) in momentum representation, in terms of ϕ˜(p).
+(unseen)
+Using the result from part (c) we have
+⟨p|e
+iˆq
+|ϕ⟩ = ϕ˜(p + ℏ)
+and 3, D
+⟨p|e
+−iˆq
+|ϕ⟩ = ϕ˜(p − ℏ),
+that is,
+⟨p| cos(ˆq)|ϕ⟩ =
+1
+2
+
+ϕ˜(p − ℏ) + ϕ˜(p + ℏ)
+
+,
+and therefore the eigenvalue equation in momentum representation reads
+p
+2
+2
+ϕ˜(p) + 1
+2
+
+ϕ˜(p − ℏ) + ϕ˜(p + ℏ)
+
+= Eϕ˜(p).
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 7 of 15
+3. Angular Momentum
+Consider the three components Jˆ
+1, Jˆ
+2, Jˆ
+3 of the angular momentum operator in three
+dimensions, fulfilling the commutation relations
+[Jˆ
+j , Jˆ
+k] = iℏϵjklJˆ
+l
+,
+and the total angular momentum operator defined as Jˆ2 = Jˆ2
+1 +Jˆ2
+2 +Jˆ2
+3
+, which commutes
+with all three angular momentum components Jˆ
+k. The ladder operators Jˆ± are defined
+as
+Jˆ± = Jˆ
+x ± iJˆ
+y.
+(a) Verify the commutation relations
+[Jˆ
+3, Jˆ±] = ±ℏJˆ±, [Jˆ+, Jˆ−] = 2ℏJˆ
+3.
+(Seen and straight forward)
+Solution:
+We have 4, A
+[Jˆ
+3, Jˆ+] = [Jˆ
+3, Jˆ
+x] + i[Jˆ
+3, Jˆ
+y] = iℏJˆ
+y + ℏJˆ
+x = ℏJˆ+
+similarly,
+[Jˆ
+3, Jˆ−] = iℏJˆ
+y − ℏJˆ
+x = −ℏJˆ−,
+and
+[Jˆ+, Jˆ−] = [Jˆ
+x + iJˆ
+y, Jˆ
+x − iJˆ
+y] = −i[Jˆ
+x, Jˆ
+y] + i[Jˆ
+y, Jˆ
+x] = 2ℏJˆ
+3.
+(b) Let |β, m⟩ be a joint eigenvector of Jˆ2
+and Jˆ
+3, such that
+Jˆ2
+|β, m⟩ = ℏ
+2β|β, m⟩, and Jˆ
+3|β, m⟩ = ℏm|β, m⟩.
+(i) Show that m2 ≤ β by considering the expectation value ⟨β, m|Jˆ2
+|β, m⟩.
+(Seen)
+Solution:
+By definition we have Jˆ2 = Jˆ2
+x + Jˆ2
+y + Jˆ2
+3
+, and thus 3, A
+⟨β, m|Jˆ2
+|β, m⟩ = ⟨β, m|Jˆ2
+x
+|β, m⟩ + ⟨β, m|Jˆ2
+y
+|β, m⟩ + ⟨β, m|Jˆ2
+3
+|β, m⟩
+We have
+⟨β, m|Jˆ2
+j
+|β, m⟩ = ||Jˆ
+j |β, m⟩||2
+,
+which has to be positive. For Jˆ
+3 we specifically have 2, B
+⟨β, m|Jˆ2
+3
+|β, m⟩ = ℏ
+2m2
+.
+Thus, we have
+⟨β, m|Jˆ2
+|β, m⟩ ≥ ℏ
+2m2
+.
+At the same time we have
+⟨β, m|Jˆ2
+|β, m⟩ = ℏ
+2β,
+and thus we deduce
+β ≥ m2
+.
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 8 of 15
+(ii) Show that Jˆ+|β, m⟩ is either an eigenvector of Jˆ
+3 corresponding to the
+eigenvalue ℏ(m + 1) or the zero vector, and Jˆ−|β, m⟩ is either an eigenvector
+of Jˆ
+3 corresponding to the eigenvalue ℏ(m − 1) or the zero vector.
+(Seen)
+Solution:
+Let us consider Jˆ
+3Jˆ+|β, m⟩: 2, A
+2, B Jˆ
+3Jˆ+|β, m⟩ = (Jˆ
+3Jˆ+ − Jˆ+Jˆ
+3 + Jˆ+Jˆ
+3)|β, m⟩
+= ([Jˆ
+3, Jˆ+] + Jˆ+Jˆ
+3)|β, m⟩
+= (ℏJˆ+ + ℏmJˆ+)|β, m⟩
+= ℏ(m + 1)Jˆ+|β, m⟩.
+Thus, the vector Jˆ+|β, m⟩ is either the zero vector, or it is an eigenvector of
+Jˆ
+3 with eigenvalue ℏ(m + 1). A similar calculation yields
+Jˆ
+3Jˆ−|β, m⟩ = ℏ(m − 1)Jˆ−|β, m⟩.
+Thus, the vector Jˆ−|β, m⟩ is either the zero vector, or it is an eigenvector of
+Jˆ
+3 with eigenvalue ℏ(m − 1).
+From the above, we can conclude that the possible eigenvalues of Jˆ2
+are given by
+ℏ
+2
+j(j + 1) with 2j ∈ N, and for each given value of j the eigenvalues of Jˆ
+3 are given
+by ℏm with m running in integer steps from −j to j. We can then label the states by
+j and m such that
+Jˆ2
+|j, m⟩ = ℏ
+2
+j(j + 1)|j, m⟩, and Jˆ
+3|j, m⟩ = ℏm|j, m⟩,
+and furthermore we have
+Jˆ±|j, m⟩ = ℏ
+p
+j(j + 1) − m(m ± 1)|j, m ± 1⟩.
+(c) Let us consider a system with Hamiltonian Jˆ
+3, which at time t = 0 is prepared in
+the state |ψ(t = 0)⟩ = √
+1
+2
+(|j = 1, m = 1⟩ + i|j = 1, m = −1⟩). Calculate the
+expectation value of Jˆ
+1
+(i) At time t = 0.
+(Unseen) 3, C
+We have Jˆ
+1 =
+1
+2
+(Jˆ+ + Jˆ−), and thus
+⟨ψ0|Jˆ
+1|ψ0⟩ =
+1
+2
+
+⟨ψ0|Jˆ+|ψ0⟩ + ⟨ψ0|Jˆ−|ψ0⟩
+
+since Jˆ− is the adjoint of Jˆ+ we only need to calculate ⟨ψ0|Jˆ+|ψ0⟩ and can
+then use ⟨ψ0|Jˆ−|ψ0⟩ = ⟨ψ0|Jˆ+|ψ0⟩
+∗
+. We have
+Jˆ+|ψ(t = 0)⟩ = iℏ|j = 1, m = 0⟩
+Since the angular momentum states are orthonormal, we thus find
+⟨ψ0|Jˆ+|ψ0⟩ =
+i
+√
+2
+ℏ,
+and thus
+⟨ψ0|Jˆ
+1|ψ0⟩ = 0.
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 9 of 15
+(ii) At later times t > 0.
+(Unseen)
+Solution:
+The time evolved state is given by 4, D
+|ψ(t)⟩ = e−iJˆ3t/ℏ
+|ψ(t = 0)⟩ =
+1
+√
+2
+
+e
+−it
+|1, 1⟩ + ieit
+|1, −1⟩
+
+We then calculate
+⟨ψ0|Jˆ+|ψ0⟩ =
+ieit
+√
+2
+ℏ,
+and thus
+⟨ψ0|Jˆ−|ψ0⟩ =
+−ie−it
+√
+2
+ℏ,
+therefore
+⟨ψ0|Jˆ
+1|ψ0⟩ = −
+ℏ
+√
+2
+sin(t).
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 10 of 15
+4. A quantum wave function
+Consider a quantum particle, the state of which is described by the wave function
+ψ(x) = Ae
+−(x−5)2
+,
+with a real and positive normalisation constant A.
+(a) Write an expression for the probability to find the particle in the interval [0, a],
+where a is a positive constant, in terms of the wave function ψ(x). You do not
+need to calculate the probability.
+(Seen) 2, A
+The probability is given by P(x ∈ [0, a]) = R a
+0
+|ψ(x)|
+2dx, assuming that ψ(x) is
+normalised to one.
+(b) Sketch the absolute value of the wave function as a function of x.
+(Seen similar) 2, A
+Full marks for a sketch of this Gaussian shape with maximum at x = 5, and an
+asymptotic decay to zero at x to plus and minus infinity, symmetric around x = 5.
+(c) Is it more likely to find the particle at a position with x ≤ 0 or at a position x ≥ 0.
+Provide a reason for your answer.
+(Seen similar) 2, B
+The wavefunction is symmetric around the single peak at x = 5, thus it is more
+likely to find the particle at a positive position.
+(d) Find the value of A such that the wave function ψ(x) is normalised to one.
+Hint: You may use that R ∞
+−∞ e
+−ax2
+dx =
+pπ
+a
+, for Re(a) > 0.
+(method seen) 2, A
+We have
+||ψ||2 = A
+2
+Z +∞
+−∞
+e
+−2(x−5)2
+dx
+= A
+2
+Z +∞
+−∞
+e
+−2y
+2
+dy.
+where we have made the substitution y = x − 5. 3, B
+Using the integral provided we find
+Z +∞
+−∞
+e
+−2y
+2
+dy =
+r
+π
+2
+,
+and thus
+||ψ||2 = A
+2
+r
+π
+2
+.
+That is, ψ(x) is normalised to one for A =
+
+2
+π
+1/4
+.
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 11 of 15
+(e) What is the expectation value ⟨xˆ⟩ of the position?
+(Seen similar)
+The wave function is symmetric around a single maximum, thus this is the
+expectation value 2, A
+⟨xˆ⟩ = 5.
+(f) Assume that the wave function ψ(x) above is the eigenfunction of a Hamiltonian
+of the form Hˆ =
+pˆ
+2
+2m + V (ˆx) belonging to the eigenenergy E0. Find the potential
+V (x).
+(unseen)
+Let |ψ⟩ the vector with position representation ψ(x) = ⟨x|ψ⟩. For ψ(x) be an
+eigenfunction of Hˆ with energy E0 it has to hold
+⟨x|Hˆ |ψ⟩ = ⟨x|E0|ψ⟩,
+or explicitly 4, D
+−ℏ
+2 d
+2
+dx
+2
+ψ(x) + V (x)ψ(x) = E0ψ(x).
+We calculate
+d
+dx
+ψ(x) = −2A(x − 5)e−(x−5)2
+,
+and
+d
+2
+dx
+2
+ψ(x) = A(−2 + 4(x − 5)2
+)e−(x−5)2
+= (−2 + 4(x − 5)2
+)ψ(x),
+and insert this into the Schr¨odinger equation in position representation to find 3, C
+−
+ℏ
+2
+2m
+(−2 + 4(x − 5)2
+)ψ(x) + V (x)ψ(x) = E0ψ(x),
+and thus we conclude that
+V (x) = E0 −
+ℏ
+2
+m
++
+2ℏ
+2
+m
+(x − 5)2
+.
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 12 of 15
+5. Mastery - Coherent states and Husimi distribution for a su(2) system
+Consider an angular momentum system with basis states |j, m⟩ defined such that
+Jˆ2
+|j, m⟩ = ℏ
+2
+j(j + 1)|j, m⟩, and Jˆ
+3|j, m⟩ = ℏm|j, m⟩.
+Specifically, we will consider the case j = 1 here and label the basis states by m as
+|1⟩, |0⟩, and | − 1⟩.
+In analogy to the coherent states of the harmonic oscillator one can define angular
+momentum coherent states as
+|ζ⟩ = N(ζ)eζJˆ+/ℏ
+| − 1⟩,
+where the complex variable ζ parameterises the spherical phase space. It can be related to
+spherical coordinates via the parameterisation ζ = −e
+−iϕ
+tan( θ
+2
+). N(ζ) is a real-valued
+positive normalisation factor.
+(a) Use the Taylor expansion of the exponential and Jˆ+|m⟩ = ℏ
+p
+2 − m(m + 1)|m+1⟩
+to express the coherent states |ζ⟩ in the standard basis |1⟩, |0⟩, and | − 1⟩.
+Taylor expanding the exponential we have
+|ζ⟩ = N(ζ)
+X∞
+n=0
+ζ
+n
+n!ℏ
+n
+Jˆn
++ | − 1⟩.
+We have 5, M
+Jˆ+| − 1⟩ = ℏ
+√
+2|0⟩, Jˆ+|0⟩ = ℏ
+√
+2|1⟩, and Jˆ+|1⟩ = 0.
+Thus we find
+|ζ⟩ = N(ζ)
+
+| − 1⟩ +
+√
+2ζ|0⟩ + ζ
+2
+|1⟩
+
+.
+(b) Verify that the normalisation constant is given by N(ζ) = cos2
+(
+θ
+2
+).
+We calculate the normalisation of a coherent state |ζ⟩ as 5, M
+⟨ζ|ζ⟩ = N
+2
+(ζ)
+
+⟨−1| +
+√
+2ζ
+∗
+⟨0| + ζ
+2
+⟨1|
+ | − 1⟩ +
+√
+2ζ|0⟩ + ζ
+2
+|1⟩
+
+= N
+2
+(ζ)
+
+1 + 2|ζ|
+2 + |ζ|
+4
+
+We have
+|ζ|
+2 = tan2
+(θ/2) = sin2
+(θ/2)
+cos2(θ/2),
+and thus
+1 + 2|ζ|
+2 + |ζ|
+4 =
+cos4
+(θ/2) + 2 cos2
+(θ/2) sin2
+(θ/2) + sin4
+(θ/2)
+cos4(θ/2) =
+1
+cos4(θ/2).
+Thus we have
+⟨ζ|ζ⟩ =
+N2
+(ζ)
+cos4(θ/2),
+and we find |ζ⟩ to be normalised to one for
+N(ζ) = cos2
+(θ/2).
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 13 of 15
+(c) We can then define a Husimi distribution on the sphere as
+Q(θ, ϕ) = 1
+4π
+|⟨ζ|ψ⟩|2
+.
+Calculate the Husimi distribution
+(i) of the state |ψ⟩ = |0⟩;
+We have by definition 4, M
+Q(θ, ϕ) = 1
+4π
+|⟨ζ|0⟩|2
+.
+From (a) we deduce
+⟨ζ|0⟩ =
+√
+2N(ζ)ζ
+∗
+,
+and thus
+Q(θ, ϕ) = 1
+2π
+N
+2
+(θ)|ζ|
+2 =
+1
+2π
+cos4
+(θ/2) tan2
+(θ/2) = 1
+2π
+cos2
+(θ/2) sin2
+(θ/2) = 1
+8π
+sin2
+(θ).
+(ii) of the state |ψ⟩ = √
+1
+2
+(| − 1⟩ + |1⟩).
+We have by definition
+Q(θ, ϕ) = 1
+8π
+|⟨ζ| − 1⟩ + ⟨ζ|1⟩|2
+.
+From (a) we deduce 6, M
+⟨ζ| − 1⟩ = N(ζ), and ⟨ζ| − 1⟩ = N(ζ)(ζ
+∗
+)
+2
+and thus
+Q(θ, ϕ) = 1
+8π
+N
+2
+(θ)|1 + (ζ
+∗
+)
+2
+|
+2
+=
+1
+8π
+
+cos4
+(θ/2) − 2 cos(2ϕ) cos2
+(θ/2) sin2
+(θ/2) + sin4
+(θ/2)
+.
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 14 of 15
+Review of mark distribution:
+Total A marks: 32 of 32 marks
+Total B marks: 20 of 20 marks
+Total C marks: 12 of 12 marks
+Total D marks: 16 of 16 marks
+Total marks: 100 of 80 marks
+Total Mastery marks: 20 of 20 marks
+MATH60015/70015 Quantum Mechanics 1 (Solutions) (2025) Page 15 of 15
+MATH70015 Quantum Mechanics I Markers Comments
+Question 1 Parts (a)-(c) did not come as a surprise to anyone as there are similar
+questions in most years, and there were very few problems here. Part
+(d) caused a bit of overthinking with many. I had hoped that without a
+lengthy calculation it should be clear that the uncertainty of H is
+largest when the two contributing eigenstates have the same
+probability, but few realised this before calculating. Nevertheless
+there were a number of correct solutions.
+Question 2 In part a) I unfortunately had not made it completely clear that you
+were not supposed to use the position representation of the
+momentum operator, but to actually derive it. I gave one mark for
+those who just used it. Part (b) caused hardly any problems for
+anyone, I was very strict about the limits of the sum, and several
+people lost a mark there. Part d) was perceived as harder as I had
+anticipated, I only saw a handful of correct answers.
+Question 3 Few problems in parts a) and b), the commutators are fiddly, and
+some people lost time not remembering the commutator rules.
+Apologies also, if anyone was confused by the typo (I used the indices
+x and y instead of 1 and 2 in the definition of J+-. Anyone who didn't
+give a good reason why J_j^2 are positive lost a mark.
+Part c was a little harder for many. It would have sufficed to calculate
+J+ here, as J- is the conjugate of this and J1 is the real part. A common
+mistake was to think that J+|1,-1 was proportional to |1,1, not |1,0. That
+mistake lead to two marks being lost in part c(i), but I did not double
+penalise this and gave full marks in part (c)(ii) if it repeated the same
+mistake but contained now further mistakes.
+Question 4 This was a very easy question that caused few problems. The most
+common issue I have seen was with the sketch of the probability
+amplitude, where many people depicted a wave function with a tip at
+x=5, rather than a smooth gaussian profile.
+Question 5 The question went very well for the vast majority. Common mistakes
+included forgetting a complex conjugation in the inner product.

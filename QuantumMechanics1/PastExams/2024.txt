@@ -1,0 +1,1048 @@
+© 2024 Imperial College London
+MATH70015
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May 2024
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Quantum Mechanics 1
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO
+Date: Thursday, May 9, 2024
+Time: 14:00 – 16:30 (BST)
+Time Allowed: 2.5 hours
+This paper has 5 Questions.
+Please Answer Each Question in a Separate Answer Booklet
+Candidates should start their solutions to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Allow margins for marking.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. The postulates of Quantum Mechanics - a spin 1
+2
+system
+Consider the matrices
+sˆx =
+ℏ
+2
+
+
+0 1
+1 0
+
+ , sˆy =
+ℏ
+2
+
+
+0 −i
+i 0
+
+ , sˆz =
+ℏ
+2
+
+
+1 0
+0 −1
+
+ ,
+which are a representation of the angular momentum operators for the total angular momentum
+quantum number j =
+1
+2
+in the standard basis (i.e. the eigenbasis of sˆz), describing, e.g. the spin
+degree of freedom of a spin 1
+2
+particle.
+(a) Verify that these matrices indeed fulfil the correct commutation relations to be angular
+momentum operators. (5 marks)
+(b) Consider now a quantum system described by the matrix Hamiltonian
+Hˆ =
+E0
+ℏ
+sˆx,
+where E0 is a real-valued energy constant.
+(i) Calculate the eigenvalues and normalised eigenvectors of Hˆ . (5 marks)
+(ii) Assume that an sˆz measurement at time t0 yields the outcome ℏ
+2
+. What is the state
+directly after the measurement? If you were to immediately measure Hˆ , with what
+probability would you obtain which outcome?
+(4 marks)
+(iii) Assume that in another experiment an sˆz measurement at time t1 yields the outcome ℏ
+2
+.
+What is the state at some later time t > t1? If you were to measure Hˆ after some time
+at t > t1, with what probability would you obtain which outcome? (6 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2024) Page 2
+2. Quantum harmonic oscillator and the position operator
+Consider the harmonic oscillator Hamiltonian
+Hˆ = ℏω
+
+aˆ
+†
+aˆ +
+1
+2
+ˆI
+
+,
+with annihilation and creation operators aˆ and aˆ
+† with [ˆa, aˆ
+†
+] = ˆI.
+(a) (i) Calculate the commutators of the number operator Nˆ = ˆa
+†aˆ with aˆ and aˆ
+†
+, respectively.
+(3 marks)
+(ii) Show that if |ν⟩ is an eigenvector of Nˆ with eigenvalue ν, then aˆ|ν⟩ is either an
+eigenvector of Nˆ with eigenvalue ν−1 or the zero vector, and aˆ
+†
+|ν⟩ is either an eigenvector
+of Nˆ with eigenvalue ν + 1 or the zero vector. (4 marks)
+(iii) Show that aˆ
+†
+|ν⟩ cannot be the zero vector. (4 marks)
+(b) The eigenstates |x⟩ of the position operator qˆ belong to the eigenvalues x ∈ R, such that
+qˆ|x⟩ = x|x⟩. They fulfil the generalised orthonormality condition ⟨y|x⟩ = δ(x − y), and form
+a resolution of the identity,
+Z ∞
+−∞
+|x⟩⟨x|dx = ˆI.
+In its own eigenbasis the position operator is diagonal, that is, we have
+⟨y|qˆ|x⟩ = xδ(x − y).
+(i) Show that the matrix elements in another basis {|n⟩} can be expressed as the integrals
+⟨n|qˆ|m⟩ =
+Z ∞
+−∞
+x⟨n|x⟩⟨x|m⟩dx.
+(4 marks)
+(ii) Now consider the harmonic oscillator eigenstates |n⟩, with position representation
+⟨x|n⟩ =
+1
+π
+1/4
+√
+2
+nn!
+√
+L
+e
+− x
+2
+2L2 Hn
+
+x
+L
+
+,
+where L =
+q ℏ
+mω
+and Hn(u) denotes the Hermite polynomial of order n.
+The Hermite polynomials fulfil the orthogonality relation
+Z ∞
+−∞
+e
+−u
+2
+Hn(u)Hm(u)du =
+√
+π2
+nn!δnm,
+and the recursion relation
+Hn+1(u) = 2uHn(u) − 2nHn−1(u).
+Using the above, calculate an expression for the matrix elements ⟨n|qˆ|m⟩ in the harmonic
+oscillator basis, where |n⟩ and |m⟩ are eigenstates of the harmonic oscillator Hamiltonian.
+(5 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2024) Page 3
+3. Particle hopping on a lattice
+Consider a particle on a one-dimensional discrete lattice, modelled on a Hilbert space spanned by
+an orthonormal basis {|n⟩}, with integer n, where the particle is located on the n-th lattice site
+with certainty if the system is in the state |n⟩. We define the “shift” operators
+Kˆ =
++
+X∞
+n=−∞
+|n − 1⟩⟨n|, and Kˆ † =
++
+X∞
+n=−∞
+|n + 1⟩⟨n|,
+and the discrete position operator
+Nˆ =
++
+X∞
+n=−∞
+n|n⟩⟨n|.
+A Hamiltonian of the form
+Hˆ = −
+E0
+2
+
+Kˆ + Kˆ †
+
+,
+where E0 is a real positive constant, describes the system of a particle that can hop between
+neighbouring sites.
+(a) Verify that
+Kˆ |m⟩ = |m − 1⟩ and Kˆ †
+|m⟩ = |m + 1⟩.
+(2 marks)
+(b) Verify that
+|k⟩ =
+1
+√
+2π
++
+X∞
+n=−∞
+e
+−ink|n⟩, with k ∈ [−π, π]
+is an eigenvector of Kˆ and of Kˆ †
+. What are the corresponding eigenvalues? (3 marks)
+(c) The vectors |k⟩ are also eigenvectors of the Hamiltonian Hˆ . What are the corresponding
+energy eigenvalues? Which range of k corresponds to the energy range [−E0, 0]?
+(4 marks)
+(d) Assume that at time t = 0 the system is described by the wave function
+|ψ⟩ =
+1
+√
+2
+(|n = 0⟩ + |n = 1⟩).
+(i) With which probability is which outcome obtained in a measurement of the discrete
+position operator Nˆ? (2 marks)
+(ii) What is the expectation value of the energy? (4 marks)
+(iii) What is the probability of obtaining an outcome in the interval [−E0, 0] in an energy
+measurement? (5 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2024) Page 4
+4. Bound states in a piecewise constant potential
+(a) Consider the time-independent Schrödinger equation in position representation for a particle
+moving in a constant potential V0 in one dimension:
+−
+ℏ
+2
+2m
+∂
+2
+∂x2
+ϕ(x) + V0ϕ(x) = Eϕ(x),
+where V0 is a positive, real energy. Write down the general solution ϕ(x). Are there square
+integrable solutions for any value of E? (4 marks)
+(b) Now consider a potential of the form
+V (x) =
+
+
+
+Vex, x ≤ −L
+0, −L < x ≤ −a
+−Vin, −a < x < a
+0, a ≤ x < L
+Vex, x ≥ L,
+where Vex, Vin, a, and L are real and positive
+constants, and a < L.
+(i) What is the possible range of energies for bound states in this potential? Is there a finite
+or an infinite number of bound states? (3 marks)
+(ii) Which boundary conditions does the wavefunction (and its first derivative) of a bound
+state of this potential have to fulfil at x = ±L, and x = ±a? (3 marks)
+(iii) What can you deduce from the symmetry of the potential? (2 marks)
+(iv) Assume there is a bound state with energy E ∈ [−Vin, 0]. What is the corresponding
+classically allowed region? If a particle is in such a bound-state, is there a finite probability
+to find it outside of the classically allowed region? (4 marks)
+(v) Which of the sketches on the next page might depict the wave function belonging to the
+bound state of this potential with the ninth highest energy? Provide a reasoning for your
+answer.
+(4 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2024) Page 6
+5. Mastery - Coherent states and the Husimi distribution
+(a) The coherent states {|α⟩} can be defined as eigenstates of the annihilation operator aˆ of a
+harmonic oscillator, as aˆ|α⟩ = α|α⟩. The coherent states are not orthonormal, but instead
+⟨α1|α2⟩ = e−
+|α1|
+2
+2 −
+|α2|
+2
+2 +α
+∗
+1α2
+.
+For simplicity let us work in units where ℏ = 1 and mω = 1. Then aˆ can be expressed in
+terms of position and momentum operators qˆ and pˆ as
+aˆ =
+1
+√
+2
+(ˆq + iˆp),
+and we write
+α =
+1
+√
+2
+(q + ip), with q, p ∈ R
+(i) Use the position representation of the eigenvalue equation of aˆ,
+⟨x|aˆ|α⟩ = α⟨x|α⟩,
+to show that the position representation of a coherent state is given by
+ϕα(x) := ⟨x|α⟩ = ϕα(0) e− x
+2
+2 +(q+ip)x
+.
+(5 marks)
+(ii) Use the normalisation condition to deduce |ϕα(0)| and show that up to a phase the
+position representation of the normalised coherent state is given by
+ϕα(x) = 1
+π
+1
+4
+e
+− 1
+2
+(x−q)
+2+ipx
+.
+You may find the integral R +∞
+−∞ e
+−x
+2
+dx =
+√
+π useful. (5 marks)
+(iii) Consider a superposition of two coherent states with α1 = 1 and α2 = −1,
+|ψ⟩ = N(|α = 1⟩ + |α = −1⟩),
+where N is a real and positive normalisation factor. Calculate N such that the state |ψ⟩
+is normalised to one. (5 marks)
+(b) The Husimi distribution Q(p, q) of a state |ψ⟩ is defined as
+Q(α, α∗
+) = ⟨α|ψ⟩⟨ψ|α⟩
+2π
+.
+Calculate the Husimi distribution of the first excited harmonic oscillator eigenstate |n = 1⟩.
+You may use that |n = 1⟩ = ˆa
+†
+|n = 0⟩. (5 marks)
+(Total: 20 marks)
+MATH60015/70015 Quantum Mechanics I (2024) Page 7
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2024
+This paper is also taken for the relevant examination for the Associateship.
+MATH60015/70015
+Quantum Mechanics I (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2024 Imperial College London MATH60015/70015 Page 1 of 10
+1. The postulates of QM - a spin 1
+2
+system sim. seen ⇓
+(a) Direct matrix multiplication ([A, B] = AB − BA) showing that
+[ˆsx, sˆy] = iℏsˆz,
+[ˆsy, sˆz] = iℏsˆx,
+and
+[ˆsz, sˆx] = iℏsˆy.
+5, A
+seen/sim.seen ⇓
+(b) (i) A straightforward calculation yields the eiegnvalues
+λ± = ±
+E0
+2
+,
+with the corresponding normalised eigenvectors (up to an overall phase factor) 2, A
+ϕ+ =
+1
+√
+2
+
+1
+1
+!
+, and ϕ− =
+1
+√
+2
+
+1
+−1
+!
+.
+3, A
+sim. seen ⇓
+(ii) According to the state collapse postulate, after the measurement of sˆz yielding
+the outcome ℏ
+2
+the state is given by the corresponding eigenstate of sˆz, i.e.
+ψ(t = t0) =
+1
+0
+!
+.
+The possible measurement outcomes of an energy measurement are the 2, B
+eigenvalues λ± of Hˆ , with the probabilities
+P(λ± = |⟨ϕ±|ψ(t0)⟩|2 =
+1
+2
+.
+2, B
+unseen ⇓
+(iii) We again have
+ψ(t = t1) =
+1
+0
+!
+.
+Now, this state is not an eigenstate of the Hamiltonian, and will thus evolve
+in time. Expressing the state in the eigenbasis of the Hamiltonian
+ψ(t = t1) = 1
+√
+2
+(ϕ+ + ϕ−),
+we deduce
+ψ(t > t1) = 1
+√
+2
+
+e
+−i
+E0
+2ℏ
+(t−t1)ϕ+ + ei
+E0
+2ℏ
+(t−t1)ϕ−
+
+,
+The probabilities to measure the outcomes ±
+E0
+2
+in an energy measurement are
+thus given by
+P(±
+E0
+2
+) =
+
+
+
+
+
+e
+∓i
+E0
+2ℏ
+(t−t1)
+√
+2
+
+
+
+
+
+2
+=
+1
+2
+,
+that is, while the state is changing in time, the probabilities of the energy 3, B
+3, C
+measurement are constant in time.
+MATH60015/70015 Quantum Mechanics I (Solutions) (2024) Page 2 of 10
+2. Quantum harmonic oscillator and the position operator seen ⇓
+(a) (i) Using the commutator rule [AB, C] = A[B, C] + [A, C]B we find
+[N, ˆ aˆ] = [ˆa
+†
+a, ˆ aˆ] = [ˆa
+†
+, aˆ]ˆa = −a, ˆ
+and
+[N, ˆ aˆ
+†
+] = [ˆa
+†
+a, ˆ aˆ
+†
+] = ˆa
+†
+.
+3, A
+(ii) We consider Nˆaˆ|n⟩. and rewrite
+Nˆaˆ|n⟩ = ([N, ˆ aˆ] + ˆaNˆ)|n⟩.
+We have
+[N, ˆ aˆ] = [ˆa
+†
+a, ˆ aˆ] = ˆa
+†
+[ˆa, aˆ] + [ˆa
+†
+, aˆ]ˆa] = −a. ˆ
+Thus
+Nˆaˆ|n⟩ = (−aˆ + ˆaNˆ)|n⟩ = (n − 1)ˆa|n⟩.
+That is, unless the vector aˆ|n⟩ is the zero vector, it is an eigenvector of Nˆ
+corresponding to the eigenvalue n − 1. The analogous calculation shows
+Nˆaˆ
+†
+|n⟩ = (ˆa
+† + ˆa
+†Nˆ)|n⟩ = (n + 1)ˆa
+†
+|n⟩.
+That is, unless the vector aˆ
+†
+|n⟩ is the zero vector, it is an eigenvector of Nˆ
+corresponding to the eigenvalue n + 1. 4, A
+(iii) For the vector aˆ unseen ⇓
+†
+|ν⟩ to be the zero vector its norm would have to vanish. Let
+us consider the square norm of this state, given by
+||aˆ
+†
+|ν⟩||2 = ⟨ν|aˆaˆ
+†
+|ν⟩.
+Using the commutation relation [ˆa, aˆ
+†
+] = ˆI, we find
+||aˆ
+†
+|ν⟩||2 = ⟨ν|
+ˆI + Nˆ|ν⟩ = (1 + ν)⟨ν|ν⟩.
+On the other hand, considering the norm of the state aˆ|ν⟩ we find 2, C
+||aˆ|ν⟩||2 = ⟨ν|Nˆ|ν⟩ = ν⟨ν|ν⟩ ≥ 0.
+Now since |ν⟩ is an eigenstate of Nˆ it is not the zero vector, and we deduce
+that ν ≥ 0 and thus
+||aˆ
+†
+|ν⟩||2 = (1 + ν)⟨ν|ν⟩ > 0.
+2, D
+unseen ⇓
+(b) (i) Inserting two identities we have
+⟨n|qˆ|m⟩ =
+Z +∞
+−∞
+Z +∞
+−∞
+⟨n|x⟩⟨x|qˆ|y⟩⟨y|m⟩dxdy.
+Using that ⟨x|qˆ|y⟩ = xδ(x − y) and integrating over y yields the desired result
+⟨n|qˆ|m⟩ =
+Z ∞
+−∞
+x⟨n|x⟩⟨x|m⟩dx.
+4, C
+(ii) Inserting
+⟨n|x⟩ = ⟨x|n⟩ =
+1
+π
+1/4
+√
+2
+nn!
+√
+L
+e
+− x
+2
+2L2 Hn
+ x
+L
+
+,
+into the expression from part (i) yields
+⟨n|qˆ|m⟩ =
+1
+√
+π
+√
+2
+nn!
+√
+2mm!
+Z +∞
+−∞
+dx e
+− x
+2
+L2
+x
+L
+Hn
+ x
+L
+
+Hm
+ x
+L
+
+.
+From the recursion relation we know that
+x
+L
+Hn
+ x
+L
+
+=
+1
+2
+Hn+1  x
+L
+
++ nHn−1
+ x
+L
+
+That is,
+⟨n|qˆ|m⟩ =
+1
+√
+π
+√
+2
+nn!
+√
+2mm!
+Z ∞
+−∞
+dx e
+− x
+2
+L2
+
+1
+2
+Hn+1  x
+L
+
++ nHn−1
+ x
+L
+
+Hm
+ x
+L
+
+.
+Integrating over u =
+x
+L
+thus yields
+⟨n|qˆ|m⟩ =
+L
+√
+π
+√
+2
+nn!
+√
+2mm!
+√
+π
+2
+2
+(n+1)(n + 1)!δn+1,m +
+√
+π n 2
+(n−1)(n − 1)!δn−1,m
+which simplifies to
+⟨n|qˆ|m⟩ =
+L
+√
+2
+√
+n + 1δn+1,m +
+√
+nδn−1,m
+.
+5, D
+MATH60015/70015 Quantum Mechanics I (Solutions) (2024) Page 4 of 10
+3. Particle hopping on a lattice
+There is a question about the same model in the 2021/22 exam, but the actual questions
+are different. seen/sim.seen ⇓
+(a)
+Kˆ |m⟩ =
+X
+n
+|n − 1⟩ ⟨n|m⟩
+| {z }
+δn,m
+= |m − 1⟩
+Kˆ †
+|m⟩ =
+X
+n
+|n + 1⟩⟨n|m⟩ = |m + 1⟩
+2, A
+(b) We calculate
+Kˆ |k⟩ =
+1
+√
+2π
+X
+n
+e
+−ink|n − 1⟩
+=
+1
+√
+2π
+X
+m
+e
+−i(m+1)k
+|m⟩
+=
+e
+−ik
+√
+2π
+X
+m
+e
+−imk|m⟩
+= e−ik|k⟩.
+That is, |k⟩ is an eigenvector of Kˆ with eigenvalue e
+−ik
+. Similarly we have
+Kˆ †
+|k⟩ =
+1
+√
+2π
+X
+m
+e
+−i(m−1)k
+|m⟩
+= eik
+|k⟩.
+That is, the eigenvalue for Kˆ †
+is e
+ik
+. 3, B
+(c) From part (b) we deduce
+Hˆ |k⟩ =
+−E0
+2
+
+e
+ik + e
+−ik
+|k⟩.
+That is, the eigenvalues of Hˆ are given by
+λ(k) = −E0 cos(k)
+The energy range [−E0, 0] corresponds to the k-interval [−
+π
+2
+,
+π
+2
+]. 4, A
+unseen ⇓
+(d) (i) Nˆ is diagonal in the |n⟩-basis with eigenvalues n. Thus, a measurement of Nˆ
+in the state ψ⟩ yields the outcome n = 0 with probability 1
+2
+and the outcome
+n = 1 with probbility 1
+2
+. 2, B
+(ii) Expectation value of Hˆ :
+⟨ψ|Hˆ |ψ⟩ = −
+E0
+2
+D
+ψ
+
+
+
+Kˆ + Kˆ +
+
+
+ ψ
+E
+= −
+E0
+4
+(⟨0| + ⟨1|) (|1⟩ + |2⟩ + | − 1⟩ + |0⟩)
+= −
+E0
+2
+4, C
+(iii) We want E ∈ [0, E0], which means k ∈
+
+−
+π
+2
+,
+π
+2
+
+The probability to obtain an
+energy measurement in this range is thus given by
+P (E ∈ [0, E0]) = Z π/2
+−π/2
+|⟨k|ψ⟩|2
+dk
+We have
+⟨k|m⟩ =
+1
+√
+2π
+e
+imk
+.
+Thus
+P (E ∈ [0, E0]) = 1
+4π
+Z π/2
+−π/2
+
+
+1 + eik
+
+
+
+2
+| {z }
+2+2 cos(k)
+dk
+=
+1
+2π
+Z π/2
+−π/2
+(1 + cos(k))dk
+=
+1
+2
++
+1
+π
+.
+5, D
+MATH60015/70015 Quantum Mechanics I (Solutions) (2024) Page 6 of 10
+4. Bound states in a piecewise constant potential seen ⇓
+(a) The time-independent Schr¨odinger equation can be rewritten as
+ϕ
+′′(x) = −
+2m (E − V0)
+ℏ
+2
+| {z }
+k
+2
+ϕ(x),
+which is solved by
+ϕ(x) = Ae
+ikx + Be
+−ikx
+,
+where A and B are constants. For E > V0 we have k ∈ R, and ik ∈ R for 2, A
+2, B
+E < V0. In neither of these cases we have any square-integrable solutions.
+sim. seen ⇓
+(b) (i) The range of energies for possible bound states is
+E ∈ [−Vin , Vex ] ,
+and there are finitely many bound states. 3, A
+(ii) The wave function and its first derivative have to be continuous everywhere. 3, A
+(iii) The bound-state wave functions ϕ(x) are either even or odd, i.e. either
+ϕ(x) = ϕ(−x) or ϕ(x) = −ϕ(−x). 2, A
+(iv) The classically allowed region in this energy range is x ∈ [−a, a]. The bound- unseen ⇓
+state wavefuntions are non-zero outside of this region, and thus, there is a
+finite probability to find a particle in a bound state in this range outside of the
+allowed region. 4, B
+(v) In class we had briefly discussed a similar problem (where one had to pick sim. seen ⇓
+between three potentials for a given wave function).
+Only the wavefunctions (1) or (2) could be (and are) bound states of a
+potential of the type considered here. (3) does not fulfill the correct boundary
+conditions (its first derivative is not continuous) and it has the same frequency
+of oscillations along the whole x-range of the potential. (4) on the other hand,
+belongs to a potential with a barrier rather than a dip in the middle, which
+we can deduce from the fact that the frequency of the oscillation is smaller
+in the centre, and thus the energy gap between the state and the bottom of
+the potential is lower there, rather than higher. Of the two sketches (1) and
+(2), we can deduce from the number of sign changes that (1) belongs to the
+seventh energy state, and (2) belongs to the ninth energy state. 4, D
+MATH60015/70015 Quantum Mechanics I (Solutions) (2024) Page 7 of 10
+5. Mastery - Coherent states and the Husimi distribution
+(a) (i) We have for ϕ(x) = ⟨x|ϕ⟩ that
+⟨x|qˆ|ϕ⟩ = xϕ(x), and ⟨x|pˆ|ϕ⟩ = −i
+d
+dx
+ϕ(x)
+Thus, the eigenvalue equation for aˆ in position representation is given by
+1
+√
+2
+
+x + i 
+−i
+d
+dx
+ ϕα(x) = αϕα(x),
+or
+
+x +
+d
+dx
+
+ϕα(x) = √
+2αϕα(x),
+which we integrate to find
+ln ϕα(x) − ln ϕα(0) = √
+2αx −
+x
+2
+2
+That is,
+ϕα(x) = ϕα(0)e− x
+2
+2 +(q+ip)x
+.
+5, M
+(ii) For the wave function to be normalised we need
+Z ∞
+−∞
+|ϕα(x)|
+2dx = 1.
+We have
+Z ∞
+−∞
+|ϕα(x)|
+2dx = |ϕα(0)|
+2
+Z ∞
+−∞
+e
+−x
+2+2qxdx
+= |ϕα(0)|
+2
+e
+q
+2
+Z ∞
+−∞
+e
+−(x−q)
+2
+dx
+= |ϕα(0)|
+2
+e
+q
+2√
+π
+Thus, we find
+|ϕα(0)| =
+e
+−
+q
+2
+2
+π
+1
+4
+and hence
+ϕα(x) = 1
+π
+1/4
+e
+− x
+2
+2 −
+q
+2
+2 +qx+ipx
+=
+1
+π
+1/4
+e
+− 1
+2
+(x−q)
+2+ipx
+5, M
+(iii) For the state to be normalised we need ⟨ψ|ψ⟩ = 1. We have
+⟨ψ|ψ⟩ = N
+2
+(⟨α1|α1⟩ + ⟨α2|α2⟩ + ⟨α1|α2⟩ + ⟨α2|α1⟩⟩
+= N
+2
+
+2 + e
+−
+|α1|
+2
+2 −
+|α2|
+2
+2
+
+e
+α
+∗
+1α2 + e
+α
+∗
+2α1
+
+With α1 = 1 and α2 = −1 this becomes
+⟨ψ|ψ⟩ = N
+2
+
+2 + 2e−2
+
+,
+and we find
+N =
+1
+p
+2(1 + e−2)
+.
+5, M
+(b) We have
+⟨α|n = 1⟩ = ⟨α|aˆ
+†
+|n = 0⟩ = α
+∗
+⟨α|n = 0⟩.
+Further we note that the state |n = 0⟩ is also a coherent state with α = 0, and
+thus
+⟨α|n = 0⟩ = e− 1
+2
+|α|
+2
+.
+Combining these we find
+Q(α, α∗
+) = |α|
+2
+2π
+e
+−|α|
+2
+.
+5, M
+MATH60015/70015 Quantum Mechanics I (Solutions) (2024) Page 9 of 10
+Review of mark distribution:
+Total A marks: 33 of 32 marks
+Total B marks: 18 of 20 marks
+Total C marks: 13 of 12 marks
+Total D marks: 16 of 16 marks
+Total marks: 100 of 80 marks
+Total Mastery marks: 20 of 20 marks
+MATH60015/70015 Quantum Mechanics I (Solutions) (2024) Page 10 of 10
+Question Marker's comment
+MATH60015 Quantum Mechanics I
+1 The majorty did well on Question 1.
+2 See MATH70015
+Question Marker's comment
+MATH70015 Quantum Mechanics I
+1 The majority did well on Question 1.
+Straight forward question for most. 2ai and 2aii universally well answered, 2aiii
+the argument as to why vugt;=0 was often missing. 2bi generally well done,
+2bii mostly well done, with some having difficulties with the integral or the
+algebra.
+2
