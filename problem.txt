@@ -1,0 +1,13 @@
+There are 5 adjacent rooms 1 , 2 , 3 , 4 , 5. 
+At the start of each turn you choose which room to search.
+There is a smart ghost, which chooses which room to hide in. 
+It chooses after it has seen which room you are about to search.
+Initially the ghost can pick any room it wants on turn 1.
+On every turn after that, the ghost can only pick a room adjacent to the one it occupied the previous turn.
+The ghost must change rooms every turn, it cannot stay in the same room two turns in a row.
+The ghost is smart, so it will always try to avoid being found.
+If in room 1 it can only move to 2, if in room 5 it can only move to 4.
+You win if you search the room the ghost is hiding in.
+What is the minimum number of turns required to guarantee that you will find the ghost, regardless of how it moves?
+What is the strategy to achieve this?
+Are there multiple strategies that can guarantee finding the ghost in the minimum number of turns?
