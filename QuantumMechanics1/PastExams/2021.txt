@@ -1,0 +1,1101 @@
+© 2021 Imperial College London Page 1
+MATH96005
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May-June 2021
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Quantum Mechanics 1
+SUBMIT YOUR ANSWERS ONE PDF TO THE RELEVANT DROPBOX ON BLACKBOARD
+INCLUDING A COMPLETED COVERSHEET WITH YOUR CID NUMBER, QUESTION
+NUMBERS ANSWERED AND PAGE NUMBERS PER QUESTION.
+Date: Tuesday, 25 May 2021
+Time: 09:00 to 11:00
+Time Allowed: 2 hours
+Upload Time Allowed: 30 minutes
+This paper has 4 Questions.
+Candidates should start their solutions to each question on a new sheet of paper.
+Each sheet of paper should have your CID, Question Number and Page Number on the
+top.
+Only use 1 side of the paper.
+Allow margins for marking.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. Dirac notation and operator algebra
+(a) Consider a quantum system on a Hilbert space spanned by the complete set of orthonormal
+vectors {|φ1i, |φ2i}.
+(i) Consider the state |ψi = √
+1
+2
+(|φ1i − i|φ2i). Construct a state |χi that is orthogonal to
+|ψi and normalised. Verify that these two states form a resolution of the identity.
+(5 marks)
+(ii) Represent the operator |ψihψ| as matrices in the bases {|φni} and {|ψi, |χi},
+respectively.
+(5 marks)
+(b) Show that
+(i) AˆBˆnAˆ−1 =
+
+AˆBˆAˆ−1
+n
+.
+(ii) e
+Aˆ
+e
+Bˆ
+e
+−Aˆ = ee
+AˆBˆe−Aˆ
+.
+(5 marks)
+(c) (i) Use the Hadamard lemma to calculate
+hψ0|e
+i
+pˆ
+2
+2m t/~
+qˆe
+−i
+pˆ
+2
+2m t/~
+|ψ0i.
+(3 marks)
+(ii) How could you have deduced the result from Ehrenfest’s theorem? (2 marks)
+(Total: 20 marks)
+2. The principles of quantum mechanics - a two-level system
+Consider a system on a Hilbert space spanned by the orthonormal basis {|φ1i, |φ2i}. The
+Hamiltonian Hˆ and another operator Aˆ are represented by the matrices
+Hˆ =
+
+
+−E 0
+0 E
+
+ , and Aˆ =
+
+
+1 −i
+i 1
+
+ .
+(a) Calculate the eigenvalues and a set of normalised eigenvectors of Aˆ in the basis {|φ1i, |φ2i}.
+(4 marks)
+(b) Assume that at some specific time the system is in the state
+|ψi = |φ1i.
+(i) With what probability does a measurement of the energy H return which result and what
+is the expectation value of the energy?
+(2 marks)
+(ii) With what probability does a measurement of the observable A return which result and
+what is the expectation value of A?
+(3 marks)
+(iii) Check that the uncertainties of A and H are consistent with the uncertainty relation
+∆A∆H ≥
+1
+2
+|h[A, ˆ Hˆ ]i|.
+(5 marks)
+(c) Assume that in an experiment the measurement of the observable A at time t = 0 yields the
+result 0. What is the probability that a subsequent measurement of A at time t > 0 yields
+the result 2?
+(6 marks)
+(Total: 20 marks)
+3. Quantum wave functions in a harmonic potential
+Consider a particle in a one-dimensional harmonic potential, described by the Hamiltonian
+Hˆ =
+pˆ
+2
+2m
++
+1
+2
+mω2
+qˆ
+2
+.
+In what follows, we will use rescaled units with m = 1 = ω, and ~ = 1, to simplify calculations.
+(a) Consider the wave functions
+φ0(x) = 
+1
+π
+1/4
+e
+− 1
+2
+x
+2
+, and φ1(x) =
+2
+√
+π
+!1/2
+xe
+− 1
+2
+x
+2
+.
+(i) Check that these wave functions are normalised to one.
+(3 marks)
+(ii) Verify that φ0(x) and φ1(x) are eigenfunctions of the Hamiltonian in position
+representation. What are the corresponding eigenvalues?
+(7 marks)
+(b) The eigenfunctions above are the position representations of the ground state, and first
+excited state of the system, respectively. Verify that the application of the creation operator
+aˆ
+† = √
+1
+2
+(ˆq − iˆp) in position representation to φ0(x) indeed yields φ1(x).
+(4 marks)
+(c) Assume that in an experiment at time t = 0 the system is in a superposition of the ground
+state and the first excited state,
+ψ(x, 0) = 1
+√
+2
+(φ0(x) + φ1(x)).
+Use the fact that qˆ = √
+1
+2
+(ˆa + ˆa
+†
+) to deduce the expectation value of the position at times
+t > 0.
+(6 marks)
+Hint: The following integrals might be useful:
+Z ∞
+−∞
+e
+−ax2
+dx =
+rπ
+a
+,
+Z ∞
+−∞
+x
+2
+e
+−ax2
+dx =
+1
+2a
+rπ
+a
+,
+for Re(a) > 0.
+(Total: 20 marks)
+4. Quantisation conditions for a piecewise constant potential well
+Consider a potential of the form
+V (x) =
+
+
+
+∞, x ≤ −L
+V0, −L < x ≤ −a
+0, −a < x < a
+V0, a ≤ x < L
+∞, L ≤ x,
+where V0, L, and a are real and positive constants, and a < L.
+(a) Write down an ansatz for possible bound states for the energy region E > V0 using the
+known form of solutions of the time-independent Schrödinger equation in the different spatial
+regions.
+(5 marks)
+(b) Due to the symmetry of the potential the eigenstates are either even or odd. Refine your
+ansatz from (a) for even and odd states, respectively, reducing the number of free parameters.
+(6 marks)
+(c) Use the boundary conditions between the different regions to verify the following quantisation
+condition for the energies of the even bound states
+k tan(ka) = ˜k cot(˜k(L − a)),
+where
+k =
+√
+2mE/~, and ˜k =
+q
+2m(E − V0)/~.
+(9 marks)
+(Total: 20 marks)
+MATH96005/97014/97093 Quantum Mechanics 1 (2021) Page 5
+5. Mastery Question - Density matrices
+(a) Consider the density matrix ρˆ of a mixture of pure states |ψj i, ρˆ =
+P
+j wj
+|ψj ihψj
+|. Using the
+Schrödinger equation for the dynamics of the pure states |ψj i show that the dynamics of ρˆ
+is governed by the von Neuman equation
+i~ ˙ρˆ = [H, ˆ ρˆ].
+(3 marks)
+(b) Show that the time evolution preserves
+(i) The norm, i.e. Tr(ˆρ),
+(ii) The purity (as measured by Tr(ˆρ
+2
+)) of ρˆ,
+(iii) The positivity of ρˆ.
+(6 marks)
+(c) Consider a spin 1 system described by the density matrix
+ρˆ =
+
+
+1
+4
+1
+2
+√
+2
+1
+4
+1
+2
+√
+2
+1
+2
+1
+2
+√
+2
+1
+4
+1
+2
+√
+2
+1
+4
+
+
+.
+Verify that the state is normalised, and check whether it is a pure state or a mixed state.
+(3 marks)
+(d) Consider a spin 1 system with the pure states ψ = (1, 0, 0)T
+and φ = √
+1
+2
+(1, 0, 1)T
+, in the
+standard basis. Assume the system is described by a Hamiltonian Hˆ = ωJˆ
+3, which, in the
+standard basis is represented by the matrix
+Hˆ = ~ω
+
+
+1 0 0
+0 0 0
+0 0 −1
+
+
+,
+where ω is a real valued frequency.
+(i) Assuming that the system is in the pure states ψ. Write down the corresponding density
+matrix, and calculate the expectation value of the energy in that state. (3 marks)
+(ii) Assuming that the system is in a mixture of the pure states ψ and φ with equal weighting
+wψ =
+1
+2 = wφ. Write down the corresponding density matrix, and calculate the
+expectation value of the energy in that state. (5 marks)
+(Total: 20 marks)
+MATH96005/97014/97093 Quantum Mechanics 1 (2021) Page 6
+Quantum Mechanics 2020/21 Exam Solutions
+1. Dirac notation and operator algebra
+(a) (i) [seen similar in homework - category A]
+A normalised state orthogonal to |ψi would be
+|χi =
+1
+√
+2
+(−i|φ1i + |φ2i)
+Resolution of identity:
+|χihχ| + |ψihψ| =
+1
+2
+(−i|φ1i + |φ2i) (ihφ1| + hφ2|)
++
+1
+2
+(|φ1i − i|φ2i) (hφ1| + ihφ2|)
+=
+1
+2
+
+|φ1ihφ1| − i|φ1ihφ2| + i|φ2ihφ1| + |φ2ihφ2|
++ |φ1ihφ1| + i|φ1ihφ2| − i|φ2ihφ1| + |φ2ihφ2|
+
+= |φ1ihφ1| + |φ2ihφ2| = ˆI,
+since {|φni} is an orthonormal basis.
+[5 marks]
+(ii) [Unseen but fairly straight-forward - category C]
+Matrix representation of |ψihψ| in basis {|ψi, |χi}:
+
+1 0
+0 0
+.
+In basis {|φ1i, |φ2i}: We have
+|ψihψ| =
+1
+2
+(|φ1i − i|φ2i) (hφ1| + ihφ2|)
+=
+1
+2
+(|φ1ihφ1| + i|φ1ihφ2| − i|φ2ihφ1| + |φ2ihφ2|).
+From this we find the matrix representation
+(hφj |ψihψ|φki) =  1
+2
+i
+2
+−
+i
+2
+1
+2
+
+.
+[5 marks]
+(b) (i) [Seen briefly in class and straight forward - category A]
+Insert Aˆ−1Aˆ = ˆI n times:
+AˆBˆnAˆ−1 = (AˆBˆAˆ−1
+)AˆBˆn−1Aˆ−1
+= · · ·
+=
+
+AˆBˆAˆ−1
+n
+[2 marks]
+(ii) [Unseen but straight forward - category B]
+Taylor expand e
+Bˆ
+:
+e
+Aˆ
+e
+Bˆ
+e
+−Aˆ
+= eAˆX
+n
+Bˆn
+n!
+
+e
+Aˆ
+−1
+=
+X
+n
+1
+n!
+e
+Aˆ
+Bˆn
+(eAˆ
+)
+−1
+=
+X
+n
+1
+n!
+(eAˆ
+Bˆ(eAˆ
+)
+−1
+)
+n
+= ee
+AˆBˆe−Aˆ
+.
+[3 marks]
+(c) (i) [Unseen but should be very straight forward - category A]
+e
+i
+pˆ
+2
+2m t/~
+qˆe
+−i
+pˆ
+2
+2m t/~ = ˆq +
+it
+2m~
+
+pˆ
+2
+, qˆ
+
++
+1
+2!(
+it
+2m~
+)
+2
+
+pˆ
+2
+,
+
+pˆ
+2
+, qˆ
+ + · · ·
+We have
+
+pˆ
+2
+, qˆ
+
+= ˆp [ˆp, qˆ] + [ˆp, qˆ] ˆp = −2i~p, ˆ
+and thus
+
+pˆ
+2
+,
+
+pˆ
+2
+, qˆ
+ = 0,
+and all higher order nested commutators vanish too. Thus we find
+e
+i
+pˆ
+2
+2m t/~
+qˆe
+−i
+pˆ
+2
+2m t/~ = ˆq +
+pˆ
+m
+t,
+that is,
+hψ0|e
+i
+pˆ
+2
+2m t/~
+qˆe
+−i
+pˆ
+2
+2m t/~
+|ψ0i = hψ0|qˆ|ψ0i +
+1
+m
+hψ0|pˆ|ψ0it.
+[3 marks]
+(ii) [Easy but does require understanding - category B]
+This is the time-dependent expectation value of qˆ under the time-evolution generated by
+the free-particle Hamiltonian Hˆ =
+pˆ
+2
+2m
+, for which the Ehrenfest theorem holds exactly,
+i.e. we have
+d
+dt
+hqˆi =
+∂hHˆ i
+∂hpˆi
+=
+hpˆi
+m
+,
+that is
+hqˆi(t) = hqˆi(0) + hpˆi
+m
+t.
+[2 marks]
+2. The principles of quantum mechanics - a two-level system
+(a) [straight forward - category A]
+We find from the characteristic polynomial of Aˆ
+(1 − λ)
+2 − 1 = 0,
+that is the two eigenvalues of Aˆ are
+λ = 0, 2.
+For the corresponding eigenvectors χ0,2 =
+
+x0,2
+y0,2
+
+we find from
+
+1 −i
+i 1  x0
+y0
+
+= 0
+that
+x0 = iy0,
+and from
+
+1 −i
+i 1  x2
+y2
+
+= 2 
+x2
+y2
+
+that
+y2 = ix2.
+Thus, a set of normalised eigenvectors (up to phase factors) is given by
+χ0 =
+1
+√
+2
+
+i
+1
+
+, and χ2 =
+1
+√
+2
+
+−i
+1
+
+.
+[4 marks]
+(b) (i) [Seen similar - category A]
+The measurement of H yields the outcome −E with probability 1. The expectation
+value is also hHˆ i = −E
+[2 marks]
+(ii) [Seen similar - category A]
+We calculate
+P(0) = |hχ0|φ1i|2 =
+1
+2
+,
+and
+P(2) = |hχ2|φ1i|2 =
+1
+2
+.
+For the expectation value we find
+hAˆi = 0 × P(0) + 2 × P(2) = 1.
+[3 marks]
+(iii) [Unseen - category C/D]
+The uncertainty of the energy is zero, that is ∆H∆A = 0.
+Now check that
+|hφ1|[H, ˆ Aˆ]|φ1i| = 0 :
+We have
+[H, ˆ Aˆ] = 
+−E 0
+0 E
+ 1 −i
+i 1 
+−
+
+1 −i
+i 1  −E 0
+0 E
+
+=
+
+0 2iE
+2iE 0
+
+(1)
+And indeed
+hφ1|[H, ˆ Aˆ]|φ1i =
+
+1
+0
+T 
+0 2iE
+2iE 0
+ 1
+0
+
+= 0,
+which is consistent with the uncertainty relation.
+[5 marks]
+(c) [Seen similar, but conceptually demanding - category D]
+A measurement of the value 0 at time t = 0 projects the system onto the corresponding
+eigenstate of Aˆ, the vector
+|ψ(t = 0)i = |χ0i =
+1
+√
+2
+
+i
+1
+
+,
+which is not an eigenstate of Hˆ .
+We can use the method of stationary states to find |ψ(t)i as
+|ψ(t)i =
+i
+√
+2
+e
+iEt/~
+|φ1i +
+1
+√
+2
+e
+−iEt/~
+|φ2i,
+The probability to measure the result 2 in an A measurement at a later time is thus given by
+P(2) = |hφ2|ψi|2 =
+1
+4
+| − e
+iEt/~ + e−iEt/~
+|
+2 = sin2
+(Et/~).
+[6 marks]
+3. Quantum wave functions in a harmonic potential
+(a) (i) [Seen similar and straight forward - category A]
+Normalisation:
+Z +∞
+−∞
+|φ0(x)|
+2dx =
+1
+√
+π
+Z +∞
+−∞
+e
+−x
+2
+dx = 1.
+and
+Z +∞
+−∞
+|φ1(x)|
+2dx =
+2
+√
+π
+Z +∞
+−∞
+x
+2
+e
+−x
+2
+dx = 1.
+[3 marks]
+(ii) [Seen similar and mostly straight forward - category A/B]
+Applying Hˆ in position representation to φ(x) yields
+hx|Hˆ |φi = −
+1
+2
+∂
+2
+∂x2
+φ(x) + 1
+2
+x
+2φ(x).
+We have
+∂
+∂xφ0(x) = −xφ0(x),
+and
+∂
+2
+∂x2
+φ0(x) = (x
+2 − 1)φ0(x),
+and thus
+hx|Hˆ |φ0i =
+1
+2
+φ0(x),
+that is, φ0(x) is an eigenfunction of Hˆ with eigenvalue 1
+2
+.
+For φ1(x) we find
+∂
+2
+∂x2
+φ1(x) = (−3 + x
+2
+)φ1(x),
+that is
+hx|Hˆ |φ1i =
+3
+2
+φ0(x),
+which means that φ1(x) is an eigenfunction of Hˆ with eigenvalue 3
+2
+.
+[7 marks]
+(b) [Unseen but fairly straight forward - category B]
+We have
+hx|aˆ
+†
+|φi =
+1
+√
+2
+(xφ(x) −
+∂
+∂xφ(x)).
+And for φ0(x) we have as in (a)
+∂
+∂xφ0(x) = −xφ0(x),
+that is
+hx|aˆ
+†
+|φ0i =
+√
+2xφ0(x),
+and indeed
+φ1(x) = √
+2xφ0(x).
+[4 marks]
+(c) [Unseen and combines various ideas - category D]
+We have
+hψ(t)|qˆ|ψ(t)i =
+1
+√
+2
+hψ(t)|aˆ + ˆa
+†
+|ψ(t)i.
+The time-dependent state is given by
+|ψ(t)i =
+1
+√
+2
+
+e
+−iE0t
+|0i + e−iE1t
+|1i
+
+.
+That is
+hψ(t)|qˆ|ψ(t)i =
+1
+√
+8
+
+h0|aˆ|0i + h0|aˆ
+†
+|0i + ei(E0−E1)t
+h0|aˆ|1i + ei(E0−E1)t
+h0|aˆ
+†
+|1i
+e
+i(E1−E0)t
+h1|aˆ|0i + ei(E1−E0)t
+h1|aˆ
+†
+|0i + h1|aˆ|1i + h1|aˆ
+†
+|1i
+
+.
+With
+aˆ
+†
+|ni − √
+n + 1|n + 1i, and ˆa|ni =
+√
+n|n − 1i,
+and hn|mi = δnm we find
+hψ(t)|qˆ|ψ(t)i =
+1
+√
+2
+cos ((E0 − E1)t) = 1
+√
+2
+cos (t).
+[6 marks]
+4. Quantisation conditions for a piecewise constant potential well
+[Conceptually very similar to an exam question from 2019, where the central part was
+raised rather than lowered]
+(a) [Seen similar and straight forward - Category A]
+The solutions of the time-independent Schr¨odinger equation in the separate regions are of
+the form ae
+ikx + be
+−ikx with k =
+p
+2m(E − Vj )/~, where Vj is the value of the constant
+potential in region j. For E > Vj we can rewrite this as A cos(kx) + B sin(kx).
+Here we are looking for bound states, that is φ(x → ±∞) → 0. The solutions are of the
+form
+φE(x) =
+
+
+
+A1 cos(˜kx) + A2 sin(˜kx), −L ≤ x ≤ −a
+B1 cos(kx) + B2 sin(kx), −a < x < a
+C1 cos(˜kx) + C2 sin(˜kx), a ≤ x ≤ L,
+(2)
+with k =
+√
+2mE
+~
+and ˜k =
+√
+2m(E−V0)
+~
+.
+[5 marks]
+(b) [Unseen, but seen similar - Category B/C]
+Let us now consider even and odd solutions separately. For the functions (2) to be even, i.e.
+φE(−x) = φE(x) it needs to hold B2 = 0 and from
+A1 cos(˜kx) − A2 sin(˜kx) = C1 cos(˜kx) + C2 sin(˜kx)
+we find A1 = C1, and A2 = −C2. That is, the ansatz for even function simplifies to
+φE(x) =
+
+
+
+A1 cos(˜kx) + A2 sin(˜kx), −L ≤ x ≤ −a
+B cos(kx), −a < x < a
+A1 cos(˜kx) − A2 sin(˜kx), a ≤ x ≤ L,
+(3)
+For odd functions φE(−x) = −φE(x) we need B1 = 0, and A1 = −C1, and A2 = C2, i.e.,
+φE(x) =
+
+
+
+A1 cos(˜kx) + A2 sin(˜kx), −L ≤ x ≤ −a
+B sin(kx), −a < x < a
+−A1 cos(˜kx) + A2 sin(˜kx), a ≤ x ≤ L,
+(4)
+[6 marks]
+(c) [Unseen, but seen similar - category A/B]
+We have the boundary conditions:
+φ(±L) = 0,
+and the wave function and its first derivative need to be continuous at x = a and x = −a.
+This yields six boundary conditions. Due to the symmetry two of them each are equivalent,
+and we thus have only three independent conditions.
+For even states the boundary conditions at x = ±L yield the following relation between A1
+and A2:
+A2 cos(˜kL) − A2 sin(˜kL) = 0,
+that is
+A2 = A1
+cos(˜kL)
+sin(˜kL)
+The continuity of the wave function and its first derivative at x = ±a yield the two conditions
+A1 cos(˜ka) − A2 sin(˜ka) = B cos(ka) (5)
+−A1
+˜k sin(˜ka) − A2
+˜k cos(˜ka) = −kB sin(ka) (6)
+Inserting A2 = A1
+cos(kL˜ )
+sin(kL˜ )
+into (5) and (6) yields
+A1
+sin(˜k(L − a))
+sin(˜kL)
+= B cos(ka) (7)
+˜kA1
+cos(˜k(L − a))
+sin(˜kL)
+= kB sin(ka) (8)
+Dividing (8) by (7) yields the quantisation condition
+k tan(ka) = ˜k cot(˜k(L − a))
+for even bound states.
+[9 marks]
+5. Mastery question - Density Matrices
+Based on extra mastery Reading material: Sections 2.1, 2.2., and 2.3 from Ballentine’s
+”Quantum Mechanics” and section 6.1 from Chris Isham’s ”Lectures on Quantum
+Theory”
+(a) According to the definition we have
+i~ρ˙ = ~
+X
+j
+wj (i|ψ˙
+j ihψj | + i|ψj ihψ˙
+j |).
+Using the Schr¨odinger equation i~|ψ˙i = Hˆ |ψi and its conjugate equation −i~hψ˙
+| = hψ|Hˆ
+yields
+i~ρ˙ =
+X
+j
+wjHˆ |ψj ihψj | − wj |ψj ihψj |Hˆ = Hˆ ρˆ− ρˆH. ˆ
+[3 marks]
+(b) (i)
+d
+dt
+Tr(ˆρ) = Tr(
+˙ρˆ) = −
+i
+~
+Tr 
+Hˆ ρˆ− ρˆHˆ
+
+,
+which vanishes since the trace is cyclic. Thus, the norm is indeed preserved.
+(ii) Time derivative of the purity:
+d
+dt
+Tr(ˆρ
+2
+) = Tr(ˆρ
+˙ρˆ+ ˙ρˆρˆ)
+= −
+i
+~
+Tr(ˆρ(Hˆ ρˆ− ρˆHˆ ) + (Hˆ ρˆ− ρˆHˆ )ˆρ)
+= 0.
+(iii) The eigenvalues of ρˆ are conserved during the time evolution. this can for example be
+seen by the fact that the traces of all the powers of ρˆ are constant in time.
+[6 marks]
+(c) Normalisation:
+Tr(ˆρ) = 1
+4
++
+1
+2
++
+1
+4
+= 1.
+Purity:
+Tr
+
+
+1
+4
+∗ ∗
+∗
+1
+4
+∗
+∗ ∗ 1
+2
+
+ = 1
+[3 marks]
+(d) (i) The density matrix is given by
+ρˆ =
+
+
+1 0 0
+0 0 0
+0 0 0
+
+
+and we find
+Tr(Hρ ˆ ) = ~ωTr
+
+
+1 ∗ ∗
+∗ 0 ∗
+∗ ∗ 0
+
+ = ~ω
+[3 marks]
+(ii) We have
+ρˆ =
+1
+2
+
+
+1
+0
+0
+
+
+
+1 0 0
++
+1
+4
+
+
+1
+0
+1
+
+
+
+1 0 1
+=
+1
+4
+
+
+3 0 1
+0 0 0
+1 0 1
+
+
+and
+Tr(Hρ ˆ ) = ~ω
+4
+Tr
+
+
+3 ∗ ∗
+∗ 0 ∗
+∗ ∗ −1
+
+ =
+~ω
+2
+.
+[5 marks]
+ExamModuleCode QuestionNumber Comments for Students
+MATH96005 and
+MATH97014
+MATH97093
+1
+As anticipated most parts of this question were answered without further problems by most
+students. A common mistake in part a was to think that |psi><psi| was the identity. That is
+impossible for any vector in a two-dimensional Hilbert space! Part c)ii concerning the Ehrenfest
+theorem was answered correctly by a good number of students, but a surprisingly large number of
+students did not realise that V(q)=0 here and that the dynamical equation dq/dt=p/m is not solved
+by q(t)=p_0/m t if p is not constant!
+MATH96005 and
+MATH97014
+MATH97093
+2
+Question 2 was solved well by most. In part b (iii) many wasted time by calculating the uncertainties
+of A and H explicilty, while it should have been clear from b (ii) that the uncertainty of H was zero.
+Part c was intended to test the understanding of the measurement concept, and not surprisingly
+there were more issues here than with the rest of the question. There was still a large number of
+student solving the whole problem excellently.
+MATH96005 and
+MATH97014
+MATH97093
+3
+As intended,everyone who knew what a normalised wavefunction is solved part a (i) correectly.
+Part a(ii) went smoothly for many, but a fairly common mistake was to regard an x-dependent
+expression as an eigenvlue. H phi(x)=f(x)phi(x) does not mean that phi(x) is an eigenfunction of H
+with eigenvalue f(x)!!! Part b was fine, and part c, which combined different ideas from the course
+did reveal a lack of understanding for some, but was fully solved by many. I hope the fact that a
+considerable number of students solved this part and part c in Q2 so well reflects that many have
+learned some important aspects of quantum foundations succesfully this year due to the hard work
+they have invested into the course.
+If your module is taught across multiple year levels, you might have received this form for each level of the module. You are only
+required to fill this out once for each question.
+Please record below, some brief but non-trivial comments for students about how well (or otherwise) the questions were answered.
+For example, you may wish to comment on common errors and misconceptions, or areas where students have done well. These
+comments should note any errors in and corrections to the paper. These comments will be made available to students via the
+MathsCentral Blackboard site and should not contain any information which identifies individual candidates. Any comments which
+should be kept confidential should be included as confidential comments for the Exam Board and Externals. If you would like to add
+formulas, please include a sperate pdf file with your email.
+MATH96005 and
+MATH97014
+MATH97093
+4
+Question 4 was very very similar to an exam question from last year, but with crucial differences.
+While many solved the whole question very well, sadly there were quite a few students who tried
+to follow last year's solution and ran into inconsistencies. Since this was an open book exam and
+since the final expression to be dervied was provided in the question, I demanded a certain level of
+detail in the last steps of the derivation in part c to obtain full marks.
+MATH96005 and
+MATH97014
+MATH97093
+5 A small number of students did not attempt the mastery question at all or wrote very very little.
+This may have been due to time constraints. Most part of the quesiton were rather straight
+forward, and solved well by most. The most challenging part seems to have been part b. 

@@ -1,0 +1,1131 @@
+© 2020 Imperial College London Page 1
+MATH97014 MATH97093
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May-June 2020
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Quantum Mechanics 1
+SUBMIT YOUR ANSWERS AS ONE PDF TO THE RELEVANT DROPBOX ON BLACKBOARD
+INCLUDING A COMPLETED COVERSHEET WITH YOUR CID NUMBER, QUESTION
+NUMBERS ANSWERED AND PAGE NUMBERS PER QUESTION.
+.
+Date: 6th May 2020
+Time: 09.00am - 11.30am (BST)
+Time Allowed: 2 Hours 30 Minutes
+Upload Time Allowed: 30 Minutes
+This paper has 5 Questions.
+Candidates should start their solutions to each question on a new sheet of paper.
+Each sheet of paper should have your CID, Question Number and Page Number on the
+top.
+Only use 1 side of the paper.
+Allow margins for marking.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. The principles of quantum mechanics - a two-level system
+Consider a system described by a Hilbert space spanned by the orthonormal basis {|φ1i, |φ2i}.
+The Hamiltonian Hˆ and another operator Aˆ are defined by their actions on the basis states as
+Hˆ |φ1i = −E|φ1i Hˆ |φ2i = E|φ2i
+Aˆ|φ1i = i|φ2i Aˆ|φ2i = −i|φ1i.
+(a) Deduce the matrix representations of Hˆ and Aˆ in the basis {|φ1i, |φ2i}. Are Hˆ and Aˆ
+Hermitian? Do they commute?
+(5 marks)
+(b) Calculate the eigenvalues and a set of normalised eigenvectors of Aˆ in the basis {|φ1i, |φ2i}.
+(3 marks)
+(c) Assume that at some specific time the system is in the state
+|ψi =
+1
+5
+(3|φ1i + 4|φ2i).
+With what probability does a measurement of the energy H return which result? With what
+probability does a measurement of the observable A return which result? What are the
+expectation values of the energy and the observable A?
+(6 marks)
+(d) The measurement of the observable A at time t = 0 yields the result 1. What is the probability
+that a subsequent measurement of the energy at time t > 0 yields the result E?
+(3 marks)
+(e) In another experiment the measurement of the energy at time t = 0 yields the result E.
+What is the probability that a subsequent measurement of the observable A at time t > 0
+yields the result 1?
+(3 marks)
+(Total: 20 marks)
+2. The harmonic oscillator - expectation values and uncertainties
+Consider the quantum harmonic oscillator, described by the Hamiltonian
+Hˆ =
+~ω
+2
+
+Qˆ2 + Pˆ2
+
+= ~ω
+
+aˆ
+†
+aˆ +
+1
+2
+
+,
+where the annihilation and creation operators aˆ and aˆ
+†
+are defined as
+aˆ =
+1
+√
+2
+
+Qˆ + iPˆ
+
+, and ˆa
+† =
+1
+√
+2
+
+Qˆ − iPˆ
+
+,
+and fulfil the commutation relation
+[ˆa, aˆ
+†
+] = ˆI.
+The eigenstates |ni of the Hamiltonian fulfil,
+Hˆ |ni = ~ω
+
+n +
+1
+2
+
+|ni,
+where n = 0, 1, 2, . . . .
+(a) What is the expectation value and what is the uncertainty of the energy in the n-th eigenstate?
+(2 marks)
+(b) Express the position operator xˆ =
+q ~
+mωQˆ and the momentum operator pˆ =
+√
+mω~Pˆ in
+terms of aˆ and aˆ
+†
+.
+(2 marks)
+(c) Recall that
+aˆ|ni =
+√
+n|n − 1i, and ˆa
+†
+|ni =
+√
+n + 1|n + 1i.
+(i) Calculate the expectation value and the uncertainty of the position in the n-th eigenstate.
+(4 marks)
+(ii) Calculate the expectation value and uncertainty of the momentum in the n-th eigenstate.
+(4 marks)
+(iii) Does the product of position and momentum uncertainties reach the lower bound of
+Heisenberg’s uncertainty relation, given by ~
+2
+, for any of the eigenstates? (1 mark)
+(d) Show that the product of the uncertainties of position and momentum is minimal for all states
+|αi which are normalised eigenstates of the annihilation operator, i.e., they fulfil
+aˆ|αi = α|αi, with hα|αi = 1
+with some α ∈ C.
+(7 marks)
+(Total: 20 marks)
+3. A double-square-well potential
+Consider a potential of the form
+V (x) =
+
+
+
+∞, x ≤ −L
+0, −L < x ≤ −a
+V0, −a < x < a
+0, a ≤ x < L
+∞, x ≥ L,
+where V0, L, and a are real and positive constants, and a ≤ L.
+(a) Sketch the potential.
+(1 mark)
+(b) Write down an ansatz for possible bound states with E < V0 using the known form of solutions
+of the time-independent Schrödinger equation in the different regions.
+(4 marks)
+(c) Use the symmetry of the potential to reduce the number of free parameters in the ansatz
+from (b).
+(6 marks)
+(d) Use the boundary conditions between the different regions to verify the following quantisation
+condition for the energies of the even bound states
+κ tanh(κa) = −k cot(k(L − a)),
+where
+k =
+√
+2mE/~, and κ =
+q
+2m(V0 − E)/~.
+(9 marks)
+(Total: 20 marks)
+4. Angular momentum quantisation
+Consider the angular momentum operators Jˆ
+x,y,z fulfilling the commutation relations [Jˆ
+x, Jˆ
+y] =
+i~Jˆ
+z, and cyclic permutations, and the total angular momentum operator defined as Jˆ2
+:=
+Jˆ2
+x + Jˆ2
+y + Jˆ2
+z
+, which commutes with all three angular momentum components Jˆ
+x,y,z. Consider a
+set of normalised joint eigenvectors of Jˆ2
+and Jˆ
+z labelled by the respective eigenvalues as
+Jˆ2
+|β, mi = ~
+2β|β, mi, and Jˆ
+z|β, mi = ~m|β, mi.
+(a) Show that m2 ≤ β by considering the expectation value hβ, m|Jˆ2
+|β, mi. (4 marks)
+(b) Let us introduce the operators
+Jˆ± = Jˆ
+x ± iJˆ
+y.
+Verify the commutation relations
+[Jˆ
+z, Jˆ±] = ±~Jˆ±, [Jˆ+, Jˆ−] = 2~Jˆ
+z,
+as well as the identities
+Jˆ−Jˆ+ = Jˆ2 − Jˆ2
+z − ~Jˆ
+z, and Jˆ+Jˆ− = Jˆ2 − Jˆ2
+z + ~Jˆ
+z.
+(5 marks)
+(c) Using the relations from (b), show that if |β, mi is an eigenvector of Jz corresponding
+to the eigenvalue ~m, then J+|β, mi is either also an eigenvector of Jz corresponding to
+the eigenvalue ~(m + 1) or the zero vector, and J−|β, mi is either an eigenvector of Jz
+corresponding to the eigenvalue ~(m − 1) or the zero vector. (4 marks)
+(d) From the above, deduce that the possible eigenvalues of J
+2 = J
+2
+x + J
+2
+y + J
+2
+z
+are given by
+~
+2
+j(j + 1) with 2j ∈ N, and for each given value of j the eigenvalues of Jz are given by ~m
+with m running in integer steps from −j to j. (7 marks)
+(Total: 20 marks)
+MATH96005/MATH97014/MATH97093 Quantum Mechanics 1 (2020) Page 5
+5. Mastery - the adiabatic theorem
+(a) Consider the time-dependent Schrödinger equation with an explicitly time-dependent
+Hamiltonian Hˆ (t).
+(i) Expand the solution of the time-dependent Schrödinger equation into the instantaneous
+eigenbasis |φni (with Hˆ (t)|φn(t)i = En(t)|φn(t)i) as
+|ψ(t)i =
+X
+n
+an(t)|φn(t)i,
+and use this to derive the equations of motion
+i~a˙ m = Emam − i~amhφm(t)|φ˙m(t)i − i~
+X
+n6=m
+anhφm(t)|φ˙
+n(t)i.
+(4 marks)
+(ii) Show that if the adiabatic condition |hφm(t)|
+˙Hˆ (t)|φn(t)i|  |En − Em| holds, this can
+be approximated by
+i~a˙ m = Emam − i~amhφm(t)|φ˙m(t)i.
+(5 marks)
+(iii) State the adiabatic theorem in words.
+(2 marks)
+(b) Now consider the following example of a two-level quantum system described by the timedependent Hamiltonian
+Hˆ (t) = ~
+
+
+−
+1
+2
+
+1
+2Ω(t)
+1
+2Ω(t)
+1
+2
+
+
+ , (1)
+where  is a real positive constant, and Ω is a real-valued function of time.
+(i) Show that the instantaneous eigenvalues are given by E± = ±
+~
+2
+√
+
+2 + Ω2
+, and verify
+that the corresponding instantaneous eigenvectors are given by
+φ+ =
+
+
+sin(θ+)
+cos(θ+)
+
+ , and φ− =
+
+
+cos(θ−)
+− sin(θ−)
+
+ , with θ± =
+1
+2
+atan
+Ω
+
+!
+,
+where you can use the relation 2atan(x) = atan 
+2x
+1−x2
+
+.
+(5 marks)
+(ii) Now assume that Ω is slowly varied linearly in time, as Ω = αt where α is infinitesimally
+small. Assume that at t → −∞ the system is in the state √
+1
+2
+(
+1
+1
+). In which state is the
+system at the end of the adiabatic time evolution at t → ∞?
+(4 marks)
+(Total: 20 marks)
+MATH96005/MATH97014/MATH97093 Quantum Mechanics 1 (2020) Page 6
+Quantum Mechanics 2019/20 Exam Solutions
+1. The principles of quantum mechanics
+((a)-(c): Seen similar in example exercises and previous exams. (d) and (e): unseen, but
+variations on the same theme have been seen before.)
+(a) The matrix representations are
+Hˆ =
+
+−E 0
+0 E
+
+, and Aˆ =
+
+0 −i
+i 0 
+.
+(2 points)
+Both are Hermitian, Hˆ † = Hˆ , and Aˆ† = Aˆ.
+(2 points)
+They do not commute:
+Hˆ Aˆ − AˆHˆ = 2 
+0 iE
+iE 0
+
+(1 point)
+(b) We find from the characteristic polynomial of Aˆ
+λ
+2
+A − 1 = 0,
+that is,
+λA = ±1.
+For the corresponding eigenvectors φ± =
+
+x±
+y±
+
+we find from
+
+0 −i
+i 0  x±
+y±
+
+= ±
+
+x±
+y±
+
+,
+that
+y± = ±ix±.
+Thus, a set of normalised eigenvectors is given by
+φ+ =
+1
+√
+2
+
+1
+i
+
+, and φ− =
+1
+√
+2
+
+1
+−i
+
+.
+(3 points)
+(c) We can read off the probabilities for the different energies from the coefficients of the wave
+function as
+P(−E) = 9
+25
+, and P(E) = 16
+25
+.
+(2 points)
+The expectation value can either be deduced from hψ|Hˆ |ψi via vector and matrix multiplications, or we calculate
+hHˆ i =
+X
+j
+P(λj )λj = −EP(−E) + EP(E) = 7
+25
+E.
+(1 point)
+For the probabilities for the measurement outcomes for A we find
+P(+1) = |hφ+|ψi|2 =
+1
+50
+|3 − 4i|
+2 =
+1
+2
+,
+and
+P(−1) = |hφ−|ψi|2 =
+1
+50
+|3 + 4i|
+2 =
+1
+2
+.
+(2 points)
+For the expectation value we find
+hAˆi = −P(−1) + P(+1) = 0.
+(1 point)
+(d) A measurement of the value 1 at time t = 0 projects the system onto the corresponding
+eigenstate of Aˆ, the vector
+|ψ(t = 0)i = |φ+i =
+1
+√
+2
+
+1
+i
+
+,
+(1 point)
+which is not an eigenstate of Hˆ .
+We can use the method of stationary states to find |ψ(t)i as
+|ψ(t)i =
+1
+√
+2
+e
+iEt/~
+|φ1i +
+i
+√
+2
+e
+−iEt/~
+|φ2i,
+(1 point)
+The probability to measure the result E in an energy measurement at a later time is thus
+given by
+P(E) = 1
+2
+for all times t > 0.
+(1 point)
+(e) A measurement of the value E for the energy at time t = 0, on the other hand, projects the
+system onto the corresponding eigenstate of Hˆ , that is, the vector
+|ψ(t = 0)i = |φ2i.
+(1 point)
+Since this is an eigenvector of Hˆ it only evolves in a phase in time, and we have
+|ψ(t)i = e−iEt/~
+|φ2i.
+(1 point)
+The probability to measure the result +1 in a measurement of A at a later time is then given
+by
+P(+1) = |hφ+|φ2i|2 =
+1
+2
+for all times t > 0.
+(1 point)
+2. The harmonic oscillator - expectation values and uncertainties
+(Parts (a), (b) and (c) seen in class, part (d) unseen.)
+(a) In an eigenstate the expectation value is the eigenvalue,
+hn|Hˆ |ni = ~ω(n +
+1
+2
+),
+and the uncertainty is zero.
+(2 points)
+(b) We have
+xˆ =
+r
+~
+mω
+Q, ˆ
+and
+Qˆ =
+1
+√
+2
+(ˆa + ˆa
+†
+),
+that is,
+xˆ =
+r
+~
+2mω
+(ˆa + ˆa
+†
+),
+and similar for
+pˆ = ir
+mω~
+2
+(ˆa
+† − aˆ).
+(2 points)
+(c) (i) Using
+xˆ =
+r
+~
+2mω
+(ˆa + ˆa
+†
+),
+we find
+hn|xˆ|ni = 0,
+(1 point)
+and for the uncertainty
+(∆x)
+2 = hxˆ
+2
+i − hxˆi
+2
+we use
+xˆ
+2 =
+~
+2mω
+(ˆa
+2 + ˆaaˆ
+† + ˆa
+†
+aˆ + ˆa
+† 2
+).
+Using the commutator of aˆ and aˆ
+†
+, this yields
+xˆ
+2 =
+~
+2mω
+(ˆa
+2 + 2ˆa
+†
+aˆ + ˆI + ˆa
+† 2
+),
+and thus
+hn|xˆ
+2
+|ni =
+~
+mω
+(n +
+1
+2
+).
+The uncertainty is thus
+∆x =
+r
+~
+mω
+(n +
+1
+2
+).
+(3 points)
+(ii) Similarly we find for pˆ:
+hn|pˆ|ni = 0,
+and
+hn|pˆ
+2
+|ni = mω~(n +
+1
+2
+),
+and thus
+∆p =
+r
+mω~(n +
+1
+2
+).
+(4 points)
+(iii) We have
+(∆x)(∆p) = ~(n +
+1
+2
+),
+that is, only the ground state n = 0 is a minimum uncertainty state.
+(1 point)
+(d) Using that
+aˆ|αi = α|αi,
+and thus
+hα|aˆ
+† = α
+∗
+hα|,
+we find
+hα|xˆ|αi =
+r
+~
+2mω
+hα|aˆ + ˆa
+†
+|αi =
+r
+~
+2mω
+(α + α
+∗
+),
+and
+hα|xˆ
+2
+|αi =
+~
+2mω
+hα|aˆ
+2 + 2ˆa
+†
+aˆ + ˆI + ˆa
+† 2
+|αi =
+~
+2mω
+((α + α
+∗
+)
+2 + 1),
+that is,
+∆x =
+r
+~
+2mω
+.
+(3 points)
+Similarly we find
+hα|pˆ|αi = ir
+mω~
+2
+(α
+∗ − α),
+hα|pˆ
+2
+|αi = −
+mω~
+2
+(α
+∗ − α)
+2
+,
+and
+∆p =
+r
+mω~
+2
+.
+(3 points)
+thus, we have
+(∆x)(∆p) = ~
+2
+,
+as required.
+(1 point)
+3. A double-square-well potential
+(Unseen)
+(a) One mark for a correct sketch of the potential.
+(1 point)
+(b) The solutions of the time-independent Schr¨odinger equation in the separate regions are of
+the form ae
+ikx + be
+−ikx with k =
+p
+2m(E − Vj )/~, where Vj is the value of the constant
+potential in region j. For E < Vj we can define κ =
+p
+2m(Vj − E)/~ ∈ R, and the solutions
+take the form ae
+−κx + be
+κx
+.
+Here we are looking for bound states, that is φ(x → ±∞) → 0. The solutions are of the
+form
+φE(x) =
+
+
+
+Ae
+ikx + Be
+−ikx
+, −L ≤ x ≤ −a
+Ce
+−κx + De
+κx
+, −a < x < a
+A˜e
+ikx + B˜e
+−ikx, a ≤ x ≤ L,
+(1)
+with k =
+√
+2mE
+~
+and κ =
+√
+2m(V0−E)
+~
+.
+(4 points)
+(c) In class we have learnt that the bound state eigenfunctions of a Hamiltonian of the form
+Hˆ = −
+~
+2
+2m
+∂
+2
+∂x2 + V (x) with V (−x) = V (x) are either even or odd. Let us now consider even
+and odd solutions separately. For the functions (1) to be even, i.e. φE(−x) = φE(x) it needs
+to hold A˜ = B and B˜ = A, and C = D.
+(3 points)
+For odd functions φE(−x) = −φE(x) we need A˜ = −B, B˜ = −A, and D = −C.
+(3 points)
+(d) We have the boundary conditions:
+φ(±L) = 0,
+and the wave function and its first derivative need to be continuous at x = a and x = −a.
+This yields six boundary conditions. Due to the symmetry two of them each are equivalent,
+and we thus have only three independent conditions.
+(3 points)
+For even states the boundary conditions at x = ±L yield the following relation between A
+and B:
+Ae
+−ikL + Be
+ikL = 0,
+that is
+B = −Ae
+−2ikL
+.
+(2 points)
+The continuity of the wave function and its first derivative at x = ±a yield the two conditions
+2C cosh(κa) = 2Ae
+ikL cos(k(L − a)) (2)
+2κC sinh(κa) = −2ikAe
+ikL sin(k(L − a)) (3)
+(3 points)
+Dividing condition (3) by condition (2) this yields the quantisation condition
+κ tanh(κa) = −k cot(k(L − a))
+for even eigenfunctions.
+(1 point)
+4. Angular momentum quantisation
+(Bookwork - Seen in lecture, and written up in lecture notes)
+(a) By definition we have Jˆ2 = Jˆ2
+x + Jˆ2
+y + Jˆ2
+z
+, and thus
+hβ, m|Jˆ2
+|β, mi = hβ, m|Jˆ2
+x
+|β, mi + hβ, m|Jˆ2
+y
+|β, mi + hβ, m|Jˆ2
+z
+|β, mi
+We have
+hβ, m|Jˆ2
+j
+|β, mi = ||Jˆ
+j |β, mi||2
+,
+which has to be positive. For Jˆ
+z we specifically have
+hβ, m|Jˆ2
+z
+|β, mi = ~
+2m2
+.
+Thus, we have
+hβ, m|Jˆ2
+|β, mi ≥ ~
+2m2
+.
+At the same time we have
+hβ, m|Jˆ2
+|β, mi = ~
+2β,
+and thus we deduce
+β ≥ m2
+.
+(4 points)
+(b) We have
+[Jˆ
+z, Jˆ+] = [Jˆ
+z, Jˆ
+x] + i[Jˆ
+z, Jˆ
+y] = i~Jˆ
+y + ~Jˆ
+x = ~Jˆ+
+(1 point)
+similarly,
+[Jˆ
+z, Jˆ−] = i~Jˆ
+y − ~Jˆ
+x = −~Jˆ−.
+(1 point)
+Further,
+[Jˆ+, Jˆ−] = [Jˆ
+x + iJˆ
+y, Jˆ
+x − iJˆ
+y] = −i[Jˆ
+x, Jˆ
+y] + i[Jˆ
+y, Jˆ
+x] = 2~Jˆ
+z.
+(1 point)
+For Jˆ−Jˆ+ we find
+Jˆ−Jˆ+ = Jˆ2
+x + i[Jˆ
+x, Jˆ
+y] + Jˆ2
+y = Jˆ2 − Jˆ2
+z − ~Jˆ
+z,
+(1 point)
+and finally
+Jˆ+Jˆ− = Jˆ2
+x − i[Jˆ
+x, Jˆ
+y] + Jˆ2
+y = Jˆ2 − Jˆ2
+z + ~Jˆ
+z.
+(1 point)
+(c) Let us consider Jˆ
+zJˆ+|β, mi:
+Jˆ
+zJˆ+|β, mi = (Jˆ
+zJˆ+ − Jˆ+Jˆ
+z + Jˆ+Jˆ
+z)|β, mi
+= ([Jˆ
+z, Jˆ+] + Jˆ+Jˆ
+z)|β, mi
+= (~Jˆ+ + ~mJˆ+)|β, mi
+= ~(m + 1)Jˆ+|β, mi.
+Thus, the vector Jˆ+|β, mi is either the zero vector, or it is an eigenvector of Jˆ
+z with eigenvalue
+~(m + 1).
+(2 points)
+A similar calculation yields
+Jˆ
+zJˆ−|β, mi = ~(m − 1)Jˆ−|β, mi.
+Thus, the vector Jˆ−|β, mi is either the zero vector, or it is an eigenvector of Jˆ
+z with eigenvalue
+~(m − 1).
+(2 points)
+(d) Since m2 ≤ β there has to be a maximal value mmax = j, for which
+Jˆ+|β, ji = 0, (4)
+and a minimal value mmin = k, for which
+Jˆ−|β, ki = 0, (5)
+such that further applications of Jˆ±, respectively do not yield eigenvectors for which m2 > β.
+(1 point)
+Applying Jˆ− to equation (4), and using that Jˆ−Jˆ+ = Jˆ2 − Jˆ2
+z − ~Jˆ
+z yields
+Jˆ2 − Jˆ2
+z − ~Jˆ
+z|β, ji = 0
+=
+
+~
+2β − ~
+2
+j
+2 − ~
+2
+j
+
+|β, ji,
+(6)
+where |β, ji is assumed not to be the zero vector. That is,
+β = j
+2 + j = j(j + 1). (7)
+(2 points)
+On the other hand, applying Jˆ+ to equation (5), and using that Jˆ+Jˆ− = Jˆ2 − Jˆ2
+3 + ~Jˆ
+3
+yields
+Jˆ2 − Jˆ2
+z + ~Jˆ
+z|β, ki = 0
+=
+
+~
+2β − ~
+2
+k
+2 + ~
+2
+k
+
+|β, ki,
+(8)
+where |β, ki is not the zero vector either, and thus
+β = k
+2 − k = k(k − 1). (9)
+(2 points)
+Combining equations (7) and (9) yields
+k(k − 1) = j(j + 1), (10)
+which has the two possible solutions
+k = j + 1 or k = −j, (11)
+we know, however, that k is the minimal value of m and j the maximal, that is k ≤ j, which
+means we have
+k = −j. (12)
+(1 point)
+In summary, we have deduced that if ~m is an eigenvalue of Lz so are ~(m + 1) and
+~(m−1) unless the corresponding eigenvectors would be zero. Thus, the only way to prevent
+eigenvectors with m2 > β is that the ladder of eigenvalues includes the maximum and
+mimimum values mmax = j and mmin = −j. Consecutively applying the operator Jˆ+ to
+the eigenvectors starting from the miminum values, yields the possible set of eigenvalues ~m,
+where m runs in integer steps from −j to j, from which it follows that 2j is an integer, and
+the value of β is related to j by β = j(j + 1)
+(1 point)
+5. Mastery question - the adiabtic theorem
+This question is based on an extra mastery section of the lecture notes. Part a is discussed in the
+notes. Part (b) (i) is very similar to an example in the notes, part (b)(ii) is unseen.
+(a) (i) At any time we can expand the solution of the time-dependent Schr¨odinger equation
+into the eigenbasis at this time, with time-dependent coefficients:
+|ψ(t)i =
+X
+n
+an(t)|φn(t)i.
+Substituting this into the Schr¨odinger equation we find
+i~
+X
+n
+
+a˙ n|φn(t)i + an|φ˙
+n(t)i
+
+=
+X
+n
+anHˆ (t)|φn(t)i.
+Using that |φn(t)i is an eigenstate of Hˆ corresponding to the eigenvalue En(t) and
+projecting onto hφm(t)| yields
+i~
+X
+a˙ nhφm(t)|φn(t)i + anhφm(t)|φ˙
+n(t)i
+
+=
+X
+n
+anEnhφm(t)|φn(t)i.
+Now at any given time the eigenbasis is orthonormal, that is hφm(t)|φn(t)i = δmn and
+thus
+i~a˙ m = Emam − i~
+X
+n
+anhφm(t)|φ˙
+n(t)i
+= Emam − i~amhφm(t)|φ˙m(t)i − i~
+X
+n6=m
+anhφm(t)|φ˙
+n(t)i
+(4 points)
+(ii) Taking the time derivative of the instantaneous eigenvalue equation yields
+˙Hˆ (t)|φn(t)i + Hˆ (t)|φ˙
+n(t)i = E˙
+n(t)|φn(t)i + En(t)|φ˙
+n(t)i.
+Projecting this onto hφm(t)| and using the fact that hφm(t)|Hˆ (t) = Em(t)hφm(t)|, yields
+hφm(t)|
+˙Hˆ (t)|φn(t)i + Em(t)hφm(t)|φ˙
+n(t)i = E˙
+n(t)hφm(t)|φn(t)i + Enhφm(t)|φ˙
+n(t)i,
+that is for n 6= m we find
+hφm(t)|φ˙
+n(t)i =
+hφm(t)|
+˙Hˆ (t)|φn(t)i
+En − Em
+.
+That is, we can neglect the off-diagonal terms in the equation for a˙ m if the adiabatic
+condition
+|hφm(t)|
+˙Hˆ (t)|φn(t)i| << |En − Em|,
+holds. In that case we have
+i~a˙ m = Emam − i~amhφm(t)|φ˙m(t)i.
+(5 points)
+(iii) The adiabatic theorem states that if ψ(t = 0) is an eigenstate of Hˆ (t = 0) and Hˆ (t) is
+varied infinitely slowly in time then ψ(t) will be an eigenstate of Hˆ (t) at all times.
+(2 points)
+(b) (i) We find the instantaneous eigenvalues of the Hamiltonian as the roots of the characteristic polynomial
+(−
+~
+2
+ − E)(~
+2
+ − E) −
+~
+2
+4
+Ω
+2 = 0
+as
+E± = ±
+~
+2
+p
+
+2 + Ω2 :=
+~
+2
+λ±.
+Reinserting the instantaneous eigenvalues into the eigenvalue equation yields the following condition for the components x±, y± of the eigenvectors:
+y± =
+ + λ±
+Ω
+x±.
+Together with the normalisation condition for the eigenvectors we thus find
+φ± =
+1
+p
+(λ± + )
+2 + Ω2
+
+Ω
+λ± + 
+
+.
+We can rewrite the eigenvectors as
+φ+ =
+
+sin(θ+)
+cos(θ+)
+
+, and φ− =
+
+cos(θ−)
+− sin(θ−)
+
+with
+θ+ = atan 
+Ω
+λ+ + 
+
+, and θ− = atan 
+−λ− − 
+Ω
+
+Using the relation
+2atan(x) = atan 
+2x
+1 − x
+2
+
+we can rewrite this as
+θ± =
+1
+2
+atan 
+2Ω(λ± + )
+(λ± + )
+2 − Ω2
+
+With λ± = ±
+√
+
+2 + Ω2 this yields
+θ± =
+1
+2
+atan 
+2Ω(λ± + )
+2(λ± + )
+
+=
+1
+2
+atan 
+Ω
+
+
+.
+(5 points)
+(ii) For Ω → −∞ we have
+tan(2θ±) → −∞,
+that is, θ± = −
+π
+4
+, and thus the initial state corresponds to the instantaneous state φ−.
+(2 points)
+According to the adiabatic theorem the final state is φ− at the final time, for which we
+have
+tan(2θ±) → ∞,
+that is, θ± =
+π
+4
+, and therefore the final state is the state
+1
+√
+2
+
+1
+−1
+
+.
+(2 points)
+ExamModuleCode QuestionNComments for Students
+MATH97014 MATH97093 1
+Tthis seems to have been mostly straight forward for most students. Common small mistakes
+included confusong A and its transpose and forgetting the complex conjugation in the inner
+product. A slightly more alarming common mistake was a lack of a time‐dependent state in parts
+d and e.
+MATH97014 MATH97093 2 Up to part d this was mostly straight forward. Part d was solved by only a few.
+MATH97014 MATH97093 3
+This seems to have been much harder than I had anticipated. A lot of people jumped onto the
+same wrong conclusion that to be even the solutions cannot have a sin contribution in the two
+outer wells. This is wrong of course.
+MATH97014 MATH97093 4
+This was bookwork and thus almost everyone got everything right here. I was stingy and took of
+points for tiny mistakes.
+MATH97014 MATH97093 5 Part a was bookwork. Only few got part b right.
+If your module is taught across multiple year levels, you might have received this form for each level of the module. You are only required to fill this out once, for each question.
+Please record below, some brief but non‐trivial comments for students about how well (or otherwise) the questions were answered. For example, you may wish to comment on common errors and
+misconceptions, or areas where students have done well. These comments should note any errors in and corrections to the paper. These comments will be made available to students via the MathsCentral
+Blackboard site and should not contain any information which identifies individual candidates. Any comments which should be kept confidential should be included as confidential comments for the Exam Board
+and Externals. If you would like to add formulas, please include a sperate pdf file with your email.

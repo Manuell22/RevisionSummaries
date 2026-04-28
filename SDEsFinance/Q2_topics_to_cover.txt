@@ -1,0 +1,129 @@
+Q2 TOPICS TO COVER — SDEs in Finance Mock Exams
+================================================
+All 9 Q2s (Mocks 1–7, 2024 exam, 2025 exam) are option pricing in Black-Scholes.
+The same core toolkit recurs in every question. Master these building blocks first,
+then learn how to combine them for each spread/strategy.
+
+=======================================================================
+CORE TOOLKIT (needed for EVERY Q2)
+=======================================================================
+
+1. BLACK-SCHOLES CALL FORMULA
+   Under Q: dS = rS dt + σS dW^Q
+   d1 = [ln(s0/K) + (r + σ²/2)T] / (σ√T)
+   d2 = d1 − σ√T
+   Call = s0·Φ(d1) − K·e^{−rT}·Φ(d2)
+   You are NOT required to derive this — memorise it.
+
+2. PUT-CALL PARITY (derive the put from the call — explicitly tested every time)
+   Call − Put = s0 − K·e^{−rT}
+   → Put = Call − s0 + K·e^{−rT} = K·e^{−rT}·Φ(−d2) − s0·Φ(−d1)
+   Know how to derive this from a no-arbitrage forward argument.
+
+3. ATM-FORWARD STRIKE SIMPLIFICATION
+   K = s0·e^{rT}  →  s0 − K·e^{−rT} = 0  →  Call = Put
+   d1 = σ√T/2,  d2 = −σ√T/2
+   Know the straddle and symmetric spread simplifications at this strike.
+
+4. DELTA (sensitivity to s0)
+   ∂/∂s0 [Call] = Φ(d1)
+   ∂/∂s0 [Put]  = −Φ(−d1) = Φ(d1) − 1
+   For any portfolio: Delta = sum of constituent deltas.
+
+5. VEGA (sensitivity to σ) — tested in Mocks 1, 5, 6; used with hint in Mocks 5, 6
+   ∂/∂σ [Call] = s0·√T·φ(d1)   [always positive]
+   KEY IDENTITY: s0·φ(d1) = K·e^{−rT}·φ(d2)   ← used to simplify vega of spreads
+   Vega of Put = Vega of Call (same formula via parity)
+
+6. CHANGE OF MEASURE (P → Q) for multi-stock questions
+   Under P: dS^(i) = μi·S^(i)dt + σi·S^(i)dW^(i)
+   Under Q: drift μi is replaced by r (Girsanov).
+   Correlation ρ is unchanged under the change of measure.
+
+=======================================================================
+STRATEGY-SPECIFIC TOPICS
+=======================================================================
+
+A. STRADDLE  [Mock 1]
+   Payoff: (S_T−K)+ + (K−S_T)+ = |S_T − K|
+   Price = Call + Put = 2·Call at ATM-forward (since Call = Put there)
+   ATM-forward price = 2s0·[2Φ(σ√T/2)−1]
+   Vega = 2s0·√T·φ(σ√T/2) > 0  → pure volatility bet, always positive vega
+   Investor: expects HIGH volatility, direction-neutral.
+
+B. TWO-STOCK PORTFOLIO (call on S1 + put on S2)  [Mock 2]
+   Price = BS_Call(s0^(1), K1, σ1) + BS_Put(s0^(2), K2, σ2)
+   KEY POINT: price decomposes into two INDEPENDENT terms.
+   → ∂V/∂ρ = 0  (price does NOT depend on correlation)
+     Reason: marginal distributions of each stock are lognormal regardless of ρ.
+   ∂V/∂σ2 = s0^(2)·√T·φ(d1^(2)) > 0  (put vega same as call vega)
+   At ATMF: d1^(2) = σ2√T/2, simplification applies.
+
+C. ASSET-OR-NOTHING (ANO) & CASH-OR-NOTHING (CNO)  [Mock 3]
+   Y^AN = S_T · 1{S_T > K},   Y^CN = K · 1{S_T > K}
+   Portfolio: ANO − CNO = (S_T−K)· 1{S_T>K} = (S_T−K)+ = Call
+   CNO price = K·e^{−rT}·Φ(d2)      [discounted Q-probability]
+   ANO price = s0·Φ(d1)              [via ANO = Call + CNO]
+   Investors: ANO → wants geared stock exposure; CNO → wants binary fixed payout.
+
+D. NO-ARBITRAGE & PUT-CALL PARITY VIOLATION  [Mock 4]
+   If Call0 = Put0 + X, X > 0: sell call, buy put, enter long forward → X·e^{rT} profit.
+   At T: short call + long put + long forward = 0 regardless of S_T → riskless profit.
+   If Call0 = Put0 − X: buy call, sell put, enter short forward → same argument.
+   Model independence: the argument uses ONLY payoff definitions and rate r.
+   Works in ANY model (BS, Bachelier, DD, etc.).
+
+E. SHORT RISK REVERSAL  [Mock 5, 2024 Exam Q2]
+   Payoff: −(S_T−K1)+ + (K2−S_T)+,   K2 < S0 < K1
+   Profile: BEARISH — profits if stock falls below K2; UNLIMITED LOSS if stock rises.
+   Price = −Call(K1) + Put(K2)
+   Delta = −Φ(d1^(1)) − Φ(−d1^(2)) = −Φ(d1^(1)) + Φ(d1^(2)) − 1  [always negative]
+   Vega: = s0√T·[φ(d1^(2)) − φ(d1^(1))]  via the hint s0φ(d1)=Ke^{−rT}φ(d2)
+   Sign of vega depends on the strikes.
+
+F. BULL CALL SPREAD  [Mock 6, 2025 Exam Q2]
+   Payoff: (S_T−K2)+ − (S_T−K1)+,   K1 > K2
+   Profile: BULLISH — profits from moderate rise; capped upside (K1−K2); limited downside.
+   Price = Call(K2) − Call(K1) > 0
+   Delta = Φ(d1(K2)) − Φ(d1(K1)) > 0  [positive: K2 < K1 → d1(K2) > d1(K1)]
+   Vega: s0√T·[φ(d1(K2)) − φ(d1(K1))]  — sign can vary
+   Comment on sign of price: payoff ≥ 0 and not identically zero → price > 0.
+
+G. LONG CALL CALENDAR SPREAD (LCCS)  [Mock 7]
+   Structure: long call maturity T1, short call maturity T2, T1 > T2, same K.
+   Price = BS_Call(s0, K, T1, σ, r) − BS_Call(s0, K, T2, σ, r)
+   Delta = Φ(d1(T1)) − Φ(d1(T2))
+   Sign analysis of delta:
+     d1(T) = ln(s0/K)/(σ√T) + (r+σ²/2)√T/σ
+     First term decreases with T if s0 > K; increases if s0 < K.
+     Second term always increases with T.
+     Sufficient condition for Δ > 0: s0 ≤ K (OTM or ATM)
+       — both terms in d1 increase with T, so d1(T1) > d1(T2) → Δ > 0.
+
+=======================================================================
+KEY SKILLS MATRIX
+=======================================================================
+
+Skill                        | Mocks tested
+-----------------------------|------------------------------------------
+BS call formula (memorise)   | ALL
+Put via parity               | ALL (explicitly required most times)
+ATM-forward simplification   | 1, 2, 3
+Delta computation            | 2, 4, 5, 6, 7 + both past exams
+Vega computation             | 1, 2, 5, 6
+Vega hint s0φ(d1)=Ke^{-rT}φ(d2) | 5, 6 (given as hint — must use it)
+Independence of correlation  | 2
+ANO/CNO decomposition        | 3
+Arbitrage argument (forward) | 4
+Payoff plot + investor profile | ALL
+
+=======================================================================
+STUDY ORDER RECOMMENDATION
+=======================================================================
+
+1. Memorise BS call, put-call parity, d1/d2, ATM-forward simplification.
+2. Practice Delta/Vega differentiation on a plain call and put.
+3. Learn the vega hint s0φ(d1) = Ke^{-rT}φ(d2) and practise simplifications.
+4. Work through each strategy (A–G above) by writing price, delta, vega.
+5. Do the no-arbitrage parity violation argument (Mock 4) — pure logic.
+6. Practise the 2-stock question (Mock 2) for the correlation independence point.

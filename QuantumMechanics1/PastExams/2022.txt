@@ -1,0 +1,1624 @@
+© 2022 Imperial College London Page 1
+MATH97014 MATH70015
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May-June 2022
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Quantum Mechanics 1
+SUBMIT YOUR ANSWERS AS ONE PDF TO THE RELEVANT DROPBOX ON BLACKBOARD
+WITH COMPLETED COVERSHEETS WITH YOUR CID NUMBER, QUESTION NUMBERS
+ANSWERED AND PAGE NUMBERS PER QUESTION.
+Date: 20 May 2022
+Time: 09:00 – 11:30 (BST)
+Time Allowed: 2:30 hours
+Upload Time Allowed: 30 minutes
+This paper has 5 Questions.
+Candidates should start their solutions to each question on a new sheet of paper.
+Each sheet of paper should have your CID, Question Number and Page Number on the
+top.
+Only use 1 side of the paper.
+Allow margins for marking.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. The principles of quantum mechanics
+Consider a system on the Hilbert space C
+3
+and a Hamiltonian Hˆ represented by the matrix
+Hˆ =
+
+
+−E 0 0
+0 0 0
+0 0 E
+
+
+,
+with E ∈ R. Let another observable Aˆ be described by the matrix
+Aˆ =
+1
+√
+2
+
+
+0 a 0
+a 0 a
+0 a 0
+
+
+,
+with a ∈ R.
+(a) Calculate the eigenvalues and a set of normalised eigenvectors of Aˆ. (4 marks)
+(b) (i) Assume that at a given time the system is in the state which is an eigenstate of the
+Hamiltonian with eigenenergy E, when a measurement of the observable A is performed.
+What are the possible outcomes of this measurement? Calculate the probabilities of the
+different measurement outcomes, and the expectation value of A.
+(6 marks)
+(ii) How can one prepare a system in a given eigenstate of the energy using measurements?
+(2 marks)
+(c) In another experiment, with an unknown initial state, at time t = 0 the measurement of the
+observable A yields the result a. What is the probability that a subsequent measurement of
+A at time t > 0 yields the same result a? (8 marks)
+(Total: 20 marks)
+MATH60015/70015/97014 Quantum Mechanics 1 (2021) Page 2
+2. Quantum harmonic oscillator and momentum representation
+Consider the harmonic oscillator Hamiltonian
+Hˆ = ~ω
+
+aˆ
+†
+aˆ +
+1
+2
+ˆI
+
+,
+with annihilation and creation operators aˆ and aˆ
+† with [ˆa, aˆ
+†
+] = ˆI.
+(a) We introduce the operators Qˆ =
+√
+√
+~
+2
+
+aˆ + ˆa
+†
+
+and Pˆ =
+√
+√
+~
+2i 
+aˆ − aˆ
+†
+
+.
+(i) Calculate the commutator [Q, ˆ Pˆ]. (3 marks)
+(ii) Verify that the harmonic oscillator Hamiltonian expressed in terms of Qˆ and Pˆ is given
+by
+Hˆ =
+ω
+2
+
+Pˆ2 + Qˆ2
+
+.
+(4 marks)
+(iii) What are the eigenvalues En of Hˆ ? (2 marks)
+(b) The eigenstates |qi of the scaled position operator Qˆ belong to the eigenvalues q ∈ R, so
+that Qˆ|qi = q|qi. They fulfil the generalised orthonormality condition hq
+0
+|qi = δ(q − q
+0
+), and
+form a resolution of the identity,
+Z ∞
+−∞
+|qihq|dq = ˆI.
+The eigenstates |pi of the scaled momentum operator Pˆ belonging to the eigenvalues p ∈ R
+(i.e. Pˆ|pi = p|pi) fulfil the generalised orthonormality condition hp
+0
+|pi = δ(p − p
+0
+), form a
+resolution of the identity
+Z ∞
+−∞
+|pihp|dp = ˆI,
+and we have
+hq|pi =
+1
+√
+2π
+e
+i
+~
+pq
+.
+(i) Show that
+hp|ψi =
+1
+√
+2π
+Z +∞
+−∞
+e
+i
+~
+pqhq|ψidq.
+(2 marks)
+(ii) Show that
+hp|Qˆ|ψi = i~
+d
+dp
+ψ˜(p) = hp|ψi.
+(5 marks)
+(iii) Express hp|Hˆ |ψi in terms of hp|ψi.
+(4 marks)
+(Total: 20 marks)
+MATH60015/70015/97014 Quantum Mechanics 1 (2021) Page 3
+3. Particle hopping on a lattice
+Consider a particle on a one-dimensional discrete lattice, modelled on a Hilbert space spanned by
+an orthonormal basis {|ni}, with integer n, where the particle is located on the n-th lattice site
+with certainty if the system is in the state |ni. We define the “shift” operators
+Kˆ =
+X
+n
+|n − 1ihn|, and Kˆ † =
+X
+n
+|n + 1ihn|,
+and the discrete position operator
+Nˆ =
+X
+n
+n|nihn|.
+A Hamiltonian of the form
+Hˆ = −
+E0
+2
+
+Kˆ + Kˆ †
+
++ FN, ˆ
+where E0 and F are real positive constants, describes the system of a particle that can hop between
+neighbouring sites, subject to a static force F.
+(a) Verify the commutation relations
+[N, ˆ Kˆ ] = −K, ˆ [N, ˆ Kˆ †
+] = Kˆ †
+, [K, ˆ Kˆ †
+] = 0.
+(4 marks)
+(b) Consider the special case F = 0.
+(i) Insert the ansatz |φi =
+P
+n cn|ni into the eigenvalue equation for Hˆ and verify that
+cn = einκ with κ ∈ [0, 2π] yields a set of eigenvectors. What are the corresponding
+eigenvalues of Hˆ ?
+(5 marks)
+(ii) Starting from the Schrödinger equation i~
+d
+dt
+|ψi = Hˆ |ψi, derive the Heisenberg equation
+of motion for the expectation value of an observable Aˆ with ∂
+∂tAˆ = 0.
+(3 marks)
+(c) Consider the general case F 6= 0.
+(i) State the Heisenberg equations for the expectation values of Kˆ , Kˆ †
+and Nˆ, simplify
+using the commutators from part (a).
+(4 marks)
+(ii) Solve the equations of motion in (i) with initial conditions hKˆ (t = 0)i = eiκ0
+,
+hKˆ †
+(t = 0)i = e−iκ0
+, and hNˆ(t = 0)i = N0.
+(4 marks)
+(Total: 20 marks)
+MATH60015/70015/97014 Quantum Mechanics 1 (2021) Page 4
+4. A quantum wave function
+Consider a quantum particle, the state of which is described by the wave function
+ψ(x) = Ae
+− 1
+2
+|x−4|
+,
+with a real and positive normalisation constant A.
+(a) Find the A such that the wave function ψ(x) is normalised to one. (4 marks)
+(b) What is the expectation value hxi and the uncertainty ∆x of the position. (9 marks)
+Hint: You may find the integral R ∞
+0 x
+2
+e
+−xdx = 2 useful.
+(c) Calculate the probability of finding the particle at a position with x ≤ 0 and the probability
+of finding it at a position x ≥ 0. (7 marks)
+(Total: 20 marks)
+MATH60015/70015/97014 Quantum Mechanics 1 (2021) Page 5
+5. Mastery Question: Husimi functions
+(a) Consider the set of coherent states |zi. These can be defined as eigenstates |zi of the
+annihilation operator aˆ, such that aˆ|zi = z|zi, where z ∈ C. In the basis of harmonic
+oscillator states they have the form
+|zi = e−
+|z|
+2
+2
+X
+n
+z
+n
+√
+n!
+|ni.
+Show that these states form a resolution of the identity with
+Z
+|zihz|
+d
+2
+z
+π
+= ˆI,
+where d
+2
+z = dRe(z)dIm(z). (5 marks)
+Hint: Introduce polar coordinates r ∈ R+ and θ ∈ [0, 2π], so that z = re
+iθ
+, and d
+2
+z = rdrdθ.
+The integral R ∞
+0
+ξ
+n
+e
+−ξdξ = n! for integer n should be useful.
+(b) We define the Husimi representation Q of a quantum state |ψi as
+Q(z, z∗
+) = 1
+π
+|hz|ψi|2
+.
+(Note that this differs by an overall normalisation factor from the Husimi distribution defined
+in the lecture notes.)
+Assume that the state |ψi is normalised to one, and show that
+(i) R
+Q(z, z∗
+)d2
+z = 1. (2 marks)
+(ii) haˆi =
+R
+zQ(z, z∗
+)d2
+z, (2 marks)
+(iii) haˆ
+†aˆi =
+R
+|z|
+2Q(z, z∗
+)d2
+z − 1. (3 marks)
+(c) (i) Show that
+∂
+∂zQ(z, z∗
+) = −z
+∗Q(z, z∗
+) + 1
+π
+hz|ψihψ|aˆ
+†
+|zi.
+(4 marks)
+(ii) Consider a harmonic oscillator Hamiltonian Hˆ = ~ω(ˆa
+†aˆ +
+1
+2
+ˆI). Starting from the
+Schrödinger equation for a state |ψi, derive an equation of motion for the time-dependent
+Husimi function Q(z, z∗
+, t). (4 marks)
+(Total: 20 marks)
+MATH60015/70015/97014 Quantum Mechanics 1 (2021) Page 6
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2022
+This paper is also taken for the relevant examination for the Associateship.
+MATH60015/70015/97014
+Solutions
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+c 2022 Imperial College London MATH60015/70015/97014 Page 1 of 14
+1. The principles of quantum mechanics
+(a) From the characteristic polynomial of Aˆ we find for the eigenvalues λ of Aˆ sim. seen ⇓
+−λ
+3 + a
+2λ = 0,
+and thus λ0 = 0 and λ± = ±a. For the components of the eigenvector φ0 we find
+from Aˆ|φ0i = 0
+1
+√
+2
+
+
+0 a 0
+a 0 a
+0 a 0
+
+
+
+
+x0
+y0
+z0
+
+ =
+
+
+0
+0
+0
+
+ ,
+that is,
+y0 = 0, and x0 = −z0.
+Together with the normalisation condition that yields
+φ0 =
+1
+√
+2
+
+
+1
+0
+−1
+
+ ,
+up to an arbitrary phase factor e
+iϕ. Similarly we find the remaining eigenvectors
+φ+ =
+1
+2
+
+
+1
+√
+2
+1
+
+ , and φ− =
+1
+2
+
+
+1
+−
+√
+2
+1
+
+ .
+4, A
+(b) (i) The system is in the state ψ = sim. seen ⇓
+
+0 0 1T
+. The probability to measure an
+eigenvalue of an observable is given by the squared modulus of the projection
+of the state onto the corresponding eigenspace of the observable.
+We can directly read off the probabilities for the different eigenvalues from the
+eigenvectors of Aˆ as
+P(a) = 1
+4
+, P(0) = 1
+2
+, and P(−a) = 1
+4
+.
+3, B
+The expectation value can be either deduced from hψ|Aˆ|ψi via vector and
+matrix multiplications, or we calculate
+hAˆi =
+X
+j
+P(λj )λj = aP(a) − aP(−a) = a
+
+1
+4
+−
+1
+4
+
+= 0.
+3, B
+(ii) A measurement of the energy with outcome E collapses the quantum state to
+the corresponding eigenstate of Hˆ . Thus if we measure the energy and the
+outcome is E the state is prepared. If there is another outcome the system
+needs to be perturbed in some way and the measurement needs to be repeated
+until the desired outcome is observed. 2, C
+(c) A measurement of the value a at time t = 0 projects the system onto the sim. seen ⇓
+corresponding eigenstate of Aˆ,
+ψ(t = 0) = 1
+2
+
+
+1
+√
+2
+1
+
+ ,
+which is not an eigenstate of Hˆ . The time-dependent wave function is then given 2, C
+by
+|ψ(t)i = e−iHt/ ˆ ~
+|ψ(0)i.
+1, C
+We can use the method of stationary states to find ψ(t). For this purpose we need
+to represent ψ(0) as a linear superposition of the eigenstates of Hˆ , the canonical
+basis χj , as
+ψ(t = 0) = 1
+2
+χ− +
+1
+√
+2
+χ0 +
+1
+2
+χ+,
+Therefore the state at time t is given by
+ψ(t) = 1
+2
+e
+iEt/~χ− +
+1
+√
+2
+χ0 +
+1
+2
+e
+−iEt/~χ+,
+3, B
+The probability to measure the result a again is given by
+P(1) = |hφa|ψ(t)i|2 =
+
+
+
+
+1
+2
+e
+iEt/~
+·
+1
+2
++
+1
+2
+e
+−iEt/~
+·
+1
+2
++
+1
+√
+2
+·
+1
+√
+2
+
+
+
+
+2
+=
+
+
+
+
+1
+2
+(1 + cos(Et/~))
+
+
+
+
+2
+=
+1
+4
+(1 + cos(Et/~))2
+,
+which oscillates between zero and one. 2, B
+MATH60015/70015/97014 Solutions (2022) Page 3 of 14
+2. Quantum harmonic oscillator
+(a) (i) By definition we have seen/sim.seen ⇓
+[Q, ˆ Pˆ] = ~
+2i
+[ˆa + ˆa
+†
+, aˆ − aˆ
+†
+].
+That is
+[Q, ˆ Pˆ] = −i
+~
+2
+([ˆa
+†
+, aˆ] − [ˆa, aˆ
+†
+] = i~[ˆa, aˆ
+†
+] = i~ˆI.
+3, A
+seen/sim.seen ⇓
+(ii) From the definition of Pˆ and Qˆ we find
+aˆ =
+1
+√
+2~
+(Qˆ + iPˆ), and ˆa =
+1
+√
+2~
+(Qˆ − iPˆ).
+Thus
+aˆ
+†
+aˆ =
+1
+2~
+(Qˆ − iPˆ)(Qˆ + iPˆ)
+=
+1
+2~
+(Qˆ2 + Pˆ2 + iQˆPˆ − iPˆQˆ)
+=
+1
+2~
+(Qˆ2 + Pˆ2 + i[Q, ˆ Pˆ])
+=
+1
+2~
+(Qˆ2 + Pˆ2 − ~ˆI)
+and thus we have
+Hˆ =
+ω
+2
+(Pˆ2 + Qˆ2
+).
+4, A
+seen ⇓
+(iii) With Hˆ |ni = En|ni the eigenvalues of Hˆ are given by
+En = ~ω(n +
+1
+2
+),
+where n is a non-negative integer. 2, A
+(b) (i) We insert an identity to find sim. seen ⇓
+hp|ψi =
+Z +∞
+−∞
+hp|qihq|ψidq.
+Inserting hq|pi = √
+1
+2π
+e
+i
+~
+pq as given in the question we verify that
+hp|ψi =
+1
+√
+2π
+Z +∞
+−∞
+e
+i
+~
+pqhq|ψidq.
+2, B
+unseen ⇓
+(ii) To calculate hp|Qˆ|ψi we write
+hp|Qˆ|ψi =
+Z +∞
+−∞
+hp|qihq|Qˆ|ψidq
+=
+Z +∞
+−∞
+qhp|qihq|ψidq
+=
+1
+√
+2π
+Z +∞
+−∞
+qe
+− i
+~
+pqψ(q)dq
+=
+1
+√
+2π
+Z +∞
+−∞
+i~
+∂
+∂p(e− i
+~
+pqψ(q))dq
+= i~
+∂
+∂p 
+1
+√
+2π
+Z +∞
+−∞
+e
+− i
+~
+pqψ(q)dq
+
+= i~
+∂
+∂p Z +∞
+−∞
+hp|qihq|ψidq
+
+= i~
+∂
+∂php|ψi = i~
+∂
+∂pψ˜(p).
+5, D
+unseen ⇓
+(iii) We have by definition of the states |pi that
+hp|Pˆ2
+|ψi = p
+2
+hp|ψi = p
+2ψ˜(p).
+Following the same argument as in part (b)(ii) we have
+hp|Qˆ2
+|ψi = −~
+2 ∂
+2
+∂p2
+ψ˜(p).
+and thus in summary we have
+hp|Hˆ |ψi =
+ω
+2
+
+−~
+2 ∂
+2
+∂p2
++ p
+2
+
+ψ˜(p).
+4, D
+MATH60015/70015/97014 Solutions (2022) Page 5 of 14
+3. Particle hopping on a lattice
+(a) We calculate sim. seen ⇓
+[K, ˆ Nˆ] = X
+n,n0
+n
+0
+
+|n − 1ihn|n
+0
+ihn
+0
+| − |n
+0
+ihn
+0
+|n − 1ihn|
+
+=
+X
+n,n0
+n
+0
+
+|n − 1ihn
+0
+|δn,n0 − |n
+0
+ihn|δn−1,n0
+
+=
+X
+n
+(n|n − 1ihn| − (n − 1)|n − 1ihn|)
+=
+X
+n
+|n − 1ihn| = K. ˆ
+And similarly
+[Kˆ †
+, Nˆ] = X
+n,n0
+n
+0
+
+|n + 1ihn|n
+0
+ihn
+0
+| − |n
+0
+ihn
+0
+|n + 1ihn|
+
+=
+X
+n,n0
+n
+0
+
+|n + 1ihn
+0
+|δn,n0 − |n
+0
+ihn|δn+1,n0
+
+=
+X
+n
+(n|n + 1ihn| − (n + 1)|n + 1ihn|)
+= −
+X
+n
+|n + 1ihn| = −Kˆ †
+.
+And finally,
+[K, ˆ Kˆ †
+] = X
+n,n0
+
+|n − 1ihn|n
+0 + 1ihn
+0
+| − |n
+0 + 1ihn
+0
+|n − 1ihn|
+
+=
+X
+n,n0
+
+|n − 1ihn
+0
+|δn,n0+1 − |n
+0 + 1ihn|δn−1,n0
+
+=
+X
+n
+(|n − 1ihn − 1| − |nihn|)
+=
+X
+n
+|nihn| −X
+n
+|nihn| = 0
+4, A
+(b) (i) We have unseen ⇓
+Kˆ |ni =
+X
+n0
+|n
+0 − 1ihn
+0
+|ni =
+X
+n0
+|n
+0 − 1iδn,n0 = |n − 1i
+and similarly
+Kˆ †
+|ni = |n + 1i.
+That is,
+Hˆ |ni = −
+E0
+2
+(|n + 1i + |n − 1i).
+Inserting the ansatz into Hˆ |φi = E|φi then yields
+−
+E0
+2
+(cn+1 + cn−1) = Ecn.
+Inserting the ansats cn = einκ yields 2, D
+−
+E0
+2
+e
+inκ(eiκ + eiκ
+) = Ee
+inκ
+,
+or
+−
+E0
+2
+(eiκ + eiκ
+) = E.
+That is, the eigenvector equation is fulfilled by this ansatz, for the
+corresponding eigenvalues
+E = −E0 cos(κ).
+3, C
+seen ⇓
+(ii) We have for a normalised state |ψi
+hAˆi := hψ|Aˆ|ψi.
+That is with ∂Aˆ
+∂t = 0 we have
+d
+dt
+hAˆi = hψ˙
+|Aˆ|ψi + hψ|Aˆ|ψ˙i,
+where the dot denotes the derivative with respect to time. From the
+Schr¨odinger equation we know
+|ψ˙i = −
+i
+~
+Hˆ |ψi
+and the adjoint equation gives
+hψ˙
+| =
+i
+~
+hψ|H, ˆ
+as Hˆ † = Hˆ . And therefore
+d
+dt
+hAˆi =
+i
+~
+hψ|Hˆ Aˆ − AˆHˆ |ψi =
+i
+~
+h[H, ˆ Aˆ]i.
+3, A
+(c) (i) The Heisenberg equation for the expectation value of Kˆ is given by unseen ⇓
+d
+dt
+hKˆ i =
+i
+~
+h[H, ˆ Kˆ ]i = −
+i
+~
+FhKˆ i,
+and the one for the adjoint operator is consequently given by
+d
+dt
+hKˆ †
+i =
+i
+~
+FhKˆ †
+i,
+For the expectation value of Nˆ we find the dynamical equation
+d
+dt
+hNˆi = −
+i
+~
+E0
+2
+
+hKˆ i − hKˆ †
+i
+
+.
+4, C
+(ii) The equations for Kˆ and Kˆ †
+are straightforwardly solved by
+hKˆ (t)i = ei(κ0− F
+~
+t)
+and
+hKˆ †
+(t)i = e−i(κ0− F
+~
+t)
+.
+Inserting the time dependent expectation values of Kˆ and Kˆ †
+into the equation
+for Nˆ we find
+d
+dt
+hNˆi = −
+i
+~
+E0
+2
+
+e
+i(κ0− F
+~
+t) − e
+−i(κ0− F
+~
+t)
+
+=
+E0
+~
+sin(κ0 −
+F
+~
+t)
+Integrating this yields
+hN(t)i = N0 +
+E0
+F
+cos(κ0 −
+F
+~
+t) −
+E0
+F
+cos(κ0).
+4, D
+MATH60015/70015/97014 Solutions (2022) Page 8 of 14
+4. A quantum wave function
+(a) We have sim. seen ⇓
+||ψ||2 = A
+2
+Z +∞
+−∞
+e
+−|x−4|dx
+= A
+2
+Z 0
+−∞
+e
+ydy +
+Z +∞
+0
+e
+−ydy
+
+= 2A
+2
+Z +∞
+0
+e
+−ydy.
+where we have made the substitution y = x − 4.
+We calculate
+Z +∞
+0
+e
+−ydy = −
+
+e
+−y
+∞
+0
+= 1.
+Thus we find
+||ψ||2 = 2A
+2
+.
+That is, ψ(x) is normalised to one for A = √
+1
+2
+. 4, A
+sim. seen ⇓
+(b) The wave function is symmetric around a single maximum, thus this is the
+expectation value
+hxˆi = 4.
+To calculate the uncertainty we need to calculate the expectation value of xˆ
+2 first. 2, A
+We calculate
+hxˆ
+2
+i =
+Z +∞
+−∞
+x
+2
+|ψ(x)|
+2dx
+=
+1
+2
+Z 0
+−∞
+(y + 4)2
+e
+ydy +
+Z +∞
+0
+(y + 4)2
+e
+−ydy
+
+=
+1
+2
+Z 0
+−∞
+(y
+2 + 8y + 16)e
+ydy +
+Z +∞
+0
+(y
+2 + 8y + 16)e
+−ydy
+
+In part (a) we have calculated
+Z +∞
+0
+e
+−ydy = 1 = Z 0
+−∞
+e
+ydy
+Further, we notice that we have
+Z 0
+−∞
+yeydy = −
+Z +∞
+0
+ye−ydy.
+Thus, it remains to calculate 2, B
+Z 0
+−∞
+y
+2
+e
+ydy =
+Z +∞
+0
+y
+2
+e
+−ydy.
+This can be done using integration by parts, but the hint already provides the
+solution
+Z ∞
+0
+y
+2
+e
+ydy = 2.
+In summary we have
+hxˆ
+2
+i =
+1
+2
+Z 0
+−∞
+(y
+2 + 8y + 16)e
+ydy +
+Z +∞
+0
+(y
+2 + 8y + 16)e
+−ydy
+
+=
+1
+2
+(2 + 16 + 2 + 16) = 18.
+And for the uncertainty we finally find
+∆x =
+p
+hxˆ
+2i − hxˆi
+2 =
+√
+18 − 16 = √
+2.
+5, A
+(c) The probability to find the particle at a position x ≥ 0 is given by sim. seen ⇓
+P(x ≥ 0) = Z ∞
+0
+|ψ(x)|
+2dx =
+1
+2
+Z ∞
+0
+e
+−|x−4|dx
+We calculate 2, A
+Z ∞
+0
+e
+−|x−4|dx =
+Z 4
+0
+e
+x−4dx +
+Z ∞
+4
+e
+4−xdx
+= e−4
+Z 4
+0
+e
+xdx + e4
+Z ∞
+4
+e
+−xdx
+= e−4
+(e4 − 1) + e4
+e
+−4
+= 2 − e
+−4
+And thus
+P(x ≥ 0) = 1 −
+e
+−4
+2
+≈ 0.98,
+the probability to find the particle at negative positions is simply given by
+P(x ≤ 0) = 1 − P(x ≥ 0) = e
+−4
+2
+≈ 0.02.
+5, B
+MATH60015/70015/97014 Solutions (2022) Page 10 of 14
+5. Mastery Question: Husimi functions
+(a) We have unseen ⇓
+Z
+|zihz|
+d
+2
+z
+π
+=
+X
+n,m
+|nihm|
+π
+√
+n!m!
+Z
+d
+2
+ze
+−|z|
+2
+z
+∗mz
+n
+.
+Introducing polar coordinates z = re
+iθ
+this becomes
+Z
+|zihz|
+d
+2
+z
+π
+=
+X
+n,m
+|nihm|
+π
+√
+n!m!
+Z ∞
+0
+rdre
+−r
+2
+r
+n+m
+Z 2π
+0
+dθe
+i(n−m)θ
+.
+The last integral reduces to 2πδnm and thus the expression simplifies to
+Z
+|zihz|
+d
+2
+z
+π
+=
+X
+n
+2|nihn|
+n!
+Z ∞
+0
+rr2n
+e
+−r
+2
+dr.
+Substituting ζ = r
+2
+and thus dζ = 2rdr we have
+Z
+|zihz|
+d
+2
+z
+π
+=
+X
+n
+|nihn|
+n!
+Z ∞
+0
+ζ
+n
+e
+−ζdζ.
+Using that R ∞
+0
+ξ
+n
+e
+−ξdξ = n! we finally find
+Z
+|zihz|
+d
+2
+z
+π
+=
+X
+n
+|nihn| = ˆI.
+5, M
+(b) (i) Using the resolution of the identity from part (a),we have unseen ⇓
+hψ|ψi =
+Z
+d
+2
+z
+π
+hψ|zihz|ψi
+=
+Z
+d
+2
+zQ(p, q)
+Since hψ|ψi = 1 this verifies the statement. 2, M
+(ii) We insert an identity into hψ|aˆ|ψi and use that aˆ|zi = z|zi to find
+hψ|aˆ|ψi =
+Z
+d
+2
+z
+π
+hψ|aˆ|zihz|ψi
+=
+Z
+d
+2
+z
+π
+zhψ|zihz|ψi
+=
+Z
+zQ(z, z∗
+)d2
+z.
+2, M
+(iii) We first write aˆ
+†aˆ = ˆaaˆ
+† − ˆI. Thus
+haˆ
+†
+aˆi = haˆaˆ
+†
+i − 1.
+Now we insert an identity and use that aˆ|zi = z|zi and hence hz|aˆ
+† = hz|z
+∗
+to find
+hψ|aˆaˆ
+†
+|ψi =
+Z
+|z|
+2Q(z, z∗
+)d2
+z.
+Thus, in summary we confirm
+haˆ
+†
+aˆi =
+Z
+|z|
+2Q(z, z∗
+)d2
+z − 1.
+3, M
+(c) (i) We have unseen ⇓
+Q =
+1
+π
+hz|ψihψ|zi =
+e
+−|z|
+2
+π
+X
+n,m
+z
+∗n
+z
+m
+√
+n!m!
+hn|ψihψ|mi.
+Taking the derivative with respect to z we find
+∂Q
+∂z = −z
+∗Q +
+e
+−|z|
+2
+π
+X
+n,m
+mz∗n
+z
+m−1
+√
+n!m!
+hn|ψihψ|mi.
+On the other hand,
+hz|ψihψ|aˆ
+†
+|zi = e−|z|
+2 X
+n,m
+z
+∗n
+z
+m
+√
+n!m!
+√
+m + 1hn|ψihψ|m + 1i
+= e−|z|
+2 X
+n,m
+z
+∗n
+z
+m
+p
+n!(m + 1)!
+(m + 1)hn|ψihψ|m + 1i
+Relabelling we can rewrite this as
+hz|ψihψ|aˆ
+†
+|zi = e−|z|
+2 X
+n,m
+mz∗n
+z
+m−1
+√
+n!m!
+hn|ψihψ|m + 1i
+That is,
+∂Q
+∂z = −z
+∗Q +
+1
+π
+hz|ψihψ|aˆ
+†
+|zi.
+4, M
+(ii) We have by definition
+∂Q
+∂t =
+1
+π
+
+hz|ψ˙ihψ|zi + hz|ψihψ˙
+|zi
+
+.
+Inserting the Schr¨odinger equation and its adjoint this yields
+∂Q
+∂t =
+i
+π~
+
+hz|Hˆ |ψihψ|zi − hz|ψihψ|Hˆ |zi
+
+.
+Now inserting the harmonic oscillator Hamiltonian we find
+∂Q
+∂t =
+iω
+π
+
+hz|aˆ
+†
+aˆ|ψihψ|zi − hz|ψihψ|aˆ
+†
+aˆ|zi
+
+=
+iω
+π
+
+z
+∗
+hz|aˆ|ψihψ|zi − zhz|ψihψ|aˆ
+†
+|zi
+
+.
+From part (c)(i) we know that
+hz|ψihψ|aˆ
+†
+|zi = π
+∂Q
+∂z + πz∗Q,
+and
+hz|aˆ|ψihψ|zi = π
+∂Q
+∂z∗
++ πzQ.
+Thus we have
+∂Q
+∂t =
+iω
+π
+
+πz∗ ∂Q
+∂z∗
++ π|z|
+2Q − πz
+∂Q
+∂z − π|z|
+2Q
+
+= iω
+
+z
+∗ ∂Q
+∂z∗
+− z
+∂Q
+∂z 
+.
+4, M
+We could, if we felt like it, rewrite this in terms of p and q using
+∂
+∂z =
+√
+~
+√
+2
+
+∂
+∂q − i
+∂
+∂p
+and
+∂
+∂z∗
+=
+√
+~
+√
+2
+
+∂
+∂q + i
+∂
+∂p
+to find
+∂Q
+∂t = iω
+
+1
+2
+(q − ip)
+
+∂Q
+∂q + i
+∂Q
+∂p 
+−
+1
+2
+(q + ip)
+
+∂Q
+∂q − i
+∂Q
+∂p 
+= iω
+
+iq
+∂Q
+∂p
+− ip
+∂Q
+∂q
+
+= ω
+
+∂Q
+∂q p −
+∂Q
+∂p q
+
+.
+Which happens to agree with the classical Liouville equation.
+MATH60015/70015/97014 Solutions (2022) Page 13 of 14
+Review of mark distribution:
+Total A marks: 33 of 32 marks
+Total B marks: 20 of 20 marks
+Total C marks: 12 of 12 marks
+Total D marks: 15 of 16 marks
+Total marks: 100 of 80 marks
+Total Mastery marks: 20 of 20 marks
+MATH60015/70015/97014 Solutions (2022) Page 14 of 14
+ExamModuleCode QuestionNumber Comments for Students
+Quantum Mechanics 1_MATH60015 MATH97014 MATH70015
+1
+On the whole this question was on the easier side. But marks were lost for a lot of minor errors in
+calculations, particularly in part a, and in the final section of part c when calculating the probability.
+Many
+ failed to even attempt the "prose" question part b (ii) and there were many partial answers.
+Often the working wasn't shown. Marks were awarded for results and calcuations. for part a.
+Overall there were many high marks in this question and only a few candidates clearly didn’t know
+what to do or didn’t attempt the question.
+Quantum Mechanics 1_MATH60015 MATH97014 MATH70015
+2
+Question 2 worked fairly well for most. Unfortunately, there was a typo in part b that hadn't been
+spotted during the exam, which confused many candidates. I was very generous with the marking
+of this part as a result.
+Quantum Mechanics 1_MATH60015 MATH97014 MATH70015
+3
+In part a marks were lost if no dummy indices were used, leading to nonsensical expressions. In
+part b(i) some solutions were to sketchy to receive full marks, and often the last steps were
+missing. Part c did not pose conceptual challenges for most, but some marks were lost in mistakes
+in the (solutions to) the differential equations, in particular the one for N.
+Quantum Mechanics 1_MATH60015 MATH97014 MATH70015
+4
+Part a was mostly correct, but often the working wasn't shown, and some people used the
+symmetry wrong and went along wrong directions. Also in part b, the most common issue was not
+to show the calculations, and confusions about the absolute value and the symmetry. A few
+candidates did not know the formual for the uncertainty. Part c had the most problems, probably
+because of time issues.
+Quantum Mechanics 1_MATH60015 MATH97014 MATH70015
+5 I admit that the mastery question this year was quite hard. I hadn't intended it to be, but it turned
+out this way. A large number of students did not attempt part c at all, or got almost none of it right.
+Part a on the other hand was better, and part b went well for many.
+If your module is taught across multiple year levels, you might have received this form for each level of the module. You are only required to fill this out once for each question.
+Please record below, some brief but non-trivial comments for students about how well (or otherwise) the questions were answered. For example, you may wish to comment on common
+errors and misconceptions, or areas where students have done well. These comments should note any errors in and corrections to the paper. These comments will be made available to
+students via the MathsCentral Blackboard site and should not contain any information which identifies individual candidates. Any comments which should be kept confidential should be
+included as confidential comments for the Exam Board and Externals. If you would like to add formulas, please include a separate pdf file with your email. 
