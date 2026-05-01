@@ -1,0 +1,1285 @@
+© 2023 Imperial College London
+MATH70047
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May 2023
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Stochastic Simulation
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO
+Date: 11 May 2023
+Time: 10:00 – 12:00 (BST)
+Time Allowed: 2 hrs
+This paper has 4 Questions.
+Please Answer Each Question in a Separate Answer Booklets
+Candidates should start their answers to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Allow margins for marking.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. (a) Consider the Rayleigh probability density function (PDF)
+p(x) = x
+σ
+2
+exp
+−
+x
+2
+2σ
+2
+!
+, x ∈ [0,∞).
+with the parameter σ > 0.
+(i) Show that (using integration by parts or other techniques) the cumulative distribution
+function (CDF) of p(x), denoted FX(x) is given by
+FX(x) = 1 − exp
+−
+x
+2
+2σ
+2
+!
+for x ∈ [0,∞).
+Hint: Completing the square will not work here, as the support is positive. (3 marks)
+(ii) Given FX(x) above, show that
+F
+−1
+X (u) = q
+−2σ
+2
+log(1 − u).
+(2 marks)
+(iii) Based on part (ii), write the pseudo-code of the inversion method that samples from the
+Rayleigh distribution p(x) using a uniform sample U ∼ Unif(0, 1). (2 marks)
+(iv) Justify the following sampler for the Rayleigh variable
+U ∼ Unif(0, 1) X =
+q
+−2σ
+2
+log(U).
+Explain why this also gives X ∼ p(x) as above. (1 mark)
+(b) Now, suppose we would like to implement a rejection sampling (RS) scheme with the Rayleigh
+PDF p(x) as the target density and using the proposal density
+qµ(x) = N (x; µ, σ2
+) = 1
+σ
+√
+2π
+exp
+−
+(x − µ)
+2
+2σ
+2
+!
+for x ∈ (−∞,∞).
+Note that the Rayleigh density parameter and the standard deviation of qµ(x) are fixed and
+equal (σ).
+(i) Show that the value x
+⋆
+that maximises the ratio p(x)/qµ(x) is given by x
+⋆ = σ
+2/µ.
+Provide any necessary constraints on µ. (4 marks)
+(ii) Based on (i), show that
+Mµ := sup
+x∈[0,∞)
+p(x)
+qµ(x)
+=
+σ
+√
+2π
+µ
+exp
+µ
+2
+2σ
+2
+− 1
+!
+.
+(2 marks)
+(iii) Provide the expression of the acceptance rate of the RS and show that the optimal µ
+that maximises the acceptance rate is µ⋆ = σ and that Mµ⋆ =
+q
+2π/e. (3 marks)
+(iv) Provide the pseudo-code of the RS method based on the optimal proposal qµ⋆ where the
+acceptance ratio is provided explicitly. (3 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2023) Page 2
+2. Consider a generic Bayesian probability model with a prior distribution p(x) and a likelihood p(y|x).
+The marginal likelihood of this model is given as
+p(y) = Z
+p(y|x)p(x)dx.
+Assume we fix an observation y = y0 and define p(y0) = R
+p(y0|x)p(x)dx.
+(a) (i) Describe the standard Monte Carlo (MC) method for estimating p(y0). Describe the test
+function φ(x) clearly. (2 marks)
+(ii) Prove that the MC estimator in (i) is unbiased. (2 marks)
+(iii) Write down an expression for the variance of the standard MC estimator in terms of φ.
+Simplify this expression as much as possible. (2 marks)
+(iv) Describe a scenario where this MC estimator could fail to be accurate. (1 mark)
+(b) In this part, we are interested in importance sampling (IS) for this problem.
+(i) Describe the IS estimator for estimating p(y0) using a proposal q(x). (2 marks)
+(ii) Prove that the IS estimator is unbiased. (2 marks)
+(iii) Derive an expression for the variance of the IS estimator. Simplify this expression as
+much as possible. (3 marks)
+(iv) State a condition, in terms of the functions p(x), p(y0|x), and q(x), that must be
+satisfied, in order for this variance to be finite.
+(1 mark)
+(c) Consider the problem of estimating p(y0) given
+p(x) = N (x; 0, 1),
+p(y|x) = N (y; x, 1).
+Consider the following proposal for IS
+qµ(x) = N
+
+x; µ,
+1
+2
+
+.
+Prove that the optimal value µ
+⋆
+that minimises the variance of the IS estimator is given by
+µ
+⋆ =
+y0
+2
+.
+Discuss how this optimal importance sampler can be useful if y0 is unlikely under p(y).
+(5 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2023) Page 3
+3. This question is about Markov chain Monte Carlo (MCMC) on a continuous state-space.
+(a) (i) Given a Markov kernel with corresponding density K(x
+′
+|x) and a target density p(x),
+state the detailed-balance condition. (2 marks)
+(ii) Given a three-dimensional target p(x, y, z), describe one step of the Gibbs sampler for
+this target given the state of the chain (xn−1, yn−1, zn−1) by writing the pseudo-code.
+(2 marks)
+(iii) Suppose that the full conditionals for this target density are not available in closed form,
+but unnormalised full conditionals are available. Suggest a suitable modification that
+can be made to the Gibbs sampler, and provide the pseudo-code for one full update of
+your modified sampler. You do not need to specify the form of any required proposal
+distributions or acceptance probabilities. (2 marks)
+(iv) In order to measure the quality of the MCMC algorithm, we can evaluate the
+autocorrelation of the resulting chain. State one way in which we can reduce the
+autocorrelation in the final MCMC sample. Give one other statistic that is commonly
+used to measure the quality of the MCMC sample. (2 marks)
+(b) Consider the Metropolis-Hastings (MH) sampler for a generic target density p(x).
+(i) Provide the pseudocode of the MH sampler for target density p(x) given an independent
+proposal density q(x). (2 marks)
+(ii) Provide the pseudocode of the MH sampler for target density p(x) given a symmetric
+proposal density q(x|x
+′
+). (2 marks)
+(iii) Consider the following target density
+p(x) = N (x; µ, σ2
+).
+Derive the proposal density q(x
+′
+|x) of the Metropolis Adjusted Langevin Algorithm
+(MALA) for this target density and write the pseudo-code. (2 marks)
+(iv) If we skip the Metropolis acceptance step in MALA and just use the proposal as a sampler
+itself, what would happen to the target distribution of the chain? Would it be still p(x)?
+Answer in words, without equations. (1 mark)
+(c) Consider the following Gaussian distribution p(x|σ
+2
+) with an inverse Gamma (IG) prior p(σ
+2
+)
+on its variance:
+p(σ
+2
+) = IG(σ
+2
+; α, β) = β
+α
+Γ(α)
+
+1
+σ
+2
+α+1
+exp
+−
+β
+σ
+2
+!
+,
+p(x|σ
+2
+) = N (x; 0, σ2
+) = 1
+σ
+√
+2π
+exp
+−
+x
+2
+2σ
+2
+!
+.
+For this model,
+(i) State full conditionals by deriving their (closed-form) distributions. (3 marks)
+(ii) Describe the pseudo-code of the Gibbs sampler for sampling from the joint distribution
+p(x, σ2
+) assuming that you can sample from the IG distribution. (2 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2023) Page 4
+4. This question is based on the mastery material, J. Dahlin and T. B. Schön, Getting started with
+particle Metropolis-Hastings for inference in nonlinear dynamical models. Journal of Statistical
+Software, 2019.
+Consider the following generic state-space model structure
+x0 ∼ µ(x0),
+xt
+|xt−1 ∼ f(xt
+|xt−1),
+yt
+|xt ∼ g(yt
+|xt).
+(a) Based on the state-space model above:
+(i) Describe the filtering problem in a state-space model and the quantity of interest in this
+setting. (2 marks)
+(ii) Write the expression of the full-joint distribution p(y1:n, x0:n) in terms of µ, f, g and
+variables (x0:n, y1:n). (2 marks)
+(iii) Write the filtering recursions, that is, state the prediction and update steps in terms of
+f and g given the filtering distribution at time n − 1 to obtain the filtering distribution
+at time n. (3 marks)
+(b) (i) Based on the model above, describe the pseudo-code of the sequential importance
+sampling-resampling (SISR) method with a Markov proposal q(xt
+|xt−1). Provide a clear
+expression for the importance weights at each step. (3 marks)
+(ii) Consider the case q(xt
+|xt−1) = f(xt
+|xt−1). How does this change the algorithm you
+provided in (b)-(i)? What is the algorithm called in this case? (2 marks)
+(iii) Suggest a method for calculating the normalised weights at each step, that avoids
+problems of numerical instability. (1 mark)
+(c) Consider now the model with parameter θ given below
+θ ∼ p(θ),
+x0 ∼ µθ(x0),
+xt
+|xt−1 ∼ fθ(xt
+|xt−1),
+yt
+|xt ∼ gθ(yt
+|xt),
+and the problem of sampling from p(θ|y1:T ) given an observation sequence y1:T .
+(i) Write down the estimator of the marginal likelihood pθ(y1:T ) := p(y1:T |θ) given the SISR
+algorithm with proposal f(xt
+|xt−1) as described in Part(b)-(ii). (3 marks)
+(ii) Write the pseudo-code of the particle Metropolis-Hastings method in order to sample
+from the posterior p(θ|y1:T ). Describe each term of the acceptance ratio clearly. What
+is the key property of the marginal likelihood estimator given in Part(c)-(i) above so that
+this MH algorithm is valid? (4 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2023) Page 5
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2023
+This paper is also taken for the relevant examination for the Associateship.
+MATH60047/70047
+Stochastic Simulation (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2023 Imperial College London MATH60047/70047 Page 1 of 10
+1. (a) (i) We write unseen ⇓
+FX(x) = Z x
+0
+p(y)dy =
+Z x
+0
+y
+σ
+2
+exp 
+−
+y
+2
+2σ
+2
+
+dy.
+Choose u = y
+2
+, hence du = 2ydy. Note that this also changes the limits
+y = 0 =⇒ u = 0 and y = x =⇒ u = x
+2
+. We can then write the integral as
+FX(x) = Z x
+2
+0
+1
+2σ
+2
+exp 
+−
+u
+2σ
+2
+
+du =
+h
+− exp 
+−
+u
+2σ
+2
+ix
+2
+0
+= 1 − exp 
+−
+x
+2
+2σ
+2
+
+,
+as wanted. 3, B
+(ii) Write FX(x) = u and leave u alone as follows meth seen ⇓
+1 − e
+− x
+2
+2σ2 = u =⇒ 1 − u = exp 
+−
+x
+2
+2σ
+2
+
+=⇒ log(1 − u) = −
+x
+2
+2σ
+2
+,
+=⇒ − 2σ
+2
+log(1 − u) = x
+2 =⇒
+p
+−2σ
+2 log(1 − u) = x
+We deduce from above that
+F
+−1
+(u) = p
+−2σ
+2 log(1 − u).
+2, B
+(iii) Inversion is a method to sample a uniform and then pass this through F
+−1
+X .
+An example pseudo code is given as
+1. U ∼ Unif(0, 1)
+2. X = F
+−1
+X (U) = p
+−2σ
+2 log(1 − U)
+It is OK to refer to part (ii) for the explicit expression without rewriting it. 2, A
+(iv) This sampler works because U and 1−U have the same distribution. Therefore,
+one can replace 1−U with simply U and the sampler would do the same thing.
+1, B
+meth seen ⇓
+(b) For this question we have the target
+p(x) = x
+σ
+2
+exp 
+−
+x
+2
+2σ
+2
+
+x ∈ [0, ∞)
+and the proposal
+qµ(x) = 1
+σ
+√
+2π
+exp 
+−
+(x − µ)
+2
+2σ
+2
+
+.
+(i) We write down the ratio
+R(x) = p(x)
+qµ(x)
+=
+x
+σ2 exp 
+−
+x
+2
+2σ2
+
+1
+σ
+√
+2π
+exp 
+−
+(x−µ)
+2
+2σ2
+ =
+x
+√
+2π✘✘✘✘✘✘
+exp 
+−
+x
+2
+2σ2
+
+σ✘✘✘✘✘✘
+exp 
+−
+x
+2
+2σ2
+
+exp
+xµ
+σ2
+
+exp 
+−
+µ2
+2σ2
+
+=
+√
+2π
+σ
+x exp 
+−
+xµ
+σ
+2
+
+exp 
+µ
+2
+2σ
+2
+
+.
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 2 of 10
+In order to maximise this, we take the log and its derivative
+d log R(x)
+dx
+=
+1
+x
+−
+µ
+σ
+2
+,
+and setting this to zero, we obtain
+x
+⋆ =
+σ
+2
+µ
+.
+We know that x ≥ 0 for the support of p(x), hence we impose x
+⋆ ≥ 0. This
+implies that we should impose µ > 0 when choosing the proposal. 4, D
+(ii) For this, we simply compute
+R(x
+⋆
+) = sup
+x∈[0,∞)
+p(x)
+qµ(x)
+=
+√
+2πσ
+µ
+exp 
+µ
+2
+2σ
+2
+− 1
+
+,
+as asked. We also denote this as Mµ = R(x
+⋆
+) for the following answer. 2, C
+(iii) The acceptance rate is given as 1/Mµ as provided in the course. In this case,
+this gives us
+aˆ =
+1
+Mµ
+=
+µ
+σ
+√
+2π
+exp 
+1 −
+µ
+2
+2σ
+2
+
+.
+In order to maximise aˆ, we need to minimise Mµ, similarly by taking its
+derivative and setting it to zero. For this, we take again the logarithm
+log Mµ = log √
+2πσ − log µ +
+µ
+2
+2σ
+2
+− 1.
+Taking its derivative and setting it to zero
+d log Mµ
+dµ
+= −
+1
+µ
++
+µ
+σ
+2
+= 0
+implies that
+µ⋆ = σ.
+since we constrained µ > 0 in part(b)(i) (excluding the negative solution).
+Plugging this above, we obtain
+Mµ⋆ =
+p
+2π/e
+3, D
+(iv) Given all components we can write the optimal rejection sampler (RS).
+1. Sample
+X′ ∼ qµ⋆
+(x)
+2. Compute the acceptance ratio
+R(X′
+) = p(x)
+qµ⋆
+(x)
+=
+√
+2π
+σ
+X′
+e
+− X′
+σ e
+1
+2 .
+3. Sample U ∼ Unif(0, 1) and accept if
+U ≤
+1
+Mµ⋆
+R(X′
+) = 1
+σ
+X′
+e
+− X′
+σ +1
+.
+3, B
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 3 of 10
+2. (a) (i) Given the integral sim. seen ⇓
+p(y0) = Z
+p(y0|x)p(x)dx,
+the MC estimator is given using the samples X1, . . . , XN ∼ p(x) and setting
+φ(x) = p(y0|x), hence
+p
+N
+MC(y0) = 1
+N
+X
+N
+i=1
+p(y0|Xi).
+2, A
+(ii) This estimator is unbiased, i.e.
+Ep(x)
+[p
+N
+MC(y0)] = 1
+N
+X
+N
+i=1
+Ep(x)
+[p(y0|Xi)] = 1
+N
+X
+N
+i=1
+Z
+p(y0|xi)p(xi)dxi = p(y0).
+2, B
+(iii) Let φ(x) = p(y0|x). The variance of the MC estimator is given by
+varp[p
+N
+MC(y0)] = varp(φ)
+N
+.
+2, A
+(iv) This estimate can be inaccurate if p(y0) is very small. This can occur with
+very unlikely observations. 1, A
+sim. seen ⇓
+(b) (i) Consider a generic proposal q(x). Given the samples X1, . . . , XN ∼ q(x), the
+IS estimator is
+p
+N
+IS(y0) = 1
+N
+X
+N
+i=
+p(y0|Xi)
+p(Xi)
+q(Xi)
+.
+2, A
+(ii) The proof is given as follows:
+Eq(x)
+[p
+N
+IS(y0)] = 1
+N
+X
+N
+i=1
+EXi∼q(x)
+
+p(y0|Xi)
+p(Xi)
+q(Xi)
+
+,
+=
+1
+N
+X
+N
+i=1
+Z
+p(y0|x)
+p(x)
+q(x)
+q(x)dx = p(y0).
+2, B
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 4 of 10
+(iii) Let us write w(x) = p(x)/q(x). We would like to compute the variance
+varq[p
+N
+IS(y = y0)] = varq
+"
+1
+N
+X
+N
+i=1
+p(y0|X)w(X)
+#
+=
+1
+N2
+varq
+"X
+N
+i=1
+p(y0|Xi)w(Xi)
+#
+,
+=
+1
+N
+varq [p(y0|Xi)w(Xi)] = 1
+N
+
+Eq[p
+2
+(y0|X)w
+2
+(X)] − Eq[w(X)p(y0|X)]2
+
+=
+1
+N
+
+Eq[p
+2
+(y0|X)w
+2
+(X)] − p(y0)
+2
+
+.
+3, C
+(iv) For this estimator to be finite, the first integral has to be finite, in particular
+p
+2
+(y0|x)w
+2
+(x)q(x) = p
+2
+(y0|x)
+p
+2
+(x)
+q(x)
+has to be integrable. 1, A
+meth seen ⇓
+(c) In order to minimise the variance of the estimator given in part(b)-(iii), only relevant
+quantity is the expectation inside the final expression. In other words, we seek
+µ
+⋆ = arg min
+µ
+Eqµ
+[p
+2
+(y0|X)w
+2
+µ
+(X)].
+This minimisation problem should be clearly stated in the answer. We next derive
+this expectation
+Eqµ
+[p
+2
+(y0|X)w
+2
+µ
+(X)] = Z
+p
+2
+(y0|x)
+p
+2
+(x)
+qµ(x)
+dx =
+Z 1
+2π
+exp
+−(y0 − x)
+2
+
+1
+2π
+exp(−x
+2
+)
+√
+1
+π
+exp (−(x − µ)
+2)
+dx,
+=
+√
+π
+4π
+2
+Z
+exp(−y
+2
+0 + 2y0x − x
+2 − x
+2 + x
+2 − 2xµ + µ
+2
+)dx
+=
+√
+π
+4π
+2
+Z
+exp(−y
+2
+0 + 2(y0 − µ)x − x
+2 + µ
+2
+)dx.
+Let g(µ) = Eqµ
+[p
+2
+(y0|X)w
+2
+µ
+(X)] for a shorthand notation. We complete the square
+here to obtain a Gaussian density:
+g(µ) =
+√
+π
+4π
+2
+Z
+exp
+−(y0 − µ)
+2
+
+exp (2(y0 − µ)x) exp(−x
+2
+) exp(2µ
+2
+) exp(−2y0µ)dx,
+=
+π
+4π
+2
+exp (−2y0µ) exp
+2µ
+2
+
+Z
+N (x; y0 − µ, 1/2)dx,
+=
+1
+4π
+exp (−2y0µ) exp(2µ
+2
+).
+We can easily maximise this by taking the log
+log g(µ) = − log 1
+4π
+− 2y0µ + 2µ
+2
+,
+taking its derivative w.r.t. µ and setting it to zero gives
+−2y0 + 4µ = 0,
+which implies µ
+⋆ = y0/2 as asked. This sampler puts mass of the proposal close
+to the observation point. If y0 has very small probability under original model, the
+MC estimator could fail (as mentioned in part(a)), but the optimal IS estimator
+will sample close to the observation and will provide an accurate estimate. 5, D
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 5 of 10
+3. (a) (i) The detailed balance condition for p(x) and a kernel K(x
+′
+|x):
+seen ⇓
+p(x)K(x
+′
+|x) = p(x
+′
+)K(x|x
+′
+).
+2, A
+(ii) Given p(x, y, z) and a state of the chain (xn−1, yn−1, zn−1), the Gibbs sampler
+is given by
+1. xn ∼ p(x|yn−1, zn−1)
+2. yn ∼ p(y|xn, zn−1)
+3. zn ∼ p(z|xn, yn).
+Marks should be given for these updates in any order. 2, A
+(iii) If full conditionals themselves are not available and we are given unnormalised
+full conditionals p¯(x|y, z), p¯(y|x, z), p¯(z|x, y), one can employ Metropoliswithin-Gibbs. Given the state of the chain (xn−1, yn−1, zn−1), the algorithm
+would consist of running
+1. Sample xn using Metropolis accept/reject step using p¯(x|yn−1, zn−1)
+2. Sample yn using Metropolis accept/reject step using p¯(y|xn, zn−1)
+3. Sample zn using Metropolis accept/reject step using p¯(z|xn, yn)
+2, B
+(iv) A technique to improve sample quality is thinning (1 mark). One other statistic
+that was provided in the course is effective sample-size. 2, A
+seen ⇓
+(b) (i) Given an independent proposal, the MH sampler is given as follows. Assume
+that the chain is at the sample Xn−1, then
+1. X′ ∼ q(x)
+2. Accept with probability
+α(Xn−1, X′
+) = min 
+1,
+p(X′
+)q(Xn−1)
+p(Xn−1)q(X′)
+
+Otherwise set Xn = Xn−1.
+2, A
+(ii) Given a symmetric proposal, the MH sampler is given as follows. Assume that
+the chain is at the sample Xn−1, then
+1. X′ ∼ q(·|Xn−1)
+2. Accept with probability
+α(Xn−1, X′
+) = min 
+1,
+p(X′
+)
+p(Xn−1)
+
+Otherwise set Xn = Xn−1.
+2, A
+(iii) The MALA algorithm requires us to compute the ∇ log p(x) which is given by
+∇ log p(x) = −
+x − µ
+σ
+The MALA proposal with a step-size γ is written as
+X′ = X − γ
+X − µ
+σ
++
+p
+2γW
+where W ∼ N (0, 1).
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 6 of 10
+We get the proposal as
+q(x
+′
+|x) = N
+
+x
+′
+;
+
+1 −
+γ
+σ
+
+x +
+γµ
+σ
+, 2γ
+
+.
+Given the current state Xn−1, the algorithm is then given by
+1. Sample X′ = Xn−1 − γ
+Xn−1−µ
+σ +
+√
+2γWn, where Wn ∼ N (0, 1).
+2. Accept with probability
+α(Xn−1, X′
+) = min 
+1,
+p(X′
+)q(Xn−1|X′
+)
+p(Xn−1)q(X′
+|Xn−1)
+
+Otherwise set Xn = Xn−1.
+2, A
+(iv) If we skip the Metropolis step, we obtain a Markov chain with a different target
+than p. If we denote this density as pγ, this density is close to p if γ is small.
+1, C
+meth seen ⇓
+(c) (i) For the Gibbs sampler, we need the full conditionals p(x|σ
+2
+) (given in the
+question) and p(σ
+2
+|x) which we derive as follows. The posterior is given as
+p(σ
+2
+|x) = p(x|σ
+2
+)p(σ
+2
+)
+p(x)
+Using the expressions given in the question, we have
+p(σ
+2
+|x) ∝
+1
+σ
+√
+2π
+exp 
+−
+x
+2
+2σ
+2
+
+β
+α
+Γ(α)
+
+1
+σ
+2
+α+1
+exp 
+−
+β
+σ
+2
+
+,
+∝
+
+1
+σ
+2
+α+ 3
+2
+exp
+−
+β +
+x
+2
+2
+σ
+2
+!
+.
+We can recognise this as the unnormalised form of another inverse-Gamma
+and write
+p(σ
+2
+|x) = IG 
+σ
+2
+; α +
+1
+2
+, β +
+x
+2
+2
+
+.
+3, C
+(ii) Given the state of this chain (xn−1, σ2
+n−1
+), the Gibbs sampler can be given as
+follows
+1. Sample xn ∼ p(x|σ
+2
+n−1
+) = N (x; 0, σ2
+n−1
+)
+2. Sample σ
+2
+n ∼ p(σ
+2
+|xn) = IG 
+σ
+2
+; α +
+1
+2
+, β +
+x
+2
+n
+2
+
+2, A
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 7 of 10
+4. (a) (i) The filtering problem is the estimation of the distribution p(xn|y1:n)
+sequentially. As we observe yn+1, yn+2, . . ., we are interested in estimating
+p(xn+1|y1:n+1), p(xn+2|y1:n+2) and so on. 2, M
+(ii) The joint distribution can be written as
+p(y1:n, x0:n) = µ(x0)
+Yn
+k=1
+g(yn|xn)f(xn|xn−1).
+2, M
+(iii) The filtering recursions are given as follows. Given the filtering distribution
+p(xn−1|y1:n−1), we first have prediction
+p(xn|y1:n−1) = Z
+f(xn|xn−1)p(xn−1|y1:n−1)dxn−1,
+and then update
+p(xn|y1:n) = p(xn|y1:n−1)
+g(yn|xn)
+p(yn|y1:n−1)
+.
+3, M
+(b) (i) Given the proposal q(xt
+|xt−1), the SISR method is given as
+1. Sample x¯
+(i)
+t ∼ q(xt
+|x
+(i)
+t−1
+) for i = 1, . . . , N
+2. Compute weights
+W
+(i)
+t =
+f(¯x
+(i)
+t
+|x
+(i)
+t−1
+)g(yt
+|x¯
+(i)
+t
+)
+q(¯x
+(i)
+t
+|x
+(i)
+t−1
+)
+for i = 1 . . . , N and normalise
+w
+(i)
+t =
+W
+(i)
+t
+PN
+i=1 W
+(i)
+t
+.
+for i = 1, . . . , N.
+3. Resample
+ik ∼ Discrete(w1, . . . ,wN ),
+x
+(k)
+t = ¯x
+(ik)
+t
+,
+for k = 1, . . . , N.
+3, M
+(ii) If q = f, the algorithm is called the Bootstrap Particle Filter. The pseudo-code
+is the same as above, with the weighting step replaced with
+W
+(i)
+t = g(yt
+|x¯
+(i)
+t
+)
+2, M
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 8 of 10
+(iii) The answer is to compute is log-unnormalised weights: log W
+(i)
+t
+directly in the
+log domain. Then, we can compute auxiliary log-weights as
+log W¯
+(i)
+t = log W
+(i)
+t − max
+i
+log W
+(i)
+t
+.
+We then compute the normalisation
+w
+(i)
+t =
+exp(log W¯
+(i)
+t
+)
+PN
+i=1 exp(log W¯
+(i)
+t
+)
+1, M
+seen ⇓
+(c) (i) The marginal likelihood estimator in a BPF is given as
+p
+N (y1:t
+|θ) = Y
+t
+k=1
+p
+N (yk|y1:k−1, θ)
+where
+p
+N (yk|y1:k−1, θ) = 1
+N
+X
+N
+i=1
+gθ(yk|x¯
+(i)
+k
+).
+3, M
+unseen ⇓
+(ii) The particle MH is sampling p(θ|y1:T ). The algorithm is given as follows.
+Given the state of the Markov chain θt−1
+1. Sample θ
+′ ∼ q(θ|θt−1)
+2. Accept with probability
+α(θt−1, θ′
+) = min 
+1,
+p(θ
+′
+)p
+N (y1:T |θ
+′
+)q(θt−1|θ
+′
+)
+p(θt−1)pN (y1:T |θt−1)q(θ
+′
+|θt−1)
+
+.
+The sampler works because the BPF provides unbiased estimates p
+N (y1:T |θ)
+of p(y1:T |θ) for any θ. 4, M
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 9 of 10
+Review of mark distribution:
+Total A marks: 24 of 24 marks
+Total B marks: 15 of 15 marks
+Total C marks: 9 of 9 marks
+Total D marks: 12 of 12 marks
+Total marks: 80 of 60 marks
+Total Mastery marks: 20 of 20 marks
+MATH60047/70047 Stochastic Simulation (Solutions) (2023) Page 10 of 10
+ExamModuleCode QuestionNumber Comments for Students
+MATH60047/70047
+1
+This question was mostly well done. The algorithms of inversion sampling and rejection
+sampling were clearly described and most people were able to complete part (b) where
+optimal proposal needed to be found via an optimization procedure. In general, the marks
+for this question were quite high.
+MATH60047/70047
+2
+Overall this question was done well by the students, who could in general remember well
+the definitions of Monte Carlo method and Importance Sampling estimator. Most students
+proved unbiasedness, and obtained the variance of the estimators. Some students
+struggled with a.iv., describing only general scenarios on when the MC method might fail,
+without linking them specifically to the case of y0 fixed. Part (c) appeared to be the most
+difficult part of the question: many students managed to set up the problem correctly, but
+then failed to identify a way to obtain the minimiser. The technique of completing the
+squares was required, but this was often not applied.
+MATH60047/70047
+3
+In general, this was a straightforward question with mostly asking definitions and
+pseudocode of the algorithms that are given in the class. Students who attempted the
+questions demonstrated sufficient knowledge to get high marks. However, there were also
+an important number of students who only attempted parts of this question. As a result,
+the average marks for this question is lower than the other questions, despite in general
+the other questions required more computations (integration, optimization etc...).
+MATH70047
+4
+There was some general confusion about the difference between SIS and SISR (the
+weighting step). Also some students did not attempt the question fully. Some of the
+students were able to score very high marks.
+If your module is taught across multiple year levels, you might have received this form for each level of the module. You are only required to fill this out once for each question.

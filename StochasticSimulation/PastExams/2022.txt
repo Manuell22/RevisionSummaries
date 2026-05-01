@@ -1,0 +1,569 @@
+© 2022 Imperial College London Page 1
+MATH97085 MATH70047
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May-June 2022
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Stochastic Simulation
+SUBMIT YOUR ANSWERS AS SEPARATE PDFs TO THE RELEVANT DROPBOXES ON
+BLACKBOARD (ONE FOR EACH QUESTION) WITH COMPLETED COVERSHEETS WITH
+YOUR CID NUMBER, QUESTION NUMBERS ANSWERED AND PAGE NUMBERS PER
+QUESTION.
+Date: 13 May 2022
+Time: 09:00 – 11:00 (BST)
+Time Allowed: 2:00 hours
+Upload Time Allowed: 30 minutes
+This paper has 4 Questions.
+Candidates should start their solutions to each question on a new sheet of paper.
+Each sheet of paper should have your CID, Question Number and Page Number on the
+top.
+Only use 1 side of the paper.
+Allow margins for marking.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. (a) Consider the following congruential generator
+Xn = (21Xn≠1 + b) mod 16, Un = Xn
+m .
+(i) If b ”= 0, determine a constraint on b such that this generator has full period.
+(3 marks)
+(ii) If b = 5, comment on the validity, and determine the period for the following choices for
+X0: X0 = 1, X0 = 7 and X0 = 16. (5 marks)
+(iii) If b = 0, what can we say about the maximal period for this congruential generator?
+Justify your answer with a detailed explanation.
+(2 marks)
+(b) Let q œ (0, 1). Let X be a discrete random variable with probability mass function
+fX(x) = q(1 ≠ q)
+x≠1
+, x = 1, 2,...
+(i) Show that FX(x)=1 ≠ (1 ≠ q)x, x = 1, 2, 3,... and determine the generalised inverse
+of FX(x). (3 marks)
+(ii) Provide the algorithm and the missing code ***** in the R code below to guarantee
+that the function MyInverseGen returns an i.i.d sample X1,...,Xn of X. (2 marks)
+MyInverseGen <- function(n,q)
+{
+U <- runif(n)
+X <- *****
+return(X)
+}
+Question 1 continues on next page
+MATH60047/MATH97085 Stochastic Simulation (2022) Page 2
+(c) Let ◊ œ (0, 1). Consider the following pdf
+fX(x) = Kx◊≠1
+(1 ≠ x)
+◊≠1
+1{xœ( 1
+2 ,1)},
+where K is an appropriate normalising constant.
+(i) Describe in detail a rejection algorithm to sample from fX using one of the following two
+distributions to construct your envelope:
+gY (y) Ã (1 ≠ y)
+◊≠1
+, or hZ(z) Ã z◊≠1
+, for y, z œ (1/2, 1).
+You can assume that you can sample directly from gY and hZ. (3 marks)
+(ii) Assume that, for any n Ø 1, you can draw a sample of size n from Y and Z using the
+hypothetical R functions GenY(n) and GenZ(n), respectively. Provide the missing code in
+*** and ***** in the R code below to guarantee that the function MyRejectionMethod
+returns an i.i.d sample X1,...,Xn of X. Define the appropriate value of the input
+parameter M. (2 marks)
+MyRejectionMethod <- function(n,M,K,theta)
+{
+x <- rep(0,n)
+i=1
+while(i <= n){
+***
+U <- runif(1)
+if(*****){
+x[i] <- y
+i <- i+1}
+}
+return(x)
+}
+(Total: 20 marks)
+MATH60047/MATH97085 Stochastic Simulation (2022) Page 3
+2. (a) Determine whether a rejection algorithm can be implemented to sample from a Cauchy
+distribution using a standard normal distribution to construct the corresponding envelope.
+Justify your answer. Recall that the the probability density function (pdf) of a Cauchy
+random variable, X, is
+fX(x) = 1
+fi(1 + x2)
+, x œ R,
+and the pdf of a standard normal random variable, Z, is
+gZ(z) = 1
+Ô2fi
+e≠ 1
+2 z2
+, z œ R
+(2 marks)
+(b) Let U1 and U2 be independent uniform random variates on [0, 1]. Describe the estimators
+below and compare their expected values and variances. (4 marks)
+(i) ◊1 = ≠ 1
+2 [log(U1) + log(U2)].
+(ii) ◊2 = ≠1
+2 [log(U1) + log(1 ≠ U1)].
+(c) Let X be a random variable with pdf fX(·). Suppose that the cumulative distribution FX(·)
+and the quantile function F ≠1
+X (·) are known. Let Y be the random variable X truncated to
+the interval I = (a, b) with a<b and such that its pdf, denoted by gY (·), is proportional to
+fX(·)1(a,b)(·).
+(i) Determine the normalising constant for gY (·). (1 mark)
+(ii) Determine the cdf, GY (·), and the quantile function, G≠1
+Y (·), of Y in terms of a, b, FX(·)
+and F ≠1
+X (·). (3 marks)
+(iii) Using your calculations above, provide an algorithm to sample from Y . (2 marks)
+(d) Consider the following integral
+◊ := ⁄ Œ
+0
+⁄ x
+≠Œ
+exp{≠(x + y2
+/2)}dy dx
+Giving a detailed explanation, justify whether a Monte Carlo estimator can be used to
+approximate the integral above. If so, provide an algorithm to estimate ◊. (5 marks)
+(e) Let Z be an exponential random variable with parameter 1 and let g : z ‘æ (z + 2)3, z Ø 0.
+To estimate E[g(Z)], you are given the following estimators
+◊1 = g
+3X + Y
+2
+4
+, and ◊2 = g(X) + g(Y )
+2 ,
+where X and Y are both exponential, antithetic variates with parameter 1. Based on their
+mean, explain which estimator you prefer. (3 marks)
+(Total: 20 marks)
+MATH60047/MATH97085 Stochastic Simulation (2022) Page 4
+3. (a) Let gX(·) be the pdf of X, a real-valued random variable and let D be a bounded subset in
+R. Giving all the details (including the necessary conditions for the method to work), provide
+an importance sampling estimator for the integral
+(3 marks)
+A =
+⁄
+D
+gX(x)dx.
+(b) Consider a random variable X with pdf fX(x) Ã (1 + 2x2)≠3/4, x œ R+. Giving a detailed
+explanation, determine whether the method of ratio of uniforms can be used to sample from
+X and, if so, outline the algorithm. (5 marks)
+(c) Suppose that Z = (X, Y )T ≥ MVN(µ, ), where µ = (0, 0)T and
+ =
+Q
+cca
+1 fl
+fl 1
+R
+ddb , with |fl| < 1.
+Recall that the corresponding pdf fZ(·) is given by
+fZ(z) = 1
+(2fi)||
+1
+2
+exp 5
+≠1
+2
+(z ≠ µ)
+T≠1
+(z ≠ µ)
+6
+, z œ R2
+,
+where || denotes the determinant of .
+(i) Describe, in detail, a Gibbs sampling method to obtain a sample Zi = (Xi, Yi) ≥ Z, i =
+1,...,n. Write down the explicit form of the nth iteration update. You may assume
+that you can sample directly from one-dimensional distributions. (5 marks)
+(ii) Giving a detailed explanation, use your algorithm above to provide an estimator for
+P[a Æ ||Z|| < b], for any b>a> 0. (4 marks)
+(d) Consider the Metropolis-Hastings algorithm associated with a target pdf fX(·) and a
+proposal distribution q(y|x). Now consider a rejection algorithm to sample from fX(·) using
+gY (·) := q(·|x) to construct the corresponding envelope with M = supx fX(x)/gY (x). Prove
+that, given a current state x, the Metropolis-Hastings algorithm accepts the proposed value
+y more often than the rejection algorithm.
+(3 marks)
+(Total: 20 marks)
+MATH60047/MATH97085 Stochastic Simulation (2022) Page 5
+4. (a) (i) In terms of the required input information, give a detailed explanation of an advantage of
+the slice sampling algorithm over the Gibbs sampling method and the Metropolis-Hasting
+algorithm.
+(3 marks)
+(ii) Explain the mathematical principle behind the slice sampling method for univariate
+distributions. (2 marks)
+(iii) Explain how a Markov chain can be constructed to sample from the bivariate uniform
+distribution involved in the slice sampling method to sample from a target density fX(x).
+(3 marks)
+(iv) In terms of implementation, explain the main drawback of the 2D slice sampling method.
+(2 marks)
+(b) Consider the following unnormalised density
+fX(x) = exp 3
+≠1
+2
+x2
+4
+1(–,Œ)(x),
+with – > 0.
+(i) Giving a detailed explanation, provide an algorithm to obtain a sample of length n from
+the distribution above using slice sampling.
+(5 marks)
+(ii) Let — > –. Consider the integral
+◊ := ⁄ —
+–
+exp(≠y2
+/2)dy.
+Giving a detailed explanation, justify whether a Monte Carlo estimator can be used to
+approximate the integral above. If so, provide the corresponding algorithm to estimate
+◊ using the slice sampling method outlined above. (5 marks)
+(Total: 20 marks)
+MATH60047/MATH97085 Stochastic Simulation (2022) Page 6
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2022
+This paper is also taken for the relevant examination for the Associateship.
+MATH60047/MATH97085
+Stochastic Simulation (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+................ ................ ................
+© 2022 Imperial College London MATH60047/MATH97085 Page 1 of 10
+1. (a) (i) For full period, we have 21 = 1 mod 2 (2 is the only prime factor of 16) and sim. seen +
+21 = 1 mod 4 (needed as 4 divides 16), so just need b relatively prime to m
+(i.e. gcd(b,16) = 1), as m is a power of 2 we just need b to be odd. 3, A
+(ii) If b=5, then this is odd, so the generator has full period for all valid X0, so full
+period of X0 = 1 and 7, but X0 = 16 is not valid (for Xn 2 {0, 1, 2 ..., 15}).
+5, A
+(iii) If the shift parameter equals zero, then a congruential generator cannot reach
+full period as, in such a case, the generator is a multiplicative congruential
+generator 1, A
+whose maximum possible period is given by m1 (called the maximal period).
+1, A
+meth seen + (b) (i) Note that the cumulative distribution function (cdf) is given as
+FX(x) = P[X  x] = Xx
+m=1
+q(1  q)
+m1 = 1  (1  q)
+x, x = 1, 2,....
+We know that, by definition, the generalised inverse F
+X : [0, 1] 7! R of the 1, A
+cdf FX(·) is
+1, B F (y) = min{x : FX(x)  y}.
+Then, it follows that 1, B
+x = F (y) =
+ln(1  y)
+ln(1  q)
+⌫
++ 1.
+(ii) Using the calculations above and the inversion method for discrete random
+variables, it follows that the algorithm to generate from X is
+1. Generate an independent sample Ui ⇠ U(0, 1), i = 1,...n.
+2. Return Xi =
+jln(1Ui)
+ln(1q)
+k
++ 1, i = 1,...,n. 1, A Hence, *** should be replaced by
+X <- floor(log(1-U)/log(1-q)) + 1 1, A
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 2 of 10
+(c) (i) First, we will verify that the conditions of the rejection method hold. meth seen +
+· Note that, as required, both gY and hZ have the same support than fX.
+· Second, we need to verify that there exists a finite M > 0 such that for
+all x 2 [1/2, 1), f(x)  MgY (x). 1, B
+As usual, we can take M = supx
+fX(x)
+gY (x) . Indeed, M1 = supx2(1/2,1) K x✓1
+and M2 = supx2(1/2,1) K(✓)(1  x)✓1. Note that M1 = K  1
+2
+✓1
+is finite, whereas M2 ! 1 as x ! 1, therefore we should choose the
+distribution gY (·) to construct our rejection algorithm. 1, B
+Therefore, the rejection algorithm to sample from fX is as follows:
+1. Set M1 = K  1
+2
+✓1
+2. Generate a random variate Y = y ⇠ g.
+3. Generate a uniform random variate U = u ⇠ (0, 1).
+4. If u  K y✓1
+M1 , then set X = y. Otherwise, GOTO 2. 1, B
+Remark: The candidate may also provide a rejection algorithm using the
+unnormalised densities.
+(ii) Considering the observations above, the missing code in *** is
+y <= GenY(1) 1, A
+whereas the missing code in ***** is
+U<=K*(y**(theta-1))/M where K denotes the normalising constant for fX,
+and M corresponds to the constant M1 defined above. 1, A
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 3 of 10
+2. (a) It is not possible to use the normal distribution to construct an envelope for a meth seen +
+Cauchy distribution, since doing so would require to find a finite constant M such
+that
+p2⇡
+⇡(1 + x2)
+ex2/2  M.
+1, A
+However, since the exponential function grows faster than a polynomial function
+as x ! 1, there is no least upper bound M for any x. 1, A
+meth seen + (b) (i) ✓1 is a crude Monte Carlo estimator (sample size n = 2) of E[X] where
+X ⇠ Exp(1). It is the average of two independent exponential random variates
+with parameter 1. 1, C
+Remark: Similarly, the candidate may also identify ✓1 and ✓2 as estimators of
+E[ log(U)], U ⇠ (0, 1).
+(ii) Since  log(·) is a monotonic function, ✓2 is an average of two estimators (of
+size n = 1) given by antithetic random variates. 1, C
+Hence, as seen in lectures, both estimators have the same mean, 1, C but var(✓2) < var(✓1).
+Remark: Similarly, the candidate may also identify ✓1 and ✓2 as estimators of 1, C
+E[ log(U)], U ⇠ (0, 1). meth seen + (c) (i) By definition of pdf and cdf, the normalising constant K is given by
+K =
+Z 1
+1
+gY (y)dy =
+Z b
+a
+fX(x)dx = FX(b)  FX(a).
+1, A
+(ii) By definition,
+GY (y) = Z y
+a
+gY (z)dz
+= FX(y)  FX(a)
+FX(b)  FX(a)
+, y 2 (a, b).
+1, B
+Remark: Give the full mark only if the candidate states the range of y.
+For the quantile function QY (which in this case coincides with the inverse of
+GY (·)), 1, B
+we use that F 1
+X (·) is known to obtain
+QY (u) = G1
+Y (u) = F 1
+X (u[FX(b)  FX(a)] + FX(a)), 0 <u< 1.
+1, B
+Remark: Give the full mark only if the candidate states the values for u.
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 4 of
+10
+(iii) Since we obtained the inverse function G1
+Y , we can use the inverse method
+as follows:
+1. Generate a random variate U = u ⇠ U(0, 1).
+2. Return Y = F 1
+X (u[FX(b)  FX(a)] + FX(a)) 2, B
+(d) To be able to approximate the integral above, we need to guarantee that ✓ is finite,
+but this is true because
+Z 1
+0
+Z 1
+1
+exp{x  y2/2}dy dx = p
+2⇡.
+Moreover, we can rewrite ✓ as an expectation of independent random variables. 1, B
+Indeed, since
+✓ =
+Z 1
+0
+Z 1
+1
+exp{x  y2/2}1{y<x}dy dx
+= p
+2⇡ E ⇥
+1{Y <X},
+⇤
+where X and Y are independent random variables with X ⇠ Exp(1) and 1, B
+Y ⇠ N(0, 1). 1, B Remark: Give full mark only if the candidate states clearly that X and Y are
+independent.
+Therefore, a Monte Carlo estimator ˆ✓ can be obtained as follows:
+1. Generate n i.i.d. random variables Xi ⇠ exp(1) (e.g. using inversion method).
+2. Generate n i.i.d. random variables Yi ⇠ N(0, 1) (e.g. using Box-Muller
+method).
+3. Return
+ˆ✓ = 1
+n
+Xn
+i=1
+1{Xi<Yi}.
+2, B
+Remark: Give full mark only if the candidate has stated clearly the assumptions
+of independence among all variables involved. unseen +
+(e) Observe that E[✓2] = E[g(X)] since X and Y have the same distribution.
+1, C Since g is not linear, it follows that E[✓1] 6= E[✓2]
+and, thus, both estimators cannot be compared. 1, C
+1, C
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 5 of 10
+3. (a) An importance sampling (IS) method for the integral above assumes that meth seen +
+∗ we are unable to sample directly from gX,
+∗ we can sample from an auxiliary density hY such that gX(x) > 0 implies
+hY (x) > 0, and
+∗ we can pointwise evaluate both gX(·) and hY (·). 2, A
+Remark: Give only 2 marks if all conditions above are stated. The IS estimator
+takes the form:
+A˜ = 1
+n
+Xn
+i=1
+gX(Yi)1{Yi2D}
+hY (Yi) , Y1,...,Yn i.i.d sample from hY .
+1, A
+sim. seen + (b) Define h : x 7! (1 + 2x2)3/4, x 2 R+. For the implementation of the ratio of
+uniforms method, we need to enclose the area
+1, A
+Ch = {(u, v):0  u 
+r
+h
+⇣u
+v
+⌘
+}
+by a rectangle B = [0,supx
+ph(x)] ⇥ [infx0 x
+ph(x),supx0 x
+ph(x)], 2, A
+which (as seen in lectures) can be obtained whenever h(x) and x2h(x) are bounded
+in the domain of x . 1, C
+However, in this case, x2h(x) is unbounded and so the method is not appropriate
+to sample from h . 1, C
+meth seen + (c) (i) Let Z = (X, Y )T .
+First, compute the conditional density of X given Y = y:
+2, D
+fX|Y =y(x|y) = fX,Y (x, y)
+fY (y)
+= 1
+p2⇡(1  ⇢2)
+exp ⇢
+(x  ⇢y)2
+2(1  ⇢2)
+
+.
+Hence, X|Y = y ⇠ N(⇢y, 1  ⇢2) and, similarly, Y |X = x ⇠ N(⇢x, 1  ⇢2).
+1, D
+The algorithm to obtain a sample Z1,...,Zn, is given as follows:
+1. Initialise X0 and set m = 1.
+2. Given Zm1 := (Xm1, Ym1) (= (xm1, ym1) =: zm1), for m  1,
+sample a new value from the full conditionals
+Xm ⇠ N(⇢ym1, 1  ⇢2). 1, D
+Ym ⇠ N(⇢xm, 1  ⇢2). 1, D
+3. Replace m by m + 1 and GOTO step 2 if m  n. Otherwise, return
+Z1,...,Zn.
+Remark: Give 2 marks only if the candidate did not identify the conditionals
+as normal distributions.
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 6 of
+10
+(ii) Since 1, D
+✓ := P[a  ||Z|| < b] = E ⇥
+1||Z||2[a,b)
+⇤
+,
+and the sample generated by the estimator above is not independent, 1, D
+a Monte Carlo estimator can be obtained as follows:
+1. Sample from Z using the algorithm above allowing a burn-in period B.
+2. Discard the sample during the burn-in period.
+3. Use the rest of the sample to compute the
+˜✓ = 1
+n
+Xn
+i=1
+1{||Zi+B||2[a,b)}.
+2, D
+meth seen + (d) Compare the acceptance probabilities for both methods:
+∗ For (x, y), the acceptance probability of the proposed value y, given the current
+state x, for the MH algorithm is
+↵(x, y) = min ⇢fX(y)gY (x)
+fX(x)gY (y)
+, 1
+
+.
+1, D
+∗ The corresponding acceptance probability for the rejection algorithm is
+(x, y) = fX(y)/gY (y)
+sup fX(z)/gY (z)
+1, D
+Since ↵(x, y)  (x, y) for all (x, y), it follows that MH accepts more often
+than the rejection algorithm. 1, D
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 7 of 10
+unseen + 4. (a) (i) Slice sampling only need the target distribution, whereas M-H and Gibbs
+sampling require to derive (or choose) additional distributions to implement
+either method. 1, M
+Indeed, M-H algorithm requires a proposal transition distribution to update the
+states of the Markov chain constructed to sample from the target distribution.
+Slice sampling only need the target distribution, whereas M-H and Gibbs
+sampling require to derive (or choose) additional distributions to implement
+either method. 1, M
+Gibbs sampling requires the computation of full conditionals of the given joint
+distribution. Slice sampling only need the target distribution, whereas M-H
+and Gibbs sampling require to derive (or choose) additional distributions to
+implement either method. 1, M
+(ii) The slice sampling method relies on the principle that one can sample from
+a target density fX(·) by sampling uniformly from the subgraph of the target
+density function, i.e. Uf := {(x, y) : x 2 supp f, 0 <y<fX(x)}, and then
+look only at the horizontal coordinates of the sample points. Slice sampling
+only need the target distribution, whereas M-H and Gibbs sampling require to
+derive (or choose) additional distributions to implement either method. 2, M
+(iii) A Markov chain that converges to the uniform distribution of the region
+Uf := {(x, y):0 <y<fX(x)} 1, M
+can be constructed as follows: starting from a point (x, y) in Uf , one can
+a) sample alternately from the conditional distribution for Y |X = x, and then
+1, M
+b) sampling the new x from the conditional distribution for X|Y = y. 1, M
+Remark: Alternatively, the candidate may provide the explicit conditional
+distributions.
+(iv) The sampling of the uniform distribution over the slice Sy := {x : fX(x) > y}
+may be dicult to implement 1, M
+when the exact form of Sy is unknown.
+1, M
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 8 of 10
+(b) (i) Let Uf :=
+(x, y):0 <y< exp
+1
+2x2
+
+1(↵,1)(x)
+
+.
+Given (x,y), Step 1 of the slice sampler requires to sample y0 from a uniform
+distribution U(0, f(x)), and Step 2 requires to sample a new x0 from a uniform
+distribution over the region S = {x : y0 < fX(x)} = (↵,
+p2 ln y0
+). 2, M
+1. Given an initial value (x0, y0) 2 Uf with x0 > ↵, set i = 1. 1, M
+2. Sample Y = yi|X = xi1 from U(0, fX(xi1))
+1, M 3. Sample X = xi from U(↵,
+p2 log yi)
+4. If i = n, return x1,...,xn. Otherwise, set n = i + 1 and GOTO 2. 1, M
+(ii) To be able to approximate the integral above, we need to guarantee that ✓ is
+finite, but this is true because
+✓ 
+Z 1
+1
+exp(y2/2)dy = p
+2⇡.
+1, M
+Moreover, we can rewrite ✓ as
+✓ = E ⇥
+1{X<},
+⇤
+where X is a r.v. with the unnormalised density fX(x) given in (b). 1, M
+Therefore, a Monte Carlo estimator ˆ✓ can be obtained as follows:
+1. Sample from X using the slice sampling algorithm in (i) allowing a burn-in
+period B. 1, M
+2. Discard the sample during the burn-in period.
+3. Use the rest of the sample to compute and return
+ˆ✓ = 1
+n
+Xn
+i=1
+1{Xi+B<}.
+2, M
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 9 of 10
+Review of mark distribution:
+Total A marks: 24 of 24 marks
+Total B marks: 15 of 15 marks
+Total C marks: 9 of 9 marks
+Total D marks: 12 of 12 marks
+Total marks: 80 of 60 marks
+Total Mastery marks: 20 of 20 marks
+MATH60047/MATH97085 Stochastic Simulation (Solutions) (2022) Page 10 of 10
+ExamModuleCode QuestionNumber Comments for Students
+Stochastic Simulation_MATH60047 MATH97085 MATH70047 1
+Stochastic Simulation_MATH60047 MATH97085 MATH70047 2
+Stochastic Simulation_MATH60047 MATH97085 MATH70047 3
+This question was well done, but more attention could have been paid to careful description of the
+rationale and conditions required by the methods in (a) and (b).
+Stochastic Simulation_MATH60047 MATH97085 MATH70047 4
+Stochastic Simulation_MATH60047 MATH97085 MATH70047 5
+If your module is taught across multiple year levels, you might have received this form for each level of the module. You are only required to fill this out once for each
+question.
+Please record below, some brief but non-trivial comments for students about how well (or otherwise) the questions were answered. For example, you may wish to
+comment on common errors and misconceptions, or areas where students have done well. These comments should note any errors in and corrections to the paper. These
+comments will be made available to students via the MathsCentral Blackboard site and should not contain any information which identifies individual candidates. Any
+comments which should be kept confidential should be included as confidential comments for the Exam Board and Externals. If you would like to add formulas, please
+include a separate pdf file with your email. 

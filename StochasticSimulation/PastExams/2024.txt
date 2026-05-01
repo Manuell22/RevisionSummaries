@@ -1,0 +1,1779 @@
+© 2024 Imperial College London
+MATH70047
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May 2024
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Stochastic Simulation
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO
+Date: Wednesday, May 8, 2024
+Time: 10:00 – 12:00 (BST)
+Time Allowed: 2 hours
+This paper has 4 Questions.
+Please Answer All Questions in 1 Answer Booklet
+Candidates should start their solutions to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Allow margins for marking.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. (a) Below FX and pX denote the cumulative density function (CDF) and probability density
+function (PDF) of a continuous random variable (r.v.) X, respectively.
+(i) Let U ∼ Unif(0, 1) and Y = F
+−1
+X (U). Using only the transformation of random
+variables formula, prove that pY = pX. (2 marks)
+(ii) Let X be a Weibull(k, 1) random variable with PDF pX(x) = kxk−1
+exp(−x
+k
+) where
+x ∈ [0,∞). Show that FX(x) = 1 − exp(−x
+k
+), where x ∈ R+. Derive F
+−1
+X .
+(2 marks)
+(iii) Describe the inversion sampler for a Weibull(k, 1) variable using Part(ii). (1 mark)
+(b) Let U1 ∼ Unif(0, 1) and U2 ∼ Unif(−π, π). Consider the following transformation
+X1 = cos(U2)
+q
+−2 log(U1) and X2 = sin(U2)
+q
+−2 log(U1).
+Show that X1 and X2 are independent and standard Normal random variables.
+Hint: d arctan(x)
+dx = 1/(1 + x
+2
+). (3 marks)
+(c) Suppose we would like to perform rejection sampling for a target density p(x) using a proposal
+density q(x).
+(i) Provide the pseudocode of the rejection sampler under the assumption that p(x) can be
+evaluated. Give the form of optimal M in terms of p(x) and q(x) so that p(x) ≤ Mq(x).
+(2 marks)
+(ii) Show that the acceptance rate of this rejection sampler is aˆ = 1/M. (3 marks)
+(iii) Suppose we can only evaluate an unnormalised version of the target density p¯(x) ∝ p(x).
+Show that the acceptance rate for the resulting rejection sampler is given by aˆ = Z/M
+where Z is the normalising constant of p(x). (2 marks)
+(iv) Consider the following unnormalised density function
+p¯(x) = 1{x≤a}(x) exp (−µx), x ∈ [0,∞),
+where µ and a are positive known constants. Consider a rejection sampler with a proposal
+q(x) = µ exp(−µx), x ∈ [0, ∞). Choose M = 1 and provide the acceptance rate in
+terms of a and µ. (2 marks)
+(d) Consider the following Erlang density function
+p(x) = x
+k−1
+exp(−λx)
+(k − 1)! for x ∈ [0,∞),
+where k ∈ N+ and λ > 0 are parameters of the density. Consider a rejection sampler for this
+target density with a proposal q(x) = µ exp(−µx), x ∈ [0, ∞) with µ < λ. Find µ
+⋆
+in terms
+of λ and k that maximises the acceptance rate of the rejection sampler. (3 marks)
+Hint: Treat log(k − 1)! terms as constants w.r.t. x and µ as necessary.
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2024) Page 2
+2. Consider the following Rayleigh density function:
+p(x) = x exp
+−
+x
+2
+2
+!
+, x ∈ [0,∞).
+Suppose we would like to estimate the mean of this distribution.
+(a) Consider the importance sampling (IS) task for this problem. We would like to use another
+Rayleigh density function qλ(x) as the proposal:
+qλ(x) = x
+λ
+2
+exp
+−
+x
+2
+2λ
+2
+!
+, x ∈ [0,∞), λ > 0.
+(i) State the test function φ(x) for this problem. Show that R
+φ(x)p(x)dx =
+q
+π/2.
+Hint: Gaussian second moment identity: R ∞
+−∞ x
+2
+√
+1
+2π
+exp 
+−
+x
+2
+2
+
+dx = 1. (2 marks)
+(ii) State the IS estimator φˆ
+N
+IS in terms of N samples X1, . . . , XN ∼ qλ(x). (1 mark)
+(iii) State the variance expression var( ˆφ
+N
+IS) in terms of p, φ, qλ, and N (You do not have to
+derive it). (2 marks)
+(iv) By explicitly computing the quantity you provided in Part(a)(iii), show that
+var( ˆφ
+N
+IS) = 1
+N
+
+2λ
+6
+(2λ
+2 − 1)−2 −
+π
+2
+
+.
+Hint: You can use integration by parts (or any other technique of your choice). In
+integration by parts, recognise that the second term can be completed to an integral of
+a Rayleigh density. (5 marks)
+(v) Show that the optimal λ⋆ that minimises the variance is λ⋆ =
+q
+3/2. (2 marks)
+(vi) Derive the expression for the variance var( ˆφ
+N
+IS) with this optimal choice λ⋆. (1 mark)
+(b) Now consider perfect Monte Carlo (MC) sampling for the same problem with the same test
+function used in Part(a).
+(i) Provide the MC estimator φˆ
+N
+MC in terms of N samples X1, . . . , XN ∼ p(x). (1 mark)
+(ii) State the variance expression var( ˆφ
+N
+MC) in terms of p, φ, and N (You do not have to
+derive it). (1 mark)
+(iii) By explicitly computing the quantity you provided in Part(b)(ii), show that
+var( ˆφ
+N
+MC) = 1
+N
+
+2 −
+π
+2
+
+.
+Hint: The computation here is a special case of Part(a)(iv), so you can directly compute
+the integral using your earlier result. (3 marks)
+(iv) Compare var( ˆφ
+N
+MC) and var( ˆφ
+N
+IS) derived in Part(a)(vi) and discuss why we would perform
+IS rather than MC even if we have access to i.i.d samples. (2 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2024) Page 3
+3. (a) Consider a generic Bayesian model with a prior p(x) and a likelihood p(y|x), where x is the
+parameter of interest and y is the data.
+(i) Provide the expression of the posterior p(x|y) in terms of p(x) and p(y|x). (1 mark)
+(ii) Suppose we would like to sample from p(x|y) using Metropolis-Hastings (MH) with a
+general proposal q(x
+′
+|x). Assume that the normalising constant p(y) is not computable.
+Provide the pseudocode of this algorithm. (2 marks)
+(iii) Assume that the proposal is symmetric: q(x
+′
+|x) = q(x|x
+′
+). Provide the simplified MH
+algorithm with a pseudocode. (1 mark)
+(iv) Provide the Metropolis-adjusted Langevin algorithm (MALA) for this problem.
+(2 marks)
+(v) Provide the unadjusted Langevin algorithm (ULA) for this problem. (2 marks)
+(vi) Suppose our likelihood has the form p(y1:n|x) = Qn
+i=1 p(yi
+|x), where n is very large.
+Suggest a modification of ULA that allows approximate sampling of p(x|y1:n) and which
+does not use the full data at each iteration. (2 marks)
+(b) In this part, we will consider online inference in Bayesian models.
+(i) Consider a single data-point model with a fixed data y:
+p(x) = Gamma(x; α, β) = β
+α
+Γ(α)
+x
+α−1
+exp(−βx), x ∈ [0,∞),
+p(y|x) = Poisson(y; x) = x
+y
+y!
+exp(−x),
+Show that p(x|y) is a Gamma density with parameters α + y and β + 1. (2 marks)
+(ii) Assume now that we have a sequence of data points y1:n = (y1, . . . , yn) where yi
+is the
+i-th data point, which are conditionally independent given x. For any prior p(x) and
+likelihoods {p(yi
+|x)}
+n
+i=1 (without using the model in Part (i)), prove that the update
+equation for the posterior p(x|y1:n) in terms of the previous posterior p(x|y1:n−1) takes
+the form
+p(x|y1:n) = p(yn|x)p(x|y1:n−1)
+p(yn|y1:n−1)
+.
+(4 marks)
+(iii) Suppose we have the following prior and likelihoods:
+p(x) = Gamma(x; α0, β0) and p(yi
+|x) = Poisson(yi
+; x) for i = 1, . . . , n.
+Using the sequential Bayesian update of Part(b)(ii), derive a recursion for the posterior
+sufficient statistics, i.e. give a relationship for each of αn, βn in terms of αn−1, βn−1,
+where p(x|y1:n) = Gamma(x; αn, βn). (4 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2024) Page 4
+4. This question is based on the mastery material, A. Doucet and A. M. Johansen. "A tutorial on
+particle filtering and smoothing: Fifteen years later." Handbook of nonlinear filtering (2009).
+(a) Consider a state space model:
+x0 ∼ µ(x0), and xt
+|xt−1 ∼ f(xt
+|xt−1), and yt
+|xt ∼ g(yt
+|xt),
+where t = 1, . . . , T.
+(i) Provide the joint unnormalised density of the state and observation sequence, i.e.,
+π¯(x0:t
+, y1:t) in terms of µ, f, and g. (2 marks)
+(ii) Using this unnormalised density, prove that
+πt(x0:t
+|y1:t) = πt−1(x0:t−1|y1:t−1)
+g(yt
+|xt)f(xt
+|xt−1)
+p(yt
+|y1:t−1)
+.
+(2 marks)
+(iii) Provide the pseudocode of the path space self-normalised importance sampler (SNIS)
+using a proposal q(x0:t) and the unnormalised target π¯(x0:t
+, y1:t). (2 marks)
+(iv) Assume that your proposal has a Markov structure q(x0:t) = q(x0)
+Qt
+k=1 q(xk|xk−1).
+Derive a sequential recursion for unnormalised importance weights. (2 marks)
+(v) Using the expression in Part(a)(iv), derive the sequential importance sampling (SIS)
+algorithm and provide the pseudocode. (3 marks)
+(b) In this part, we consider the variance behaviour of the SNIS schemes on the path space.
+(i) Let π(x) and q(x) be the target and proposal densities and let π(x) = γ(x)/Z where
+γ(x) is the unnormalised density. Provide the SNIS estimator ZbN of Z. (1 mark)
+(ii) Show that the relative variance of this SNIS estimator is given by
+var(ZbN )
+Z2
+=
+1
+N
+ Z
+π
+2
+(x)
+q(x)
+dx − 1
+!
+.
+(2 marks)
+(iii) Consider now distributions on the path space:
+π(x0:t) = Y
+t
+k=0
+N (x; 0, 1) and q(x0:t) = Y
+t
+k=0
+N (xk; 0, σ2
+),
+where N (x; µ, σ2
+) = √
+1
+2πσ2
+exp 
+−
+(x−µ)
+2
+2σ2
+
+. Let Zt be the normalising constant of π(x0:t).
+Adapting the formula in Part(b)(ii), prove that the relative variance of the SNIS estimator
+of the normalising constant Zt
+is given by
+var(ZbN
+t
+)
+Z
+2
+t
+=
+1
+N
+
+
+
+σ
+4
+2σ
+2 − 1
+!t/2
+− 1
+
+ .
+Provide the necessary constraint on σ
+2
+. (5 marks)
+(iv) What implication does this result have for the SIS algorithm you derived in Part(a)(v)?
+Suggest a modification (in words) that would remedy the issue. (1 mark)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2024) Page 5
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2024
+This paper is also taken for the relevant examination for the Associateship.
+MATH60047/70047
+Stochastic Simulation (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2024 Imperial College London MATH60047/70047 Page 1 of 12
+1. (a) (i) For a generic transformation Y = g(U), 1D transformation of random variables sim. seen ⇓
+formula is given by pY (y) = pU (g
+−1
+(y))
+
+
+
+dg−1
+(y)
+dy
+
+
+. In this particular case,
+g(U) = F
+−1
+X (U), therefore g
+−1
+(y) = FX(y). It needs to be recognised
+that pU (FX(y)) = 1, since F(·) maps to [0, 1] and that the derivative of
+g
+−1
+(y) = FX(y) is pX(y), which implies that pY (y) = pX(y). 2, A
+(ii) Consider a change of variable u = y
+k
+. With this, we obtain
+FX(x) = Z x
+0
+kyk−1
+exp(−y
+k
+)dy =
+Z x
+k
+0
+exp(−u)du = 1 − exp(−x
+k
+).
+Therefore, F
+−1
+X (u) = (− log(1 − u))1/k
+.
+2, B
+(iii) Using the result from part (ii), we obtain the sampler
+Ui ∼ Unif(0, 1) Xi = (− log(1 − Ui))1/k
+.
+1, A
+meth seen ⇓
+(b) We first need to compute inverse transformation (u1, u2) = g
+−1
+(x1, x2) =
+(g
+−1
+1
+(x1, x2), g−1
+2
+(x1, x2)). For g
+−1
+1
+(x1, x2), we have
+X2
+1 + X2
+2 = −2 log U1 =⇒ g
+−1
+1
+(x1, x2) = exp 
+−x
+2
+1 − x
+2
+2
+2
+
+.
+Similarly, for g
+−1
+2
+(x1, x2), we have
+X2
+X1
+= tan(U2) =⇒ g
+−1
+2
+(x1, x2) = arctan 
+x2
+x1
+
+.
+We can then write using transformation of random variables formula that
+px1,x2
+(x1, x2) = pu1,u2
+(g
+−1
+1
+(x1, x2), g−1
+2
+(x1, x2))| det Jg−1 (x1, x2)|
+where pu1,u2
+is a 2D uniform distribution on [0, 1] × [−π, π] where u1 and u2 are
+independent. The Jacobian of g
+−1
+is given by
+det Jg−1 (x1, x2) =
+
+
+
+
+
+
+∂g−1
+1
+∂x1
+∂g−1
+1
+∂x2
+∂g−1
+2
+∂x1
+∂g−1
+2
+∂x2
+
+
+
+
+
+
+=
+
+
+
+
+
+
+−x1 exp 
+−x
+2
+1−x
+2
+2
+2
+
+−x2 exp 
+−x
+2
+1−x
+2
+2
+2
+
+−
+x2
+x
+2
+1
+1
+1+(x2/x1)
+2
+1
+x1
+1
+1+(x2/x1)
+2
+
+
+
+
+
+
+= − exp 
+−x
+2
+1 − x
+2
+2
+2
+
+1
+1 + (x2/x1)
+2
+− exp 
+−x
+2
+1 − x
+2
+2
+2
+
+x
+2
+2
+x
+2
+1
+1
+1 + (x2/x1)
+2
+= − exp 
+−x
+2
+1 − x
+2
+2
+2
+
+.
+Plugging this into the transformations formula (be mindful of the absolute value
+and the facts that pu1
+(·) = 1 and pu2
+(·) = 1/2π), we obtain
+px1,x2
+(x1, x2) = 1
+2π
+exp 
+−x
+2
+1 − x
+2
+2
+2
+
+=
+1
+√
+2π
+exp 
+−x
+2
+1
+2
+
+1
+√
+2π
+exp 
+−x
+2
+2
+2
+
+= px1
+(x1)px2
+(x2).
+3, D
+seen ⇓
+(c) (i) The rejection sampler pseudocode is given as
+· Sample X′ ∼ q(x).
+· Sample U ∼ Unif(0, 1).
+· If U ≤
+p(X′
+)
+Mq(X′)
+, then accept X′
+, otherwise reject.
+· Repeat. 1, A
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 2 of 12
+The optimal M is given by M = supx∈X
+p(x)
+q(x)
+. 1, A
+(ii) It can be seen that, conditioned on X′ = x
+′
+, the acceptance probability is
+P(accept|X′ = x
+′
+) = P
+
+U ≤
+p(x
+′
+)
+Mq(x
+′)
+
+=
+Z p(x
+′
+)
+Mq(x′)
+0
+1du =
+p(x
+′
+)
+Mq(x
+′)
+.
+Therefore, the unconditional acceptance probability is given by
+P(accept) = Z
+X
+P(accept|X′ = x
+′
+)q(x
+′
+)dx
+′ =
+Z
+X
+p(x
+′
+)
+Mq(x
+′)
+q(x
+′
+)dx
+′ =
+1
+M
+Z
+X
+p(x
+′
+)dx
+′ =
+1
+M
+.
+3, B
+(iii) The same argument holds exactly when p¯(x) is available where p(x) = 1
+Z
+p¯(x),
+where Z =
+R
+p¯(x)dx is the normalising constant. In other words,
+P(accept) = Z
+X
+P(accept|X′ = x
+′
+)q(x
+′
+)dx
+′ =
+Z
+X
+p¯(x
+′
+)
+Mq(x
+′)
+q(x
+′
+)dx
+′ =
+1
+M
+Z
+X
+p¯(x
+′
+)dx
+′ =
+Z
+M
+.
+2, B
+(iv) This is a truncated sampling method. Since M = 1, the acceptance rate is Z = R
+p¯(x)dx =
+R
+1x≤a(x) exp(−µx)dx =
+R a
+0
+exp(−µx)dx =
+1
+µ
+(1 − exp(−µa)).
+2, B
+meth seen ⇓
+(d) In order to find the optimal proposal qµ⋆ , we first need to find Mµ. We have
+Mµ = sup
+x∈[0,∞)
+p(x)
+qµ(x)
+where
+Rµ(x) = p(x)
+qµ(x)
+=
+x
+k−1 exp(−λx)
+(k−1)!
+µ exp(−µx)
+=
+1
+(k − 1)!
+x
+k−1
+µ
+exp (−(λ − µ)x).
+We would like to maximise Rµ(x) and solve this optimisation problem by first
+computing log Rµ(x)
+log Rµ(x) = (k − 1) log(x) − (λ − µ)x + C
+where C is a constant that does not depend on x. Computing the derivative and
+setting it to zero
+d
+dx
+log Rµ(x) = k − 1
+x
+− (λ − µ) = 0 =⇒ x
+⋆ =
+k − 1
+λ − µ
+.
+We can then see Mµ = Rµ(x
+⋆
+), which is given by
+Mµ =
+1
+(k − 1)!
+(k − 1)k−1
+(λ − µ)
+k−1
+1
+µ
+exp 
+−(λ − µ)
+k − 1
+λ − µ
+
+=
+(k − 1)k−1
+(k − 1)!
+exp(1 − k)
+µ(λ − µ)
+k−1
+.
+We would like to now minimise Mµ with respect to µ (as this would then maximise
+the acceptance rate 1/Mµ). Taking log Mµ, differentiating with respect to µ, and
+setting it to zero, we obtain
+d
+dµ
+log Mµ = −
+1
+µ
++
+k − 1
+λ − µ
+= 0 =⇒ µ
+⋆ =
+λ
+k
+.
+3, C
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 3 of 12
+2. (a) (i) The test function is φ(x) = x as mean is to be estimated. Then meth seen ⇓
+Z
+φ(x)p(x)dx =
+Z ∞
+0
+x
+2
+exp 
+−
+x
+2
+2
+
+dx =
+1
+2
+Z ∞
+−∞
+x
+2
+exp 
+−
+x
+2
+2
+
+dx =
+p
+π/2,
+as x
+2
+exp(−x
+2/2) is an even function and given the identity in the hint. 2, A
+(ii) Given samples X1, . . . , XN ∼ qλ(x), the basic IS estimator is given as (for
+φ(x) = x):
+φˆ
+N
+IS =
+1
+N
+X
+N
+i=1
+p(Xi)
+qλ(Xi)
+Xi
+.
+1, A
+(iii) The variance of the IS estimator is given by (for a generic φ)
+var( ˆφ
+N
+IS) = 1
+N
+
+Eqλ
+
+p
+2
+(X)
+q
+2
+λ
+(X)
+φ(X)
+2
+
+− φ¯
+2
+
+.
+where φ¯ =
+R
+φ(x)p(x)dx. Alternatively, students might use wλ(x) =
+p(x)/qλ(x) or can just give the expression for φ(x) = x. 2, A
+(iv) Among the terms in the variance expression, we know φ¯ =
+p
+π/2. Therefore,
+we are interested in computing the expectation (by putting φ(x) = x)
+Eqλ
+
+p
+2
+(X)
+q
+2
+λ
+(X)
+X2
+
+=
+Z ∞
+0
+x
+4
+exp(−x
+2
+)
+x
+λ2 exp 
+−
+x2
+2λ2
+dx = λ
+2
+Z ∞
+0
+x
+3
+exp 
+−
+x
+2
+2
+
+2λ
+2 − 1
+λ2
+ dx.
+Write σ
+2 = λ
+2/(2λ
+2 − 1). Then, we have
+Eqλ
+
+p
+2
+(X)
+q
+2
+λ
+(X)
+X2
+
+= λ
+2
+Z ∞
+0
+x
+3
+exp 
+−
+x
+2
+2σ
+2
+
+dx.
+At this point, we perform integration by parts by setting u = x
+2
+and
+dv = x exp(−x
+2/2σ
+2
+)dx. Then, du = 2xdx and v = −σ
+2
+exp(−x
+2/2σ
+2
+).
+Therefore,
+Z ∞
+0
+x
+3
+exp 
+−
+x
+2
+2σ
+2
+
+dx =
+Z ∞
+0
+udv = [uv]
+∞
+0 −
+Z ∞
+0
+vdu
+=
+
+−σ
+2x
+2
+exp 
+−
+x
+2
+2σ
+2
+∞
+0
+| {z }
+=0
++2σ
+4
+Z ∞
+0
+x
+σ
+2
+exp 
+−
+x
+2
+2σ
+2
+
+dx
+| {z }
+=1 as int. of Rayleigh PDF
+= 2σ
+4
+.
+Therefore,
+Eqλ
+
+p
+2
+(X)
+q
+2
+λ
+(X)
+X2
+
+= 2λ
+2σ
+4 = 2λ
+6
+(2λ
+2 − 1)−2
+.
+Plugging this into the expression, we get
+var( ˆφ
+N
+IS) = 1
+N
+
+2λ
+6
+(2λ
+2 − 1)−2 −
+π
+2
+
+.
+5, D
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 4 of 12
+(v) We compute optimal λ by minimising the expression
+λ
+⋆ = arg min
+λ
+Eqλ
+
+p
+2
+(X)
+q
+2
+λ
+(X)
+X2
+
+= arg min
+λ
+2λ
+6
+(2λ
+2 − 1)−2
+.
+Taking the log, then its derivative and setting it to zero, we obtain
+6
+λ
+−
+8λ
+2λ2 − 1
+= 0 =⇒ λ
+⋆ =
+p
+3/2,
+since λ > 0. 2, C
+(vi) Plugging λ
+⋆
+into the variance expression, we obtain
+var( ˆφ
+N
+IS) = 1
+N
+
+2λ
+6
+⋆
+(2λ
+2
+⋆ − 1)−2 −
+π
+2
+
+=
+1
+N
+
+27
+16
+−
+π
+2
+
+.
+1, B
+seen ⇓
+(b) (i) Given X1, . . . , XN ∼ p(x), the MC estimator is given as
+φˆ
+N
+MC =
+1
+N
+X
+N
+i=1
+Xi
+.
+1, A
+(ii) The variance of the MC estimator (for any φ) is given by var( ˆφ
+N
+MC) = 1
+N
+var(φ)
+where var(φ) = E[φ(X)
+2
+] − E[φ(X)]2
+and X ∼ p. 1, A
+(iii) To compute this variance for φ(x) = x, we need to compute var(X). We have meth seen ⇓
+varp(X) = Z
+x
+2
+p(x)dx −
+Z
+xp(x)dx
+2
+.
+The second term above can be computed using Part(a)(i), the first term is
+given by
+Z
+x
+2
+p(x)dx =
+Z ∞
+0
+x
+3
+exp 
+−
+x
+2
+2
+
+dx.
+This integral can be computed by integration by parts. Indeed, it needs to be
+recognised that using the same integration by parts as in Part(a)(iv), we have
+R ∞
+0
+x
+3
+exp(−x
+2/2)dx = 2. Therefore, varp(X) = 2 − (
+p
+π/2)2 = 2 − π/2. 3, B
+(iv) This result shows that the variance of the MC estimator is larger than the
+variance of the IS estimator even though we have access to i.i.d samples. It is
+therefore preferable in certain risk sensitive situations to use IS estimators to
+reduce variance. 2, B
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 5 of 12
+3. (a) (i) We have seen ⇓
+p(x|y) = p(y|x)p(x)
+R
+p(y|x)p(x)dx
+.
+1, A
+(ii) We have a generic proposal q(x
+′
+|x). Furthermore, p(y) is uncomputable,
+therefore, we have to consider the unnormalised distribution p(x, y) instead.
+We can then write the MH sampler initialised at X0 = x0 as follows. For
+t = 1, . . . , T:
+· Sample X′ ∼ q(x
+′
+|Xt−1).
+· Sample U ∼ Unif(0, 1).
+· If
+U ≤
+p(X′
+, y)q(Xt−1|X′
+)
+p(Xt−1, y)q(X′
+|Xt−1)
+then accept Xt = X′
+, otherwise reject and set Xt = Xt−1.
+Alternatively students can use p(x, y) = p(y|x)p(x) in the acceptance ratio. 2, A
+(iii) We have a symmetric proposal q(x
+′
+|x) = q(x|x
+′
+). We can then write the
+symmetric MH sampler initialised at X0 = x0 as follows. For t = 1, . . . , T:
+· Sample X′ ∼ q(x
+′
+|Xt−1).
+· Sample U ∼ Unif(0, 1).
+· If
+U ≤
+p(X′
+, y)
+p(Xt−1, y)
+then accept Xt = X′
+, otherwise reject and set Xt = Xt−1.
+Alternatively students can use p(x, y) = p(y|x)p(x) in the acceptance ratio. 1, A
+(iv) The MALA algorithm uses a gradient-based proposal. We notice that
+∇x log p(x|y) = ∇x log p(y|x) + ∇x log p(x).
+as p(y) drops from the gradient. Therefore, the MALA proposal is given as
+q(x
+′
+|x) = N (x
+′
+; x + γ∇x log p(y|x) + γ∇x log p(x), 2γId).
+or any equivalent formulation (e.g. ∇x log p(x, y)). Then we have
+· Sample X′ ∼ N (x
+′
+; x + γ∇x log p(y|x) + γ∇x log p(x), 2γId).
+· Sample U ∼ Unif(0, 1).
+· If
+U ≤
+p(X′
+, y)q(Xt−1|X′
+)
+p(Xt−1, y)q(X′
+|Xt−1)
+then accept Xt = X′
+, otherwise reject and set Xt = Xt−1.
+2, A
+(v) ULA method just uses MALA proposal and skips the accept/reject step,
+therefore can be compactly written as
+Xt = Xt−1 + γ∇x log p(y|Xt−1) + γ∇x log p(Xt−1) + p
+2γWt
+where Wt ∼ N (0, Id). 2, A
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 6 of 12
+(vi) For this case, we have the algorithm as
+Xt = Xt−1 + γ
+
+∇x log p(Xt−1) +Xn
+k=1
+∇x log p(yk|Xt−1)
+!
++
+p
+2γWt
+,
+where Wt ∼ N (0, Id). This is impractical as n is large. We can instead
+use subsampling to estimate the second term of the gradient with a subset of
+the data. We sample uniformly i1, . . . , iK from {1, . . . , n} and then use the
+following approximation
+Xn
+k=1
+∇x log p(yk|Xt−1) ≈
+n
+K
+X
+K
+k=1
+∇x log p(yik
+|Xt−1).
+Then we obtain the following method which is called stochastic gradient
+Langevin dynamics (SGLD):
+Xt = Xt−1 + γ
+
+∇x log p(Xt−1) + n
+K
+X
+K
+k=1
+∇x log p(yik
+|Xt−1)
+!
++
+p
+2γWt
+,
+where Wt ∼ N (0, Id). Note that indices ik are different for every t, but
+clear statement of stochastic gradients Langevin dynamics for one iteration is
+enough here. 2, A
+seen ⇓
+(b) (i) We can see that the unnormalised posterior is given by
+p(x|y) ∝ x
+y+α−1
+exp(−(β + 1)x),
+by dropping all terms that do not depend on x. This can be recognised as
+another Gamma distribution with parameters y + α and β + 1. 2, A
+(ii) We can prove this recursion as follows
+p(x|y1:n) = p(x, y1:n)
+p(y1:n)
+=
+p(yn|x, y1:n−1)p(x, y1:n−1)
+p(y1:n)
+At this point, we use two key observations. (1) p(yn|x, y1:n−1) = p(yn|x) as
+yn is conditionally independent of y1:n−1 given x, (2) the chain rule implies
+that p(y1:n) = p(yn|y1:n−1)p(y1:n−1). Therefore, we have
+p(x|y1:n) = p(yn|x)
+p(yn|y1:n−1)
+p(x, y1:n−1)
+p(y1:n−1)
+=
+p(yn|x)p(x|y1:n−1)
+p(yn|y1:n−1)
+.
+4, D
+meth seen ⇓
+(iii) We know that (from Part(b)(i)) for fixed data, the posterior is given by
+p(x|y) = Gamma(x; y + α, β + 1).
+where α, β are the prior parameters. We then observe that for the prior we
+have
+p(x|y1) = Gamma(x; α1, β1) = Gamma(x; y1 + α0, β0 + 1).
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 7 of 12
+Assume as an induction hypothesis that
+p(x|y1:n−1) = Gamma(x;
+nX−1
+i=1
+yi + α0, β0 + n − 1) = Gamma(x; αn−1, βn−1).
+By Part(b)(i) and Part(b)(ii), we know that
+p(x|y1:n) = Gamma(x; αn, βn),
+where
+αn = αn−1 + yn βn = βn−1 + 1.
+4, C
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 8 of 12
+4. (a) (i) The joint unnormalised density is given as seen ⇓
+π¯(x0:t
+, y1:t) = µ(x0)
+Y
+t
+k=1
+f(xk|xk−1)g(yk|xk).
+2, M
+(ii) We can write
+πt(x0:t
+|y1:t) = π¯(x0:t
+, y1:t)
+p(y1:t)
+=
+f(xt
+|xt−1)g(yt
+|xt)¯πt−1(x0:t−1, y1:t−1)
+p(y1:t)
+.
+Using chain rule p(y1:t) = p(yt
+|y1:t−1)p(y1:t−1), we obtain
+πt(x0:t
+|y1:t) = f(xt
+|xt−1)g(yt
+|xt)¯πt−1(x0:t−1, y1:t−1)
+p(yt
+|y1:t−1)p(y1:t−1)
+=
+f(xt
+|xt−1)g(yt
+|xt)πt−1(x0:t−1|y1:t−1)
+p(yt
+|y1:t−1)
+,
+which is the desired result. 2, M
+(iii) Using a proposal q(x0:t) and the unnormalised distribution π¯(x0:t
+, y1:t), we can
+define an importance sampler
+· Sample X
+(i)
+0:t ∼ q(x0:t) for i = 1, . . . , N.
+· Compute the importance weights
+W
+(i)
+0:t =
+π¯(X
+(i)
+0:t
+, y1:t)
+q(X
+(i)
+0:t
+)
+· Report an approximation
+π
+N
+t
+(x0:t
+|y1:t)dx0:t =
+X
+N
+i=1
+W
+(i)
+0:t
+δX
+(i)
+0:t
+(dx0:t).
+The obvious shortcoming of this sampler is that, whenever we get new data
+points yt+1, . . . , yT , we need to recompute the importance weights in an
+increasing space dimension. Another problem (also acceptable as an answer)
+as this dimensionality increases, then the weights will be hard to compute
+properly. 2, M
+(iv) Consider the weight expression above as a function:
+W0:t(x0:t) = π¯(x0:t
+, y1:t)
+q(x0:t)
+.
+If the proposal is Markov, we can suitably decompose
+W0:t(x0:t) = f(xt
+|xt−1)g(yt
+|xt)
+q(xt
+|xt−1)
+π¯(x0:t−1, y1:t−1)
+q(x0:t−1)
+=
+f(xt
+|xt−1)g(yt
+|xt)
+q(xt
+|xt−1)
+W0:t−1(x0:t−1).
+Therefore, the whole computation can be done sequentially. Given W
+(i)
+0
+for all
+i, we can compute the weights recursively as
+W
+(i)
+0:t =
+f(x
+(i)
+t
+|x
+(i)
+t−1
+)g(yt
+|x
+(i)
+t
+)
+q(x
+(i)
+t
+|x
+(i)
+t−1
+)
+W
+(i)
+0:t−1
+.
+2, M
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 9 of 12
+(v) The SIS sampler is then given as
+· Sample X
+(i)
+t ∼ q(xt
+|X
+(i)
+t−1
+) for i = 1, . . . , N.
+· Compute the importance weights
+W
+(i)
+0:t =
+f(x
+(i)
+t
+|x
+(i)
+t−1
+)g(yt
+|x
+(i)
+t
+)
+q(x
+(i)
+t
+|x
+(i)
+t−1
+)
+W
+(i)
+0:t−1
+.
+· Report an approximation
+π
+N
+t
+(x0:t
+|y1:t)dx0:t =
+X
+N
+i=1
+W
+(i)
+0:t
+δX
+(i)
+0:t
+(dx0:t).
+3, M
+unseen ⇓
+(b) (i) Given an unnormalised target γ(x) and a proposal q(x), the estimator of the
+normalising constant is given by
+ZbN =
+1
+N
+X
+N
+i=1
+γ(X(i)
+)
+q(X(i))
+,
+where X(i) ∼ q(x). 1, M
+(ii) We can straightforwardly compute the variance as
+var(ZbN ) = 1
+N2
+X
+N
+i=1
+var
+γ(X(i)
+)
+q(X(i))
+!
+=
+1
+N2
+X
+N
+i=1
+
+Eq
+"
+γ
+2
+(X(i)
+)
+q
+2(X(i))
+#
+− Eq
+"
+γ(X(i)
+)
+q(X(i))
+#2
+
+ ,
+=
+1
+N
+ Z
+γ
+2
+(x)
+q(x)
+dx −
+Z
+γ(x)
+q(x)
+q(x)dx
+2
+!
+=
+1
+N
+
+Z
+2
+Z
+π
+2
+(x)
+q(x)
+dx − Z
+2
+
+.
+By dividing this expression by Z
+2
+, we obtain the result. 2, M
+(iii) We have
+γ(x0:t) = Y
+t
+k=1
+exp 
+−
+x
+2
+k
+2
+
+and Zt = (2π)
+t/2
+.
+The formula in (ii) should be used here, by just replacing π(x) with π(x0:t)
+and q(x) with q(x0:t). When done so, the relative variance is given by
+var(ZbN
+t
+)
+Z
+2
+t
+=
+1
+N
+Z
+π
+2
+(x0:t)
+q(x0:t)
+dx0:t − 1
+
+=
+1
+N
+"Y
+t
+k=1
+Z
+(1/2π) exp(−x
+2
+k
+)
+(1/
+√
+2πσ2) exp(−xk/2σ
+2)
+dxk − 1
+#
+The integral can be computed by recognising its Gaussian form
+Z
+(1/2π) exp(−x
+2
+k
+)
+(1/
+√
+2πσ2) exp(−xk/2σ
+2)
+dxk = σ
+Z
+1
+√
+2π
+exp 
+−
+x
+2
+k
+2
+
+2 −
+1
+σ
+2
+ dxk.
+By putting 1/λ2 =
+
+2 − 1/σ2
+
+,
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 10 of 12
+σ
+Z
+1
+√
+2π
+exp 
+−
+x
+2
+k
+2
+
+2 −
+1
+σ
+2
+ dxk = σ
+Z
+λ
+1
+√
+2πλ
+exp 
+−
+x
+2
+k
+2λ2
+
+dxk = σλ =
+
+σ
+4
+2σ
+2 − 1
+1/2
+.
+With this we conclude 4, M
+var(ZbN
+t
+)
+Z
+2
+t
+=
+1
+N
+"Y
+t
+k=1
+
+σ
+4
+2σ
+2 − 1
+1/2
+− 1
+#
+=
+1
+N
+"
+σ
+4
+2σ
+2 − 1
+t/2
+− 1
+#
+.
+A necessary constraint here for variance to be positive and finite is σ
+2 > 1/2.
+1, M
+(iv) This means that as t → ∞, SIS variance increases exponentially even in
+simple cases. Resampling resolves this issue (enough for points). In particular,
+resampling results in an asymptotic relative variance that is only linear in t. 1, M
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 11 of 12
+Review of mark distribution:
+Total A marks: 24 of 24 marks
+Total B marks: 15 of 15 marks
+Total C marks: 9 of 9 marks
+Total D marks: 12 of 12 marks
+Total marks: 80 of 60 marks
+Total Mastery marks: 20 of 20 marks
+MATH60047/70047 Stochastic Simulation (Solutions) (2024) Page 12 of 12
+Question Marker's comment
+MATH60047 Stochastic Simulation
+This question aims at measuring basic knowledge about direct and exact
+sampling methods. Some parts of this question contained problems that were
+similar to the ones covered in the course. The question is attempted by almost
+all students and usually was solved with high accuracy.
+1
+This questionnbsp;aims at measuring the knowledge of Monte Carlo
+integration and Importance sampling. The question contained a challenging
+integration problem. The question in general was attempted by all students
+and usually, again, done well on average.
+2
+This question aims at measuring the knowledge of Markov chain Monte Carlo
+and Bayesian updating. The question was in general well done, there was
+some confusion about Metropolis Adjusted Langevin algorithm vs Langevin
+algorithm but overall the questions were answered correctly.
+3
+Question Marker's comment
+MATH70047 Stochastic Simulation
+This question aims at measuring basic knowledge about direct and exact
+sampling methods. Some parts of this question contained problems that were
+similar to the ones covered in the course. The question is attempted by almost
+all students and usually was solved with high accuracy.
+1
+This questionnbsp;aims at measuring the knowledge of Monte Carlo
+integration and Importance sampling. The question contained a challenging
+integration problem. The question in general was attempted by all students
+and usually, again, done well on average.
+2
+This question aims at measuring the knowledge of Markov chain Monte Carlo
+and Bayesian updating. The question was in general well done, there was
+some confusion about Metropolis Adjusted Langevin algorithm vs Langevin
+algorithm but overall the questions were answered correctly.
+3
+This mastery question aimed at measuringnbsp;knowledge related to
+sequential Monte Carlo filtering. The answers to this question were mixed;
+some on point but also many struggled, especially about the variance
+computations, despite similar calculations were in the mastery material.
+4

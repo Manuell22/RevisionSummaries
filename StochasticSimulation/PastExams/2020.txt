@@ -1,0 +1,979 @@
+© 2020 Imperial College London Page 1
+MATH97085
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May-June 2020
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Stochastic Simulation
+SUBMIT YOUR ANSWERS AS ONE PDF TO THE RELEVANT DROPBOX ON BLACKBOARD
+INCLUDING A COMPLETED COVERSHEET WITH YOUR CID NUMBER, QUESTION
+NUMBERS ANSWERED AND PAGE NUMBERS PER QUESTION.
+.
+Date: 26th May 2020
+Time: 09.00am - 11.00am (BST)
+Time Allowed: 2 Hours
+Upload Time Allowed: 30 Minutes
+This paper has 4 Questions.
+Candidates should start their solutions to each question on a new sheet of paper.
+Each sheet of paper should have your CID, Question Number and Page Number on the
+top.
+Only use 1 side of the paper.
+Allow margins for marking.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Each question carries equal weight.
+1. (a) The congruential generator to generate pseudo-standard uniform variates, Ui
+, defines
+Ui =
+Xi
+m
+,
+where,
+Xi = (aXi−1 + b) mod m, i = 1, 2, 3, . . .
+with integer m and X0, a, b ∈ {0, 1, . . . , m − 1}.
+(i) What is the value of b for a multiplicative generator? (1 mark)
+(ii) Define the period, k, of such a generator. What is the largest value of k when b 6= 0?
+(3 marks)
+(iii) Consider the following R code:
+cg = function(n, m, a, b, x0)
+{
+x = c(x0, rep(0,(n-1)))
+for(i in 2:n)
+x[i] = (a * x[i - 1]+b) %% m
+data.frame(x = x/m)
+}
+x1 = cg(500, 2^(40), 5^3, 0, 1)
+x2 = cg(500, 2^(45), 11, 0, 1)
+x3 = cg(500, 2^(12), 2^6, 1, 2^2)
+Find the period for each of the generators which produce x1, x2, and x3. (4 marks)
+The figures below show lag-one scatter plots of the data produced by the R code above.
+Figure A Figure B Figure C
+To which sequence (out of x1, x2, and x3) do each of the Figures (out of A, B and C)
+correspond? (2 marks)
+(b) Given a sequence of n variates which are claimed to be from a U(0, 1) distribution, describe
+how you would perform a chi-squared goodness-of-fit test on the numbers (between 0 and 99)
+formed by taking the first two decimal places of the generated sequence. (5 marks)
+(c) Describe two methods to investigate the dependence structure of a sequence of generated
+U(0, 1) variates. (5 marks)
+(Total: 20 marks)
+MATH96054/MATH97085 Stochastic Simulation (2020) Page 2
+2. (a) Describe in detail the rejection method for generating samples from a probability density function
+(pdf) fX(·) using a rejection envelope gY (·). (3 marks)
+(b) Describe in detail the Metropolis-Hastings (M-H) scheme to generate samples from a pdf fX(·)
+using a transition kernel q(· | ·). (4 marks)
+(c) Describe in detail the inversion algorithm to generate samples from a pdf fX(·). (2 marks)
+(d) Consider schemes to simulate samples from a pdf fX(x) ∝ f
+∗
+X(x), where,
+f
+∗
+X(x) =
+
+
+
+exp(−|x|), −1 < x < 1;
+0, otherwise.
+(i) Determine the acceptance probability of a rejection scheme to generate samples from fX(x)
+using a uniform envelope, i.e.
+gY (y) =
+
+
+
+0.5, −1 < y < 1;
+0, otherwise.
+(2 marks)
+(ii) Consider the following R code to implement a M-H scheme to simulate from fX(·),
+f = function(x){
+c=2*(1-exp(-1))
+ifelse(x>-1 & x<1, exp(-abs(x))/c, 0)
+}
+qpdf = function(y, sigma){
+rnorm(1, mean=y, sd=sigma)
+}
+MH = function(n){
+x=vector("double",n); x[1]=0; u=runif(n); sigma=0.1
+for(i in 2:n){
+y=qpdf(x[i-1],sigma)
+x[i] = ifelse(u[i]<min(****,1), y, x[i-1])
+}
+return(x)
+}
+(I) What transition kernel is being used in this implementation? (1 mark)
+(II) What R code should replace **** for this code to work? (1 mark)
+(III) Describe the effect of changing the variable sigma. (2 marks)
+(e) Why is it beneficial for a simulation scheme to generate independent samples? (2 marks)
+(f) With justification, which approach, out of rejection, inversion and M-H would you choose to
+apply in order to generate samples from the pdf outlined in part (d). (3 marks)
+(Total: 20 marks)
+MATH96054/MATH97085 Stochastic Simulation (2020) Page 3
+3. Consider the following integral,
+θ =
+Z
+h(x) dx =
+Z
+φ(x)fX(x) dx.
+(a) Given X1, . . . , Xn ∼ fX(·).
+(i) Write down the Monte-Carlo estimator ˆθ for θ in terms of the Xi
+, i = 1, . . . , n. (1 mark)
+(ii) Prove that ˆθ is unbiased for θ. (2 marks)
+(iii) Find an expression for the variance of ˆθ in terms of φ(·), fX(·) and θ. (2 marks)
+(b) Consider estimating the integral,
+θ =
+Z 1
+0
+exp(−x
+3
+) dx.
+(i) Describe the hit-or-miss method for estimating θ.
+Consider the following R code:
+a=0;b=1;c=1;n=10000
+u=runif(n, min=a,max=b)
+v=runif(n, min=0,max=c)
+thetahat = ****
+What R code should replace **** in the code above in order for thetahat to be the
+hit-or-miss Monte-Carlo estimate of θ? (4 marks)
+(ii) Describe how you would construct the crude Monte-Carlo estimator for θ given a sequence
+of independent variates U1, . . . , Un ∼ U(0, 1). (2 marks)
+(iii) Using inversion, one can generate from the following pdf,
+fX(x) =
+
+
+
+k cos(kx)
+√
+1 − e
+−2
+, 0 < x < 1;
+0, otherwise,
+where k = arccos(e−1
+).
+Consider the following R implementation of an inversion scheme to generate from fX(·),
+n=10000;k=acos(exp(-1));k1=sqrt(1-exp(-2))
+u=runif(n)
+x= ****
+What R code should replace **** in the section of code above so that x contains variates
+with pdf fX(·)? (4 marks)
+(iv) Determine an estimator of θ given a sequence of independent variates X1, . . . , Xn ∼ fX(·),
+described in part (iii). (3 marks)
+(v) Without performing any calculations, but giving your reasoning, which estimator out of
+those calculated in parts (i), (ii) and (iv), would you expect to have the lowest variance?
+(2 marks)
+(Total: 20 marks)
+MATH96054/MATH97085 Stochastic Simulation (2020) Page 4
+4. (a) Given random variables X and Y with joint probability density (pdf) function fX,Y (x, y), and
+conditional probability density functions fY |X(y|x) and fX|Y (x|y) , outline the two-stage Gibbs
+sampler to generate (Xt
+, Yt), t = 1, 2, . . . from the joint pdf. (3 marks)
+(b) It is supposed that X and Y have a joint distribution for which the conditional pdfs are
+X|Y = y ∼ Exp(y) and Y |X = x ∼ Exp(x).
+(i) Show that these conditional distributions would be consistent with a joint distribution whose
+pdf is fX,Y (x, y) ∝ exp(−xy), x, y > 0.
+Explain why this function fX,Y (x, y) is not actually a valid pdf. (3 marks)
+(ii) What issue with Gibbs sampling does the lack of validity of fX,Y (x, y) highlight?
+(1 mark)
+(iii) Now suppose that the X and Y have a joint distribution with pdf fX,Y (x, y) ∝ exp(−xy)
+for x ∈ (0, 1), y ∈ (0, 1) and fX,Y (x, y) = 0 otherwise.
+In this case, outline the Gibbs sampler to generate from fX,Y (x, y). (4 marks)
+(c) Let the joint pdf of X and U be given by
+fX,U (x, u) =
+
+
+
+1, 0 < u < 8
+π
+q
+x(1 − x), 0 < x < 1;
+0, otherwise.
+(i) Verify that
+fX(x) =
+
+
+
+8
+π
+q
+x(1 − x), 0 < x < 1;
+0, otherwise.
+(1 mark)
+(ii) Prove that U|X = x ∼ U(0, a) and X|U = u ∼ U(b, c) where you should specify a in
+terms of x, and b and c in terms of u. (5 marks)
+(iii) An implementation of the Gibbs sampler to simulate from the joint pdf is given below.
+N=5000
+X=c(runif(1));U=c(runif(1))
+for(t in 1:N){
+a=**1**
+U[t+1]=runif(1,0,a)
+b=**2**
+c=**3**
+X[t+1]=runif(1,b,c)
+}
+What R code should replace **1**, **2** and **3** in order for X to contain variates
+with pdf fX(·)? (3 marks)
+(Total: 20 marks)
+MATH96054/MATH97085 Stochastic Simulation (2020) Page 5
+Module: MATH96054/MATH97085
+Setter: McCoy
+Checker: Hallsworth
+Editor: Hallsworth
+External: Jennison
+Date: May 18, 2020
+Version: Draft version for checking
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+May – June 2020
+MATH96054/MATH97085 Stochastic Simulation (Solutions)
+The following information must be completed:
+Is the paper suitable for resitting students from previous years: Yes
+Category A marks: available for basic, routine material (excluding any mastery question)
+(40 percent = 32/80 for 4 questions):
+1(a) 3 marks; 1(c) 5 marks; 2(a)(b) 7 marks; 2(c) 2 marks; 2(d)(ii) 2 marks; 3(a) 5 marks. Total 24
+marks.
+Category B marks: Further 25 percent of marks (20/ 80 for 4 questions) for demonstration
+of a sound knowledge of a good part of the material and the solution of straightforward
+problems and examples with reasonable accuracy (excluding mastery question):
+2(d)(i) 2 marks; 2(iii) 2 marks; 2(e) 2 marks; 3(b)(ii) 2 marks; 3(b)(iv) 3 marks; 3(b)(v) 2 marks.
+Total 13 marks.
+Category C marks: the next 15 percent of the marks (= 12/80 for 4 questions) for parts
+of questions at the high 2:1 or 1st class level (excluding mastery question):
+1(b) 5 marks; 2(f) 5 marks; 3(b)(i) 4 marks. Total 12 marks.
+Category D marks: Most challenging 20 percent (16/80 marks for 4 questions) of the paper
+(excluding mastery question):
+1(a)(iii) 7 marks; 3(b)(iii) 4 marks. Total 11 marks.
+Signatures are required for the final version:
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+c 2020 Imperial College London MATH96054/MATH97085 Temporary cover page
+Temporary front page
+BSc, MSc and MSci EXAMINATIONS (MATHEMATICS)
+May – June 2020
+This paper is also taken for the relevant examination for the Associateship of the
+Royal College of Science.
+Stochastic Simulation (Solutions)
+Date: Tuesday, 26th May 2020
+Time: AM
+Time Allowed: 1.5 Hours for MATH96 paper; 2 Hours for MATH97 papers
+This paper has 3 Questions (MATH96 version); 4 Questions (MATH97 versions).
+Candidates should start their solutions to each question in a new main answer book.
+Supplementary books may only be used after the relevant main book(s) are full.
+Statistical tables will not be provided.
+• DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO.
+• Affix one of the labels provided to each answer book that you use, but DO NOT USE THE
+LABEL WITH YOUR NAME ON IT.
+• Credit will be given for all questions attempted.
+• Each question carries equal weight.
+• Calculators may not be used.
+
+c 2020 Imperial College London MATH96054/MATH97085 Page 1 of 9
+seen ⇓
+1. (a) (i) b = 0 for a multiplicative generator.
+1 A
+(ii) The period k is the smallest positive integer such that
+Xi+k = Xi
+, ∀i
+The sequence {Xi
+, . . . , Xi+k−1} repeats.
+2 A
+If b 6= 0 the largest value of k is m (as i mod m ∈ {0, 1, . . . , m − 1}, i ∈ N). 1 A
+(iii) A multiplicative generator with m = 2 meth seen ⇓
+β has period m/4 if a mod 8 ≡ 3 or 5 and X0
+is odd.
+x1: m = 240, a = 53
+, b = 0, x0 = 1, so this is multiplicative and a mod 8 = 5 so
+period = 238
+.
+x2: m = 245, a = 11, b = 0, x0 = 1, so this is multiplicative and a mod 8 = 3 so
+period = 243
+.
+x3: m = 212, a = 26
+, b = 1, x0 = 22
+, so,
+x1 = (26
+2
+2 + 1) mod 212 = 28 + 1,
+x2 = (26
+(28 + 1) + 1) mod 212 = 26 + 1,
+x3 = (26
+(26 + 1) + 1) mod 212 = 26 + 1,
+so xi+1 = xi
+, i > 1 and hence the period =1.
+4 D
+unseen ⇓ Figure A is the plot for sequence x3 as it eventually gets stuck at the value (26+1)/2
+12
+.
+Sequence x2 has a = 11 and hence is associated with Figure C (all points on lines
+with gradient 11)
+Finally, x1 is associated with Figure B. 2 D
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 2
+sim. seen ⇓
+(b) Let vi
+, i = 1, . . . , n be the number represented by the first two decimal places of ui
+, i.e.
+vi = b100uic, alternatively, let d1i and d2i represent the first two decimal places of the
+observed ui
+, i = 1, . . . , n respectively and let vi = 10d1i + d2i
+. Let,
+Oj =
+Xn
+i=1
+I[vi=j]
+, j = 0, . . . , 99; where I[vi=j] =
+
+
+
+1 if vi = j;
+0 otherwise.
+If the sequence follows a standard uniform distribution then we would expect each of the
+numbers 0, . . . , 99 to occur with equal probability so Ei = n/100.
+Form the test statistics
+χ
+2 =
+X
+99
+i=0
+(Oi − Ei)
+2
+Ei
+.
+Under the null hypothesis that the sequence is uniformly distributed the test statistic will
+approximately follow a Chi-Squared distribution with 100−1 = 99 degrees of freedom. The
+value of the test statistic is then compared to the percentage points of the χ
+2
+99 distribution
+to see if there is evidence to reject the null hypothesis.
+5 C
+seen ⇓
+(c) The dependence structure of a sequence, U1, . . . , Un of generated U(0, 1) variates can be
+tested by the following:
+∗ Correlogram: Plot of the sample autocorrelation sequence
+ρˆk =
+1
+n
+Pn−k
+i=1 (Ui − U¯)(Ui+k − U¯)
+1
+n
+Pn
+i=1(Ui − U¯)
+2
+:
+against k. An approximate 95% confidence interval (CI) for the estimated
+autocorrelation sequence is
+−
+1
+n
+±
+1.96
+√
+n
+;
+Values of ρˆk that lie outside the CI give evidence to reject the hypothesis that the
+sequence is independent.
+∗ Serial test for digits: Let njk be the number of times the digit j is followed by the
+digit k. In this case we have
+O0 = n00, O1 = n01, . . . , O9 = n09, O10 = n10, . . . , O99 = n99
+E0 =
+n
+100 , E1 =
+n
+100 , . . . , E99 =
+n
+100 .
+This can be tested with a Chi-Squared test.
+∗ Gap Test: Choose a digit, say 3, then record the length of the subsequence lying
+between occurrences of the digit 3.
+X1, X2, X3, 3, X5, X6, . . . , Xk+4
+| {z }
+gap length= k
+, 3, . . .
+If the sequence is uniform and independent, the distribution of gap lengths, K, should
+be Geometric( 1
+10 ), which can be tested with a Chi-Squared test.
+5 A
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 3
+seen ⇓
+2. (a) Generating X with a known pdf fX(·) using rejection employs the use of a rejection envelope
+gY (·) (which we can generate from). The pdf gY (·) must have the following properties:
+∗ the support of gY encompasses that of fX, i.e. fX(x) > 0 ⇒ gY (x) > 0,
+∗ there exists M > 0 such that ∀x s.t. fX(x) > 0,
+fX(x)
+gY (x)
+≤ M < ∞.
+Rejection Sampling Algorithm
+1. Generate Y = y ∼ gY (.).
+2. Generate U = u ∼ U(0, 1).
+3. If u ≤
+fX(y)
+M gY (y)
+set X = y.
+4. Otherwise GOTO 1.
+3 A
+(b) Generating X from known pdf fX(·) using Metropolis-Hastings (M-H), employs a transition
+kernel q(y|x) ≥ 0, which satisfies
+Z
+q(y|x)dy = 1.
+q(y | x) and should be chosen to ensure irreducibility (the conditional pdf should be nonzero over the range of X).
+Metropolis-Hastings Procedure (continuous state space):
+1. Initialise the chain: start from an arbitrary X0, possibly sampled from an initial
+pdf/prior. Set n = 1.
+2. Given Xn−1 = x, generate a candidate value Y = y from the proposal density q(y|x).
+3. Set Xn = y with probability α(x, y), where
+α(x, y) = min (
+fX(y)q(x|y)
+fX(x)q(y|x)
+, 1
+)
+,
+otherwise, set Xn = x.
+4. Replace n by n + 1 and return to Step 2.
+Note that as X0 is not generated directly from fX the algorithm needs a burn-in period.
+Also, MH does not produce independent samples.
+4 A
+meth seen ⇓
+(c) Generating X from known pdf fX(·) using inversion requires calculating the inverse cdf
+F
+−1
+X (x).
+Inversion Algorithm:
+1. Generate U = u ∼ U(0, 1)
+2. Set X = x = F
+−1
+X (u)
+2 A
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 4
+(d) (i)
+M = sup
+x
+f
+∗
+X(x)
+gY (x)
+= sup
+−1<x<1
+2e−|x| = 2.
+Acceptance probability, θ, is given by
+θ =
+R 1
+−1
+f
+∗
+X(x) dx
+M
+=
+2
+R 2
+0
+e
+−x dx
+2
+=
+h
+−e
+−x
+i1
+0
+= 1 − e
+−1
+.
+2 B
+(ii) (I) The transition kernel is a Normal density centred at the current value with variance
+0.01,
+q(y|x) = 10
+√
+2π
+e
+−50(y−x)
+2
+, y ∈ R.
+1 B
+(II) **** should be replaced with f(y)/f(x[i-1]). Note that q(y|x) is symmetric,
+so does not need to be included as the terms cancel.
+1 B
+(III) sigma controls how close the distribution of the proposal around the current
+value. Reducing sigma means that the proposed values are accepted with higher
+probability, will be more correlated and slowly mixing with less opportunity to
+explore the space. If sigma is set too high, then the acceptance probability may
+be too low and be inefficient.
+2 A
+(e) Many statistical procedures rely on the independence assumption either directly or through
+the Central Limit Theorem.
+2 B
+(f) Answer should justify with a discussion of computational complexity and timing
+considerations. Accept any well reasoned answer based on e.g. avoiding complex
+calculations, computational time or a discussion of excluding M-H because of lack of
+independence. 3 C
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 5
+seen ⇓
+3. (a) (i)
+θ = E (φ(x))),
+ˆθ =
+1
+n
+Xn
+i=1
+φ(Xi).
+1 A
+(ii)
+E(
+ˆθ) = 1
+n
+Xn
+i=1
+E(φ(Xi)) = 1
+n
+Xn
+i=1
+θ = θ.
+So ˆθ is unbiased for θ.
+2 A
+(iii)
+var(
+ˆθ) = 1
+n2
+Xn
+i=1
+var(φ(Xi)) = 1
+n
+
+E(φ
+2
+(X)) − θ
+2
+
+=
+1
+n
+Z
+φ
+2
+(x)fX(x) dx − θ
+2
+
+2 A
+part seen ⇓
+(b) (i) Given θ =
+R b
+a h(x) dx with 0 ≤ h ≤ c. We generate points uniformly in the rectangle
+(a, b) × (0, c) and estimate the area from the proportion that lie under h(x).
+Hit-or-Miss Algorithm:
+1. Sample U = ui ∼ U(a, b), V = vi ∼ U(0, c), i = 1, . . . , n
+2. Define
+ˆθ = c(b − a)
+| {z }
+area of
+rectangle
+1
+n
+Xn
+i=1
+I(vi ≤ h(ui))
+| {z }
+frequency of “dart”
+under h
+We have h(x) = exp(−x
+3
+), x ∈ (0, 1).
+So a = 0, b = 1 and c = supx∈(0,1) exp(−x
+3
+) = 1 and **** should be replaced with
+the R code
+c*(b-a)*mean(v <= exp(-u^3)).
+Alternatively, c*(b-a)*length(v[v<=exp(-u^3)])/n,
+or c*(b-a)*sum(v <= exp(-u^3))/n.
+4 C
+meth seen ⇓
+(ii) We have
+θ =
+Z 1
+0
+exp(−x
+3
+) dx =
+Z b
+a
+φ(x)fX(x) dx,
+where fX(x) = 1, x ∈ (0, 1) and φ(x) = exp(−x
+3
+), x ∈ (0, 1). The crude MC
+estimator is given by,
+ˆθ =
+1
+n
+Xn
+i=1
+exp(−U
+3
+i
+).
+2 B
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 6
+(iii) We have, for x ∈ (0, 1),
+FX(x) = Z x
+0
+k cos(ky)
+√
+1 − e
+−2
+dy =
+1
+√
+1 − e
+−2
+[sin(ky)]x
+0
+,
+=
+sin(kx)
+√
+1 − e
+−2
+.
+To find F
+−1
+X (·), x ∈ (0, 1),
+U =
+sin(kx)
+√
+1 − e
+−2
+⇒ X = F
+−1
+X (U) = 1
+k
+arcsin(U
+√
+1 − e
+−2
+).
+To generate from fX(·) using inversion:
+1. Generate U = u ∼ U(0, 1).
+2. Set X = x = arcsin(u
+√
+1 − e
+−2
+)/k.
+Hence ***** should be replaced with the commands x=asin(u*k1)/k. 4 D
+(iv) We have
+θ =
+Z 1
+0
+exp(−x
+3
+) dx =
+Z b
+a
+φ(x)fX(x) dx,
+where
+fX(x) = k cos(ky)
+√
+1 − e
+−2
+, x ∈ (0, 1), and hence φ(x) = exp(−x
+3
+)
+√
+1 − e
+−2
+k cos(kx)
+, x ∈ (0, 1).
+The MC estimator is given by
+ˆθ =
+1
+n
+Xn
+i=1
+exp(−X3
+i
+)
+√
+1 − e
+−2
+k cos(kXi)
+.
+3 B
+(v) We would expect the estimator outlined in (iv) to have the lowest variance. We know
+that hit-or-miss always has higher variance than crude MC. The density outlined in (iv)
+mimics the shape of exp(−x
+3
+) better than the uniform (cf Importance sampling).
+2 B
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 7
+4. (a) Two-stage Gibbs sampler given the conditional pdfs for fX,Y (x|y) and fY |X(y|x).
+Set X0 = x0. Set t = 1.
+1. Generate Yt = yt ∼ fY |X(·|xt−1);
+2. Generate Xt = xt ∼ fX|Y (·|yt);
+3. Set t = t + 1 and goto 1. 3
+(b) We have fX|Y (x|y) = y exp(−xy), x > 0 and fY |X(y|x) = x exp(−xy), y > 0.
+(i)
+fX,Y (x, y) ∝ exp(−xy) ⇒ fX(x) ∝
+Z ∞
+0
+exp(−xy) dy =
+"
+exp(−xy)
+−x
+#∞
+0
+=
+1
+x
+, x > 0,
+fY |X(y|x) = fX,Y (x, y)
+fX(x)
+∝ x exp(−xy), x > 0.
+So Y |X = x ∼ Exp(x). Similarly X|Y = y ∼ Exp(y) as required for consistency
+with joint distribution.
+2
+This is not a valid pdf as R ∞
+0
+1/y dy is not finite. 1
+(ii) This can be a danger as you can implement the Gibbs sampler with conditional
+distributions without having to verify that that they correspond to a valid joint
+distribution.
+1
+(iii) If the conditional pdfs are truncated to (0, 1), then we have
+fY |X(y|x) = x exp(−xy)
+R 1
+0 x exp(−xy) dy
+=
+x exp(−xy)
+1 − e
+−x
+Similarly for fX|Y . To generate from fY |X (and fX|Y ) we can use inversion. For
+0 < y < 1, we have
+FY |X(y|x) = Z y
+0
+x exp(−xt)
+1 − e
+−x
+dt =
+1 − e
+−xy
+1 − e
+−x
+.
+Setting
+U =
+1 − e
+−xY
+1 − e
+−x ⇒ U(1 − e
+−x
+) = 1 − e
+−xY ⇒ −xY = log(1 − U(1 − e
+−x
+))
+⇒ Y = F
+−1
+Y |X(U|x) = −
+1
+x
+log(1 − U(1 − e
+−x
+))
+Gibbs sampler:
+1. Set t = 1, X0 = x0.
+2. Generate U = u ∼ U(0, 1), set Yt = yt = −
+1
+xt−1
+log(1 − u(1 − e
+−xt−1 )), then
+Yt ∼ Exp(0,1)(xt−1), where Exp(0,1)(·) is an exponential distribution truncated to
+(0, 1).
+3. Generate U = u ∼ U(0, 1), set Xt = xt = −
+1
+yt
+log(1 − u(1 − e
+−yt )), then
+Xt ∼ Exp(0,1)(yt).
+4. Set t = t + 1 and goto 1. 4
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 8
+(c) (i)
+fX(x) = Z
+fX,U (x, u) du =
+Z 8
+√
+x(1−x)/π
+0
+1 du =
+8
+π
+q
+x(1 − x), 0 < x < 1,
+as required. 1
+(ii)
+fU|X(u|x) = fU,X(u, x)
+fX(x)
+=
+π
+8
+q
+x(1 − x)
+, 0 < u <
+8
+π
+q
+x(1 − x).
+i.e U|X = x ∼ U(0, a) where a =
+8
+π
+q
+x(1 − x). Now,
+fU (u) = Z
+0<u< 8
+π
+√
+x(1−x)
+1 dx
+u <
+8
+π
+q
+x(1 − x) ⇒
+πu
+8
+<
+q
+x(1 − x) ⇒
+π
+2u
+2
+64
+< x(1 − x) ⇒ x
+2 − x +
+π
+2u
+2
+64
+< 0
+⇒
+
+x −
+1 −
+q
+1 −
+4π2u2
+64
+2
+
+
+
+x −
+1 + q
+1 −
+4π2u2
+64
+2
+
+ < 0
+⇒ b =
+1
+2
+−
+1
+8
+√
+16 − π
+2u
+2 < x <
+1
+2
++
+1
+8
+√
+16 − π
+2u
+2 = c.
+So
+fU (u) = Z c
+b
+1 dx =
+1
+4
+√
+16 − π
+2u
+2
+, 0 < u <
+4
+π
+,
+and
+fX|U (u|x) = 4
+√
+16 − π
+2u
+2
+,
+1
+2
+−
+1
+8
+√
+16 − π
+2u
+2 < x <
+1
+2
++
+1
+8
+√
+16 − π
+2u
+2
+i.e. X|U = u ∼ U(b, c) where b =
+1
+2 −
+1
+8
+√
+16 − π
+2u
+2 and c =
+1
+2 +
+1
+8
+√
+16 − π
+2u
+2
+. 5
+(iii) From part (ii):
+**1** = 8*sqrt(X[t]*(1-X[t]))/pi
+**2** =0.5-(1/8)*sqrt(16-U[t+1]^2*pi^2)
+**3** = 0.5+(1/8)*sqrt(16-U[t+1]^2*pi^2)
+3
+Commentary
+Q1 Mainly a straightforward question, though students may find a(iii) challenging, for (b) they have
+seen the test for a single digit.
+Q2 The first two parts are bookwork, though we concentrated more on the discrete case, so the MH
+scheme may be a little more challenging.
+Q3 Mainly application of standard results, but the inversion is a little fiddly and the R code sections
+may be harder for them as this has not appeared in previous exams.
+Q4 Based on Chapter 7 of “Introducing Monte Carlo Methods with R, Use R” by Robert and Casella.
+They have only seen the basic Gibbs sampler in lectures.
+MATH96054/MATH97085 Stochastic Simulation (Solutions) (2020) Page 9
+ExamModuleCode QuestionNComments for Students
+MATH97085 1
+This question was generally well done. The only significant comment is that many candidates
+failed to distinguish between methods designed to test for uniformity of output and those
+designed to test for serial dependence.
+MATH97085 2
+This question was found straightforward. Rather few answers provided a careful argument about
+why we would want independent samples, and too many candidates asserted (incorrectly) that
+inversion was not an option with the density in (d).
+MATH97085 3
+Question was generally done well. There were some mistakes in the inversion technique for the
+trigonometric pdf and the calculation of the full details of the hit‐or‐miss algorithm was not given
+in all cases
+MATH97085 4
+This questions proved challenging for many students, particularly part ( c) where many students
+were unable to derive the values for b and c.
+If your module is taught across multiple year levels, you might have received this form for each level of the module. You are only required to fill this out once for each question.
+Please record below, some brief but non‐trivial comments for students about how well (or otherwise) the questions were answered. For example, you may wish to comment on common errors and
+misconceptions, or areas where students have done well. These comments should note any errors in and corrections to the paper. These comments will be made available to students via the MathsCentral
+Blackboard site and should not contain any information which identifies individual candidates. Any comments which should be kept confidential should be included as confidential comments for the Exam
+Board and Externals. If you would like to add formulas, please include a sperate pdf file with your email.

@@ -1,0 +1,156 @@
+PTEM values from Exam Board June 2023
+Module Code Module Title P T E M
+MATH40002 Analysis 1 31 50 60 90
+MATH40003 Linear Algebra and Groups 35 55 65 100
+MATH40004 Calculus and Applications 35 60 70 100
+MATH40005 Probability and Statistics 35 55 65 100
+MATH40006 Introduction to Computation 40 60 70 100
+MATH40007 An Introduction to Applied Mathematics 30 52 60 90
+MATH40008 Individual Research Project 40 60 70 100
+MATH40012 Linear Algebra and Groups for JMC 40 55 65 100
+MATH50001 Analysis 2 35 55 65 100
+MATH50002 Group Research Project 40 60 70 100
+MATH50003 Linear Algebra and Numerical Analysis 30 50 60 100
+MATH50004 Multivariable Calculus and Differential Equations 35 58 68 100
+MATH50005 Groups and Rings 35 55 65 100
+MATH50006 Lebesgue Measure and Integration 35 55 65 100
+MATH50007 Network Science 35 58.5 68 100
+MATH50008 Partial Differential Equations in Action 32 55 65 100
+MATH50009 Principles of Programming 32 55 65 100
+MATH50010 Probability for Statistics 35 52 65 100
+MATH50011 Statistical Modelling 1 41.5 57 69 100
+MATH50012 Numerical Analysis for JMC 30 50 60 100
+MATH50013 Probability and Statistics for JMC 35 55 65 100
+MATH50014 Group Research Project in Mathematics 40 60 70 100
+MATH50015 Multivariable Calculus for JMC 35 58 68 100
+MATH50016 Linear Algebra 2 for JMC 30 50 60 100
+MATH50017 Real Analysis and Topology for JMC 34 55 65 100
+MATH50018 Complex Analysis for JMC 35 55 65 100
+MATH50019 Differential Equations for JMC 35 58 68 100
+MATH60001 Fluid Dynamics 1 34 55 62 95
+MATH60002 Fluid Dynamics 2 34.4 55 65 100
+MATH60003 Introduction to Geophysical Fluid Dynamics 35 55 65 100
+MATH60004 Asymptotic Methods 30 45 55 90
+MATH60005 Optimisation 35 55 65 100
+MATH60006 Applied Complex Analysis 35 55 65 100
+MATH60007 Dynamics of Learning and Iterated Games 40 60 70 100
+MATH60008 Dynamical Systems 35 55 65 100
+MATH60009 Bifurcation Theory 35 55 65 100
+MATH60010 Geometric Mechanics 35 55 65 100
+MATH60011 Classical Dynamics 35 55 65 100
+MATH60012 Mathematical Finance: An Introduction to Option Pricing 31 55 65 100
+MATH60013 Mathematics of Business and Economics 35 55 65 100
+MATH60014 Mathematical Biology 34 55 65 100
+MATH60015 Quantum Mechanics 1 34.95 55 65 100
+MATH60016 Special Relativity and Electromagnetism 40 60 70 100
+MATH60017 Tensor Calculus and General Relativity 31 51.4 62 100
+PTEM values from Exam Board June 2023
+MATH60018 Quantum Mechanics 2 35 55 65 100
+MATH60019 Theory of Partial Differential Equations 33 55 65 100
+MATH60020 Function Spaces and Applications 35 55 65 100
+MATH60021 Advanced Topics in Partial Differential Equations 35 55 65 100
+MATH60022 Finite Elements: Numerical Analysis and Implementation 40 60 70 100
+MATH60023 Numerical Solution of Ordinary Differential Equations 40 60 70 100
+MATH60024 Computational Linear Algebra 40 60 70 100
+MATH60025 Computational Partial Differential Equations 38 60 70 100
+MATH60026 Methods For Data Science 40 60 70 100
+MATH60027 Scientific Computation 35 55 65 95
+MATH60028 Probability Theory 35 55 65 100
+MATH60029 Functional Analysis 35 55 65 100
+MATH60030 Fourier Analysis and Theory of Distributions 35 55 65 100
+MATH60031 Markov Processes 34 55 65 100
+MATH60032 Geometry of Curves and Surfaces 35 55 68 100
+MATH60033 Algebraic Curves 35 55 65 100
+MATH60034 Algebraic Topology 31 52 64 95
+MATH60035 Algebra 3 23.5 45 55 90
+MATH60036 Group Theory 35 55 65 100
+MATH60037 Galois Theory 33 52 62 100
+MATH60038 Graph Theory 34.9 55 65 100
+MATH60039 Group Representation Theory 30 50 60 100
+MATH60040 Formalising Mathematics 40 60 70 100
+MATH60041 Number Theory 37 57 67 100
+MATH60042 Algebraic Number Theory 35 55 65 100
+MATH60043 Statistical Theory 35 55 65 100
+MATH60044 Statistical Modelling 2 35 55 65 100
+MATH60045 Applied Probability 31.5 55 65 100
+MATH60046 Time Series Analysis 34 60 70 100
+MATH60047 Stochastic Simulation 40 60 70 100
+MATH60048 Survival Models 35 55 70 100
+MATH60049 Introduction to Statistical Learning 34.5 55 65 100
+MATH60050 Research Project in Mathematics 40 60 70 100
+MATH60131 Consumer Credit Risk Modelling 35 55 65 100
+MATH60132 Mathematical Logic 30 50 60 95
+MATH70001 Fluid Dynamics 1 45 55 62 95
+MATH70002 Fluid Dynamics 2 45 55 65 100
+MATH70003 Introduction to Geophysical Fluid Dynamics 45 55 65 100
+MATH70004 Asymptotic Methods 34 45 55 90
+MATH70005 Optimisation 45 55 65 100
+MATH70006 Applied Complex Analysis 41 55 65 100
+MATH70007 Dynamics of Learning and Iterated Games 50 60 70 100
+MATH70008 Dynamical Systems 45 55 65 100
+MATH70009 Bifurcation Theory 45 55 65 100
+PTEM values from Exam Board June 2023
+MATH70010 Geometric Mechanics 45 55 65 100
+MATH70011 Classical Dynamics 49 60 73 100
+MATH70012 Mathematical Finance: An Introduction to Option Pricing 40 50 61 95
+MATH70014 Mathematical Biology 39 55 65 100
+MATH70015 Quantum Mechanics 1 43 55 65 100
+MATH70016 Special Relativity and Electromagnetism 50 60 70 100
+MATH70017 Tensor Calculus and General Relativity 42 52 62.7 100
+MATH70018 Quantum Mechanics 2 45 55 65 100
+MATH70019 Theory of Partial Differential Equations 45 55 65 100
+MATH70020 Function Spaces and Applications 42.5 55 65 100
+MATH70021 Advanced Topics in Partial Differential Equations 45 55 65 100
+MATH70022 Finite Elements: Numerical Analysis and Implementation 50 60 70 100
+MATH70023 Numerical Solution of Ordinary Differential Equations 50 60 70 100
+MATH70024 Computational Linear Algebra 50 60 70 100
+MATH70025 Computational Partial Differential Equations 48 60 70 100
+MATH70026 Methods For Data Science 50 60 70 100
+MATH70027 Scientific Computation 45 55 65 98
+MATH70028 Probability Theory 35 55 65 100
+MATH70029 Functional Analysis 42 55 65 100
+MATH70030 Fourier Analysis and Theory of Distributions 45 55 65 100
+MATH70031 Markov Processes 45 55 65 100
+MATH70032 Geometry of Curves and Surfaces 44 55 68 100
+MATH70033 Algebraic Curves 45 55 65 100
+MATH70034 Algebraic Topology 45 55 63 97
+MATH70035 Algebra 3 31 45 55 90
+MATH70036 Group Theory 43 55 63 100
+MATH70037 Galois Theory 42 52 62 100
+MATH70038 Graph Theory 45 55 65 100
+MATH70039 Group Representation Theory 40 50 60 100
+MATH70040 Formalising Mathematics 50 60 70 100
+MATH70041 Number Theory 45 55 65 100
+MATH70042 Algebraic Number Theory 43 55 65 100
+MATH70043 Statistical Theory 44 55 65 100
+MATH70044 Statistical Modelling 2 45 55 65 100
+MATH70045 Applied Probability 40 55 65 100
+MATH70046 Time Series Analysis 45 60 70 100
+MATH70047 Stochastic Simulation 50 60 70 100
+MATH70048 Survival Models 40 55 70 100
+MATH70049 Introduction to Statistical Learning 41 55 65 100
+MATH70050 Research Project in Mathematics 50 60 70 100
+MATH70051 Vortex Dynamics 35 55 65 100
+MATH70052 Hydrodynamic Stability 43 53 62 95
+MATH70053 Random Dynamical Systems and Ergodic Theory 50 60 70 100
+MATH70054
+Introduction to Stochastic Differential Equations and
+Diffusion Processes 45 55 65 100
+PTEM values from Exam Board June 2023
+MATH70055
+Stochastic Calculus with Applications to Nonlinear
+Filtering 45 55 65 100
+MATH70056 Algebraic Geometry 41 50 65 100
+MATH70057 Riemannian Geometry 41 55 65 100
+MATH70058 Manifolds 40 55 65 100
+MATH70059 Differential Topology 45 55 65 100
+MATH70060 Complex Manifolds 45 55 65 100
+MATH70061 Commutative Algebra 40 50 60 100
+MATH70062 Lie Algebras 40 54 64 100
+MATH70063 Algebra 4 45 55 65 100
+MATH70064 Elliptic Curves 44 55 65 100
+MATH70130 Stochastic Differential Equations in Financial Modelling 50 60 70 100
+MATH70131 Consumer Credit Risk Modelling 45 55 65 100
+MATH70132 Mathematical Logic 30 50 60 95
+MATH70134 Introduction to the Mathematics of Machine Learning 50 60 70 100
+MATH70135 Analytic Methods in Partial Differential Equations 40 50 60 100

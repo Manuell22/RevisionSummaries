@@ -1,0 +1,1180 @@
+© 2025 Imperial College London
+MATH70047
+BSc, MSci and MSc EXAMINATIONS (MATHEMATICS)
+Summer 2025
+This paper is also taken for the relevant examination for the
+Associateship of the Royal College of Science
+Stochastic Simulation
+DO NOT OPEN THIS PAPER UNTIL THE INVIGILATOR TELLS YOU TO DO SO
+Date: Tuesday, May 6, 2025
+Time: Start time 10:00 – End time 12:00 (BST)
+Time Allowed: 2 hours
+This paper has 4 Questions.
+Please Answer Each Question in a Separate Answer Booklet
+This is a closed book examination.
+Candidates should start their solutions to each question on a new sheet of paper.
+Supplementary books may only be used after the relevant main book(s) are full.
+Any required additional material(s) will be provided.
+Credit will be given for all questions attempted.
+Allow margins for marking.
+1. (a) Let X and Y be continuous random variables. Show that one can obtain Y ∼ pY with a
+desired pY by choosing g(x) = F
+−1
+Y
+(FX(x)), where FX and FY are the (invertible) cumulative
+distribution functions of X and Y , respectively. (3 marks)
+(b) Throughout parts (b) and (c), the notation Uniform(a, b) denotes a uniform distribution on
+[a, b] and χ
+2
+(k) denotes the chi-squared distribution with k degrees of freedom with density:
+p(x) = 1
+2
+k/2Γ(k/2)x
+k/2−1
+e
+−x/2
+, x > 0.
+Recall that Γ(n) = R ∞
+0
+t
+n−1
+e
+−tdt = (n − 1)! for n ∈ N.
+(i) State the multivariate transformation of random variables formula. (2 marks)
+(ii) Consider the following sampling procedure:
+r ∼ χ
+2
+(k) and θ ∼ Uniform(−π, π),
+and X =
+√
+r cos(θ) and Y =
+√
+r sin(θ). Using the transformation of random variables
+formula, derive the joint density of pX,Y (x, y). (3 marks)
+(c) Consider a target distribution:
+p(x) ∝ x
+2
+e
+−x/2
+, x > 0.
+and a proposal:
+qλ(x) = λe−λx, x > 0.
+(i) Provide the pseudocode of the rejection sampling algorithm by choosing the appropriate
+M in terms of λ. Provide the constraint for λ for this to be well defined. (3 marks)
+(ii) Find λ⋆ that maximises the acceptance rate. (2 marks)
+(iii) Calculate the value of the acceptance rate using qλ⋆ as the proposal. (3 marks)
+(iv) Suppose we run this rejection sampler for K iterations. Denote the number of accepted
+samples N. Provide the expression for the expected number of accepted samples, i.e.
+E[N], in terms of K. (1 mark)
+(v) Derive the distribution of N, i.e., P(N), in terms of K. (3 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2025) Page 2
+2. (a) Consider a Bayesian model that consists of a prior p(x) and the likelihood p(y|x). Assume
+that we only know the prior in an unnormalised form p¯(x) and p(x) = ¯p(x)/Z where Z is the
+unknown (positive) normalising constant. Consider first the task of estimating the marginal
+likelihood p(y) under this setting.
+(i) Provide the expression of p(y) in terms of the unnormalised prior p¯(x), Z, and the
+likelihood p(y|x). (1 mark)
+(ii) Derive a self-normalised importance sampling estimator for p(y) assuming only the
+knowledge of the prior in an unnormalised form and the likelihood. (3 marks)
+(iii) Is this estimator unbiased? Justify your answer. (1 mark)
+(b) Suppose that we have a probabilistic model with a parameter θ, i.e. we have pθ(x, y) as the
+joint distribution. Consider the task of estimating θ by maximising pθ(y) where y is fixed.
+(i) Show that
+∇θ log pθ(y) = Epθ(x|y)
+[∇θ log pθ(x, y)] .
+(3 marks)
+Hint: Use the identity ∇θ log pθ(y) = ∇θpθ(y)/pθ(y) and that pθ(y) = R
+pθ(x, y)dx.
+Assume you can swap derivatives and integrals.
+(ii) Provide a self-normalised importance sampling based estimator for estimating this
+gradient. (5 marks)
+(c) Consider a generic target density
+p(x) = N (x; 0, 1).
+where N (x; µ, σ2
+) = (2πσ2
+)
+−1/2
+exp 
+−
+(x−µ)
+2
+2σ2
+
+. We are interested in estimating the
+expectation of a function φ(x) = 1{x≥K}(x) for some K > 0 via importance sampling
+(IS). Consider a proposal with fixed variance:
+qµ(x) = N (x; µ, 1/2).
+We would like to find the best proposal (i.e. µ) that minimises the variance of the importance
+sampling estimator.
+(i) Describe the optimisation problem for finding the best proposal that minimises the IS
+estimator variance. (3 marks)
+(ii) Find the minimum variance proposal qµ⋆ by identifying the appropriate µ
+⋆
+via variance
+minimization. Provide any constraints on µ for this variance to be finite. (4 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2025) Page 3
+3. (a) This part is about Markov chain Monte Carlo (MCMC) theory.
+(i) Describe the Metropolis-Hastings algorithm targeting a distribution p⋆(x) with an
+independent proposal q(x) by providing the pseudocode. (2 marks)
+(ii) Suppose the chain is at a given point x. Describe the formula for the probability that
+the next proposed sample is rejected at x for the sampler in 3(a)(i). (2 marks)
+(iii) Describe the Metropolis-Hastings algorithm targeting a distribution p⋆(x) with a general
+proposal q(x
+′
+|x) by providing the pseudocode. (2 marks)
+(iv) Prove that the Metropolis-Hastings algorithm you provided in Part (iii) satisfies the
+detailed balance condition. (5 marks)
+(b) Suppose that you would like to optimise a function f : R → R globally.
+(i) Describe a Metropolis acceptance based algorithm to optimise this function. Outline the
+pseudocode and relevant parameter choices of the algorithm. (2 marks)
+(ii) Describe a Langevin MCMC based algorithm to optimise this function. Outline the
+pseudocode and relevant parameter choices of the algorithms. (2 marks)
+(c) Consider the following modified unadjusted Langevin algorithm (ULA):
+Xk+1 = Xk + γ∇ log p⋆(Xk) + σqWk,
+where Wk ∼ N (0, 1) (assuming the chain is 1D), γ > 0, and σq > 0. Consider the target
+distribution:
+p⋆(x) = N (x; µ, σ2
+).
+(i) Derive the limiting distribution of the chain (Xk)k≥0. Provide any necessary constraints
+on γ for this to be well-defined. (3 marks)
+(ii) Can you make ULA unbiased in the limit with an appropriate choice of σq? If no, provide
+your reasoning. If yes, provide the expression of σq. (2 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2025) Page 4
+4. This question is based on Chapters 8, 11, and 12 of Bayesian Filtering and Smoothing, Simo
+Särkkä, Cambridge University Press, 2013.
+(a) Consider the state-space model
+x0 ∼ π0(x0), xk|xk−1 ∼ f(xk|xk−1), yk|xk ∼ g(yk|xk),
+for k = 1, . . . , K, where xk ∈ R
+n
+and yk ∈ R
+m. Assume that the prior π0(x0), the transition
+density f(xk|xk−1), and the observation density g(yk|xk) are known.
+(i) Describe the filtering problem in the context of this state-space model. Similarly, describe
+the prediction problem. (2 marks)
+(ii) Provide an expression of the incremental marginal likelihood p(yt
+|y1:t−1) in terms of the
+predictive distribution and any other given quantities in the model. (2 marks)
+(iii) Provide the pseudocode of the Bootstrap Particle Filter (BPF) method for approximating
+the filtering distribution. (3 marks)
+(iv) Suppose we run the BPF until time T and would like to compute p(y1:t) in a numerically
+stable way. Provide the appropriate additions to the BPF algorithm to compute this
+quantity as a byproduct of the BPF. Elaborate on what is required for this computation
+to be stable. (4 marks)
+(b) Consider the state-space model with a parameter θ:
+x0 ∼ π0(x0), xk|xk−1 ∼ fθ(xk|xk−1) and yk|xk ∼ gθ(yk|xk).
+Suppose that we are interested in implementing a gradient-based parameter estimation
+method for this model given the observations y1:T .
+(i) Derive the expression of the gradient of the log marginal likelihood ∇θ log pθ(y1:T ) as an
+expectation. (4 marks)
+(ii) Provide the pseudocode for the sequential importance resampling (SIR) smoother with
+proposal f. (2 marks)
+(iii) Using the smoother in Part(b)(ii) as a subroutine, describe a gradient ascent method to
+estimate θ by maximising the log marginal likelihood. (3 marks)
+(Total: 20 marks)
+MATH60047/70047 Stochastic Simulation (2025) Page 5
+BSc and MSci EXAMINATIONS (MATHEMATICS)
+May 2025
+This paper is also taken for the relevant examination for the Associateship.
+MATH60047/70047
+Stochastic Simulation (Solutions)
+Setter’s signature Checker’s signature Editor’s signature
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+© 2025 Imperial College London MATH60047/70047 Page 1 of 11
+1. (a) If X ∼ p sim. seen ⇓ X and U = FX(X), then
+P(U ≤ u) = P(FX(X) ≤ u) = P(X ≤ F
+−1
+X (u)) = FX(F
+−1
+X (u)) = u
+which means that U is uniform. Thus,
+P(Y ≤ y) = P(F
+−1
+Y
+(U) ≤ y) = P(U ≤ FY (y)) = FY (y)
+since U is uniform. Thus, Y ∼ FY . 3, B
+seen ⇓
+(b) (i) The multivariate change of variables formula for Y = g(X):
+pY (y) = pX(g
+−1
+(y))
+
+det Jg−1 (y)
+
+
+where Jg−1 (y) is the Jacobian of g
+−1
+evaluated at y. 2, A
+(ii) We have the formula for 2D as above and sim. seen ⇓
+[x, y] = [g1(r, θ), g2(r, θ)]
+where g1(r, θ) = √
+r cos θ and g2(r, θ) = √
+r sin θ. Thus, r = g
+−1
+1
+(x, y) =
+x
+2 + y
+2
+and θ = g
+−1
+2
+(x, y) = arctan(y/x). The Jacobian has an identical
+computation to the example in the lecture notes and it evaluates to 2. Next,
+pX,Y (x, y) = pr,θ(g
+−1
+1
+(x, y), g−1
+2
+(x, y))2
+= pr(x
+2 + y
+2
+)pθ(arctan(y/x))2
+=
+1
+2
+k/2Γ(k/2)(x
+2 + y
+2
+)
+k/2−1
+e
+−(x
+2+y
+2
+)/2
+1
+π
+,
+is the asked density. 3, A
+sim. seen ⇓
+(c) (i) The optimal choice of M is given by
+M = sup
+x
+p¯(x)
+q(x)
+.
+where p¯(x) = x
+2
+e
+−x/2
+. By computing the ratio, we obtain
+R(x) = 1
+λ
+x
+2
+e
+−(1/2−λ)x
+.
+For this to be well-defined, we need 1/2 − λ > 0 or λ < 1/2. By taking its log
+derivative
+d log R(x)/dx =
+2
+x
+− (1/2 − λ).
+and setting it to zero, we obtain
+x
+⋆ =
+4
+1 − 2λ
+.
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 2 of 11
+We get:
+Mλ = R(x
+⋆
+) = 1
+λ
+
+4
+1 − 2λ
+2
+e
+−2
+.
+For fixed λ, the rejection sampler is given below
+∗ Y ∼ qλ
+∗ U ∼ Uniform(0, 1)
+∗ If
+U ≤
+p¯(Y )
+Mλqλ(Y )
+=
+Y
+2
+e
+−Y /2
+1
+λ
+
+4
+1−2λ
+2
+e−2λe−λY
+,
+then accept Y , otherwise reject.
+∗ Iterate. 3, A
+(ii) We compute
+Mλ = R(x
+⋆
+) = 1
+λ
+
+4
+1 − 2λ
+2
+e
+−2
+.
+Taking the log and derivative of Mλ, it can be shown that λ
+⋆ = 1/6. 2, B
+(iii) The acceptance rate is given by
+aˆ =
+Z
+M
+,
+as our density is unnormalised. In this case, we can compute
+Z =
+Z ∞
+0
+x
+2
+e
+−x/2dx = 23Γ(3) = 16.
+The students can recognise that the density in Part (1)(b) is a special case
+and normalising constant can be found by just identifying k. Using qλ⋆ , we
+can evaluate
+Mλ⋆ = 216e
+−2
+.
+Merging these two together, the acceptance rate is
+aˆ =
+16
+216e−2
+=
+2
+27
+e
+2
+.
+3, B
+(iv) Since acceptance rate is aˆ = (2/27)e
+2
+, for K trials, the expected number
+of accepted samples will be E[N] = Kaˆ. The students are not expected to
+explicitly compute this, the intuitive answer is enough. 1, A
+(v) Recall that, we can see the accept/reject as a binary random variable, e.g., a
+Bernoulli variable with p = ˆa. Thus, for K trials, we would have a binomial
+distribution with K trials and p = ˆa as the distribution of N. In other words,
+P(N) = 
+K
+N
+
+(2/27)N e
+2N (1 − 2/27e
+2
+)
+K−N .
+3, C
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 3 of 11
+2. (a) (i) Given an unnormalised prior p¯(x) and the likelihood p(y|x), we write seen ⇓
+p(y) = Z
+p(y|x)p(x)dx =
+1
+Z
+Z
+p(y|x)¯p(x)dx.
+1, A
+sim. seen ⇓
+(ii) Note that
+p(y) =
+R
+p(y|x)¯p(x)dx
+R
+p¯(x)dx
+,
+by using the identity trick, we obtain
+p(y) =
+R
+p(y|x)
+p¯(x)
+q(x)
+q(x)dx
+R p¯(x)
+q(x)
+q(x)dx
+.
+By sampling from q(x), we can obtain
+p
+N (y) =
+PN
+i=1 Wip(y|Xi)
+PN
+i=1 Wi
+,
+where Wi = ¯p(Xi)/q(Xi). 3, B
+(iii) This estimator is not unbiased. This is a ratio of two unbiased estimators, but
+by itself it will not be unbiased. 1, B
+seen ⇓
+(b) (i) We write
+∇ log pθ(y) = ∇pθ(y)
+pθ(y)
+=
+∇
+R
+pθ(x, y)dx
+R
+pθ(x, y)dx
+=
+R
+∇pθ(x, y)dx
+R
+pθ(x, y)dx
+,
+=
+R
+∇ log pθ(x, y)pθ(x, y)dx
+R
+pθ(x, y)dx
+= Epθ(x|y)
+[∇ log pθ(x, y)].
+3, C
+unseen ⇓
+(ii) This is a classical task for estimating an expectation. Here the test function
+φ(x) = ∇θ log pθ(x, y) since y is fixed and θ is also fixed for a given estimation
+task (e.g. at θk). Since
+pθ(x|y) = pθ(x, y)
+R
+pθ(x, y)dx
+,
+by choosing a proposal q(x) and taking samples Xi ∼ q(x), we can estimate
+the expectation as
+Epθ(x|y)
+[∇ log pθ(x, y)] ≈
+PN
+i=1 ∇ log pθ(Xi
+, y)Wi
+PN
+i=1 Wi
+,
+where Wi = pθ(Xi
+, y)/q(Xi). 5, D
+(c) (i) To minimize the IS estimator variance for a proposal qµ with the parameter µ,
+the problem to solve is
+sim. seen ⇓
+µ
+⋆ = arg min
+µ
+Eq
+
+φ
+2
+(X)
+p
+2
+(X)
+q
+2(X)
+
+. (1)
+3, A
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 4 of 11
+(ii) Using the quantities in the question, we compute
+V (µ) = Eqµ
+
+φ
+2
+(X)
+p
+2
+(X)
+q
+2
+µ
+(X)
+
+=
+Z ∞
+−∞
+1
+2
+{x≥K}
+(x)
+p
+2
+(x)
+qµ(x)
+dx,
+=
+Z ∞
+K
+√
+π
+2π
+e
+−x
+2
+e−(x−µ)
+2 dx,
+= (1/2
+√
+π)e
+µ
+2
+Z ∞
+K
+e
+−2µxdx.
+For this integral to be finite, we impose µ > 0. Then we have
+V (µ) = (1/2
+√
+π)e
+µ
+2 e
+−2µK
+µ
+.
+Taking the log derivative and setting it to zero
+dV (µ)/dµ = 2µ − 2K −
+1
+µ
+= 0. (2)
+This leads to a quadratic equation:
+2µ
+2 − 2Kµ − 1 = 0.
+With solutions
+µ =
+2K ±
+√
+4K2 + 8
+4
+.
+Since µ > 0, we choose the positive root:
+µ
+⋆ =
+2K +
+√
+4K2 + 8
+4
+.
+4, D
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 5 of 11
+3. (a) (i) The Metropolis-Hastings algorithm is a Markov chain Monte Carlo method that seen ⇓
+generates a Markov chain with the target density p as its stationary distribution.
+The algorithm is as follows:
+· Given Xt = x, sample x
+′ ∼ q(x
+′
+).
+· Compute the acceptance probability
+α(x, x′
+) = min 
+1,
+p(x
+′
+)q(x)
+p(x)q(x
+′)
+
+.
+· Accept Xt+1 = x
+′ with probability α(x, x′
+).
+· Otherwise, reject and set Xt+1 = x. 2, A
+(ii) We accept with probability α(x, x′
+) where x
+′ ∼ q(x
+′
+). Therefore, the
+probability of accepting a sample is
+a(x) = Z
+X
+α(x, x′
+)q(x
+′
+)dx
+′
+.
+As a result, the probability of rejecting a sample is 1 − a(x). 2, A
+(iii) The Metropolis-Hastings algorithm is a Markov chain Monte Carlo method that
+generates a Markov chain with the target density p as its stationary distribution.
+The algorithm is as follows:
+· Given Xt = x, sample x
+′ ∼ q(x
+′
+|x).
+· Compute the acceptance probability
+α(x, x′
+) = min 
+1,
+p(x
+′
+)q(x|x
+′
+)
+p(x)q(x
+′
+|x)
+
+.
+· Accept Xt+1 = x
+′ with probability α(x, x′
+).
+· Otherwise, reject and set Xt+1 = x. 2, A
+(iv) Proof from the lecture notes: We first define the kernel induced by the MH
+algorithm. This is given as
+K(x
+′
+|x) = α(x, x′
+)q(x
+′
+|x) + (1 − a(x))δx(x
+′
+),
+where δx is the Dirac delta function and 1, A
+a(x) = Z
+X
+α(x, x′
+)q(x
+′
+|x)dx
+′
+,
+is the probability of accepting a sample. Given this, to check detailed balance,
+we check for a function f
+Z
+f(x, x′
+)p⋆(x)K(x
+′
+|x)dxdx
+′ =
+Z
+f(x, x′
+)p⋆(x)q(x
+′
+|x)α(x, x′
+)dxdx
+′
++
+Z
+f(x, x′
+)p⋆(x)(1 − a(x))δx(dx
+′
+)dx.
+For the first term, we can easily see that 1, B
+p⋆(x)q(x
+′
+|x)α(x, x′
+) = p⋆(x)q(x
+′
+|x) min 
+1,
+p⋆(x
+′
+)q(x|x
+′
+)
+p⋆(x)q(x
+′
+|x)
+
+= min 
+p⋆(x)q(x
+′
+|x), p⋆(x
+′
+)q(x|x
+′
+)
+	
+= min 
+p⋆(x)q(x
+′
+|x)
+p⋆(x
+′)q(x|x
+′)
+, 1
+
+p⋆(x
+′
+)q(x|x
+′
+) = p⋆(x
+′
+)q(x|x
+′
+)α(x
+′
+, x).
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 6 of 11
+Since the second term involves a Dirac measure, we will check it against the
+integral form directly:
+Z
+f(x, x′
+)p⋆(x)(1 − a(x))δx(dx
+′
+)dx =
+Z
+f(x, x)p⋆(x)(1 − a(x))dx
+=
+Z
+f(x
+′
+, x′
+)p⋆(x
+′
+)(1 − a(x
+′
+))dx
+′
+=
+Z
+f(x, x′
+)p⋆(x
+′
+)(1 − a(x
+′
+))δx′(dx)dx
+′
+.
+All in all, we can see that
+Z
+f(x, x′
+)p⋆(x)K(x
+′
+|x)dxdx
+′ =
+Z
+f(x, x′
+)p⋆(x
+′
+)K(x|x
+′
+)dxdx
+′
+,
+which is the detailed balance condition. 3, C
+seen ⇓
+(b) (i) A Metropolis based algorithm to optimise a function f is simulated annealing.
+In order to minimise f, simulated annealing targets p
+βt (x) ∝ exp(−βtf(x))
+where βt
+is the inverse temperature as follows:
+· X′ ∼ q(·|Xt−1) (symmetric proposal, e.g., random walk)
+· Set βt (e.g. βt =
+√
+1 + t)
+· Accept X′ with probability
+min n
+1, pβt
+(X′
+)/pβt
+(Xt−1)
+o
+.
+and set Xt = X′
+if accepted.
+· Otherwise set Xt = Xt−1 2, A
+(ii) A Langevin MCMC based approach is to target a distribution p
+β
+(x) ∝
+exp(−βf(x)) and use the Langevin dynamics to sample from it for large β
+as this induces concentration. The Langevin dynamics to sample from this can
+be described as follows:
+Xt+1 = Xt − γ∇f(Xt) + r
+2γ
+β
+Zt
+,
+where Zt ∼ N (0, I) and γ is the step size. 2, A
+sim. seen ⇓
+(c) (i) The solution follows a similar structure to Example 5.14 in the lecture notes.
+The algorithm described in the question can be written as
+Xk+1 = Xk − γ
+Xk − µ
+σ
+2
++ σqWk.
+Let
+a = 1 −
+γ
+σ
+2
+, b =
+γ
+σ
+2
+µ.
+We can write now the iterates beginning at x0 as
+x1 = ax0 + b + σqW1,
+x2 = a
+2x0 + ab + aσqW1
+| {z }
+ax1
++b + σqW2,
+x3 = a
+3x0 + a
+2
+b + a
+2σqW1 + ab + aσqW2
+| {z }
+ax2
++b + σqW3,
+.
+.
+.
+xn = a
+nx0 +
+nX−1
+k=0
+a
+k
+b +
+nX−1
+k=0
+a
+kσqWn−k.
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 7 of 11
+We can compute the expected value
+E[Xn] = a
+nx0 +
+nX−1
+k=0
+a
+k
+b,
+since Wk are zero mean. We require |a| < 1 which implies that 0 < γ < 2σ
+2
+.
+As n → ∞, we have
+µ∞ = limn→∞
+E[Xn] = X∞
+k=0
+a
+k
+b =
+b
+1 − a
+= µ.
+The variance of the iterates as n → ∞ can also be computed. Note that for
+finite n, we have
+var(xn) = var nX−1
+k=0
+a
+kσqWk
+!
+,
+= σ
+2
+q
+nX−1
+k=0
+(a
+2
+)
+k
+,
+= σ
+2
+q
+1 − a
+2n
+1 − a
+2
+.
+Therefore, we obtain the limiting variance as
+limn→∞
+var(xn) = σ
+2
+q
+1
+1 − a
+2
+= σ
+2
+q
+1
+1 −
+
+1 −
+γ
+σ2
+2
+= σ
+2
+q
+1
+2γ
+σ2 −
+γ
+2
+σ4
+,
+=
+2σ
+4
+2σ
+2 − γ
+.
+Hence
+limn→∞
+var(Xn) = σ
+2
+q
+σ
+4
+2γσ2 − γ
+2
+.
+The limiting distribution is Gaussian as it is a linear combination of Gaussian
+random variables, with the mean and variance provided above. 3, D
+(ii) The choice
+σ
+2
+q =
+2γσ2 − γ
+2
+σ
+2
+,
+gives us
+limn→∞
+var(Xn) = σ
+2
+,
+hence results in an unbiased sampler as the target distribution is now exactly
+what we want, i.e., p⋆(x) = N (x; µ, σ2
+). 2, B
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 8 of 11
+4. (a) (i) The filtering problem is to sequentially compute the posterior distribution of seen ⇓
+the state Xt given the observations y1:t = (y1, . . . , yt), i.e., p(xt
+|y1:t). The
+prediction problem is to compute distributions p(xt
+|y1:t−1), i.e., predict the
+state Xt given the past data y1:t−1. 2, M
+(ii) The incremental marginal likelihood can be written as
+p(yt
+|y1:t−1) = Z
+g(yt
+|xt)p(xt
+|y1:t−1)dxt
+.
+2, M
+(iii) The bootstrap particle filter can be described as follows. For brevity, we write
+one step, assuming the access to a sample X
+(i)
+k−1
+for i = 1, . . . , N from the
+previous step:
+· Sample X¯
+(i)
+k ∼ f(·|X
+(i)
+k−1
+).
+· Compute the weight W
+(i)
+k = g(yk|X¯
+(i)
+k
+).
+· Normalise the weights w
+(i)
+k = W
+(i)
+k
+/
+PN
+i=1 W
+(i)
+k
+.
+· Resample X
+(i)
+k with probability w
+(i)
+k
+from the set {X¯
+(i)
+k
+}
+N
+i=1.
+3, M
+(iv) The full marginal likelihood is given as
+p(y1:t) = Y
+t
+k=1
+p(yk|y1:k−1),
+where p(y1|y0) = p(y1). For a given step k of the algorithm, the incremental
+marginal likelihood can be approximated as
+p(yk|y1:k−1) = Z
+g(yk|xk)p(xk|y1:k−1)dxk,
+≈
+1
+N
+X
+N
+i=1
+g(yk|X¯
+(i)
+k
+).
+The estimator is thus given as
+p
+N (y1:t) = Y
+t
+k=1
+1
+N
+X
+N
+i=1
+g(yk|X¯
+(i)
+k
+).
+A stable computation of this requires a log-sum-exp trick. 4, M
+unseen ⇓
+(b) (i) The gradient can be written as
+∇θ log pθ(y1:t) = ∇θpθ(y1:t)
+pθ(y1:t)
+=
+∇θ
+R
+pθ(x0:t
+, y1:t)dx0:t
+pθ(y1:t)
+=
+R
+∇θpθ(x0:t
+, y1:t)dx0:t
+pθ(y1:t)
+=
+R
+∇θ log pθ(x0:t
+, y1:t)pθ(x0:t
+, y1:t)dx0:t
+pθ(y1:t)
+= Epθ(x0:t|y1:t)
+[∇θ log pθ(x0:t
+, y1:t)].
+4, M
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 9 of 11
+(ii) SIR smoother is a straightforward method that accumulates the samples. Given
+X
+(i)
+0:k−1
+samples,
+· Run the BPF sampling and weighting steps to obtain the samples X¯
+(i)
+k
+and weights w
+(i)
+k
+.
+· Construct X¯
+(i)
+0:k = X
+(i)
+0:k−1 ∪ X¯
+(i)
+k
+(append).
+· Resample X
+(i)
+0:k with probability w
+(i)
+k
+from the set {X¯
+(i)
+0:k
+}
+N
+i=1.
+At the end of t iterations, the samples {X
+(i)
+0:t
+}
+N
+i=1 are the smoothed samples,
+i.e., approximating p(x0:t
+|y1:t). 2, M
+(iii) Assume we are at θk. The gradient of the log marginal likelihood can be
+approximated by running an SIR smoother as
+∇θ log pθk
+(y1:t) = Z
+∇θ log pθk
+(x0:t
+, y1:t)pθk
+(x0:t
+|y1:t)dx0:t
+≈
+1
+N
+X
+N
+i=1
+∇θ log pθk
+(X
+(i)
+0:t
+, y1:t) = ∇θ log\pθk
+(y1:t).
+Note the samples depend on θk. We can then define the gradient descent
+scheme as
+θk+1 = θk + γk∇θ log\pθk
+(y1:t).
+3, M
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 10 of 11
+Review of mark distribution:
+Total A marks: 24 of 24 marks
+Total B marks: 15 of 15 marks
+Total C marks: 9 of 9 marks
+Total D marks: 12 of 12 marks
+Total marks: 80 of 60 marks
+Total Mastery marks: 20 of 20 marks
+MATH60047/70047 Stochastic Simulation (Solutions) (2025) Page 11 of 11
+MATH70047 Stochastic Simulation Markers Comments
+Question 1 There is a good number of students who scored highly in this
+question. The main confusion points were: 1 (i): This was a question
+created a common confusion, despite being relatively
+straightforward in part (c): Many students missed the normalising
+constant. (c)(v) was attempted fewer times than other questions.
+Overall, the students provided reasonable answers.
+Question 2 Well done on addressing question 2 on this exam. While I was
+impressed with many answers given the relatively short amount of
+time and exam conditions, there are a few points that I would like to
+provide as feedback: in part (a-iii), the correct answer is that selfnormalising IS samplers are ratios of two unbiased estimators and so
+in general not unbiased. It is worth noting this general point. Part (b)
+was overall felt as the hardest sub-question of Q2. Many students did
+not see the link to part (a) in that we can only evaluate the joint
+density p_\theta(x,y) rather than the posterior p_\theta(x | y)
+=p_\theta(x,y) / Z with unknown normalising constant. With this
+insight, most of the calculations followed relatively straightforwardly
+in the spirit of part (a). I thought part (c) was very well done, with a
+very large proportion of students completing the calculus part
+correctly.
+Question 3 Many students had trouble with writing the acceptance probability
+that gave the correct conditioning (3aiii), time instances and correct
+densities (3aii and 3ai); there seemed to be some confusion between
+variables of target density functions and random variables. Given
+that the sub questions carried on from previous answers given earlier
+on, I did not penalise twice for a mistake made in earlier sub
+questions. This question required quite a few technical details, which
+students overall did well at; I gave credit showing a clear
+understanding even if some details were missing along the way but
+there was a good explanation and demonstration of understanding.
+Question 4 There was some confusion about some parts of this question,
+despite it being relatively straightforward given the lecture and
+mastery material.
+Parts 4(a)(i-iv) are relatively straightforward, but in general the level of
+answers was lower than past years (of similar questions). There were
+confusions around weight computation steps, BPF algorithm, and
+general concepts of filtering/marginal likelihoods. Parts 4(b) was
+about the most basic smoother in the mastery material, SIR
+smoother. Despite it being an algorithm, literally, BPF but operated
+on paths space, there was a confusion about the method.

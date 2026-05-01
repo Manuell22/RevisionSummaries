@@ -1,0 +1,220 @@
+ModuleCode ModuleTitle P T E M
+MATH40002 Analysis 1 36 55 65 98
+MATH40003 Linear Algebra and Groups 36 58 70 100
+MATH40004 Calculus and Applications 37 55 65 95
+MATH40005 Probability and Statistics 39.5 60 70 100
+MATH40006 Introduction to Computation 38 60 70 100
+MATH40007 An Introduction to Applied Mathematics 40 60 70 100
+MATH40008 Individual Research Project 40 60 70 100
+MATH40012 Linear Algebra and Groups for JMC 38 60 70 97
+MATH50001 Analysis 2 40 60 70 100
+MATH50002 Group Research Project 40 60 70 100
+MATH50003 Linear Algebra and Numerical Analysis 38 60 70 100
+MATH50004
+Multivariable Calculus and Differential
+Equations
+38 60 70 100
+MATH50005 Groups and Rings 35 55 65 100
+MATH50006 Lebesgue Measure and Integration 35.5 56.5 67 95
+MATH50007 Network Science 37 60 70 100
+MATH50008 Partial Differential Equations in Action 35 55 65 90
+MATH50009 Principles of Programming 48 63 75 100
+MATH50010 Probability for Statistics 35 58 68 95
+MATH50011 Statistical Modelling 1 40 60 70 100
+MATH50012 Numerical Analysis for JMC 38 60 70 100
+MATH50013 Probability and Statistics for JMC 36.5 56 63 95
+MATH50014 Group Research Project in Mathematics 40 60 70 100
+MATH50015 Multivariable Calculus for JMC 38 60 70 100
+MATH50016 Linear Algebra 2 for JMC 38 60 70 100
+MATH50017 Real Analysis and Topology for JMC 40 60 70 100
+MATH50018 Complex Analysis for JMC 40 60 70 100
+MATH50019 Differential Equations for JMC 38 60 70 100
+MATH60001 Fluid Dynamics 1 34 55 63 96
+MATH60002 Fluid Dynamics 2 28 42 55 90
+MATH60004 Asymptotic Methods 35 55 65 100
+MATH60005 Optimisation 35 55 65 100
+MATH60006 Applied Complex Analysis 35 55 65 100
+MATH60007 Dynamics of Learning and Iterated Games 40 60 70 100
+MATH60008 Dynamical Systems 35 60 70 100
+MATH60009 Bifurcation Theory 35 55 65 100
+MATH60010 Geometric Mechanics 35 55 65 100
+MATH60011 Classical Dynamics 35 55 65 100
+MATH60012
+Mathematical Finance: An Introduction to
+Option Pricing
+40 60 70 100
+MATH60014 Mathematical Biology 35 55 65 100
+MATH60015 Quantum Mechanics 1 40 60 70 100
+MATH60016 Special Relativity and Electromagnetism 40 60 70 100
+MATH60017 Tensor Calculus and General Relativity 35 55 65 100
+MATH60018 Quantum Mechanics 2 35 55 65 100
+MATH60019 Theory of Partial Differential Equations 35 55 65 100
+MATH60020 Function Spaces and Applications 35 55 63.25 91
+MATH60021
+Advanced Topics in Partial Differential
+Equations
+35 55 65 100
+MATH60022
+Finite Elements: Numerical Analysis and
+Implementation
+35 60 70 100
+MATH60023
+Numerical Solution of Ordinary Differential
+Equations
+40 60 70 100
+MATH60024 Computational Linear Algebra 40 60 75 100
+MATH60025 Computational Partial Differential Equations 40 60 70 100
+MATH60026 Methods For Data Science 40 60 70 100
+MATH60027 Scientific Computation 38 58 68 98
+MATH60028 Probability Theory 35 55 65 100
+MATH60029 Functional Analysis 35 55 65 100
+MATH60030 Fourier Analysis and Theory of Distributions 35 55 65 100
+MATH60031 Markov Processes 35 55 65 100
+MATH60032 Geometry of Curves and Surfaces 40 60 75 100
+MATH60033 Algebraic Curves 35 55 65 100
+MATH60034 Algebraic Topology 35 55 65 100
+MATH60035 Algebra 3 35 55 65 100
+MATH60036 Group Theory 35 55 65 100
+MATH60037 Galois Theory 35 55 64 95
+MATH60038 Graph Theory 32 55 65 100
+MATH60039 Group Representation Theory 35 55 65 100
+MATH60040 Formalising Mathematics 40 60 70 100
+MATH60041 Number Theory 35 55 65 100
+MATH60042 Algebraic Number Theory 35 60 70 100
+MATH60043 Statistical Theory 32 51 70 100
+MATH60044 Applied Statistical Inference 35 55 65 100
+MATH60045 Applied Probability 33 54 64 100
+MATH60046 Time Series Analysis 39 60 70 100
+MATH60047 Stochastic Simulation 35 55 65 100
+MATH60048 Survival Models 40 60 70 100
+MATH60049 Introduction to Statistical Learning 35 55 65 100
+MATH60050 Research Project in Mathematics 40 60 70 100
+MATH60052 Mathematical Mysteries 40 60 70 100
+MATH60053 Individual Project (JMC BEng) Mathematics 40 60 70 100
+MATH60130
+Stochastic Differential Equations in Financial
+Modelling
+35 66 75 100
+MATH60132 Mathematical Logic 33 53 63 100
+MATH60137 Mathematical Biology 2: Systems Biology 35 55 65 100
+MATH60138
+Rough Paths and Applications to Machine
+Learning
+35 55 65 100
+MATH60139 Spatial Statistics 40 60 70 100
+MATH60140 Geometric Complex Analysis 35 55 65 100
+MATH60141 Introduction to Game Theory 35 55 65 100
+MATH60142 The Mathematics of Business and Economics 34.25 55 65 100
+MATH60146 Advanced Topics in Dynamical Systems 35 55 65 100
+MATH60147 Statistical Mechanics 40 55 65 90
+MATH70001 Fluid Dynamics 1 43.5 55 62 95
+MATH70002 Fluid Dynamics 2 38 45 55 90
+MATH70003 Introduction to Geophysical Fluid Dynamics 45 55 65 100
+MATH70004 Asymptotic Methods 45 55 65 100
+MATH70005 Optimisation 40 55 65 100
+MATH70006 Applied Complex Analysis 44 55 65 100
+MATH70007 Dynamics of Learning and Iterated Games 50 60 70 100
+MATH70008 Dynamical Systems 45 55 70 100
+MATH70009 Bifurcation Theory 40 55 65 100
+MATH70010 Geometric Mechanics 45 55 65 100
+MATH70011 Classical Dynamics 45 55 65 100
+MATH70012
+Mathematical Finance: An Introduction to
+Option Pricing
+45 60 70 100
+MATH70014 Mathematical Biology 45 55 65 100
+MATH70015 Quantum Mechanics 1 45 60 70 100
+MATH70016 Special Relativity and Electromagnetism 45 60 70 100
+MATH70017 Tensor Calculus and General Relativity 45 55 65 100
+MATH70018 Quantum Mechanics 2 42 55 65 100
+MATH70019 Theory of Partial Differential Equations 45 55 65 100
+MATH70020 Function Spaces and Applications 42.5 55 63.25 91
+MATH70021
+Advanced Topics in Partial Differential
+Equations
+45 60 70 100
+MATH70022
+Finite Elements: Numerical Analysis and
+Implementation
+45 60 70 100
+MATH70023
+Numerical Solution of Ordinary Differential
+Equations
+43.5 60 70 100
+MATH70024 Computational Linear Algebra 48.9 60 75 100
+MATH70025 Computational Partial Differential Equations 50 60 70 100
+MATH70026 Methods For Data Science 50 60 70 100
+MATH70027 Scientific Computation 47.5 58 68 98
+MATH70028 Probability Theory 45 55 65 100
+MATH70029 Functional Analysis 39.5 55 65 100
+MATH70030 Fourier Analysis and Theory of Distributions 35 55 65 100
+MATH70031 Markov Processes 40 55 65 100
+MATH70032 Geometry of Curves and Surfaces 45 60 75 100
+MATH70033 Algebraic Curves 45 57 67 100
+MATH70034 Algebraic Topology 45 55 65 100
+MATH70035 Algebra 3 44 55 65 100
+MATH70036 Group Theory 37 52 62 90
+MATH70037 Galois Theory 45 55 65 90
+MATH70038 Graph Theory 45 55 65 100
+MATH70039 Group Representation Theory 35 50 60 100
+MATH70040 Formalising Mathematics 50 60 70 100
+MATH70041 Number Theory 45 55 65 100
+MATH70042 Algebraic Number Theory 45 55 65 100
+MATH70043 Statistical Theory 32 51 70 100
+MATH70044 Applied Statistical Inference 45 55 65 100
+MATH70045 Applied Probability 45 55 65 100
+MATH70046 Time Series Analysis 45 60 70 100
+MATH70047 Stochastic Simulation 45 55 65 100
+MATH70048 Survival Models 40 60 70 100
+MATH70049 Introduction to Statistical Learning 45 55 65 100
+MATH70050 Research Project in Mathematics 50 60 70 100
+MATH70051 Vortex Dynamics 45 55 65 100
+MATH70052 Hydrodynamic Stability 44.5 52 60 94
+MATH70053
+Random Dynamical Systems and Ergodic
+Theory
+50 60 70 100
+MATH70054
+Introduction to Stochastic Differential
+Equations and Diffusion Processes
+44.5 54 63 90
+MATH70055
+Stochastic Calculus with Applications to
+Nonlinear Filtering
+45 60 70 100
+MATH70056 Algebraic Geometry 45 60 70 100
+MATH70057 Riemannian Geometry 45 55 65 100
+MATH70058 Manifolds 39 55 65 100
+MATH70059 Differential Topology 45 55 65 100
+MATH70060 Complex Manifolds 30 55 65 100
+MATH70061 Commutative Algebra 45 55 65 100
+MATH70062 Lie Algebras 37.4 55 65 100
+MATH70063 Algebra 4 39 55 65 100
+MATH70064 Elliptic Curves 28 50 60 82
+MATH70106 Maths Individual Project MEng
+- JMC 40 60 70 100
+MATH70130
+Stochastic Differential Equations in Financial
+Modelling
+45 66 75 100
+MATH70131 Consumer Credit Risk Modelling 45 55 65 100
+MATH70132 Mathematical Logic 42.85 53 63 100
+MATH70134
+Introduction to the Mathematics of Machine
+Learning
+50 60 70 100
+MATH70135
+Analytic Methods in Partial Differential
+Equations
+45 55 65 100
+MATH70137 Mathematical Biology 2: Systems Biology 42 52 62 100
+MATH70138
+Rough Paths and Applications to Machine
+Learning
+45 55 65 100
+MATH70139 Spatial Statistics 50 60 70 100
+MATH70140 Geometric Complex Analysis 49 55 65 100
+MATH70141 Introduction to Game Theory 38.1 55 65 100
+MATH70142 The Mathematics of Business and Economics 45 55 65 100
+MATH70146 Advanced Topics in Dynamical Systems 50 60 70 100
+MATH70147 Statistical Mechanics 45 55 65 90
