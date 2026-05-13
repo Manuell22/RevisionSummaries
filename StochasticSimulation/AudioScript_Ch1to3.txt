@@ -1,0 +1,460 @@
+STOCHASTIC SIMULATION — CHAPTERS 1 TO 3
+Exhaustive Audio Revision Script — MATH60047
+---------------------------------------------
+Read at a natural, conversational pace. Pause briefly at each "---" break.
+This script covers every concept, theorem, algorithm, and worked example
+in the lecture notes for Chapters 1, 2, and 3.
+=============================================
+
+
+CHAPTER 1: INTRODUCTION AND BAYESIAN INFERENCE
+===============================================
+
+SECTION 1.1 — WHAT THIS COURSE IS ABOUT
+
+Welcome to Stochastic Simulation. This course is fundamentally about one problem: how do we perform computations — particularly integrals and expectations — when we're dealing with probability distributions that are too complex to handle analytically? The answer is: we use random samples and Monte Carlo methods.
+
+The overarching setting throughout the course is Bayesian inference. So let's build that framework from scratch.
+
+---
+
+SECTION 1.2 — NOTATION AND THE PROBABILISTIC FRAMEWORK
+
+We work with random variables. Uppercase X denotes a random variable; lowercase x denotes a realised value of it. The density of X is written p of x. When we condition on another variable Y equals y, we write the conditional density as p of x given y.
+
+For a continuous random variable, an expectation is an integral: the expected value of some function phi of X is the integral of phi of x times p of x over all x. For discrete variables, replace the integral with a sum.
+
+The notation we use throughout is compact and consistent: p of x for the prior, p of y given x for the likelihood, p of x given y for the posterior, and p of y for the marginal likelihood.
+
+---
+
+SECTION 1.3 — BAYESIAN INFERENCE
+
+The central object of Bayesian inference is Bayes' rule. It says:
+
+The posterior p of x given y equals the likelihood p of y given x, times the prior p of x, divided by the marginal likelihood p of y.
+
+Let's be precise about each piece. The prior p of x encodes our beliefs about the unknown quantity X before we observe any data. The likelihood p of y given x tells us how probable the observed data y is, if x were the true underlying value. The posterior p of x given y is our updated belief after seeing the data — this is what we want to compute. And the marginal likelihood p of y is the integral of the likelihood times the prior over all possible values of x.
+
+The proportionality form is often the most useful: the posterior is proportional to the likelihood times the prior. We often can't compute the marginal likelihood analytically, so we work with unnormalised posteriors.
+
+---
+
+SECTION 1.3.1 — THE GAUSSIAN–GAUSSIAN CONJUGATE MODEL
+
+The most important concrete example: Gaussian prior, Gaussian likelihood. Suppose the prior is a Gaussian with mean mu-zero and variance sigma-zero-squared. The likelihood — the probability of observing y given x — is a Gaussian centred at x with variance sigma-squared.
+
+To find the posterior, we multiply the two Gaussians together and collect terms. The posterior is also Gaussian. Its mean, which we call mu-p, is:
+
+sigma-squared times mu-zero, plus sigma-zero-squared times y, all divided by sigma-squared plus sigma-zero-squared.
+
+And the posterior variance, sigma-p-squared, is the product of the two variances divided by their sum: sigma-squared times sigma-zero-squared, all over sigma-squared plus sigma-zero-squared.
+
+Notice what this means geometrically: the posterior mean is a weighted average of the prior mean and the data. If the likelihood variance is very small — meaning the data is very precise — the posterior is pulled strongly towards the observed y. If the prior is very tight, the posterior stays close to the prior mean.
+
+This extends to the multivariate setting. If the prior on a vector x is a multivariate Gaussian with mean mu-zero and covariance Sigma-zero, and the likelihood is a Gaussian with observation matrix A and noise covariance Sigma, then the posterior is again multivariate Gaussian. The posterior precision matrix is A-transpose Sigma-inverse A plus Sigma-zero-inverse. Call this Lambda. The posterior mean is Lambda-inverse times A-transpose Sigma-inverse y plus Sigma-zero-inverse mu-zero. There is also an alternative form using the Woodbury matrix identity that is sometimes more convenient to compute.
+
+---
+
+SECTION 1.3.2 — THE POISSON–GAMMA CONJUGATE MODEL
+
+The second conjugate pair: a Poisson observation model with a Gamma prior. If the data y is drawn from a Poisson distribution with rate x — so the probability of Y equals y given x is x to the y, times e to the minus x, divided by y factorial — and we put a Gamma prior on x with shape alpha and rate beta, then the posterior is again Gamma.
+
+Specifically, after observing one data point y, the posterior is Gamma with shape alpha plus y and rate beta plus one.
+
+The derivation is elegant: multiply the Poisson likelihood by the Gamma prior, drop the normalising constants, and you're left with x to the power alpha plus y minus one, times e to the minus x times beta plus one. That's the kernel of a Gamma distribution, and you can read off the parameters directly.
+
+With n conditionally independent observations y-one through y-n, the posterior becomes Gamma with shape alpha plus the sum of all y-i and rate beta plus n.
+
+---
+
+SECTION 1.3.3 — CONDITIONAL INDEPENDENCE
+
+A key structural assumption that makes Bayesian inference tractable is conditional independence. Two random variables X and Y are conditionally independent given Z if their joint conditional density factorises: p of x, y given z equals p of x given z times p of y given z.
+
+The practical consequence: if observations y-one through y-n are conditionally independent given x, then the joint likelihood is just the product of the individual likelihoods. This is the assumption made in almost every model in this course. And it means the posterior is proportional to the prior multiplied by the product of all n likelihoods.
+
+The Bayes update formula for n conditionally independent observations is: p of x given y-one through y-n is proportional to the product from i equals one to n of p of y-i given x, times p of x.
+
+There's also a conditional form of Bayes' rule. Given three random variables X, Y, Z, the rule holds conditionally: p of x given y and z equals p of y given x and z times p of x given z, divided by p of y given z. This is used whenever you want to update beliefs while conditioning on some observed context.
+
+---
+
+SECTION 1.3.4 — THE MARGINAL LIKELIHOOD
+
+The marginal likelihood p of y is the integral of the likelihood p of y given x over all values of x, weighted by the prior p of x. It is the probability of the data under our model.
+
+For the scalar Gaussian model — prior is N of x with mean mu-zero and variance sigma-zero-squared, likelihood is N of y with mean x and variance sigma-squared — the marginal likelihood comes out to be a Gaussian in y with mean mu-zero and variance sigma-zero-squared plus sigma-squared.
+
+The interpretation: the observation y is modelled as the sum of the unknown x drawn from the prior, plus independent noise. The variance of y is therefore the sum of the prior variance and the noise variance.
+
+The marginal likelihood is useful for model comparison. If you have two different models — say, one with prior centred at mu-zero and another with prior centred at mu-one — you compute the marginal likelihood under each model for your observed data and pick the one that gives a higher value. The model that fits the data better, in the sense of marginal likelihood, is preferred.
+
+For most complex models — nonlinear likelihoods, high-dimensional x — the marginal likelihood integral is intractable. This is the central motivation for the computational methods developed in Chapters 2 and 3.
+
+---
+
+SECTION 1.4 — CONCLUSION OF CHAPTER 1
+
+Chapter 1 has established the probabilistic framework for the rest of the course. The key message is this: for simple models like Gaussian–Gaussian and Poisson–Gamma, the posterior can be computed exactly — these are called conjugate models. For everything else, we need Monte Carlo methods. The next chapter starts building those tools from the ground up.
+
+
+CHAPTER 2: EXACT GENERATION OF RANDOM VARIATES
+================================================
+
+SECTION 2.0 — OVERVIEW
+
+Chapter 2 is about generating random samples exactly from known distributions. The foundation of every simulation algorithm is the ability to draw samples. Everything is built from uniform random numbers, so we start there.
+
+---
+
+SECTION 2.1 — GENERATING UNIFORM RANDOM VARIATES
+
+On a computer, you cannot generate truly random numbers — you can only generate pseudo-random numbers. A pseudo-random sequence is a deterministic sequence whose statistical properties match those of a truly random sequence. The advantages are obvious: pseudo-random numbers are fast, cheap, and crucially, repeatable. You can reproduce any experiment by fixing the seed.
+
+The most commonly discussed pseudo-random number generator is the linear congruential generator. It works by a linear recursion: x-next equals a times x-current plus b, modulo m. You divide by m to get numbers in the interval from zero to one. The sequence is periodic with period at most m. To get good statistical properties you need to choose the parameters a, b, and m carefully.
+
+A simple LCG with small m fails badly — if you plot pairs of consecutive samples, they lie on a small number of lines rather than filling the square uniformly. With large m and well-chosen parameters, the behaviour is much better.
+
+The currently dominant algorithm in practice is the Mersenne Twister, which is not an LCG but achieves excellent statistical properties with a very long period. In this course, we just use the standard random number generator and don't worry further about its internals.
+
+---
+
+SECTION 2.2 — TRANSFORMATION METHODS
+
+Given uniform samples, we can produce samples from other distributions by applying transformations. The two main tools are: the inverse transform method, and the more general transformation of random variables.
+
+SECTION 2.2.1 — THE INVERSE TRANSFORM
+
+The probability integral transform theorem states: if X is a random variable with CDF F-X, and U is uniform on zero to one, then F-X-inverse of U has the same distribution as X.
+
+The proof is one line: the probability that F-X-inverse of U is at most x equals the probability that U is at most F-X of x, which is exactly F-X of x — the CDF of X.
+
+The algorithm is simple: generate U uniform on zero to one, then set X equals F-X-inverse of U.
+
+For discrete distributions, the CDF is a staircase, and F-X-inverse is the generalised inverse: the smallest x such that F-X of x is at least u. In practice, you sample u uniformly, then scan through the probability mass function until the cumulative sum exceeds u — that's your sample.
+
+Let's go through the key worked examples.
+
+EXPONENTIAL. The density is lambda e to the minus lambda x for x at least zero. The CDF is one minus e to the minus lambda x. Setting this equal to u and solving: u equals one minus e to the minus lambda X, so X equals minus one over lambda times log of one minus u. That's F-inverse. Algorithm: draw U uniform, return minus one over lambda times log of one minus U.
+
+CAUCHY. The density is one over pi times one plus x-squared. The CDF is one half plus one over pi times the arctan of x. The inverse is F-inverse of u equals tan of pi times the quantity u minus one half. Algorithm: draw U, return tan of pi times U minus a half.
+
+POISSON. This is discrete. The CDF is e to the minus lambda times the sum from i equals zero to k of lambda-to-the-i over i-factorial. You can't invert this in closed form, so you use the generalised inverse: draw U uniform, then scan k equals zero, one, two, and so on until the cumulative probability first exceeds U — that k is your sample.
+
+WEIBULL. The density is k times x to the k-minus-one times e to the minus x to the k, for x at least zero. The CDF is one minus e to the minus x to the k. Setting CDF equal to u gives F-inverse of u as the negative log of one minus u, raised to the power one over k.
+
+---
+
+SECTION 2.2.2 — THE TRANSFORMATION METHOD
+
+Sometimes you can't invert the CDF, but you can construct a clever transformation. The general rule: if Y equals g of X and X has density p-X, then the density of Y at y equals p-X evaluated at g-inverse of y, multiplied by the absolute value of the derivative of g-inverse at y.
+
+In two dimensions, replace the absolute derivative with the absolute determinant of the Jacobian of g-inverse.
+
+The Gaussian is the canonical example. We want Y with density N of y with mean mu and variance sigma-squared. Start from X standard normal. Set Y equals sigma X plus mu. Then g-inverse of y is y minus mu over sigma, and the derivative is one over sigma. Substituting: the density of Y is one over sigma times N of y minus mu over sigma with zero mean and unit variance, which is exactly N of y with mean mu and variance sigma-squared.
+
+---
+
+SECTION 2.2.3 — THE BOX-MÜLLER TRANSFORM
+
+The Box-Müller transform generates standard normal samples directly from uniform samples, without needing a CDF inverse.
+
+Let X-one have an Exponential distribution with rate one half, and X-two be uniform on minus pi to pi. Define Y-one equals square root of X-one times cosine of X-two, and Y-two equals square root of X-one times sine of X-two. Then Y-one and Y-two are independent standard normals.
+
+The proof: write the joint density of X-one and X-two, compute the inverse transformation — X-one equals Y-one-squared plus Y-two-squared, X-two equals arctan of Y-two over Y-one — compute the Jacobian, and the absolute determinant comes out to be two. Multiplying everything together gives the product of two standard normals.
+
+In practice, since X-one is exponential with rate one half, which has CDF one minus e to the minus x over two, you can sample X-one using inversion as minus two times log of U-one. So if U-one is uniform on zero to one and U-two is uniform on zero to two pi, then:
+
+Z-one equals square root of minus two log U-one times cosine of U-two,
+Z-two equals square root of minus two log U-one times sine of U-two,
+
+and both are independent standard normals.
+
+The 2024 exam version uses U-one uniform on zero to one and U-two uniform on minus pi to pi, and the form X-one equals cosine of U-two times square root of minus two log U-one. This is the same transformation — the range of U-two just shifts by pi.
+
+---
+
+SECTION 2.3 — COMPOSITION METHODS
+
+Many complex distributions can be handled by composition: factorising the joint density and sampling in sequence.
+
+SECTION 2.3.1 — SAMPLING JOINT DISTRIBUTIONS
+
+The chain rule for sampling says: to sample from a joint density p of x-one, x-two, first sample X-one from its marginal p of x-one, then sample X-two from the conditional p of x-two given x-one equals that sampled value. The result has the correct joint distribution.
+
+This extends to n variables: sample x-one, then x-two given x-one, then x-three given x-one and x-two, and so on.
+
+A practical example: the linear model. Suppose x is uniform on minus ten to ten, and y given x is N of y with mean a times x plus b and variance sigma-squared. To simulate data pairs, sample x from the uniform, then sample y from the Gaussian centred at a times x plus b. This generates realistic data with a linear relationship and Gaussian noise.
+
+SECTION 2.3.2 — SAMPLING MARGINALS
+
+A byproduct of sampling the joint is that you get marginal samples for free. If you sample X-one and X-two from their joint, then the X-one values alone are samples from the marginal density of X-one. This is marginalisation by projection, and it's useful for checking distributions numerically.
+
+SECTION 2.3.3 — DISCRETE MIXTURE DENSITIES
+
+A mixture distribution is p-star of x equals a sum over k of w-k times q-k of x, where the w-k are non-negative weights that sum to one. To sample from a mixture, first draw a component index k from the categorical distribution with probabilities w-one through w-K — this can be done by inversion — then draw a sample from q-k. That's your sample from the mixture.
+
+---
+
+SECTION 2.4 — SAMPLING MULTIVARIATE GAUSSIANS
+
+For a d-dimensional Gaussian with mean vector mu and covariance matrix Sigma, the sampling procedure is a multivariate version of the Y equals sigma X plus mu trick.
+
+Start from a d-dimensional standard normal — draw each coordinate independently from N of zero, one. Then compute the Cholesky factor L such that Sigma equals L times L-transpose. Your sample from N of mu, Sigma is then mu plus L times the standard normal vector.
+
+You don't need to implement the Cholesky decomposition from scratch — numpy provides it. The key conceptual point is that the Cholesky factor plays the role of sigma in the univariate case.
+
+---
+
+SECTION 2.5 — REJECTION SAMPLING
+
+Rejection sampling is the universal fallback for sampling from complex distributions. It works whenever you can evaluate the target density — or even just an unnormalised version of it.
+
+The underlying theorem is called the Fundamental Theorem of Simulation. It states: sampling from a one-dimensional density p-star of x is equivalent to sampling uniformly on the two-dimensional region under the curve of p-star. That region is all pairs x, y such that zero is at most y which is at most p-star of x. If you sample uniformly on that region, the x-coordinates of your samples have density p-star.
+
+The proof: the joint density on the region is one over Z, where Z is the area under the curve, which equals the normalising constant. The marginal density in x is found by integrating out y: you integrate from zero to p-bar of x, which gives p-bar of x over Z, and that's exactly p-star of x.
+
+This theorem extends directly to unnormalised densities: sampling uniformly under p-bar-star still gives x-marginal samples from the normalised p-star.
+
+SECTION 2.5.1 — THE REJECTION SAMPLER
+
+The practical algorithm exploits this by covering the target with a scaled proposal. Choose a proposal density q of x that you can sample from. Find a constant M such that p-star of x is at most M times q of x for all x. Then:
+
+Step one: draw X-prime from q.
+Step two: draw U uniform on zero to one.
+Step three: accept X-prime if U is at most p-star of X-prime divided by M times q of X-prime. Otherwise, go back to step one.
+
+The acceptance probability at a given candidate x-prime is p-star of x-prime over M times q of x-prime. This is at most one because M was chosen so that Mq dominates p-star.
+
+For unnormalised targets, replace p-star with p-bar-star everywhere. The algorithm is identical.
+
+Worked example: sampling from a posterior. Suppose the prior is N of x with mean zero and variance one, the likelihood is N of y with mean x and variance sigma-squared, and we observe y equals zero point five. The unnormalised posterior is the product of the two Gaussians. Choose q to be another Gaussian — say N of zero, one — with M chosen so that Mq covers the unnormalised posterior. Sample from q, accept with probability p-bar of x-prime divided by M times q of x-prime. The accepted samples are exactly from the correct posterior, without ever computing the normalising constant.
+
+SECTION 2.5.2 — THE ACCEPTANCE RATE
+
+The acceptance rate, denoted a-hat, is the expected fraction of candidates that get accepted. For a normalised target, a-hat equals one over M. For an unnormalised target with normalising constant Z, a-hat equals Z over M.
+
+The proof: the unconditional probability of acceptance equals the integral of the acceptance probability a of x-prime times the proposal q of x-prime over all x-prime. For a normalised target, this integral is exactly one over M, because it telescopes to the integral of p-star divided by M, which is one over M times one equals one over M.
+
+You want M as small as possible to maximise the acceptance rate. The minimum valid M is the supremum of p-star of x divided by q of x over all x.
+
+Example: the Beta(2,2) density on a unit interval. You can cover it with a box of height p-max equals 1.5, giving acceptance rate one over 1.5 = 0.67. Or you can use a Gaussian proposal centred at 0.5 with a smaller M of 1.3, giving acceptance rate one over 1.3 = 0.77. The Gaussian proposal is tighter and thus more efficient.
+
+Special case: the truncated Gaussian. To sample from a Gaussian restricted to the interval minus a to a, use the full Gaussian as the proposal with M equals one. Accept any sample that falls in bounds; reject any sample outside. The acceptance rate equals exactly the probability that a standard Gaussian falls in the interval.
+
+SECTION 2.5.3 — DESIGNING THE OPTIMAL REJECTION SAMPLER
+
+Choosing M: the optimal M is the supremum over x of p-star of x divided by q of x. Find this by taking the log of the ratio, differentiating, and setting the derivative to zero. Find the maximiser x-star, then M equals the ratio evaluated at x-star.
+
+Worked example — finding M for an unnormalised Gaussian target with a Cauchy proposal. The log of the ratio is minus x-squared over two plus log of one plus x-squared, plus a constant. Setting the derivative to zero gives x equals zero or x equals plus or minus one. Checking second derivatives: x equals zero is a local minimum, x equals plus or minus one are local maxima. So x-star equals plus or minus one, and M equals two pi times e to the minus one half.
+
+Optimising the proposal: parameterise the proposal as q-theta. The optimal M is a function of theta. To maximise the acceptance rate one over M-theta, you minimise M-theta over theta. In log space, minimise log M-theta.
+
+Long worked example — Gamma(alpha, 1) target with Exponential(lambda) proposal, for lambda less than one. The log ratio is alpha minus one times log x plus lambda minus one times x, minus log lambda minus log Gamma of alpha. Differentiating and setting to zero gives x-star equals alpha minus one divided by one minus lambda. Substituting back gives M-lambda as an explicit expression involving alpha and lambda. Differentiating M-lambda with respect to lambda and setting to zero gives the optimal lambda-star equals one over alpha. Plugging this in gives the acceptance condition: accept X-prime drawn from Exponential of one over alpha if U is at most X-prime over alpha raised to the power alpha minus one, times e to the power one over alpha minus one times X-prime plus alpha minus one.
+
+---
+
+SECTION 2.6 — WHY REJECTION SAMPLING FAILS IN HIGH DIMENSIONS
+
+Rejection sampling works well in low dimensions, but breaks down as the dimension grows. This is the curse of dimensionality.
+
+Consider trying to sample from a d-dimensional unit ball using a d-dimensional unit cube as the proposal. The acceptance rate is the volume of the ball divided by the volume of the cube. This ratio equals pi to the power d over two, divided by Gamma of d over two plus one.
+
+For d equals two, the acceptance rate is pi over four, which is about 0.78. For d equals three, it drops to pi over six, about 0.52. As d grows, Stirling's approximation shows that this ratio decays super-exponentially — it goes to zero faster than any exponential.
+
+There's also the issue of numerical stability: for large n, the product of likelihoods underflows to zero in floating point. You must compute the log-sum of log-likelihoods instead, and then accept based on comparing log U to the log acceptance ratio.
+
+These two problems — vanishing acceptance rates in high dimensions, and numerical instability with many observations — motivate the Markov chain methods in Chapters 4 and beyond. Rejection sampling is exact but impractical for realistic Bayesian models.
+
+
+CHAPTER 3: MONTE CARLO INTEGRATION
+=====================================
+
+SECTION 3.0 — OVERVIEW
+
+Chapter 3 asks a more general question than Chapter 2. Chapter 2 asked: how do we sample from a distribution? Chapter 3 asks: how do we estimate expectations and integrals? Sampling is one way to do this, but not the only way. And sometimes we can estimate an integral even when we can't sample from the distribution directly.
+
+---
+
+SECTION 3.1 — INTRODUCTION TO MONTE CARLO INTEGRATION
+
+The goal is to estimate the expectation of a test function phi with respect to a distribution p-star. Written as an integral: phi-bar equals the integral of phi of x times p-star of x over all x.
+
+We build a Monte Carlo estimator as follows. Given N independent samples X-one through X-N from p-star, the MC estimator is phi-hat-N equals one over N times the sum of phi of X-i.
+
+The underlying idea is that we approximate the continuous measure p-star of x times dx by an empirical measure: a sum of N equal-weight Dirac point masses at the sample locations. Integrating phi against this empirical measure gives exactly the arithmetic average.
+
+This can also be used to estimate integrals. If you want the integral of f of x over a domain, write it as an expectation of phi equals f over p under a suitable density p. For an integral over zero to one, the simplest choice is p equals Uniform on zero to one.
+
+Concrete examples: Estimate the area of a disk — choose X, Y uniform on the unit square, and estimate the fraction of samples falling within the unit circle; multiply by four to get pi. Estimate the integral of cosine of fifty x plus sine of twenty x squared over zero to one — choose uniform samples, average the integrand. Estimate a tail probability P of X greater than two — use indicator functions as phi.
+
+---
+
+SECTION 3.1.1 — KEY PROPERTIES OF THE MC ESTIMATOR
+
+Proposition one: unbiasedness. The MC estimator is unbiased. The proof is by linearity of expectation — you pull the expectation inside the sum, each term gives the true mean, and you get phi-bar back.
+
+Proposition two: variance. The variance of the MC estimator is one over N times the variance of phi under p-star. This variance goes to zero as N grows, so the estimator is consistent.
+
+The standard deviation of the estimator is sigma-phi over root N, where sigma-phi is the standard deviation of phi under p-star. This is the O of one over root N convergence rate.
+
+There's also an empirical variance estimator: one over N-squared times the sum of phi of X-i minus phi-hat-N, all squared. This uses the sample mean in place of the true mean and gives you a practical bound without knowing the true expectation.
+
+A central limit theorem also applies: the standardised estimator converges in distribution to a standard normal. This gives confidence intervals, though these are asymptotic.
+
+---
+
+SECTION 3.2 — ERROR METRICS
+
+Several ways to quantify the quality of an estimator.
+
+Bias: the expected value of the estimator minus the true value. Zero for the standard MC estimator.
+
+Variance: the expected squared deviation from the estimator's own mean.
+
+Mean squared error, or MSE: the expected squared deviation from the true value. MSE equals bias squared plus variance. For unbiased estimators, MSE equals variance.
+
+Root MSE, or RMSE: the square root of MSE.
+
+Relative absolute error, or RAE: the absolute difference between estimator and truth, divided by the truth. This normalises the error by the scale of the quantity being estimated.
+
+The theoretical bound on absolute error for the standard MC estimator is: the absolute difference between phi-hat and phi-bar is at most V over root N, where V is an almost surely finite random variable. This is the rigorous version of the O of one over root N rate.
+
+---
+
+SECTION 3.3 — IMPORTANCE SAMPLING
+
+Standard Monte Carlo requires samples from p-star. What if we can evaluate p-star pointwise but can't sample from it? This is the setting for importance sampling, or IS.
+
+Motivation: two main scenarios. First, tail probability estimation — the probability of being in a rare region is tiny, so direct sampling from p-star gives almost no samples in the region of interest. For example, P of X greater than four for a standard Gaussian is about three times ten to the minus five — if you draw ten thousand samples, you might get zero in that tail. Second, Bayesian inference — the posterior p of x given y is often intractable to sample from, because computing its normalising constant requires an intractable integral.
+
+SECTION 3.3.1 — BASIC IS: NORMALISED CASE
+
+The identity trick. Write phi-bar as the integral of phi of x times p-star of x. Multiply and divide by a proposal density q of x. You get the integral of phi of x times w of x times q of x, where w of x equals p-star of x over q of x is called the weight function.
+
+This is now an expectation under q. Draw samples X-i from q, and estimate the integral as one over N times the sum of w-i times phi of X-i, where w-i equals p-star of X-i divided by q of X-i. This is the IS estimator.
+
+The requirement: q must have positive density wherever p-star has positive density. This is much less restrictive than rejection sampling, which requires Mq to dominate p-star everywhere.
+
+IS estimator properties:
+- Unbiasedness: the proof is analogous to the MC proof — take expectation under q, use the fact that the integral of p-star over q times q equals the integral of p-star, which is the true expectation.
+- Variance: one over N times the quantity E under q of w-squared times phi-squared, minus phi-bar-squared.
+- For finite variance, you need the integral of p-star-squared over q times phi-squared to be finite.
+
+Counter-example of infinite IS variance: Cauchy target, Gaussian proposal. The ratio p-star over q is proportional to e to the x-squared over two divided by one plus x-squared — this blows up in the tails and its square is not integrable. Even if phi ensures finiteness, the estimator behaves badly in practice, producing rare but enormous weights that destabilise the estimator.
+
+Optimal proposal: by Jensen's inequality, the variance of the IS estimator is lower bounded by E under p-star of absolute phi, squared, minus phi-bar-squared over N. This lower bound is achieved when q-star of x is proportional to p-star of x times the absolute value of phi of x. With this optimal proposal, the variance is at most the variance of the plain MC estimator — so IS is always at least as good as MC when the optimal proposal is used.
+
+In fact, if phi is non-negative everywhere, the optimal IS variance is zero. This sounds too good to be true — and it is, because computing q-star requires knowing the very integral you're trying to estimate.
+
+SECTION 3.3.2 — CHOOSING THE OPTIMAL PROPOSAL WITHIN A FAMILY
+
+You can't use the true optimal proposal, but you can optimise within a parametric family. Parameterise the proposal as q-theta. The quantity to minimise is E under q-theta of w-theta-squared times phi-squared, as a function of theta. The optimal theta-star solves this minimisation.
+
+Worked example: Exponential target pλ of x, estimating P of X greater than K. Use an Exponential proposal q-mu. The variance integral reduces to lambda-squared over mu times two lambda minus mu, times one minus the CDF of the Exponential two lambda minus mu distribution evaluated at K. Taking the log, differentiating with respect to mu, and setting to zero leads to a quadratic equation. The solution with mu less than two lambda is:
+
+mu-star equals two times K lambda plus one, minus the square root of four K-squared lambda-squared plus four, all divided by two K.
+
+For K equals six and lambda equals two, the standard MC estimator with ten to the five samples gives exactly zero — no sample lands above K. The IS estimator with mu-star gives the correct answer to four significant figures.
+
+---
+
+SECTION 3.3.3 — SELF-NORMALISED IS: THE UNNORMALISED CASE
+
+In practice — especially in Bayesian inference — you usually have only the unnormalised target p-bar-star, not the normalised p-star. The normalising constant Z is what you're trying to avoid computing.
+
+Write the expectation phi-bar as a ratio: numerator is the integral of phi of x times p-bar-star of x over q of x times q of x dx, denominator is the integral of p-bar-star of x over q of x times q of x dx. Both can be estimated by sampling from q.
+
+Define unnormalised weights W of x equals p-bar-star of x over q of x. The SNIS estimator is the sum of w-bar-i times phi of X-i, where w-bar-i equals W of X-i divided by the total sum of all W of X-j. These are the normalised weights.
+
+Key properties:
+- Biasedness: the SNIS estimator is biased, because a ratio of two estimates is generally biased. The bias is of order one over N.
+- MSE: the MSE of the SNIS estimator is of order one over N. The bound is four over N times E under q of W-squared, divided by E under q of W, squared.
+- Marginal likelihood estimation: as a byproduct, one over N times the sum of unnormalised weights W-i is an unbiased estimator of the normalising constant Z.
+
+The algorithm:
+Step one: draw X-one through X-N from q.
+Step two: for each i, compute the unnormalised weight W-i as p-bar-star of X-i divided by q of X-i.
+Step three: compute the sum of all W-i, divide each W-i by this sum to get normalised weights w-bar-i.
+Step four: report the SNIS estimator as the sum of w-bar-i times phi of X-i.
+
+---
+
+SECTION 3.4 — BAYESIAN INFERENCE WITH IMPORTANCE SAMPLING
+
+In the Bayesian setting, the target is the posterior p of x given y, and the unnormalised target is p-bar of x given y equals p of y given x times p of x. Choose a proposal q, draw samples, compute unnormalised weights as p of y given X-i times p of X-i divided by q of X-i, normalise them, and the SNIS estimator gives you approximate posterior expectations.
+
+The marginal likelihood estimator is the average of the unnormalised weights — and this estimator is unbiased. The proof: the expectation of each W-i under q is the integral of p of y given x times p of x, which equals p of y. So the average is an unbiased estimator of p of y.
+
+For the optimal IS proposal in the marginal likelihood estimation problem, the answer turns out to be the posterior itself. Using the posterior as proposal gives exactly zero variance. This is because the weight function W of x becomes p of y given x times p of x divided by p of x given y, which equals p of y — a constant. Zero variance over any constant proposal. But again, this requires knowing the posterior, which we're trying to sample from.
+
+---
+
+SECTION 3.5 — IMPLEMENTATION, ALGORITHMS, AND DIAGNOSTICS
+
+SECTION 3.5.1 — COMPUTING WEIGHTS IN THE LOG DOMAIN
+
+When implementing SNIS, numerical instability arises from exponentiating large log-weights. The solution is the log-sum-exp trick.
+
+Step one: compute log W-i equals log p-bar of X-i minus log q of X-i.
+Step two: let log-W-tilde-i equal log-W-i minus the maximum of all log-W-i.
+Step three: exponentiate the shifted log weights, then normalise: w-bar-i equals exp of log-W-tilde-i divided by the sum of all exp of log-W-tilde-j.
+
+This doesn't change the result, because subtracting the maximum is equivalent to multiplying all weights by a constant, which cancels in the normalisation step. But it prevents any single weight from overflowing to infinity or underflowing to zero.
+
+For a concrete example: log-weights of 1000, 1001, 999, 1002, 950 would cause overflow if exponentiated directly. After subtracting the maximum of 1002, you exponentiate values like minus two, minus one, minus three, zero, and minus fifty-two — all well-behaved.
+
+SECTION 3.5.2 — SAMPLING IMPORTANCE RESAMPLING
+
+The IS and SNIS estimators give you a weighted set of samples: pairs of X-i and w-bar-i. You can convert this to an approximately unweighted sample by resampling.
+
+Draw N new indices by sampling k from the categorical distribution with probabilities w-bar-one through w-bar-N. Set X-bar-i equals X-k. The resulting set is an approximately independent set of samples from p-star.
+
+This technique, called sampling importance resampling or SIR, is the foundation of particle filters. The intuition: samples with high weights are resampled more often, and samples with low weights are discarded. The result is a more uniform set of samples that approximates the target.
+
+SECTION 3.5.3 — EFFECTIVE SAMPLE SIZE
+
+The effective sample size, or ESS, measures how many independent samples your weighted set is worth.
+
+ESS-N equals one divided by the sum of the squared normalised weights.
+
+If all weights are equal — w-bar-i equals one over N — then the sum of squared weights is N times one over N-squared equals one over N, so ESS equals N. Perfect efficiency.
+
+If one weight equals one and all others are zero — meaning one sample dominates — then the sum of squared weights is one, so ESS equals one. The worst case.
+
+ESS always lies between one and N. A low ESS signals that the proposal is poorly matched to the target.
+
+SECTION 3.5.4 — MIXTURE IMPORTANCE SAMPLING
+
+For multimodal targets, a single unimodal proposal may fail to cover all modes. The remedy is to use a mixture proposal: q-alpha of x is a sum over k of alpha-k times q-k of x, with weights alpha-k summing to one.
+
+Sampling is easy: draw a component index from the categorical distribution with weights alpha-k, then draw from q-k. The unnormalised weights are now p-bar of X-i divided by the full mixture density, which is the sum of alpha-k times q-k of X-i.
+
+For numerical stability, the denominator can be computed using the log-sum-exp trick: the log of the mixture density is log of the sum of exp of log alpha-k plus log q-k of X-i.
+
+---
+
+SECTION 3.6 — CHAPTER 3 SUMMARY
+
+Monte Carlo integration is built on a single idea: represent an expectation as a sample average. The key properties are unbiasedness and O of one over root N convergence, regardless of dimension.
+
+When you can sample from the target, use the standard MC estimator. When you can only evaluate the target — possibly up to a normalising constant — use importance sampling. Normalised target: use basic IS with weights p-star over q. Unnormalised target: use SNIS with weights p-bar over q, normalised. In both cases, the error rate is still one over root N.
+
+The critical practical tools: always compute weights in the log domain using the log-sum-exp trick, always monitor the ESS, and use SIR if you need to convert a weighted sample to an unweighted one.
+
+
+OVERALL SUMMARY — CHAPTERS 1 TO 3
+=====================================
+
+Chapter 1 builds the Bayesian framework. Prior, likelihood, posterior, marginal likelihood. Conjugate models — Gaussian–Gaussian, Poisson–Gamma — admit closed-form posteriors. Everything else requires numerical methods.
+
+Chapter 2 provides exact sampling tools. Pseudo-random number generators give you uniform samples. The inverse transform turns them into samples from any distribution with a tractable CDF inverse — Exponential, Rayleigh, Weibull, Cauchy, Geometric, discrete distributions. Box-Müller and transformation methods handle the Gaussian. Composition handles joint and mixture distributions. Rejection sampling handles everything with a known or unnormalised density — but its acceptance rate collapses exponentially with dimension, making it impractical for high-dimensional Bayesian inference.
+
+Chapter 3 provides integration tools. Standard Monte Carlo estimates expectations when you can sample from the target. Importance sampling estimates them when you can only evaluate the target. Self-normalised IS handles the ubiquitous case where only the unnormalised target is available, which is essentially all of Bayesian inference. ESS and the log-weight trick are the practical machinery that makes IS stable. Sampling importance resampling converts weighted samples to approximately independent ones.
+
+The convergence rate is O of one over root N throughout. That is the fundamental tradeoff in stochastic simulation.
+
+---
+
+[End of script — Chapters 1 to 3 complete]

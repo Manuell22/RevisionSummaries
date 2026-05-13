@@ -1,0 +1,42 @@
+STOCHASTIC SIMULATION — EXERCISES WORTH DOING
+=============================================
+(Assessment based on notes + past exam patterns, May 2026)
+
+---
+
+SKIP OR SKIM — low exam value:
+
+- 3.1–3.3 (MC for CDF, KDE, ellipse area) — too basic and mechanical; understanding the estimator formula is enough
+- 3.5 (Cauchy tail via IS) — low value; covered better by 3.6/3.8
+- 4.1 (IFS fractal attractor) — pure visualisation exercise, no exam relevance
+- 4.6 (Inconsistent Gibbs) — conceptually interesting warning but way too niche; no exam has tested this
+- 4.9–4.10 (Gradient descent basics, local minima trap) — just motivation for why stochastic methods are needed; grasp the idea in 5 minutes and move on
+
+---
+
+DO THESE — genuinely high value:
+
+- 1.1–1.7 — Bayesian conjugacy derivations appear every year from 2023 onwards; bread-and-butter
+- 3.6–3.8 — IS variance optimisation is a very consistent exam topic. 3.8 is literally the 2024 exam Q2, so do it in full
+- 3.9–3.10 — marginal likelihood via IS and SNIS workflow; recurring from 2023
+- 4.2–4.3 — detailed balance + convergence of AR(1); detailed balance comes up in almost every exam
+- 4.5 — MH vs rejection sampler comparison; good conceptual proof
+- 4.7 — this is the 2025 exam Q3(c); ULA bias derivation for Gaussian target. Do this
+- 4.11 — ULA with temperature; connects to simulated annealing which appeared in 2025
+- 6.1–6.2 (BPF examples) — particle filtering appeared in 2025 for the first time; likely to continue
+
+---
+
+MODERATE — do if you have time:
+
+- 3.4 (MC variance vs dimension) — good intuition builder, occasionally tested implicitly
+- 3.11 (Banana SNIS in 2D) — good for understanding proposal design but implementation-heavy
+- 4.4 (MH for Banana, MALA comparison) — implementation practice; useful if MALA design is tested
+- 4.8 (Langevin for Student's t) — good Langevin practice but long
+
+---
+
+BOTTOM LINE:
+About 10–12 of the ~30+ exercises are clearly worth full attention.
+The rest are either too mechanical to teach anything new, too niche for exams,
+or pure implementation practice better spent on past papers instead.
